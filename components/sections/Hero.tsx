@@ -16,6 +16,9 @@ export function Hero() {
           <Container className="relative z-10 flex flex-1 flex-col justify-end pb-12 pt-28">
             <div className="w-full">
               <h1 className="font-display text-[clamp(2.6rem,6.3vw,5.75rem)] font-black uppercase leading-[0.95] tracking-[-0.01em] text-white">
+                <span className="-mb-3 block -rotate-2 font-script text-[clamp(2.85rem,7vw,6.5rem)] font-bold normal-case leading-none tracking-normal text-yellow [text-shadow:0_3px_12px_rgba(0,0,0,0.5)] sm:-mb-5">
+                  Bespoke
+                </span>
                 Football jerseys
                 <br />
                 from concept
