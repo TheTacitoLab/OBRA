@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Caveat, Inter, Space_Mono } from "next/font/google";
+import { Archivo, Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -27,14 +27,6 @@ const spaceMono = Space_Mono({
 const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
-  display: "swap",
-});
-
-// Handwritten script accent (e.g. "Bespoke" over the hero title).
-const caveat = Caveat({
-  subsets: ["latin"],
-  weight: ["700"],
-  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -67,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceMono.variable} ${archivo.variable} ${caveat.variable} h-full antialiased`}
+      className={`${inter.variable} ${spaceMono.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-void text-white">
         <Header />
