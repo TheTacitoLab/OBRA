@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wordmark } from "./brand/Wordmark";
+import Image from "next/image";
 import { Asterisk } from "./brand/Marks";
 import { privacyHref, siteConfig } from "@/lib/siteConfig";
 
@@ -44,7 +44,13 @@ export function Footer() {
 
         {/* Large wordmark */}
         <div className="py-14">
-          <Wordmark className="block text-[clamp(4rem,17vw,15rem)] text-white" />
+          <Image
+            src="/brand/obra-white.svg"
+            alt="OBRA"
+            width={1104}
+            height={426}
+            className="h-auto w-full max-w-2xl md:max-w-4xl"
+          />
         </div>
 
         {/* Baseline */}

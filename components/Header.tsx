@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Wordmark } from "./brand/Wordmark";
 import { Button } from "./Button";
 import { Asterisk } from "./brand/Marks";
 import { briefHref, navLinks } from "@/lib/siteConfig";
@@ -49,7 +49,14 @@ export function Header() {
           className="relative z-50 inline-flex items-center"
           onClick={() => setOpen(false)}
         >
-          <Wordmark className="text-[1.6rem] text-white" />
+          <Image
+            src="/brand/obra-white.svg"
+            alt=""
+            width={1104}
+            height={426}
+            priority
+            className="h-7 w-auto sm:h-8"
+          />
         </Link>
 
         {/* Desktop nav */}
