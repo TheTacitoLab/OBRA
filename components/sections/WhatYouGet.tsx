@@ -1,6 +1,6 @@
 import { Container } from "../Container";
 import { Reveal } from "../Reveal";
-import { JerseySlot } from "../JerseySlot";
+import { Polaroid } from "../Polaroid";
 import { Asterisk } from "../brand/Marks";
 
 const deliverables = [
@@ -43,22 +43,22 @@ export function WhatYouGet() {
             </Reveal>
           </div>
 
-          <div className="flex flex-col gap-5">
-            <Reveal>
-              <JerseySlot
+          <Reveal className="md:h-full">
+            <div className="relative mx-auto flex max-w-sm flex-col items-center md:block md:h-full md:max-w-none">
+              <Polaroid
                 src="/jerseys/obra-jersey-front.webp"
                 alt="OBRA black-and-white striped football jersey with number 10, worn by a model"
-                className="aspect-[4/5]"
+                caption="OBRA · 10"
+                className="w-[80%] -rotate-3 md:absolute md:left-0 md:top-[3%] md:w-[57%] md:-rotate-6"
               />
-            </Reveal>
-            <Reveal delay={0.1}>
-              <JerseySlot
+              <Polaroid
                 src="/jerseys/obra-jersey-detail.webp"
                 alt="OBRA jersey collar label and swing tag with a gold lion crest"
-                className="aspect-[4/5]"
+                caption="OBRA · Crest"
+                className="-mt-10 w-[74%] rotate-3 md:absolute md:bottom-[3%] md:right-0 md:z-10 md:mt-0 md:w-[53%] md:rotate-[5deg]"
               />
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </Container>
     </section>
