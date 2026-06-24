@@ -3,6 +3,8 @@ import { Container } from "../Container";
 import { SectionLabel } from "../SectionLabel";
 import { Reveal } from "../Reveal";
 
+const notThis = ["Print-on-demand", "Teamwear", "Blanks"];
+
 export function WhyObra() {
   return (
     <section id="why" className="border-t border-line">
@@ -10,16 +12,24 @@ export function WhyObra() {
         <Container>
           <div className="mx-auto max-w-4xl text-center">
             <Reveal>
-              <SectionLabel className="justify-center">WHY OBRA</SectionLabel>
+              <SectionLabel className="text-center">WHY OBRA</SectionLabel>
             </Reveal>
+
             <Reveal delay={0.05}>
-              <h2 className="text-display mt-8 text-white">
-                This is not print-on-demand, teamwear or a blank shirt with a
-                logo on it.
-              </h2>
+              <div className="mt-8">
+                <p className="text-display text-yellow">This is not</p>
+                <ul className="mt-2 space-y-1">
+                  {notThis.map((item) => (
+                    <li key={item} className="text-display text-white">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Reveal>
+
             <Reveal delay={0.1}>
-              <p className="text-lede mx-auto mt-8 max-w-2xl text-white/85">
+              <p className="text-lede mx-auto mt-10 max-w-2xl text-white/85">
                 OBRA is a football jersey studio creating unique, retail-ready
                 jerseys designed to tell your story.
               </p>

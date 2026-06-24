@@ -9,7 +9,7 @@ export function WhoItsFor() {
     <section id="who" className="border-t border-line py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
-          <SectionLabel className="justify-center">
+          <SectionLabel className="text-center">
             WHO IT&apos;S FOR
           </SectionLabel>
         </Reveal>
