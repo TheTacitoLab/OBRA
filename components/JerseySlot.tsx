@@ -1,10 +1,11 @@
+import Image from "next/image";
 import { Grain } from "./Grain";
 import { Asterisk } from "./brand/Marks";
 
 /**
- * Intentional framed placeholder for jersey photography that doesn't exist yet.
- * Labelled in mono so the page reads as a confident pre-launch rather than an
- * empty one. Set the shape via `className` (e.g. `aspect-[3/4]`).
+ * Jersey image frame. Pass `src` to show real product photography; without it,
+ * renders an intentional mono-labelled placeholder. Set the shape via
+ * `className` (e.g. `aspect-[4/5]`).
  */
 export function JerseySlot({
   label,
@@ -12,13 +13,33 @@ export function JerseySlot({
   accent = "text-yellow",
   variant = "gradient",
   className = "",
+  src,
+  alt = "",
 }: {
-  label: string;
+  label?: string;
   caption?: string;
   accent?: string;
   variant?: "gradient" | "slate";
   className?: string;
+  src?: string;
+  alt?: string;
 }) {
+  if (src) {
+    return (
+      <div
+        className={`group relative isolate overflow-hidden rounded-sm border border-line bg-slate ${className}`}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(min-width: 768px) 45vw, 90vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative isolate overflow-hidden rounded-sm border border-line bg-slate ${className}`}
@@ -29,9 +50,7 @@ export function JerseySlot({
       <Grain opacity={0.1} />
 
       {/* Brand motif watermark */}
-      <Asterisk
-        className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 text-white/[0.06]"
-      />
+      <Asterisk className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 text-white/[0.06]" />
 
       {/* Mono frame labels */}
       <div className="absolute inset-0 flex flex-col justify-between p-5">

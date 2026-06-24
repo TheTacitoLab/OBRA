@@ -45,23 +45,18 @@ export function WhatYouGet() {
 
           <div className="flex flex-col gap-5">
             <Reveal>
-              <JerseySlot label="JERSEY 01 / FRONT" className="aspect-[4/5]" />
+              <JerseySlot
+                src="/jerseys/obra-jersey-front.webp"
+                alt="OBRA black-and-white striped football jersey with number 10, worn by a model"
+                className="aspect-[4/5]"
+              />
             </Reveal>
             <Reveal delay={0.1}>
-              <div className="grid grid-cols-2 gap-5">
-                <JerseySlot
-                  label="DETAIL"
-                  caption="Crest"
-                  variant="slate"
-                  className="aspect-square"
-                />
-                <JerseySlot
-                  label="DETAIL"
-                  caption="Fabric"
-                  variant="slate"
-                  className="aspect-square"
-                />
-              </div>
+              <JerseySlot
+                src="/jerseys/obra-jersey-detail.webp"
+                alt="OBRA jersey collar label and swing tag with a gold lion crest"
+                className="aspect-[4/5]"
+              />
             </Reveal>
           </div>
         </div>
