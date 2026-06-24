@@ -5,17 +5,14 @@ export type NavLink = { label: string; href: string };
  */
 export const siteConfig = {
   name: "OBRA",
-  url: "https://byobra.com",
-  // TODO: confirm the final public contact address with the client.
-  email: "hello@byobra.com",
+  url: "https://madebyobra.com",
+  // TODO: confirm the exact mailbox; the domain is madebyobra.com.
+  email: "hello@madebyobra.com",
   tagline: "One process. Start to finish.",
   description:
     "OBRA creates limited edition football jerseys for festivals, artists, creators and culture-led brands. We take your drop from concept to creation, covering design, mockups, tech packs, sampling and production.",
   social: {
-    // TODO: add real social handles once confirmed.
-    instagram: "", // TODO
-    tiktok: "", // TODO
-    x: "", // TODO
+    instagram: "madebyobra",
   },
 } as const;
 

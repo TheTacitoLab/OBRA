@@ -11,12 +11,10 @@ export function Hero() {
         {/* Left-weighted dark scrim keeps the headline AA-legible over colour. */}
         <div aria-hidden className="absolute inset-0 scrim-hero" />
 
-        <Container className="relative flex min-h-[100svh] flex-col justify-end pb-24 pt-32 sm:pb-28">
+        <Container className="relative flex min-h-[100svh] flex-col justify-center pb-20 pt-28">
           <div className="w-full">
-            <p className="text-label text-white/80">OBRA · LIMITED EDITION</p>
-
-            <h1 className="text-poster mt-6 text-white">
-              Limited edition football jerseys, from concept to creation.
+            <h1 className="text-poster text-white">
+              Football jerseys from concept to creation
             </h1>
 
             <p className="text-lede mt-8 max-w-2xl text-ash">
@@ -26,7 +24,9 @@ export function Hero() {
               and production.
             </p>
 
-            <p className="mt-6 text-label text-flare">One process. Start to finish.</p>
+            <p className="mt-6 text-label text-flare">
+              One process. Start to finish.
+            </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button href={briefHref}>Start a brief</Button>

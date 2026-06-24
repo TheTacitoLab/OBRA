@@ -4,7 +4,7 @@
  * `className` (defaults to currentColor).
  *
  * NOTE: a `/public/brand/obra-white.svg` placeholder exists for the eventual
- * real logo — when the licensed mark arrives, swap this for a `next/image`.
+ * real logo - when the licensed mark arrives, swap this for a `next/image`.
  */
 export function Wordmark({ className = "" }: { className?: string }) {
   return (

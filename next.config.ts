@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
   images: {
-    // Required for `output: 'export'` — no on-demand image optimization server.
+    // Required for `output: 'export'` - no on-demand image optimization server.
     unoptimized: true,
   },
 };

@@ -9,7 +9,7 @@ import { Asterisk } from "./brand/Marks";
 export function JerseySlot({
   label,
   caption = "Shot coming",
-  accent = "text-coral",
+  accent = "text-yellow",
   variant = "gradient",
   className = "",
 }: {

@@ -49,7 +49,7 @@ export function Process() {
                   >
                     0{i + 1}
                   </span>
-                  <Asterisk className="h-4 w-4 text-mute transition-colors duration-500 group-hover:text-white" />
+                  <Asterisk className="h-4 w-4 text-yellow" />
                 </div>
                 <h3 className="text-headline text-white">{step}</h3>
               </li>

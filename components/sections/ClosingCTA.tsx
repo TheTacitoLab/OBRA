@@ -12,7 +12,7 @@ export function ClosingCTA() {
         <div aria-hidden className="absolute inset-0 scrim-hero" />
         <Container className="relative py-28 sm:py-36">
           <Reveal>
-            <Asterisk className="h-8 w-8 text-coral" />
+            <Asterisk className="h-8 w-8 text-yellow" />
             <h2 className="text-display mt-8 max-w-4xl text-white">
               Take your drop from concept to creation.
             </h2>

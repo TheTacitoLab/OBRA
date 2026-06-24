@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 /**
  * Infinite horizontal marquee. Content is duplicated so the -50% loop is
  * seamless; pauses on hover, and stops entirely under prefers-reduced-motion
- * (via `.animate-marquee`). Decorative — keep meaningful copy elsewhere too.
+ * (via `.animate-marquee`). Decorative - keep meaningful copy elsewhere too.
  */
 export function Marquee({
   children,

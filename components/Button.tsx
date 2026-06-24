@@ -5,8 +5,8 @@ import { Arrow } from "./brand/Marks";
 type Variant = "primary" | "secondary";
 
 /**
- * CTA link. Primary = coral on near-black (AA-safe with void text); secondary =
- * outlined. Both nudge their arrow on hover.
+ * CTA link. Primary = yellow accent with dark void text; secondary = outlined.
+ * Both nudge their arrow on hover.
  */
 export function Button({
   href,
@@ -24,7 +24,7 @@ export function Button({
 
   const styles: Record<Variant, string> = {
     primary:
-      "bg-coral text-void hover:-translate-y-0.5 hover:shadow-[0_14px_44px_-14px_rgba(232,95,64,0.65)]",
+      "bg-yellow text-void hover:-translate-y-0.5 hover:shadow-[0_14px_44px_-14px_rgba(252,222,22,0.55)]",
     secondary:
       "border border-line text-white hover:border-white hover:bg-white/5",
   };

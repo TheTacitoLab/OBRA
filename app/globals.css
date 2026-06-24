@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* =========================================================================
-   OBRA design tokens — single source of truth.
+   OBRA design tokens - single source of truth.
    Tailwind v4 emits each of these as a CSS variable on :root AND generates the
    matching utility (e.g. --color-coral -> bg-coral / text-coral / border-coral).
    ========================================================================= */
@@ -14,11 +14,12 @@
   --color-white: #ffffff; /* primary text */
   --color-ash: #b6bbba; /* secondary text */
   --color-mute: #6e7471; /* tertiary text, muted labels */
-  --color-electric: #3e53d8; /* accent — cobalt-indigo */
-  --color-magenta: #d44078; /* accent — raspberry */
-  --color-coral: #e85f40; /* accent — coral-red, primary CTA */
+  --color-electric: #3e53d8; /* accent - cobalt-indigo */
+  --color-magenta: #d44078; /* accent - raspberry */
+  --color-coral: #e85f40; /* accent - coral-red, primary CTA */
   --color-flare: #ef9568; /* peach highlight, accents only */
   --color-violet: #7e50a4; /* fifth accent */
+  --color-yellow: #fcde16; /* accent: buttons + icon marks */
 
   /* Type families (the --font-* vars come from next/font in layout.tsx) */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -50,7 +51,7 @@
   }
 
   ::selection {
-    background: var(--color-coral);
+    background: var(--color-yellow);
     color: var(--color-void);
   }
 
@@ -130,14 +131,14 @@
    Texture, glow + surfaces
    ========================================================================= */
 @layer utilities {
-  /* Film grain — desaturated fractal noise, tiled. Layer over colour. */
+  /* Film grain - desaturated fractal noise, tiled. Layer over colour. */
   .bg-grain {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
     background-repeat: repeat;
   }
 
-  /* Soft accent bloom — stage lighting, used sparingly. */
+  /* Soft accent bloom - stage lighting, used sparingly. */
   .glow-coral {
     box-shadow: 0 0 110px -28px color-mix(in srgb, var(--color-coral) 60%, transparent);
   }
@@ -150,7 +151,7 @@
 
   /* The brand gradient, rendered in CSS (no binary asset needed).
      Warm coral/flare top-right, magenta + electric mid-right, deep void
-     bottom-left — the announcement surface for hero + closing CTA. */
+     bottom-left - the announcement surface for hero + closing CTA. */
   .obra-gradient {
     background-color: var(--color-void);
     background-image:
@@ -231,7 +232,7 @@
 }
 
 /* =========================================================================
-   Reduced motion — honour the user's preference everywhere.
+   Reduced motion - honour the user's preference everywhere.
    ========================================================================= */
 @media (prefers-reduced-motion: reduce) {
   html {

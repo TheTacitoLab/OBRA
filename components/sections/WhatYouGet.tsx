@@ -40,7 +40,7 @@ export function WhatYouGet() {
                     <span className="w-8 shrink-0 text-label text-ash">
                       0{i + 1}
                     </span>
-                    <Asterisk className="h-4 w-4 shrink-0 text-coral transition-transform duration-500 group-hover:rotate-90" />
+                    <Asterisk className="h-4 w-4 shrink-0 text-yellow transition-transform duration-500 group-hover:rotate-90" />
                     <span className="text-lede text-white">{item}</span>
                   </li>
                 ))}
@@ -50,25 +50,19 @@ export function WhatYouGet() {
 
           <div className="flex flex-col gap-5">
             <Reveal>
-              <JerseySlot
-                label="JERSEY 01 / FRONT"
-                accent="text-electric"
-                className="aspect-[4/5]"
-              />
+              <JerseySlot label="JERSEY 01 / FRONT" className="aspect-[4/5]" />
             </Reveal>
             <Reveal delay={0.1}>
               <div className="grid grid-cols-2 gap-5">
                 <JerseySlot
                   label="DETAIL"
                   caption="Crest"
-                  accent="text-magenta"
                   variant="slate"
                   className="aspect-square"
                 />
                 <JerseySlot
                   label="DETAIL"
                   caption="Fabric"
-                  accent="text-coral"
                   variant="slate"
                   className="aspect-square"
                 />

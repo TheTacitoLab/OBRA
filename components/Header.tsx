@@ -45,7 +45,7 @@ export function Header() {
       <div className="mx-auto flex h-[4.5rem] max-w-[88rem] items-center justify-between px-5 sm:px-8">
         <Link
           href="/"
-          aria-label="OBRA — home"
+          aria-label="OBRA home"
           className="relative z-50 inline-flex items-center"
           onClick={() => setOpen(false)}
         >
@@ -62,7 +62,7 @@ export function Header() {
                   className="group relative text-label text-ash transition-colors duration-300 hover:text-white"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-coral transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-yellow transition-all duration-300 group-hover:w-full" />
                 </Link>
               </li>
             ))}
@@ -125,7 +125,7 @@ export function Header() {
                     >
                       <span className="text-label text-ash">0{i + 1}</span>
                       <span className="flex-1">{link.label}</span>
-                      <Asterisk className="h-4 w-4 text-coral opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <Asterisk className="h-4 w-4 text-yellow opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     </Link>
                   </li>
                 ))}

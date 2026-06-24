@@ -1,14 +1,14 @@
 import type { SVGProps } from "react";
 
 /**
- * Brand marks. Inline SVG so they inherit `currentColor` — colour them with
+ * Brand marks. Inline SVG so they inherit `currentColor` - colour them with
  * text colour (e.g. `className="text-coral"`). Decorative by default
  * (aria-hidden); pass a `title`/role if a mark ever needs to be announced.
  */
 
 type MarkProps = SVGProps<SVGSVGElement>;
 
-/** Recurring six-point asterisk motif — section markers, bullets, scroll cue. */
+/** Recurring six-point asterisk motif - section markers, bullets, scroll cue. */
 export function Asterisk({
   strokeWidth = 2.4,
   ...props
@@ -42,7 +42,7 @@ export function Star(props: MarkProps) {
   );
 }
 
-/** Arrow — CTAs and "next" cues. Rotate 90deg for a downward scroll cue. */
+/** Arrow - CTAs and "next" cues. Rotate 90deg for a downward scroll cue. */
 export function Arrow({
   strokeWidth = 2,
   ...props

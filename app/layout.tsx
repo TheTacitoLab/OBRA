@@ -33,12 +33,12 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "OBRA — Limited Edition Football Jerseys, Concept to Creation",
-    template: "%s · OBRA",
+    default: "Football Jerseys From Concept to Creation | OBRA",
+    template: "%s | OBRA",
   },
   description: siteConfig.description,
   openGraph: {
-    title: "OBRA — Limited Edition Football Jerseys",
+    title: "Football Jerseys From Concept to Creation | OBRA",
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OBRA — Limited Edition Football Jerseys",
+    title: "Football Jerseys From Concept to Creation | OBRA",
     description: siteConfig.description,
   },
 };
@@ -65,6 +65,11 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        {/* Site-wide film grain, blended over everything. */}
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-[60] bg-grain opacity-[0.08] mix-blend-soft-light"
+        />
       </body>
     </html>
   );
