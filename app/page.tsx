@@ -4,6 +4,7 @@ import { WhatYouGet } from "@/components/sections/WhatYouGet";
 import { Process } from "@/components/sections/Process";
 import { WhyObra } from "@/components/sections/WhyObra";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
+import { Overview } from "@/components/sections/Overview";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Process />
       <WhyObra />
       <ClosingCTA />
+      <Overview />
     </>
   );
 }

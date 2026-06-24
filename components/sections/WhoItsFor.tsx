@@ -1,5 +1,4 @@
 import { Container } from "../Container";
-import { SectionLabel } from "../SectionLabel";
 import { Reveal } from "../Reveal";
 
 const audiences = ["Festivals", "Artists", "Creators", "Culture-led brands"];
@@ -9,13 +8,7 @@ export function WhoItsFor() {
     <section id="who" className="py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
-          <SectionLabel className="text-center">
-            WHO IT&apos;S FOR
-          </SectionLabel>
-        </Reveal>
-
-        <Reveal delay={0.05}>
-          <div className="mt-12 text-center">
+          <div className="text-center">
             <p className="text-label text-ash">For</p>
             <ul className="mt-6 space-y-2">
               {audiences.map((audience) => (

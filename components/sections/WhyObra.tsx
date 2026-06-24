@@ -1,6 +1,5 @@
 import { GradientSurface } from "../GradientSurface";
 import { Container } from "../Container";
-import { SectionLabel } from "../SectionLabel";
 import { Reveal } from "../Reveal";
 
 const notThis = ["Print-on-demand", "Teamwear", "Blanks"];
@@ -20,11 +19,7 @@ export function WhyObra() {
         <Container>
           <div className="mx-auto max-w-4xl text-center">
             <Reveal>
-              <SectionLabel className="text-center">WHY OBRA</SectionLabel>
-            </Reveal>
-
-            <Reveal delay={0.05}>
-              <div className="mt-8">
+              <div>
                 <p className={`${lineClass} text-yellow`}>This is not</p>
                 <ul className="mt-2 space-y-1">
                   {notThis.map((item) => (

@@ -1,5 +1,4 @@
 import { Container } from "../Container";
-import { SectionLabel } from "../SectionLabel";
 import { Reveal } from "../Reveal";
 import { JerseySlot } from "../JerseySlot";
 import { Asterisk } from "../brand/Marks";
@@ -18,11 +17,7 @@ export function WhatYouGet() {
   return (
     <section id="what" className="blend-down-purple py-24 sm:py-32 md:py-40">
       <Container>
-        <Reveal>
-          <SectionLabel>WHAT YOU GET</SectionLabel>
-        </Reveal>
-
-        <div className="mt-12 grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
+        <div className="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
           <div>
             <Reveal>
               <h2 className="text-headline max-w-md text-white">

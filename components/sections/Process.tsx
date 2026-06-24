@@ -1,5 +1,4 @@
 import { Container } from "../Container";
-import { SectionLabel } from "../SectionLabel";
 import { Reveal } from "../Reveal";
 import { Asterisk } from "../brand/Marks";
 
@@ -19,11 +18,7 @@ export function Process() {
   return (
     <section id="process" className="blend-up-purple py-24 sm:py-32 md:py-40">
       <Container>
-        <Reveal>
-          <SectionLabel>THE PROCESS</SectionLabel>
-        </Reveal>
-
-        <div className="mt-12 grid gap-8 md:grid-cols-12 md:items-end">
+        <div className="grid gap-8 md:grid-cols-12 md:items-end">
           <Reveal className="md:col-span-8">
             <h2 className="text-display text-white">
               Brief. Design. Mockup. Sample. Production. Delivery.
@@ -35,6 +30,15 @@ export function Process() {
             </p>
           </Reveal>
         </div>
+
+        <Reveal delay={0.08}>
+          <p className="text-body mt-8 max-w-2xl text-ash">
+            In plain terms: you bring the idea, we handle the rest. We design it,
+            send you mockups, make a sample to approve, then produce and deliver
+            the finished jerseys. No factories, suppliers or sampling for you to
+            manage.
+          </p>
+        </Reveal>
 
         <Reveal>
           <ol className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
