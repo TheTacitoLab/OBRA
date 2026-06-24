@@ -1,25 +1,34 @@
 import { GradientSurface } from "../GradientSurface";
 import { Container } from "../Container";
-import { Button } from "../Button";
 import { Reveal } from "../Reveal";
 import { Asterisk } from "../brand/Marks";
-import { briefHref } from "@/lib/siteConfig";
+import { BriefForm } from "../BriefForm";
 
 export function ClosingCTA() {
   return (
-    <section className="border-t border-line">
-      <GradientSurface className="flex min-h-[70vh] items-center">
+    <section id="start" className="border-t border-line">
+      <GradientSurface>
         <div aria-hidden className="absolute inset-0 scrim-hero" />
-        <Container className="relative py-28 sm:py-36">
-          <Reveal>
-            <Asterisk className="h-8 w-8 text-yellow" />
-            <h2 className="text-display mt-8 max-w-4xl text-white">
-              Take your drop from concept to creation.
-            </h2>
-            <div className="mt-10">
-              <Button href={briefHref}>Start a brief</Button>
-            </div>
-          </Reveal>
+        <Container className="relative py-24 sm:py-32">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <Reveal>
+              <div>
+                <Asterisk className="h-8 w-8 text-yellow" />
+                <h2 className="text-display mt-8 text-white">
+                  Take your drop from concept to creation.
+                </h2>
+                <p className="text-lede mt-6 max-w-md text-ash">
+                  Tell us about your drop and we&apos;ll be in touch.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <div className="rounded-sm border border-line bg-void/80 p-6 backdrop-blur-md sm:p-8">
+                <BriefForm compact />
+              </div>
+            </Reveal>
+          </div>
         </Container>
       </GradientSurface>
     </section>

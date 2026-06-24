@@ -20,7 +20,7 @@ export function Process() {
     <section id="process" className="border-t border-line py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
-          <SectionLabel>03 / THE PROCESS</SectionLabel>
+          <SectionLabel>THE PROCESS</SectionLabel>
         </Reveal>
 
         <div className="mt-12 grid gap-8 md:grid-cols-12 md:items-end">

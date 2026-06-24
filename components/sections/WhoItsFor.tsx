@@ -10,7 +10,7 @@ export function WhoItsFor() {
       <Container>
         <Reveal>
           <SectionLabel className="justify-center">
-            01 / WHO IT&apos;S FOR
+            WHO IT&apos;S FOR
           </SectionLabel>
         </Reveal>
 
@@ -24,7 +24,9 @@ export function WhoItsFor() {
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-lede text-ash">With a crowd.</p>
+            <p className="text-display mt-8 font-black text-yellow">
+              With a crowd
+            </p>
           </div>
         </Reveal>
       </Container>

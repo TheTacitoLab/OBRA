@@ -19,7 +19,7 @@ export function WhatYouGet() {
     <section id="what" className="border-t border-line py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
-          <SectionLabel>02 / WHAT YOU GET</SectionLabel>
+          <SectionLabel>WHAT YOU GET</SectionLabel>
         </Reveal>
 
         <div className="mt-12 grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">

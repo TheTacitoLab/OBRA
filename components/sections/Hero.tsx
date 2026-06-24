@@ -13,7 +13,7 @@ export function Hero() {
 
         <Container className="relative flex min-h-[100svh] flex-col justify-center pb-20 pt-28">
           <div className="w-full">
-            <h1 className="text-poster text-white">
+            <h1 className="font-display text-[clamp(2.25rem,5.5vw,5rem)] font-black uppercase leading-[0.95] tracking-[-0.01em] text-balance text-white">
               Football jerseys from concept to creation
             </h1>
 
