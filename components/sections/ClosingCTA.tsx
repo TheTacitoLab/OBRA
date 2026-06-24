@@ -3,6 +3,7 @@ import { Container } from "../Container";
 import { Reveal } from "../Reveal";
 import { Asterisk } from "../brand/Marks";
 import { BriefForm } from "../BriefForm";
+import { siteConfig } from "@/lib/siteConfig";
 
 export function ClosingCTA() {
   return (
@@ -25,7 +26,11 @@ export function ClosingCTA() {
 
             <Reveal delay={0.08}>
               <div className="rounded-sm border border-line bg-void/80 p-6 backdrop-blur-md sm:p-8">
-                <BriefForm compact />
+                <BriefForm
+                  compact
+                  accessKey={siteConfig.web3formsKeys.homepage}
+                  subject="OBRA brief (homepage)"
+                />
               </div>
             </Reveal>
           </div>

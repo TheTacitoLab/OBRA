@@ -14,6 +14,11 @@ export const siteConfig = {
   social: {
     instagram: "madebyobra",
   },
+  // Web3Forms access keys (public by design; used client-side by the forms).
+  web3formsKeys: {
+    homepage: "57be4d91-f32e-4d51-8c6f-72794532f19a",
+    brief: "4655dc33-4151-4db9-b958-aa76e53a50e8",
+  },
 } as const;
 
 /** Anchor navigation into the homepage sections. */

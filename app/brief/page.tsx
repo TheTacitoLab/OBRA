@@ -4,6 +4,7 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { Reveal } from "@/components/Reveal";
 import { BriefForm } from "@/components/BriefForm";
 import { Asterisk } from "@/components/brand/Marks";
+import { siteConfig } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "Start a brief",
@@ -44,7 +45,10 @@ export default function BriefPage() {
 
           <Reveal delay={0.08}>
             <div className="rounded-sm border border-line bg-obsidian p-6 sm:p-8">
-              <BriefForm />
+              <BriefForm
+                accessKey={siteConfig.web3formsKeys.brief}
+                subject="OBRA brief (brief page)"
+              />
             </div>
           </Reveal>
         </div>

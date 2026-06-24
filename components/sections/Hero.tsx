@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { GradientSurface } from "../GradientSurface";
 import { Container } from "../Container";
 import { Button } from "../Button";
@@ -15,6 +16,13 @@ export function Hero() {
           {/* Title sits in the lower third, well clear of the header. */}
           <Container className="relative z-10 flex flex-1 flex-col justify-end pb-12 pt-28">
             <div className="w-full">
+              <Image
+                src="/brand/griffin-yellow.png"
+                alt=""
+                width={360}
+                height={360}
+                className="mb-4 h-12 w-12 sm:h-16 sm:w-16"
+              />
               <h1 className="font-display text-[clamp(2.6rem,6.3vw,5.75rem)] font-black uppercase leading-[0.95] tracking-[-0.01em] text-white">
                 Football jerseys
                 <br />
