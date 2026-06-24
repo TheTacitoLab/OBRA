@@ -56,7 +56,7 @@ export function Footer() {
         {/* Baseline */}
         <div className="flex items-center gap-3 border-t border-line py-8">
           <Asterisk className="h-3 w-3 text-yellow" />
-          <p className="text-label text-ash">© 2026 OBRA · Limited Edition</p>
+          <p className="text-label text-ash">© 2026 OBRA · a TACITO Group company</p>
         </div>
       </div>
     </footer>

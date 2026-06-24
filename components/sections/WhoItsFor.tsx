@@ -9,7 +9,7 @@ export function WhoItsFor() {
       <Container>
         <Reveal>
           <div className="text-center">
-            <p className="text-label text-ash">For</p>
+            <p className="text-label text-yellow">For</p>
             <ul className="mt-6 space-y-2">
               {audiences.map((audience) => (
                 <li key={audience} className="text-display text-white">
@@ -17,9 +17,6 @@ export function WhoItsFor() {
                 </li>
               ))}
             </ul>
-            <p className="text-display mt-8 font-black text-yellow">
-              With a crowd
-            </p>
           </div>
         </Reveal>
       </Container>

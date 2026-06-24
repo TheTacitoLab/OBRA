@@ -35,79 +35,82 @@ export function Header() {
   }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled || open
-          ? "border-b border-line bg-void/90 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-[4.5rem] max-w-[88rem] items-center justify-between px-5 sm:px-8">
-        <Link
-          href="/"
-          aria-label="OBRA home"
-          className="relative z-50 inline-flex items-center"
-          onClick={() => setOpen(false)}
-        >
-          <Image
-            src="/brand/obra-white.svg"
-            alt=""
-            width={1104}
-            height={426}
-            priority
-            className="h-7 w-auto sm:h-8"
-          />
-        </Link>
-
-        {/* Desktop nav */}
-        <nav aria-label="Primary" className="hidden items-center gap-9 md:flex">
-          <ul className="flex items-center gap-9">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="group relative text-label text-ash transition-colors duration-300 hover:text-white"
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-yellow transition-all duration-300 group-hover:w-full" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Button href={briefHref}>Start a brief</Button>
-        </nav>
-
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          className="relative z-50 -mr-2 inline-flex h-11 w-11 items-center justify-center text-white md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-          <span className="relative block h-4 w-6" aria-hidden>
-            <span
-              className={`absolute left-0 block h-0.5 w-6 bg-current transition-all duration-300 ${
-                open ? "top-1.5 rotate-45" : "top-0"
-              }`}
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+          scrolled || open
+            ? "border-b border-line bg-void/90 backdrop-blur-md"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-[4.5rem] max-w-[88rem] items-center justify-between px-5 sm:px-8">
+          <Link
+            href="/"
+            aria-label="OBRA home"
+            className="relative z-50 inline-flex items-center"
+            onClick={() => setOpen(false)}
+          >
+            <Image
+              src="/brand/obra-white.svg"
+              alt=""
+              width={1104}
+              height={426}
+              priority
+              className="h-7 w-auto sm:h-8"
             />
-            <span
-              className={`absolute left-0 top-1.5 block h-0.5 w-6 bg-current transition-all duration-300 ${
-                open ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`absolute left-0 block h-0.5 w-6 bg-current transition-all duration-300 ${
-                open ? "top-1.5 -rotate-45" : "top-3"
-              }`}
-            />
-          </span>
-        </button>
-      </div>
+          </Link>
 
-      {/* Mobile full-screen overlay menu */}
+          {/* Desktop nav */}
+          <nav aria-label="Primary" className="hidden items-center gap-9 md:flex">
+            <ul className="flex items-center gap-9">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="group relative text-label text-ash transition-colors duration-300 hover:text-white"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-yellow transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Button href={briefHref}>Start a brief</Button>
+          </nav>
+
+          {/* Mobile toggle */}
+          <button
+            type="button"
+            className="relative z-50 -mr-2 inline-flex h-11 w-11 items-center justify-center text-white md:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+            <span className="relative block h-4 w-6" aria-hidden>
+              <span
+                className={`absolute left-0 block h-0.5 w-6 bg-current transition-all duration-300 ${
+                  open ? "top-1.5 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-1.5 block h-0.5 w-6 bg-current transition-all duration-300 ${
+                  open ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`absolute left-0 block h-0.5 w-6 bg-current transition-all duration-300 ${
+                  open ? "top-1.5 -rotate-45" : "top-3"
+                }`}
+              />
+            </span>
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile full-screen overlay menu. Rendered outside <header> so the
+          header's backdrop-filter doesn't trap this fixed overlay in the bar. */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -146,6 +149,6 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
