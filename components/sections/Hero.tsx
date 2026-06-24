@@ -13,8 +13,12 @@ export function Hero() {
 
         <Container className="relative flex flex-1 flex-col justify-center pb-10 pt-28 sm:pt-32">
           <div className="w-full">
-            <h1 className="font-display text-[clamp(2.25rem,5.5vw,5rem)] font-black uppercase leading-[0.95] tracking-[-0.01em] text-balance text-white">
-              Football jerseys from concept to creation
+            <h1 className="font-display text-[clamp(2.6rem,6.3vw,5.75rem)] font-black uppercase leading-[0.95] tracking-[-0.01em] text-white">
+              Football jerseys
+              <br />
+              from concept
+              <br />
+              to creation
             </h1>
 
             <p className="mt-6 font-mono text-base uppercase tracking-[0.2em] text-white sm:text-lg">

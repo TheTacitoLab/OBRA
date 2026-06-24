@@ -16,7 +16,7 @@ const deliverables = [
 
 export function WhatYouGet() {
   return (
-    <section id="what" className="border-t border-line py-24 sm:py-32 md:py-40">
+    <section id="what" className="blend-down-purple py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
           <SectionLabel>WHAT YOU GET</SectionLabel>

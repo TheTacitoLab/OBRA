@@ -5,10 +5,18 @@ import { Reveal } from "../Reveal";
 
 const notThis = ["Print-on-demand", "Teamwear", "Blanks"];
 
+// Smaller than the full display scale so "Print-on-demand" stays on one line.
+const lineClass =
+  "font-display text-[clamp(1.75rem,4.5vw,3.25rem)] font-extrabold uppercase leading-[1.08] tracking-[-0.01em]";
+
 export function WhyObra() {
   return (
-    <section id="why" className="border-t border-line">
-      <GradientSurface intensity="soft" className="py-24 sm:py-32 md:py-44">
+    <section id="why">
+      <GradientSurface
+        intensity="soft"
+        topScrim
+        className="py-24 sm:py-32 md:py-44"
+      >
         <Container>
           <div className="mx-auto max-w-4xl text-center">
             <Reveal>
@@ -17,10 +25,13 @@ export function WhyObra() {
 
             <Reveal delay={0.05}>
               <div className="mt-8">
-                <p className="text-display text-yellow">This is not</p>
+                <p className={`${lineClass} text-yellow`}>This is not</p>
                 <ul className="mt-2 space-y-1">
                   {notThis.map((item) => (
-                    <li key={item} className="text-display text-white">
+                    <li
+                      key={item}
+                      className={`${lineClass} whitespace-nowrap text-white`}
+                    >
                       {item}
                     </li>
                   ))}

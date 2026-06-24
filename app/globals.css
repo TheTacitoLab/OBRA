@@ -183,6 +183,29 @@
     background-color: color-mix(in srgb, var(--color-void) 58%, transparent);
   }
 
+  /* Section colour blends, so the page flows from one surface to the next. */
+  .scrim-top {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-void) 0%,
+      transparent 38%
+    );
+  }
+  .blend-down-purple {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-void) 0%,
+      color-mix(in srgb, var(--color-violet) 50%, var(--color-void)) 100%
+    );
+  }
+  .blend-up-purple {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-violet) 50%, var(--color-void)) 0%,
+      var(--color-void) 100%
+    );
+  }
+
   /* Motion helpers */
   .animate-drift {
     animation: obra-drift 16s ease-in-out infinite;

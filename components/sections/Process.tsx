@@ -17,7 +17,7 @@ const accents = [
 
 export function Process() {
   return (
-    <section id="process" className="border-t border-line py-24 sm:py-32 md:py-40">
+    <section id="process" className="blend-up-purple py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
           <SectionLabel>THE PROCESS</SectionLabel>

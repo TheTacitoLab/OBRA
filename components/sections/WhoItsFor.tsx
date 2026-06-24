@@ -6,7 +6,7 @@ const audiences = ["Festivals", "Artists", "Creators", "Culture-led brands"];
 
 export function WhoItsFor() {
   return (
-    <section id="who" className="border-t border-line py-24 sm:py-32 md:py-40">
+    <section id="who" className="py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
           <SectionLabel className="text-center">

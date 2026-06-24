@@ -6,8 +6,8 @@ import { BriefForm } from "../BriefForm";
 
 export function ClosingCTA() {
   return (
-    <section id="start" className="border-t border-line">
-      <GradientSurface>
+    <section id="start">
+      <GradientSurface topScrim>
         <div aria-hidden className="absolute inset-0 scrim-hero" />
         <Container className="relative py-24 sm:py-32">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
