@@ -1,7 +1,6 @@
 import { Section } from "./Section";
 import { Button } from "../Button";
-import { AssetPlaceholder } from "./AssetPlaceholder";
-import { detailImages, spec } from "@/content/festival-landing";
+import { spec } from "@/content/festival-landing";
 
 export function SpecOptions() {
   return (
@@ -17,14 +16,7 @@ export function SpecOptions() {
         ))}
       </div>
 
-      {/* Detail image strip */}
-      <div className="mt-12 grid gap-4 sm:grid-cols-3">
-        {detailImages.map((asset) => (
-          <AssetPlaceholder key={asset.filename} asset={asset} />
-        ))}
-      </div>
-
-      <p className="text-body mt-10 max-w-3xl rounded-sm border border-line bg-obsidian p-6 text-ash sm:p-7">
+      <p className="text-body mt-12 max-w-3xl rounded-sm border border-line bg-obsidian p-6 text-ash sm:p-7">
         {spec.honestyNote}
       </p>
 

@@ -4,8 +4,7 @@ import { SectionLabel } from "../SectionLabel";
 import { Button } from "../Button";
 import { Asterisk } from "../brand/Marks";
 import { Marquee } from "../Marquee";
-import { AssetPlaceholder } from "./AssetPlaceholder";
-import { breadcrumb, hero, heroImage } from "@/content/festival-landing";
+import { breadcrumb, hero } from "@/content/festival-landing";
 
 export function FestivalHero() {
   return (
@@ -30,8 +29,7 @@ export function FestivalHero() {
 
         <SectionLabel>{hero.eyebrow}</SectionLabel>
 
-        {/* One H1 element. The two lines are a styling decision, so the heading
-            spans the full measure rather than sharing the row with the image. */}
+        {/* One H1 element. The two lines are a styling decision. */}
         <h1
           id="festival-hero-heading"
           className="mt-5 font-display text-[clamp(2.2rem,5.2vw,5rem)] font-extrabold uppercase leading-[0.96] tracking-[-0.015em] text-white"
@@ -40,32 +38,22 @@ export function FestivalHero() {
           <span className="block">{hero.headingLineTwo}</span>
         </h1>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-16">
-          <div>
-            <div className="max-w-2xl space-y-4">
-              <p className="text-lede text-ash">{hero.standfirst[0]}</p>
-              <p className="text-body text-ash">{hero.standfirst[1]}</p>
-            </div>
+        <div className="mt-8 max-w-3xl space-y-4">
+          <p className="text-lede text-ash">{hero.standfirst[0]}</p>
+          <p className="text-body text-ash">{hero.standfirst[1]}</p>
+        </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <Button href={hero.primaryCta.href} className="justify-between sm:justify-start">
-                {hero.primaryCta.label}
-              </Button>
-              <Button
-                href={hero.secondaryCta.href}
-                variant="secondary"
-                className="justify-between sm:justify-start"
-              >
-                {hero.secondaryCta.label}
-              </Button>
-            </div>
-          </div>
-
-          {/* LCP slot. Replace with the real asset, preloaded and eager. */}
-          <AssetPlaceholder
-            asset={heroImage}
-            className="mx-auto w-full max-w-sm lg:max-w-none"
-          />
+        <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <Button href={hero.primaryCta.href} className="justify-between sm:justify-start">
+            {hero.primaryCta.label}
+          </Button>
+          <Button
+            href={hero.secondaryCta.href}
+            variant="secondary"
+            className="justify-between sm:justify-start"
+          >
+            {hero.secondaryCta.label}
+          </Button>
         </div>
       </Container>
 

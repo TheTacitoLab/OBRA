@@ -1,6 +1,5 @@
 import { Section } from "./Section";
-import { AssetPlaceholder } from "./AssetPlaceholder";
-import { designDevelopmentImage, process } from "@/content/festival-landing";
+import { process } from "@/content/festival-landing";
 
 export function ProcessStages() {
   return (
@@ -30,8 +29,6 @@ export function ProcessStages() {
           </li>
         ))}
       </ol>
-
-      <AssetPlaceholder asset={designDevelopmentImage} className="mt-10" />
     </Section>
   );
 }

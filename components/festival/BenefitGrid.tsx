@@ -11,9 +11,6 @@ export function BenefitGrid() {
       <div className="mt-6 max-w-2xl space-y-4">
         <p className="text-lede text-ash">{benefits.intro[0]}</p>
         <p className="text-body text-ash">{benefits.intro[1]}</p>
-        <p className="text-tag rounded-sm border border-dashed border-line bg-obsidian p-4 text-yellow">
-          {benefits.introNote}
-        </p>
       </div>
 
       <div className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">

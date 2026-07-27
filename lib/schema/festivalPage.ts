@@ -26,7 +26,6 @@ export const festivalPageMeta = {
   ogTitle: "Custom Football Shirts for Festivals",
   ogDescription:
     "Fully custom festival football shirts, designed, developed and manufactured in one place. From 50 units to 10,000+.",
-  ogImage: "/og/festival-football-shirts.jpg",
 };
 
 export function buildFestivalPageSchema() {

@@ -30,20 +30,13 @@ export const metadata: Metadata = {
     title: festivalPageMeta.ogTitle,
     description: festivalPageMeta.ogDescription,
     locale: "en_GB",
-    images: [
-      {
-        url: festivalPageMeta.ogImage,
-        width: 1200,
-        height: 630,
-        alt: "Custom festival football shirt made by OBRA",
-      },
-    ],
+    // No og:image until the card artwork exists. Pointing at a missing file
+    // would render a broken share preview.
   },
   twitter: {
     card: "summary_large_image",
     title: festivalPageMeta.ogTitle,
     description: festivalPageMeta.ogDescription,
-    images: [festivalPageMeta.ogImage],
   },
 };
 

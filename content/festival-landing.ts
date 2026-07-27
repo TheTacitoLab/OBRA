@@ -3,8 +3,6 @@
  *
  * All strings are verbatim from the landing-page strategy document, Section 3.
  * Components consume this file, so a copy edit never requires a component edit.
- * Square-bracket placeholders are rendered as visible placeholder blocks and
- * must not be filled in with invented content.
  */
 
 import type { PackageId } from "@/lib/packages";
@@ -14,44 +12,6 @@ export const festivalBriefHref = "/brief/?project=festival";
 export function packageBriefHref(id: PackageId | "unsure"): string {
   return `/brief/?project=festival&package=${id}`;
 }
-
-/** Missing image assets, per strategy document Section 5. */
-export type AssetPlaceholder = {
-  label: string;
-  filename: string;
-  /** Tailwind aspect-ratio class, so the reserved space matches the real asset. */
-  ratio: string;
-};
-
-export const heroImage: AssetPlaceholder = {
-  label: "Hero: custom festival football shirt worn at an outdoor music event",
-  filename: "festival-football-shirt-hero.webp",
-  ratio: "aspect-[4/5]",
-};
-
-export const detailImages: AssetPlaceholder[] = [
-  {
-    label: "Ribbed collar and custom woven neck label",
-    filename: "custom-football-shirt-collar-woven-label.webp",
-    ratio: "aspect-[3/2]",
-  },
-  {
-    label: "Embroidered badge and sponsor placement",
-    filename: "football-shirt-embroidered-badge-detail.webp",
-    ratio: "aspect-[3/2]",
-  },
-  {
-    label: "Performance and lifestyle-weight fabric swatches",
-    filename: "football-shirt-fabric-options.webp",
-    ratio: "aspect-[3/2]",
-  },
-];
-
-export const designDevelopmentImage: AssetPlaceholder = {
-  label: "Jersey design mockups and a technical specification pack",
-  filename: "football-shirt-design-development.webp",
-  ratio: "aspect-[16/9]",
-};
 
 /* ---------------------------------------------------------------- Section 1 */
 
@@ -85,7 +45,6 @@ export const benefits = {
     "A football shirt behaves differently from the rest of a merchandise range. It carries a higher perceived value, so it can hold a higher retail price. It has a natural place for sponsor branding that does not look bolted on. And it gets worn long after the weekend, in places where a printed tee would not go.",
     "Festivals have already proved the format. Shirts released with Glastonbury, Tramlines, Truck and Y Not have shown that an audience will treat an event jersey as a collectable rather than a souvenir.",
   ],
-  introNote: "[OBRA TO CONFIRM THIS LINE IS STILL ACCURATE BEFORE PUBLICATION]",
   blocks: [
     {
       heading: "Sits at a higher price point",
@@ -419,12 +378,6 @@ export const proof = {
       heading: "No fixed catalogue",
       body: "Product decisions come from the project, the audience and the budget. We recommend the specification that suits the release, including the cheaper option when it is the right one.",
     },
-  ],
-  placeholders: [
-    "[OBRA TO PROVIDE: 2 to 3 verified festival or event project examples. For each: client name if permitted, quantity band, number of designs, what was produced, timeline from brief to delivery and one finished product photograph.]",
-    "[OBRA TO PROVIDE: 1 to 2 client testimonials with name, role and organisation. A merchandise or production role carries far more weight here than a founder quote.]",
-    "[OBRA TO PROVIDE: client or festival logo strip, only where permission is confirmed in writing.]",
-    "[OBRA TO PROVIDE: founder credential paragraph. Named person, years in garment development or production, relevant experience. This is the cheapest credibility on the page and it does not need a client to approve it.]",
   ],
 };
 

@@ -14,19 +14,6 @@ export function ProofSection() {
           </article>
         ))}
       </div>
-
-      {/* Proof slots. Left visibly empty rather than filled with invented
-          examples, testimonials or logos. */}
-      <div className="mt-12 grid gap-4 md:grid-cols-2">
-        {proof.placeholders.map((placeholder) => (
-          <p
-            key={placeholder.slice(0, 40)}
-            className="text-body rounded-sm border border-dashed border-line bg-obsidian p-5 text-ash"
-          >
-            {placeholder}
-          </p>
-        ))}
-      </div>
     </Section>
   );
 }
