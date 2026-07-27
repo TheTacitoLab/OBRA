@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Container } from "../Container";
 import { SectionLabel } from "../SectionLabel";
 import { Button } from "../Button";
+import { Polaroid } from "../Polaroid";
 import { Asterisk } from "../brand/Marks";
 import { Marquee } from "../Marquee";
 import { breadcrumb, hero } from "@/content/festival-landing";
@@ -66,16 +66,22 @@ export function FestivalHero() {
             </div>
           </div>
 
-          {/* Main product image. Eager and sized: it is the LCP element here. */}
-          <Image
-            src="/jerseys/obra-jersey-flatlay.webp"
-            alt="OBRA football jerseys laid flat, including a purple jacquard shirt with the OBRA wordmark and griffin crest"
-            width={1440}
-            height={1080}
-            priority
-            sizes="(min-width: 1024px) 48vw, 100vw"
-            className="h-auto w-full rounded-sm border border-white/10 lg:mt-9"
-          />
+          {/* Two instant photos, overlapping and tilted, matching the pair on
+              the homepage. */}
+          <div className="relative mx-auto flex w-full max-w-sm flex-col items-center lg:mt-2 lg:block lg:h-full lg:min-h-[32rem] lg:max-w-none">
+            <Polaroid
+              src="/jerseys/obra-jersey-festival.webp"
+              alt="A festival-goer wearing a purple tie-dye OBRA football shirt with the griffin crest"
+              caption="OBRA · Festival"
+              className="w-[80%] -rotate-3 lg:absolute lg:left-0 lg:top-0 lg:w-[58%] lg:-rotate-6"
+            />
+            <Polaroid
+              src="/jerseys/obra-jersey-flatlay.webp"
+              alt="OBRA football jerseys laid flat, including a purple jacquard shirt with the OBRA wordmark and griffin crest"
+              caption="OBRA · Jerseys"
+              className="-mt-10 w-[74%] rotate-3 lg:absolute lg:bottom-0 lg:right-0 lg:z-10 lg:mt-0 lg:w-[54%] lg:rotate-[5deg]"
+            />
+          </div>
         </div>
       </Container>
 
