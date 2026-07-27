@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Container } from "../Container";
 import { SectionLabel } from "../SectionLabel";
@@ -38,22 +39,37 @@ export function FestivalHero() {
           <span className="block">{hero.headingLineTwo}</span>
         </h1>
 
-        <div className="mt-8 max-w-3xl space-y-4">
-          <p className="text-lede text-ash">{hero.standfirst[0]}</p>
-          <p className="text-body text-ash">{hero.standfirst[1]}</p>
-        </div>
+        <div className="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-14">
+          <div>
+            <div className="space-y-4">
+              <p className="text-lede text-ash">{hero.standfirst[0]}</p>
+              <p className="text-body text-ash">{hero.standfirst[1]}</p>
+            </div>
 
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          <Button href={hero.primaryCta.href} className="justify-between sm:justify-start">
-            {hero.primaryCta.label}
-          </Button>
-          <Button
-            href={hero.secondaryCta.href}
-            variant="secondary"
-            className="justify-between sm:justify-start"
-          >
-            {hero.secondaryCta.label}
-          </Button>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Button href={hero.primaryCta.href} className="justify-between sm:justify-start">
+                {hero.primaryCta.label}
+              </Button>
+              <Button
+                href={hero.secondaryCta.href}
+                variant="secondary"
+                className="justify-between sm:justify-start"
+              >
+                {hero.secondaryCta.label}
+              </Button>
+            </div>
+          </div>
+
+          {/* Main product image. Eager and sized: it is the LCP element here. */}
+          <Image
+            src="/jerseys/obra-jersey-flatlay.webp"
+            alt="OBRA football jerseys laid flat, including a purple jacquard shirt with the OBRA wordmark and griffin crest"
+            width={1440}
+            height={1080}
+            priority
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            className="h-auto w-full rounded-sm border border-white/10"
+          />
         </div>
       </Container>
 
