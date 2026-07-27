@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Arrow, Asterisk } from "./brand/Marks";
+import { ReleaseSelector } from "./ReleaseSelector";
 import { siteConfig } from "@/lib/siteConfig";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -134,6 +135,7 @@ export function BriefForm({
           placeholder="Festival, label, artist, brand…"
         />
       )}
+      {!compact && <ReleaseSelector />}
       <Field
         label="Tell us about your drop"
         name="message"

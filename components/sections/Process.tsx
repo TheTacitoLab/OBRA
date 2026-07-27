@@ -7,7 +7,7 @@ export function Process() {
     <section id="process" className="blend-up-purple py-24 sm:py-32 md:py-40">
       <Container>
         <Reveal>
-          <h2 className="font-display text-[clamp(2.25rem,5.2vw,4.5rem)] font-extrabold uppercase leading-[0.98] tracking-[-0.015em] text-white">
+          <h2 className="font-display text-[clamp(2.7rem,6.24vw,5.4rem)] font-extrabold uppercase leading-[0.98] tracking-[-0.015em] text-white">
             You bring the idea,{" "}
             <br className="hidden md:block" />
             we handle the rest.
