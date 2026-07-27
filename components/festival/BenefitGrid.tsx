@@ -4,6 +4,7 @@ import { benefits } from "@/content/festival-landing";
 export function BenefitGrid() {
   return (
     <Section
+      id="festival-benefits"
       eyebrow={benefits.eyebrow}
       heading={benefits.heading}
       headingId="festival-benefits-heading"

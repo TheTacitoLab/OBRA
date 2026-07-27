@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Button } from "./Button";
 import { Asterisk } from "./brand/Marks";
-import { briefHref, navLinks } from "@/lib/siteConfig";
+import { briefHref, navLinksFor } from "@/lib/siteConfig";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  // Section anchors differ per page, so the nav follows the current route.
+  const navLinks = navLinksFor(usePathname() ?? "/");
 
   // Swap to a solid void background once the hero scrolls away.
   useEffect(() => {

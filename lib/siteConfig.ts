@@ -21,6 +21,10 @@ export const siteConfig = {
   },
 } as const;
 
+export const briefHref = "/brief";
+export const privacyHref = "/privacy";
+export const festivalHref = "/custom-football-shirts-for-festivals/";
+
 /** Anchor navigation into the homepage sections. */
 export const navLinks: NavLink[] = [
   { label: "Who it's for", href: "#who" },
@@ -30,9 +34,34 @@ export const navLinks: NavLink[] = [
   { label: "Why OBRA", href: "#why" },
 ];
 
-export const briefHref = "/brief";
-export const privacyHref = "/privacy";
-export const festivalHref = "/custom-football-shirts-for-festivals/";
+/** Anchor navigation into the festival landing page's own sections. */
+export const festivalNavLinks: NavLink[] = [
+  { label: "Home", href: "/" },
+  { label: "Why jerseys", href: "#festival-benefits" },
+  { label: "Process", href: "#festival-process" },
+  { label: "Packages", href: "#festival-packages" },
+  { label: "Questions", href: "#festival-faq" },
+];
+
+/**
+ * Navigation for the page currently being viewed.
+ *
+ * Section anchors only work on the page that owns them, so each landing page
+ * gets its own set plus a link home. Anywhere else (the brief and privacy
+ * pages) falls back to a link home plus the homepage sections as absolute
+ * URLs, so nothing points at a section that is not there.
+ */
+export function navLinksFor(pathname: string): NavLink[] {
+  const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
+
+  if (path === "/") return navLinks;
+  if (path === festivalHref) return festivalNavLinks;
+
+  return [
+    { label: "Home", href: "/" },
+    ...navLinks.map((link) => ({ ...link, href: `/${link.href}` })),
+  ];
+}
 
 /** Sector landing pages, linked from the footer. */
 export const sectorLinks: NavLink[] = [

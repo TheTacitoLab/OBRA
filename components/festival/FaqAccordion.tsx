@@ -11,6 +11,7 @@ import { festivalFaq } from "@/content/festival-faq";
 export function FaqAccordion() {
   return (
     <Section
+      id="festival-faq"
       heading={faqSection.heading}
       headingId="festival-faq-heading"
       layout="centre"
