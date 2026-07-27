@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Section } from "./Section";
 import { AssetPlaceholder } from "./AssetPlaceholder";
 import { designDevelopmentImage, process } from "@/content/festival-landing";
@@ -6,6 +5,7 @@ import { designDevelopmentImage, process } from "@/content/festival-landing";
 export function ProcessStages() {
   return (
     <Section
+      id="festival-process"
       eyebrow={process.eyebrow}
       heading={
         <>
@@ -32,15 +32,6 @@ export function ProcessStages() {
       </ol>
 
       <AssetPlaceholder asset={designDevelopmentImage} className="mt-10" />
-
-      <p className="text-body mt-8">
-        <Link
-          href={process.processLink.href}
-          className="text-white underline decoration-yellow underline-offset-4 transition-colors hover:text-yellow"
-        >
-          {process.processLink.label}
-        </Link>
-      </p>
     </Section>
   );
 }

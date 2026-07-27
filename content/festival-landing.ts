@@ -63,8 +63,10 @@ export const hero = {
     "We design, develop and manufacture fully custom football shirts for festivals, artists, sponsors and event merchandise programmes.",
     "From a guided 50-piece release to a production programme of 10,000 units and beyond, one team takes the project from first idea to delivered stock.",
   ],
-  primaryCta: { label: "Start your festival jersey project", href: festivalBriefHref },
-  secondaryCta: { label: "See how the process works", href: "/#process" },
+  primaryCta: { label: "Start your jersey project", href: festivalBriefHref },
+  // Points at this page's own process section, so the hero never sends a lead
+  // off the landing page.
+  secondaryCta: { label: "See how the process works", href: "#festival-process" },
   proofBar: [
     "From 50 units",
     "Design to delivery",
@@ -87,7 +89,7 @@ export const benefits = {
   blocks: [
     {
       heading: "Sits at a higher price point",
-      body: "Construction, fabric and finishing put a jersey in a different bracket from a printed tee. That changes what the product can return per unit sold, and it changes how the range is priced around it.",
+      body: "Construction, fabric and finishing put a jersey in a different bracket from a printed tee. That changes what the product can return per unit sold and it changes how the range is priced around it.",
     },
     {
       heading: "Built for sponsors",
@@ -125,7 +127,7 @@ export const audiences = {
     {
       heading: "If you own the commercial result",
       roles: "Head of Merchandise, Commercial Director, Head of Retail, Merchandise Manager.",
-      body: "You need a product that sells through at a sensible margin, a quantity that does not leave you holding stock in October, and a size split that does not run out of larges on day one. We help set the numbers before anything goes into production.",
+      body: "You need a product that sells through at a sensible margin, a quantity that does not leave you holding stock in October and a size split that does not run out of larges on day one. We help set the numbers before anything goes into production.",
     },
     {
       heading: "If you own the creative",
@@ -135,7 +137,7 @@ export const audiences = {
     {
       heading: "If you own the delivery",
       roles: "Event Production Manager, Operations Director, Production Director, agency project leads.",
-      body: "You need dates that hold, a sample you have signed off, and one person to ask when something changes. Approvals happen on a schedule and production runs against an agreed critical path.",
+      body: "You need dates that hold, a sample you have signed off and one person to ask when something changes. Approvals happen on a schedule and production runs against an agreed critical path.",
     },
   ],
   closing:
@@ -164,7 +166,7 @@ export const process = {
     {
       n: "03",
       heading: "Development",
-      body: "We specify fabric, fit, construction, collar, trims and labels, then produce the technical pack the factory manufactures from. This is the stage most merchandise projects skip, and the reason most of them arrive wrong.",
+      body: "We specify fabric, fit, construction, collar, trims and labels, then produce the technical pack the factory manufactures from. This is the stage most merchandise projects skip and the reason most of them arrive wrong.",
     },
     {
       n: "04",
@@ -192,11 +194,6 @@ export const process = {
       body: "We manage the route from production to your delivery address, including split deliveries and international freight where the project needs it.",
     },
   ],
-  processLink: {
-    lead: "See the full production process on the OBRA homepage",
-    label: "See the full production process",
-    href: "/#process",
-  },
 };
 
 /* ---------------------------------------------------------------- Section 5 */
@@ -245,10 +242,6 @@ export const packages = {
     "Five production levels, set by quantity. Every project is quoted individually, because cost depends on the quantity, the design, the fabric, the construction, the trims, the packaging, the sampling and where it needs to be delivered.",
     "You do not need to pick one now. If you are not sure, start a brief and we will tell you which level fits.",
   ],
-  homepageLink: {
-    label: "production levels in detail",
-    href: "/#custom-football-jersey-production",
-  },
   /** Names and quantities come from lib/packages.ts, so they stay in sync. */
   levels: [
     {
@@ -320,7 +313,13 @@ export const packages = {
   footer: {
     heading: "Not sure which level fits?",
     body: "Tell us the event, the audience size and the date. We will recommend a starting quantity and a production route.",
-    cta: { label: "Start a brief", href: packageBriefHref("unsure") },
+    /** Starts the brief here, then carries the answers into the full form. */
+    nameLabel: "Your name",
+    namePlaceholder: "First and last",
+    emailLabel: "Email",
+    emailPlaceholder: "you@festival.com",
+    cta: { label: "Continue to the brief", href: packageBriefHref("unsure") },
+    note: "We will take you to the rest of the brief with these details filled in.",
   },
 };
 
@@ -358,7 +357,7 @@ export const planning = {
   heading: "Build the release around how it will sell",
   intro: [
     "The quantity question is the one that stalls most festival merchandise projects. Order too few and you sell out on Friday afternoon with two days left. Order too many and the margin sits in a storage unit until next summer.",
-    "There is no universal formula, and anyone offering one is guessing. What we can do is work through the variables with you before the number gets committed.",
+    "There is no universal formula and anyone offering one is guessing. What we can do is work through the variables with you before the number gets committed.",
   ],
   questionsHeading: "The questions we help you answer",
   questions: [
@@ -368,7 +367,7 @@ export const planning = {
     "How should the size breakdown be split for this audience?",
     "What specification supports the retail price you have in mind?",
     "Is one delivery destination enough, or does stock need to land in more than one place?",
-    "What happens if it sells out on day one, and is replenishment realistic within the event window?",
+    "What happens if it sells out on day one and is replenishment realistic within the event window?",
     "What is the plan for anything unsold after the weekend?",
   ],
   tableCaption: "Planning inputs and why each one changes the quantity",
@@ -410,7 +409,7 @@ export const proof = {
     },
     {
       heading: "Approvals on a schedule",
-      body: "Set stages, in writing. You know what you are signing off and when, and so does the factory.",
+      body: "Set stages, in writing. You know what you are signing off and when and so does the factory.",
     },
     {
       heading: "Built for 50 and for 10,000",
@@ -422,7 +421,7 @@ export const proof = {
     },
   ],
   placeholders: [
-    "[OBRA TO PROVIDE: 2 to 3 verified festival or event project examples. For each: client name if permitted, quantity band, number of designs, what was produced, timeline from brief to delivery, and one finished product photograph.]",
+    "[OBRA TO PROVIDE: 2 to 3 verified festival or event project examples. For each: client name if permitted, quantity band, number of designs, what was produced, timeline from brief to delivery and one finished product photograph.]",
     "[OBRA TO PROVIDE: 1 to 2 client testimonials with name, role and organisation. A merchandise or production role carries far more weight here than a founder quote.]",
     "[OBRA TO PROVIDE: client or festival logo strip, only where permission is confirmed in writing.]",
     "[OBRA TO PROVIDE: founder credential paragraph. Named person, years in garment development or production, relevant experience. This is the cheapest credibility on the page and it does not need a client to approve it.]",
@@ -444,7 +443,7 @@ export const finalCta = {
     "You do not need the design finished, the quantity confirmed or the budget signed off to start a conversation.",
     "Tell us what you are creating, who it is for, roughly how many and when you need it on site. We will come back with the right specification, a realistic quantity and a production route that works to your date.",
   ],
-  cta: { label: "Start your festival jersey project", href: festivalBriefHref },
+  cta: { label: "Start your jersey project", href: festivalBriefHref },
   expectationsHeading: "The brief asks for:",
   expectations: [
     "Your name and contact details",
@@ -462,7 +461,7 @@ export const finalCta = {
 
 /** Sticky mobile CTA. */
 export const stickyCta = {
-  label: "Start your festival jersey project",
+  label: "Start your jersey project",
   href: festivalBriefHref,
 };
 

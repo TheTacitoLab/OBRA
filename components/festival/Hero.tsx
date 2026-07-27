@@ -3,6 +3,7 @@ import { Container } from "../Container";
 import { SectionLabel } from "../SectionLabel";
 import { Button } from "../Button";
 import { Asterisk } from "../brand/Marks";
+import { Marquee } from "../Marquee";
 import { AssetPlaceholder } from "./AssetPlaceholder";
 import { breadcrumb, hero, heroImage } from "@/content/festival-landing";
 
@@ -68,18 +69,25 @@ export function FestivalHero() {
         </div>
       </Container>
 
-      {/* Proof bar */}
-      <div className="mt-14 border-y border-line py-6">
-        <Container>
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-4 md:grid-cols-5">
-            {hero.proofBar.map((item) => (
-              <li key={item} className="flex items-start gap-2.5">
-                <Asterisk className="mt-0.5 h-3.5 w-3.5 shrink-0 text-yellow" />
-                <span className="text-body text-white/90">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </Container>
+      {/* Proof bar. Same treatment as the homepage billing marquee. The track
+          itself is aria-hidden and duplicated, so the list below carries the
+          same copy for assistive tech and for indexing. */}
+      <div className="mt-14 border-y border-line bg-void py-6">
+        <Marquee duration={36}>
+          {hero.proofBar.map((item) => (
+            <span key={item} className="flex items-center">
+              <span className="px-8 font-display text-[1.75rem] font-extrabold uppercase leading-none tracking-tight text-white sm:text-[2.5rem]">
+                {item}
+              </span>
+              <Asterisk className="h-5 w-5 text-yellow sm:h-7 sm:w-7" />
+            </span>
+          ))}
+        </Marquee>
+        <ul className="sr-only">
+          {hero.proofBar.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </div>
     </section>
   );

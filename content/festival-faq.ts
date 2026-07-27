@@ -54,21 +54,21 @@ export const festivalFaq: FaqItem[] = [
     id: "multiple-designs",
     question: "Can we produce more than one design?",
     answer: [
-      "Yes. Multiple designs and colourways are supported from the Edition Release upwards, and are common for festivals running stage identities, artist collaborations, crew shirts or sponsor editions. At lower quantities, splitting across designs also splits your stock, so we will talk through whether one strong design serves the release better.",
+      "Yes. Multiple designs and colourways are supported from the Edition Release upwards and are common for festivals running stage identities, artist collaborations, crew shirts or sponsor editions. At lower quantities, splitting across designs also splits your stock, so we will talk through whether one strong design serves the release better.",
     ],
   },
   {
     id: "sponsor-branding",
     question: "Can sponsor branding be included?",
     answer: [
-      "Yes. Front, sleeve, back and short placements are all available, and sponsor integration is one of the reasons the format works for festivals. Bring the sponsor's brand guidelines and approval process into the brief early, because sponsor sign-off is one of the most common causes of delay.",
+      "Yes. Front, sleeve, back and short placements are all available and sponsor integration is one of the reasons the format works for festivals. Bring the sponsor's brand guidelines and approval process into the brief early, because sponsor sign-off is one of the most common causes of delay.",
     ],
   },
   {
     id: "fabrics",
     question: "What fabrics are available?",
     answer: [
-      "Lightweight performance fabrics for a technical feel, and heavier lifestyle weights for a retail garment with more structure. Choice widens with quantity. At Major Release and above, custom fabric weights, textures and finishes can be developed for the project. We will recommend based on the price point, the audience and how the shirt is meant to feel.",
+      "Lightweight performance fabrics for a technical feel and heavier lifestyle weights for a retail garment with more structure. Choice widens with quantity. At Major Release and above, custom fabric weights, textures and finishes can be developed for the project. We will recommend based on the price point, the audience and how the shirt is meant to feel.",
     ],
   },
   {
@@ -101,7 +101,7 @@ export const festivalFaq: FaqItem[] = [
   },
   {
     id: "pricing",
-    question: "How is pricing calculated, and why is there no price list?",
+    question: "How is pricing calculated and why is there no price list?",
     answer: [
       "Every project is quoted individually because the cost drivers change with every release. The main ones are quantity, design complexity, fabric, construction, labels and trims, packaging, sampling requirements, delivery destination and timeline. A 500-unit single-design release and a 500-unit three-design release with custom packaging are different products at different costs. Send a brief with an approximate quantity and target date and you will get a real number rather than a range that means nothing.",
     ],
@@ -110,7 +110,7 @@ export const festivalFaq: FaqItem[] = [
     id: "what-to-prepare",
     question: "What do we need to have ready before contacting you?",
     answer: [
-      "Very little. The event or project name, roughly who it is for, an approximate quantity if you have one, and your target delivery date. Everything else, including the design, the specification and the final quantity, gets worked out together.",
+      "Very little. The event or project name, roughly who it is for, an approximate quantity if you have one and your target delivery date. Everything else, including the design, the specification and the final quantity, gets worked out together.",
     ],
   },
 ];

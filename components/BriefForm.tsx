@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Arrow, Asterisk } from "./brand/Marks";
 import { ReleaseSelector } from "./ReleaseSelector";
 import { siteConfig } from "@/lib/siteConfig";
@@ -14,6 +14,7 @@ type FieldProps = {
   required?: boolean;
   textarea?: boolean;
   placeholder?: string;
+  defaultValue?: string;
 };
 
 function Field({
@@ -23,6 +24,7 @@ function Field({
   required,
   textarea,
   placeholder,
+  defaultValue,
 }: FieldProps) {
   const control =
     "mt-2 w-full rounded-sm border border-line bg-slate px-4 py-3 text-body text-white placeholder:text-mute focus-visible:border-yellow";
@@ -48,6 +50,7 @@ function Field({
           type={type}
           required={required}
           placeholder={placeholder}
+          defaultValue={defaultValue}
           className={control}
         />
       )}
@@ -70,6 +73,16 @@ export function BriefForm({
   subject?: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
+  // Carried over when a visitor starts the brief on a landing page. Read after
+  // mount so the server-rendered markup stays identical for everyone, and used
+  // only as an input value, never inserted as markup.
+  const [prefill, setPrefill] = useState({ name: "", email: "" });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const trim = (value: string | null) => (value ?? "").trim().slice(0, 120);
+    setPrefill({ name: trim(params.get("name")), email: trim(params.get("email")) });
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -120,13 +133,23 @@ export function BriefForm({
         aria-hidden="true"
       />
 
-      <Field label="Name" name="name" required placeholder="First and last" />
+      {/* Keyed so the prefill lands once it has been read from the URL. */}
       <Field
+        key={`name-${prefill.name}`}
+        label="Name"
+        name="name"
+        required
+        placeholder="First and last"
+        defaultValue={prefill.name}
+      />
+      <Field
+        key={`email-${prefill.email}`}
         label="Email"
         name="email"
         type="email"
         required
         placeholder="you@studio.com"
+        defaultValue={prefill.email}
       />
       {!compact && (
         <Field
