@@ -44,7 +44,7 @@ export function StartBriefForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 w-full max-w-xl">
+    <form onSubmit={handleSubmit} className="w-full text-left">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="festival-lead-name" className="text-tag text-ash">

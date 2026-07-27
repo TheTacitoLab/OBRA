@@ -241,6 +241,37 @@
     );
   }
 
+  /* Further blends, so a long page can flow through more than one colour.
+     Each pair meets at void, which keeps section joins seamless. */
+  .blend-down-electric {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-void) 0%,
+      color-mix(in srgb, var(--color-electric) 42%, var(--color-void)) 100%
+    );
+  }
+  .blend-up-electric {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-electric) 42%, var(--color-void)) 0%,
+      var(--color-void) 100%
+    );
+  }
+  .blend-down-magenta {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-void) 0%,
+      color-mix(in srgb, var(--color-magenta) 34%, var(--color-void)) 100%
+    );
+  }
+  .blend-up-magenta {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-magenta) 34%, var(--color-void)) 0%,
+      var(--color-void) 100%
+    );
+  }
+
   /* Motion helpers */
   .animate-drift {
     animation: obra-drift 16s ease-in-out infinite;

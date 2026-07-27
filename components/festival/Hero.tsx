@@ -9,9 +9,12 @@ import { breadcrumb, hero } from "@/content/festival-landing";
 
 export function FestivalHero() {
   return (
-    <section aria-labelledby="festival-hero-heading" className="pb-16 pt-28 sm:pt-32 md:pb-20">
+    <section
+      aria-labelledby="festival-hero-heading"
+      className="blend-down-purple pb-16 pt-28 sm:pt-32 md:pb-20"
+    >
       <Container>
-        <nav aria-label="Breadcrumb" className="mb-10">
+        <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex flex-wrap items-center gap-2 text-tag text-mute">
             <li>
               <Link
@@ -28,25 +31,28 @@ export function FestivalHero() {
           </ol>
         </nav>
 
-        <SectionLabel>{hero.eyebrow}</SectionLabel>
-
-        {/* One H1 element. The two lines are a styling decision. */}
-        <h1
-          id="festival-hero-heading"
-          className="mt-5 font-display text-[clamp(2.2rem,5.2vw,5rem)] font-extrabold uppercase leading-[0.96] tracking-[-0.015em] text-white"
-        >
-          <span className="block">{hero.headingLineOne}</span>
-          <span className="block">{hero.headingLineTwo}</span>
-        </h1>
-
-        <div className="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-14">
+        {/* Headline and image share the row, both aligned to the top so the
+            image sits high on the page rather than dropping below the copy. */}
+        <div className="grid items-start gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
           <div>
-            <div className="space-y-4">
+            <SectionLabel>{hero.eyebrow}</SectionLabel>
+
+            {/* One H1 element. The three lines are a styling decision. */}
+            <h1
+              id="festival-hero-heading"
+              className="mt-5 font-display text-[clamp(2.1rem,4.2vw,3.9rem)] font-extrabold uppercase leading-[0.97] tracking-[-0.015em] text-white"
+            >
+              <span className="block">{hero.headingLineOne}</span>
+              <span className="block">{hero.headingLineTwo}</span>
+              <span className="block">{hero.headingLineThree}</span>
+            </h1>
+
+            <div className="text-pretty mt-7 space-y-4">
               <p className="text-lede text-ash">{hero.standfirst[0]}</p>
               <p className="text-body text-ash">{hero.standfirst[1]}</p>
             </div>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Button href={hero.primaryCta.href} className="justify-between sm:justify-start">
                 {hero.primaryCta.label}
               </Button>
@@ -67,8 +73,8 @@ export function FestivalHero() {
             width={1440}
             height={1080}
             priority
-            sizes="(min-width: 1024px) 45vw, 100vw"
-            className="h-auto w-full rounded-sm border border-white/10"
+            sizes="(min-width: 1024px) 48vw, 100vw"
+            className="h-auto w-full rounded-sm border border-white/10 lg:mt-9"
           />
         </div>
       </Container>
@@ -76,7 +82,7 @@ export function FestivalHero() {
       {/* Proof bar. Same treatment as the homepage billing marquee. The track
           itself is aria-hidden and duplicated, so the list below carries the
           same copy for assistive tech and for indexing. */}
-      <div className="mt-14 border-y border-line bg-void py-6">
+      <div className="mt-14 border-y border-white/10 py-6">
         <Marquee duration={36}>
           {hero.proofBar.map((item) => (
             <span key={item} className="flex items-center">

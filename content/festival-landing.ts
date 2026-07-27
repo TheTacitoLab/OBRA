@@ -17,8 +17,10 @@ export function packageBriefHref(id: PackageId | "unsure"): string {
 
 export const hero = {
   eyebrow: "Festival merchandise",
-  headingLineOne: "Custom football shirts",
-  headingLineTwo: "for festivals",
+  // Three lines beside the image: two words, two words, one.
+  headingLineOne: "Custom football",
+  headingLineTwo: "shirts for",
+  headingLineThree: "festivals",
   standfirst: [
     "We design, develop and manufacture fully custom football shirts for festivals, artists, sponsors and event merchandise programmes.",
     "From a guided 50-piece release to a production programme of 10,000 units and beyond, one team takes the project from first idea to delivered stock.",
@@ -85,17 +87,14 @@ export const audiences = {
   columns: [
     {
       heading: "If you own the commercial result",
-      roles: "Head of Merchandise, Commercial Director, Head of Retail, Merchandise Manager.",
       body: "You need a product that sells through at a sensible margin, a quantity that does not leave you holding stock in October and a size split that does not run out of larges on day one. We help set the numbers before anything goes into production.",
     },
     {
       heading: "If you own the creative",
-      roles: "Creative Director, Marketing Director, Festival Founder, artists and their teams.",
       body: "You need the shirt to look like the event, not like a template with a logo on it. Design, artwork direction, colour, trims and labels are all developed for the project. Nothing is chosen from a catalogue.",
     },
     {
       heading: "If you own the delivery",
-      roles: "Event Production Manager, Operations Director, Production Director, agency project leads.",
       body: "You need dates that hold, a sample you have signed off and one person to ask when something changes. Approvals happen on a schedule and production runs against an agreed critical path.",
     },
   ],
@@ -201,6 +200,9 @@ export const packages = {
     "Five production levels, set by quantity. Every project is quoted individually, because cost depends on the quantity, the design, the fabric, the construction, the trims, the packaging, the sampling and where it needs to be delivered.",
     "You do not need to pick one now. If you are not sure, start a brief and we will tell you which level fits.",
   ],
+  /** Label on the disclosure that reveals the five levels. */
+  toggleOpen: "See packages",
+  toggleClose: "Hide packages",
   /** Names and quantities come from lib/packages.ts, so they stay in sync. */
   levels: [
     {

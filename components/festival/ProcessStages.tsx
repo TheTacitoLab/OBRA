@@ -13,19 +13,21 @@ export function ProcessStages() {
         </>
       }
       headingId="festival-process-heading"
+      layout="centre"
+      size="large"
+      background="blend-down-electric"
+      intro={<p className="text-lede text-ash">{process.intro}</p>}
     >
-      <p className="text-lede mt-6 max-w-3xl text-ash">{process.intro}</p>
-
-      <ol className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="mt-14 grid gap-px border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
         {process.stages.map((stage) => (
-          <li key={stage.n} className="bg-void p-6 sm:p-7">
-            <p className="font-display text-[2rem] font-extrabold leading-none text-coral">
+          <li key={stage.n} className="bg-void/80 p-6 sm:p-7">
+            <p className="font-display text-[2rem] font-extrabold leading-none text-yellow">
               {stage.n}
             </p>
-            <h3 className="text-headline mt-4 text-[1.25rem] text-white">
+            <h3 className="mt-4 font-display text-[1.3rem] font-bold uppercase leading-[1.1] tracking-[-0.01em] text-white">
               {stage.heading}
             </h3>
-            <p className="text-body mt-2.5 text-ash">{stage.body}</p>
+            <p className="text-body text-pretty mt-3 text-ash">{stage.body}</p>
           </li>
         ))}
       </ol>

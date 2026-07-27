@@ -10,14 +10,20 @@ import { festivalFaq } from "@/content/festival-faq";
  */
 export function FaqAccordion() {
   return (
-    <Section heading={faqSection.heading} headingId="festival-faq-heading">
-      <div className="mt-10 max-w-3xl border-t border-line">
+    <Section
+      heading={faqSection.heading}
+      headingId="festival-faq-heading"
+      layout="centre"
+      size="large"
+      background="blend-up-purple"
+    >
+      <div className="mx-auto mt-12 max-w-3xl border-t border-white/15 text-left">
         {festivalFaq.map((item, i) => (
           <details
             key={item.id}
             id={`faq-${item.id}`}
             open={i === 0}
-            className="group border-b border-line"
+            className="group border-b border-white/15"
           >
             <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden">
               <h3 className="text-lede font-medium text-white">{item.question}</h3>
