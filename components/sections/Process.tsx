@@ -1,65 +1,30 @@
 import { Container } from "../Container";
 import { Reveal } from "../Reveal";
-import { Asterisk } from "../brand/Marks";
-
-const steps = ["Brief", "Design", "Mockup", "Sample", "Production", "Delivery"];
-
-// Accent cycling per the brief: coral / electric / magenta / coral / electric / violet.
-const accents = [
-  "text-coral",
-  "text-electric",
-  "text-magenta",
-  "text-coral",
-  "text-electric",
-  "text-violet",
-];
+import { ProcessGrid } from "../ProcessGrid";
 
 export function Process() {
   return (
     <section id="process" className="blend-up-purple py-24 sm:py-32 md:py-40">
       <Container>
-        <div className="grid gap-8 md:grid-cols-12 md:items-end">
-          <Reveal className="md:col-span-8">
-            <h2 className="text-display text-white">
-              Brief. Design. Mockup. Sample. Production. Delivery.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.05} className="md:col-span-4">
-            <p className="text-lede text-ash">
-              A clear process from first idea to finished product.
-            </p>
-          </Reveal>
-        </div>
+        <Reveal>
+          <h2 className="font-display text-[clamp(2.25rem,5.2vw,4.5rem)] font-extrabold uppercase leading-[0.98] tracking-[-0.015em] text-white">
+            You bring the idea,{" "}
+            <br className="hidden md:block" />
+            we handle the rest.
+          </h2>
+        </Reveal>
 
-        <Reveal delay={0.08}>
-          <p className="text-body mt-8 max-w-2xl text-ash">
-            In plain terms: you bring the idea, we handle the rest. We design it,
-            send you mockups, make a sample to approve, then produce and deliver
-            the finished jerseys. No factories, suppliers or sampling for you to
-            manage.
+        <Reveal delay={0.05}>
+          <p className="text-lede mt-6 max-w-2xl text-ash">
+            We have built the design, development and production infrastructure
+            needed to take your jersey from idea to delivery. Fewer mistakes, no
+            surprise costs and none of the production stress.
           </p>
         </Reveal>
 
-        <Reveal>
-          <ol className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {steps.map((step, i) => (
-              <li
-                key={step}
-                className="group flex min-h-[12.5rem] flex-col justify-between bg-void p-7 transition-colors duration-500 hover:bg-obsidian"
-              >
-                <div className="flex items-start justify-between">
-                  <span
-                    className={`font-display text-[3.25rem] font-extrabold leading-none ${accents[i]}`}
-                  >
-                    0{i + 1}
-                  </span>
-                  <Asterisk className="h-4 w-4 text-yellow" />
-                </div>
-                <h3 className="text-headline text-white">{step}</h3>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
+        <div className="mt-14 sm:mt-16">
+          <ProcessGrid />
+        </div>
       </Container>
     </section>
   );
