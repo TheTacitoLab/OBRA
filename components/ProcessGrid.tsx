@@ -3,28 +3,26 @@
 import type { Variants } from "framer-motion";
 import { motion, useReducedMotion } from "framer-motion";
 import { Asterisk } from "./brand/Marks";
-
-type Step = {
-  n: string;
-  title: string;
-  week: string;
-  weekNo: number;
-  accent: string;
-};
+import { processStages } from "@/lib/process";
 
 /**
- * Six process stages. `accent` is a curated warm -> cool sweep drawn from the
- * brand accents, so the numbers stay controlled and cohesive while subtly
- * echoing the timeline.
+ * Stage accents: a curated warm -> cool sweep drawn from the brand accents, so
+ * the numbers stay controlled and cohesive while subtly echoing the timeline.
+ * The stage data itself is shared with the festival landing page timeline.
  */
-const steps: Step[] = [
-  { n: "01", title: "Brief", week: "Week 1", weekNo: 1, accent: "text-coral" },
-  { n: "02", title: "Design", week: "Week 2", weekNo: 2, accent: "text-flare" },
-  { n: "03", title: "Approvals", week: "Week 3", weekNo: 3, accent: "text-magenta" },
-  { n: "04", title: "Sampling", week: "Week 4", weekNo: 4, accent: "text-violet" },
-  { n: "05", title: "Production", week: "Week 6", weekNo: 6, accent: "text-electric" },
-  { n: "06", title: "Delivery", week: "Week 9", weekNo: 9, accent: "text-coral" },
+const accents = [
+  "text-coral",
+  "text-flare",
+  "text-magenta",
+  "text-violet",
+  "text-electric",
+  "text-coral",
 ];
+
+const steps = processStages.map((stage, i) => ({
+  ...stage,
+  accent: accents[i],
+}));
 
 // House easing curve (matches components/Reveal.tsx).
 const EASE = [0.22, 1, 0.36, 1] as const;

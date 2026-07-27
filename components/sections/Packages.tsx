@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { Container } from "../Container";
 import { Reveal } from "../Reveal";
 import { SectionLabel } from "../SectionLabel";
 import { Button } from "../Button";
 import { PackageCard } from "../PackageCard";
 import { releasePackages, type PackageId } from "@/lib/packages";
+import { festivalHref } from "@/lib/siteConfig";
 
 // Number accent per package — a controlled warm→cool sweep from the brand
 // palette. Core sits in brand yellow to reinforce its prominence.
@@ -52,7 +54,15 @@ export function Packages() {
               Whether you are creating festival merchandise, a creator drop, a
               brand collaboration or a large-scale retail collection, we help you
               choose the right production level and manage the complete process
-              from concept to delivery.
+              from concept to delivery. The Core and Edition levels are the usual
+              starting point for{" "}
+              <Link
+                href={festivalHref}
+                className="text-white underline decoration-yellow underline-offset-4 transition-colors hover:text-yellow"
+              >
+                festival merchandise releases
+              </Link>
+              .
             </p>
           </div>
         </Reveal>

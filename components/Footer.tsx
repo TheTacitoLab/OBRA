@@ -1,14 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Asterisk } from "./brand/Marks";
-import { privacyHref, siteConfig } from "@/lib/siteConfig";
+import { privacyHref, sectorLinks, siteConfig } from "@/lib/siteConfig";
 
 export function Footer() {
   return (
     <footer className="relative border-t border-line bg-void">
       <div className="mx-auto max-w-[88rem] px-5 sm:px-8">
         {/* Contact + meta */}
-        <div className="grid gap-10 border-b border-line py-16 sm:grid-cols-3">
+        <div className="grid gap-10 border-b border-line py-16 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <h2 className="text-tag text-ash">Contact</h2>
             <a
@@ -29,6 +29,22 @@ export function Footer() {
             >
               Instagram
             </a>
+          </div>
+
+          <div>
+            <h2 className="text-tag text-ash">Services</h2>
+            <ul className="mt-3 space-y-2">
+              {sectorLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="block w-fit text-body text-white underline-offset-4 transition-colors hover:text-yellow hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>

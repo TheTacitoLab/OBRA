@@ -206,6 +206,41 @@ export function parsePackageParam(value: string | null | undefined): BriefPackag
     : null;
 }
 
+/**
+ * Project types for the brief form. `id` is the submitted value; `label` is the
+ * only thing ever rendered, so an untrusted `?project=` value can never reach
+ * the DOM.
+ */
+export type ProjectTypeId =
+  | "festival"
+  | "artist"
+  | "creator"
+  | "brand"
+  | "event"
+  | "retail"
+  | "unsure";
+
+export const projectTypes: { id: ProjectTypeId; label: string }[] = [
+  { id: "festival", label: "Festival merchandise" },
+  { id: "artist", label: "Artist merchandise" },
+  { id: "creator", label: "Creator merchandise" },
+  { id: "brand", label: "Brand collaboration" },
+  { id: "event", label: "Event merchandise" },
+  { id: "retail", label: "Retail collection" },
+  { id: "unsure", label: "Not sure yet" },
+];
+
+/**
+ * Narrow an untrusted `?project=` value. Only `festival` is linked from the
+ * festival landing page, but every known project type is accepted so future
+ * sector pages can deep-link without another change here.
+ */
+export function parseProjectParam(value: string | null | undefined): ProjectTypeId | null {
+  if (!value) return null;
+  const match = projectTypes.find((type) => type.id === value);
+  return match ? match.id : null;
+}
+
 /** Look up a package by id (excludes the brief-only "unsure" option). */
 export function getPackage(id: PackageId): ReleasePackage | undefined {
   return releasePackages.find((p) => p.id === id);

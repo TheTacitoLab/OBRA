@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-GB"
       className={`${inter.variable} ${spaceMono.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-void text-white">

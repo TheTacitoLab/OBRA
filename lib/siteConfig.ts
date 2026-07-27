@@ -32,3 +32,9 @@ export const navLinks: NavLink[] = [
 
 export const briefHref = "/brief";
 export const privacyHref = "/privacy";
+export const festivalHref = "/custom-football-shirts-for-festivals/";
+
+/** Sector landing pages, linked from the footer. */
+export const sectorLinks: NavLink[] = [
+  { label: "Festival football shirts", href: festivalHref },
+];

@@ -4,10 +4,13 @@ import { useEffect, useId, useState } from "react";
 import {
   getPackage,
   parsePackageParam,
+  parseProjectParam,
+  projectTypes,
   releasePackages,
   unsureOption,
   volumeOptions,
   type BriefPackageId,
+  type ProjectTypeId,
 } from "@/lib/packages";
 
 const packageOptions = [
@@ -38,18 +41,30 @@ const focusRing =
  * is neutralised under `prefers-reduced-motion` by the global stylesheet.
  */
 export function ReleaseSelector() {
+  const [projectType, setProjectType] = useState<ProjectTypeId | "">("");
   const [pkg, setPkg] = useState<BriefPackageId | "">("");
   const [volume, setVolume] = useState<string>("");
   const [helper, setHelper] = useState<string | null>(null);
+  const [source, setSource] = useState("");
   const helperId = useId();
 
-  // Preselect from ?package= on load. Read from the URL directly (works with
-  // the static export) and ignore anything invalid.
+  // Preselect from ?project= and ?package= on load. Read from the URL directly
+  // (works with the static export). Both are validated against an allow-list
+  // and anything else is ignored silently, and only the mapped label is ever
+  // rendered, never the raw parameter value.
   useEffect(() => {
-    const param = parsePackageParam(
-      new URLSearchParams(window.location.search).get("package"),
-    );
-    if (param) setPkg(param);
+    const params = new URLSearchParams(window.location.search);
+
+    const projectParam = parseProjectParam(params.get("project"));
+    if (projectParam) setProjectType(projectParam);
+
+    const packageParam = parsePackageParam(params.get("package"));
+    if (packageParam) setPkg(packageParam);
+
+    // Attribute the enquiry when the visitor arrived from the festival page.
+    if (projectParam === "festival" || document.referrer.includes("custom-football-shirts-for-festivals")) {
+      setSource("festival-landing-page");
+    }
   }, []);
 
   function choosePackage(id: BriefPackageId) {
@@ -80,6 +95,31 @@ export function ReleaseSelector() {
 
   return (
     <>
+      {/* Submission source, set only when the visitor came from the festival
+          landing page. Never contains personal data. */}
+      <input type="hidden" name="source" value={source} />
+
+      {/* Project type */}
+      <div>
+        <label htmlFor="projectType" className="text-tag text-ash">
+          Project type
+        </label>
+        <select
+          id="projectType"
+          name="projectType"
+          value={projectType}
+          onChange={(event) => setProjectType(event.target.value as ProjectTypeId)}
+          className="mt-2 w-full rounded-sm border border-line bg-slate px-4 py-3 text-body text-white focus-visible:border-yellow"
+        >
+          <option value="">Select a project type</option>
+          {projectTypes.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Release package */}
       <fieldset>
         <legend className="text-label text-white">
