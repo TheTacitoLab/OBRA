@@ -26,10 +26,6 @@ export type ReleasePackage = {
   shortDescription: string;
   benefits: string[];
   bestFor: string;
-  /** Small uppercase utility label, e.g. "MOST POPULAR" / "FULLY GUIDED". */
-  badge?: string;
-  /** Core Release — rendered as the most prominent card. */
-  featured?: boolean;
   ctaLabel: string;
 };
 
@@ -57,7 +53,6 @@ export const releasePackages: ReleasePackage[] = [
     ],
     bestFor:
       "First launches, limited-edition football shirts, creator drops and brands testing a new product.",
-    badge: "FULLY GUIDED",
     ctaLabel: "START A CONCEPT RELEASE",
   },
   {
@@ -83,7 +78,6 @@ export const releasePackages: ReleasePackage[] = [
     ],
     bestFor:
       "Festivals, creators, events and culture-led brands launching custom football shirt merchandise.",
-    featured: true,
     ctaLabel: "START A CORE RELEASE",
   },
   {

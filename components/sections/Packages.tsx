@@ -9,7 +9,7 @@ import { releasePackages, type PackageId } from "@/lib/packages";
 // palette. Core sits in brand yellow to reinforce its prominence.
 const accentById: Record<PackageId, string> = {
   concept: "text-coral",
-  core: "text-yellow",
+  core: "text-flare",
   edition: "text-magenta",
   major: "text-violet",
   volume: "text-electric",
@@ -57,18 +57,20 @@ export function Packages() {
           </div>
         </Reveal>
 
-        <Reveal className="mt-14 grid grid-cols-1 items-stretch gap-5 sm:mt-16 md:grid-cols-2 lg:grid-cols-6">
-          {releasePackages.map((pkg, i) => (
+        {/* Rendered without a Reveal wrapper: a single scroll-reveal around the
+            whole (very tall, on mobile) grid can leave the cards stuck at
+            opacity 0 until an unreachable amount is on screen. */}
+        <div className="mt-14 grid grid-cols-1 items-stretch gap-5 sm:mt-16 md:grid-cols-2 lg:grid-cols-6">
+          {releasePackages.map((pkg) => (
             <PackageCard
               key={pkg.id}
               pkg={pkg}
-              index={i}
               accent={accentById[pkg.id]}
               wide={wideIds.includes(pkg.id)}
               className={colSpan(pkg.id)}
             />
           ))}
-        </Reveal>
+        </div>
 
         <Reveal delay={0.05}>
           <div className="mt-14 flex flex-col items-start gap-5 rounded-sm border border-line bg-obsidian p-8 sm:mt-16 sm:p-10">
@@ -79,9 +81,7 @@ export function Packages() {
               creating, who it is for and when you need it. We will help you
               establish the right specification, quantity and production route.
             </p>
-            <Button href="/brief?package=unsure">
-              START YOUR CUSTOM FOOTBALL JERSEY PROJECT
-            </Button>
+            <Button href="/brief?package=unsure">Start a brief</Button>
           </div>
         </Reveal>
       </Container>

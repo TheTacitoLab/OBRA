@@ -26,6 +26,7 @@ export const navLinks: NavLink[] = [
   { label: "Who it's for", href: "#who" },
   { label: "What you get", href: "#what" },
   { label: "Process", href: "#process" },
+  { label: "Packages", href: "#custom-football-jersey-production" },
   { label: "Why OBRA", href: "#why" },
 ];
 
