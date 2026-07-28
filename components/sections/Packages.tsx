@@ -91,7 +91,7 @@ export function Packages() {
               creating, who it is for and when you need it. We will help you
               establish the right specification, quantity and production route.
             </p>
-            <Button href="/brief?package=unsure">Start a brief</Button>
+            <Button href="/brief/?package=unsure">Start a brief</Button>
           </div>
         </Reveal>
       </Container>

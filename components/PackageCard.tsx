@@ -144,7 +144,7 @@ export function PackageCard({
       {/* CTA — always visible, consistent across all cards */}
       <div className="mt-auto pt-6 sm:pt-8">
         <Button
-          href={`/brief?package=${pkg.id}`}
+          href={`/brief/?package=${pkg.id}`}
           variant="secondary"
           className="w-full justify-between"
         >

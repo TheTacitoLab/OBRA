@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { WhoItsFor } from "@/components/sections/WhoItsFor";
 import { WhatYouGet } from "@/components/sections/WhatYouGet";
@@ -6,6 +7,12 @@ import { Packages } from "@/components/sections/Packages";
 import { WhyObra } from "@/components/sections/WhyObra";
 import { ClosingCTA } from "@/components/sections/ClosingCTA";
 import { Overview } from "@/components/sections/Overview";
+
+// Self-referencing canonical. Resolved against `metadataBase` in the root
+// layout, and trailing-slashed to match `trailingSlash: true`.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (

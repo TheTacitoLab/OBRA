@@ -21,8 +21,12 @@ export const siteConfig = {
   },
 } as const;
 
-export const briefHref = "/brief";
-export const privacyHref = "/privacy";
+// Trailing slashes are required: next.config.ts sets `trailingSlash: true`, so
+// the non-slash form 301s. next/link normalises rendered hrefs, but the raw
+// literals are published in the RSC payloads and client chunks, where crawlers
+// pick them up and then report the redirect.
+export const briefHref = "/brief/";
+export const privacyHref = "/privacy/";
 export const festivalHref = "/custom-football-shirts-for-festivals/";
 
 /** Anchor navigation into the homepage sections. */

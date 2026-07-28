@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Start a brief",
   description:
     "Tell us about your drop. OBRA takes limited edition football jerseys from concept to creation.",
+  alternates: { canonical: "/brief/" },
+  // Without this the page inherits the homepage og:url from the root layout.
+  openGraph: { url: "/brief/" },
 };
 
 const steps = ["Send your brief", "We shape a concept", "We build the drop"];

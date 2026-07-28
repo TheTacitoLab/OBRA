@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "How OBRA collects, uses and protects your personal data, and your rights under UK data protection law.",
+  alternates: { canonical: "/privacy/" },
+  // Without this the page inherits the homepage og:url from the root layout.
+  openGraph: { url: "/privacy/" },
 };
 
 export default function PrivacyPage() {
