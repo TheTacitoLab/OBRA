@@ -11,8 +11,19 @@ export const siteConfig = {
   tagline: "One process. Start to finish.",
   description:
     "OBRA creates limited edition football jerseys for festivals, artists, creators and culture-led brands. We take your drop from concept to creation, covering design, mockups, tech packs, sampling and production.",
+  // Canonical profile URLs exactly as the platforms serve them (www host,
+  // trailing slash). Footer links and schema.org sameAs both read from here
+  // and must match character for character, so the profiles resolve to one
+  // unambiguous entity.
   social: {
-    instagram: "madebyobra",
+    instagram: {
+      label: "Instagram",
+      url: "https://www.instagram.com/madebyobra/",
+    },
+    linkedin: {
+      label: "LinkedIn",
+      url: "https://www.linkedin.com/company/madebyobra/",
+    },
   },
   // Web3Forms access keys (public by design; used client-side by the forms).
   web3formsKeys: {
@@ -20,6 +31,12 @@ export const siteConfig = {
     brief: "4655dc33-4151-4db9-b958-aa76e53a50e8",
   },
 } as const;
+
+/** Social profiles, in footer display order. */
+export const socialLinks = [
+  siteConfig.social.instagram,
+  siteConfig.social.linkedin,
+];
 
 // Trailing slashes are required: next.config.ts sets `trailingSlash: true`, so
 // the non-slash form 301s. next/link normalises rendered hrefs, but the raw

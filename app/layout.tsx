@@ -3,6 +3,7 @@ import { Archivo, Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ogImage } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
 // Body + lede.
@@ -37,17 +38,17 @@ export const metadata: Metadata = {
     template: "%s | OBRA",
   },
   description: siteConfig.description,
+  // Rendered on every route: pages inherit this whole-key value.
+  robots: { index: true, follow: true },
+  // Fallback only. Every route builds its complete `openGraph` block through
+  // lib/metadata.ts, because a page-level `openGraph` replaces this whole
+  // object rather than merging into it; this remains for any future route
+  // that ships without page metadata.
   openGraph: {
-    title: "Football Jerseys From Concept to Creation | OBRA",
-    description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Football Jerseys From Concept to Creation | OBRA",
-    description: siteConfig.description,
+    siteName: siteConfig.name,
+    locale: "en_GB",
+    images: [ogImage],
   },
 };
 

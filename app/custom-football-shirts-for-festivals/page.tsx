@@ -12,33 +12,20 @@ import { FaqAccordion } from "@/components/festival/FaqAccordion";
 import { FinalCta } from "@/components/festival/FinalCta";
 import { StickyCta } from "@/components/StickyCta";
 import { stickyCta } from "@/content/festival-landing";
+import { pageMetadata } from "@/lib/metadata";
 import { buildFestivalPageSchema, festivalPageMeta } from "@/lib/schema/festivalPage";
+import { festivalHref } from "@/lib/siteConfig";
 
-export const metadata: Metadata = {
-  // `absolute` so the root layout's "%s | OBRA" template does not double the
-  // site name, which the specified title already carries.
-  title: { absolute: festivalPageMeta.title },
+// `absolute` so the root layout's "%s | OBRA" template does not double the
+// site name, which the specified title already carries.
+export const metadata: Metadata = pageMetadata({
+  title: festivalPageMeta.title,
+  absolute: true,
   description: festivalPageMeta.description,
-  alternates: {
-    canonical: festivalPageMeta.url,
-  },
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    url: festivalPageMeta.url,
-    siteName: "OBRA",
-    title: festivalPageMeta.ogTitle,
-    description: festivalPageMeta.ogDescription,
-    locale: "en_GB",
-    // No og:image until the card artwork exists. Pointing at a missing file
-    // would render a broken share preview.
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: festivalPageMeta.ogTitle,
-    description: festivalPageMeta.ogDescription,
-  },
-};
+  path: festivalHref,
+  ogTitle: festivalPageMeta.ogTitle,
+  ogDescription: festivalPageMeta.ogDescription,
+});
 
 export default function FestivalLandingPage() {
   return (

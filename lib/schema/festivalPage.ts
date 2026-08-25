@@ -13,6 +13,7 @@
 
 import { festivalFaq } from "@/content/festival-faq";
 import { releasePackages } from "@/lib/packages";
+import { organizationNode } from "@/lib/schema/organization";
 import { siteConfig } from "@/lib/siteConfig";
 
 const SITE = "https://madebyobra.com";
@@ -32,26 +33,7 @@ export function buildFestivalPageSchema() {
   return {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${SITE}/#organization`,
-        name: siteConfig.name,
-        url: `${SITE}/`,
-        logo: {
-          "@type": "ImageObject",
-          url: `${SITE}/brand/obra-white.svg`,
-        },
-        email: siteConfig.email,
-        sameAs: [`https://instagram.com/${siteConfig.social.instagram}`],
-        parentOrganization: {
-          "@type": "Organization",
-          name: "TACITO Group",
-        },
-        address: {
-          "@type": "PostalAddress",
-          addressCountry: "GB",
-        },
-      },
+      organizationNode(),
       {
         "@type": "WebSite",
         "@id": `${SITE}/#website`,

@@ -1,7 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Asterisk } from "./brand/Marks";
-import { privacyHref, sectorLinks, siteConfig } from "@/lib/siteConfig";
+import {
+  privacyHref,
+  sectorLinks,
+  siteConfig,
+  socialLinks,
+} from "@/lib/siteConfig";
 
 export function Footer() {
   return (
@@ -21,14 +26,22 @@ export function Footer() {
 
           <div>
             <h2 className="text-tag text-ash">Follow</h2>
-            <a
-              href={`https://instagram.com/${siteConfig.social.instagram}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 block w-fit text-body text-white underline-offset-4 transition-colors hover:text-yellow hover:underline"
-            >
-              Instagram
-            </a>
+            <ul className="mt-3 space-y-2">
+              {socialLinks.map((link) => (
+                <li key={link.url}>
+                  {/* rel="me" ties the page to the profile for entity
+                      matching, the same association as schema.org sameAs. */}
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="me noopener noreferrer"
+                    className="block w-fit text-body text-white underline-offset-4 transition-colors hover:text-yellow hover:underline"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>

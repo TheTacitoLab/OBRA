@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
+import { pageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
     "How OBRA collects, uses and protects your personal data, and your rights under UK data protection law.",
-  alternates: { canonical: "/privacy/" },
-  // Without this the page inherits the homepage og:url from the root layout.
-  openGraph: { url: "/privacy/" },
-};
+  path: "/privacy/",
+});
 
 export default function PrivacyPage() {
   return (

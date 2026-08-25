@@ -4,16 +4,15 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { Reveal } from "@/components/Reveal";
 import { BriefForm } from "@/components/BriefForm";
 import { Asterisk } from "@/components/brand/Marks";
+import { pageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Start a brief",
   description:
     "Tell us about your drop. OBRA takes limited edition football jerseys from concept to creation.",
-  alternates: { canonical: "/brief/" },
-  // Without this the page inherits the homepage og:url from the root layout.
-  openGraph: { url: "/brief/" },
-};
+  path: "/brief/",
+});
 
 const steps = ["Send your brief", "We shape a concept", "We build the drop"];
 
