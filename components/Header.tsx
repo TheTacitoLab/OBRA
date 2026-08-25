@@ -55,7 +55,7 @@ export function Header() {
           >
             <Image
               src="/brand/obra-white.svg"
-              alt=""
+              alt="OBRA"
               width={1104}
               height={426}
               priority

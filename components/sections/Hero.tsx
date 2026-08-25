@@ -16,6 +16,8 @@ export function Hero() {
           {/* Title sits in the lower third, well clear of the header. */}
           <Container className="relative z-10 flex flex-1 flex-col justify-end pb-12 pt-28">
             <div className="w-full">
+              {/* Decorative crest: the heading beneath carries the message,
+                  so the empty alt is deliberate. */}
               <Image
                 src="/brand/griffin-yellow.png"
                 alt=""
