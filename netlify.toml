@@ -1,0 +1,17 @@
+# Netlify configuration.
+#
+# Redirects live here rather than in next.config.ts because `next.config`
+# redirects do not fire on a static export: the site is served as plain files
+# from /out, so the CDN has to issue them.
+
+# The old festival URL predates this codebase and still receives external
+# traffic. Redirect both the slash and no-slash variants permanently.
+[[redirects]]
+  from = "/festival"
+  to = "/custom-football-shirts-for-festivals/"
+  status = 301
+
+[[redirects]]
+  from = "/festival/"
+  to = "/custom-football-shirts-for-festivals/"
+  status = 301
