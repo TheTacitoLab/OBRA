@@ -28,7 +28,7 @@ export function Editorial({
     ? "md:col-span-7 md:col-start-6 md:order-2"
     : "md:col-span-7 lg:col-span-8";
   const asideCols = reverse
-    ? "md:col-span-4 md:col-start-1 md:order-1 lg:col-span-4"
+    ? "md:col-span-5 md:col-start-1 md:order-1 lg:col-span-4"
     : "md:col-span-5 lg:col-span-4 lg:col-start-9";
   const headingText = [
     headingAlign === "right" ? "md:text-right" : "",

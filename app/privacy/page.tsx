@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <Section tone="bone" containerClassName="pt-28 md:pt-36">
+    <Section tone="bone" containerClassName="pt-hero">
       <div className="max-w-3xl">
           <h1 className="type-display">Privacy policy.</h1>
           <p className="type-meta mt-6 text-muted">

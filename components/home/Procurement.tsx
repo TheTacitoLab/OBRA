@@ -25,7 +25,7 @@ export function Procurement() {
           tone="stone"
           meta="01"
           title="Sampling and QC through our factory network"
-          className="min-h-[15rem] md:col-span-7 md:row-span-2 md:min-h-[24rem]"
+          className="md:col-span-7 md:row-span-2 md:min-h-[24rem]"
         >
           <p>
             Every product is sampled, approved and checked in production
@@ -37,7 +37,7 @@ export function Procurement() {
           tone="accent"
           meta="02"
           title="Costed to the budget"
-          className="min-h-[11rem] md:col-span-5"
+          className="md:col-span-5"
         >
           <p>
             Specification, volume and finish are balanced together, so the

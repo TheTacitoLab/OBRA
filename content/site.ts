@@ -20,7 +20,7 @@ export const navLinks: NavLink[] = [
 
 export const primaryCta = { label: "Start a project", href: startHref };
 
-export type LandingPage = {
+export type PageEntry = {
   slug: string;
   /** Label as it appears in the enormous homepage lists (uppercase via CSS). */
   label: string;
@@ -32,7 +32,7 @@ export type LandingPage = {
 };
 
 /** Who for: the four audiences, in display order. */
-export const audiences: LandingPage[] = [
+export const audiences: PageEntry[] = [
   {
     slug: "festivals",
     label: "Festivals",
@@ -72,7 +72,7 @@ export const audiences: LandingPage[] = [
 ];
 
 /** What we make: product category landing pages. */
-export const products: LandingPage[] = [
+export const products: PageEntry[] = [
   {
     slug: "headwear",
     label: "Headwear",

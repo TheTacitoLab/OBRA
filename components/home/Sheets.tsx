@@ -36,6 +36,9 @@ export function Sheets({ children }: { children: ReactNode }) {
 
     const html = document.documentElement;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Below 768px the sheets flow naturally (see globals.css), so the
+    // progress values are not needed; the header tone still is.
+    const phone = window.matchMedia("(max-width: 767px)");
     // The layout viewport height matches 100svh, which sizes the sheets.
     const viewport = () => html.clientHeight;
     let frame = 0;
@@ -56,7 +59,7 @@ export function Sheets({ children }: { children: ReactNode }) {
       const vh = viewport();
       const tops = sheets.map((sheet) => sheet.getBoundingClientRect().top);
 
-      if (!reduce.matches) {
+      if (!reduce.matches && !phone.matches) {
         sheets.forEach((sheet, index) => {
           const nextTop = tops[index + 1];
           const cover = nextTop === undefined ? 0 : clamp((vh - nextTop) / vh);
@@ -123,6 +126,7 @@ export function Sheets({ children }: { children: ReactNode }) {
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", onResize);
     reduce.addEventListener("change", schedule);
+    phone.addEventListener("change", onResize);
     document.addEventListener("click", onClick, true);
     window.addEventListener("hashchange", onHashChange);
     measure();
@@ -140,6 +144,7 @@ export function Sheets({ children }: { children: ReactNode }) {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", onResize);
       reduce.removeEventListener("change", schedule);
+      phone.removeEventListener("change", onResize);
       document.removeEventListener("click", onClick, true);
       window.removeEventListener("hashchange", onHashChange);
       if (frame) cancelAnimationFrame(frame);

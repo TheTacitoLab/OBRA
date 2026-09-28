@@ -1,4 +1,4 @@
-import { findAudience, type LandingPage } from "./site";
+import { findAudience, type PageEntry } from "./site";
 
 /**
  * The four "Who for" pages: /festivals/, /events/, /brands/ and /artists/.
@@ -261,7 +261,7 @@ export const findAudienceContent = (slug: string) =>
  * cannot ship with an empty page.
  */
 export function getAudience(slug: string): {
-  page: LandingPage;
+  page: PageEntry;
   content: AudienceContent;
 } {
   const page = findAudience(slug);

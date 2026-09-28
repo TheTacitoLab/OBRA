@@ -18,8 +18,8 @@ const parent = { label: "Who for", href: "/who-for/" };
 
 /** Lead block spans 7/12 and both rows; the other two stack beside it. */
 const benefitLayout: { tone: BlockTone; className: string }[] = [
-  { tone: "stone", className: "min-h-[18rem] md:col-span-7 md:row-span-2" },
-  { tone: "accent", className: "min-h-[13rem] md:col-span-5" },
+  { tone: "stone", className: "md:col-span-7 md:row-span-2 md:min-h-[24rem]" },
+  { tone: "accent", className: "md:col-span-5" },
   { tone: "outline", className: "md:col-span-5" },
 ];
 
@@ -45,7 +45,7 @@ export function AudiencePage({ slug }: { slug: string }) {
   return (
     <>
       {/* Hero: parent link, full-width statement, intro and CTA in the right column. */}
-      <Section tone="bone" size="large" containerClassName="pt-24 md:pt-32">
+      <Section tone="bone" size="large" containerClassName="pt-hero">
         <p className="type-small text-muted">
           <Link
             href={parent.href}

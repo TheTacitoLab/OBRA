@@ -9,7 +9,7 @@ import { Button, ArrowLink } from "../site/Button";
 export function Hero() {
   return (
     <Sheet id="top" tone="bone">
-      <Container className="flex flex-1 flex-col pb-10 pt-24 sm:pt-28 lg:pb-14 lg:pt-36">
+      <Container className="flex flex-1 flex-col pb-12 pt-20 sm:pt-28 lg:pb-14 lg:pt-36">
         <h1 className="type-hero">
           <span className="rise-line">
             <span>

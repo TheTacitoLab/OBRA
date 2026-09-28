@@ -207,7 +207,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 768px) {
     .type-display {
-      font-size: clamp(3.25rem, 8.25vw, 7.5rem);
+      font-size: clamp(3.25rem, 7.9vw, 7.5rem);
     }
   }
 
@@ -235,6 +235,15 @@ html[data-nav="dark"] {
     text-transform: uppercase;
     text-wrap: balance;
   }
+  /* For a title whose longest word runs past 11 characters ("Trainingwear"). */
+  .type-page-long {
+    font-size: clamp(2.5rem, 12vw, 11rem);
+  }
+
+  /* Hero sections clear the fixed header from the same tokens. */
+  .pt-hero {
+    padding-top: calc(var(--spacing-header) + var(--spacing-section));
+  }
 
   /* The enormous audience links. Limit: "FESTIVALS" in an 8/12 column. */
   .type-link {
@@ -253,10 +262,24 @@ html[data-nav="dark"] {
   /* Product links. Limit: "RETRO FOOTBALL" on one line, "SHIRTS" on the next. */
   .type-link-sm {
     font-weight: 900;
+    font-size: clamp(2.25rem, 11.6vw, 7.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+  }
+
+  /* Product index labels that share a row with copy from md up. */
+  .type-link-xs {
+    font-weight: 900;
     font-size: clamp(2.25rem, 11.6vw, 8rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
     text-transform: uppercase;
+  }
+  @media (min-width: 768px) {
+    .type-link-xs {
+      font-size: clamp(2.5rem, 5.5vw, 5rem);
+    }
   }
 
   /* Mid-size heavy titles: notes, article headlines, block titles. */
@@ -355,8 +378,8 @@ html[data-nav="dark"] {
   }
   .u-wipe:hover,
   .u-wipe:focus-visible,
-  a:hover > .u-wipe,
-  a:focus-visible > .u-wipe,
+  a:hover .u-wipe,
+  a:focus-visible .u-wipe,
   .u-wipe[aria-current="page"] {
     background-size: 100% var(--u-size);
     background-position: 0 100%;
@@ -711,6 +734,24 @@ html[data-nav="dark"] {
     position: relative;
     top: auto;
   }
+  /* Phones get their own layout: the chapters flow at their natural height
+     with no stacking, so nothing on the first screens is padding. */
+  @media (max-width: 767px) {
+    .sheet {
+      position: relative;
+      top: auto !important;
+      min-height: 0;
+      box-shadow: none;
+    }
+    .sheet::after {
+      display: none;
+    }
+    .sheet__inner {
+      transform: none !important;
+      opacity: 1 !important;
+      will-change: auto;
+    }
+  }
 
   /* -------------------------------------------------------------------
      Load-in for the hero: lines rise from behind a mask, copy fades after.
@@ -735,24 +776,25 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
-     Blocks: the occasional content block. One accent among neutrals.
+     Panels: the occasional content block. One accent among neutrals.
+     (Named "panel" because Tailwind owns the `block` utility.)
      ------------------------------------------------------------------- */
-  .block {
+  .panel {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: clamp(2rem, 4vw, 4rem);
+    gap: clamp(1.5rem, 3vw, 3.5rem);
     padding: clamp(1.25rem, 2vw + 0.5rem, 2.25rem);
     border-radius: 2px;
     color: var(--color-ink);
   }
-  .block-stone {
+  .panel-stone {
     background-color: var(--color-stone);
   }
-  .block-accent {
+  .panel-accent {
     background-color: var(--color-lime-soft);
   }
-  .block-outline {
+  .panel-outline {
     border: 1px solid var(--line-strong);
   }
 

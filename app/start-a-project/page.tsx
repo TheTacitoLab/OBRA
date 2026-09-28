@@ -28,7 +28,7 @@ export default function StartAProjectPage() {
           crumbs: [{ name: "Home", path: "/" }, { name: page.title }],
         })}
       />
-      <Section tone="bone" size="default" containerClassName="pt-28 md:pt-36">
+      <Section tone="bone" size="default" containerClassName="pt-hero">
         <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-24">

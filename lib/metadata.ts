@@ -23,6 +23,8 @@ type PageMetadata = {
   /** Share-card copy, where it should differ from the page title. */
   ogTitle?: string;
   ogDescription?: string;
+  /** Present for notes: typed as an article with its publication date. */
+  article?: { publishedTime: string; modifiedTime?: string };
 };
 
 /**
@@ -39,19 +41,27 @@ export function pageMetadata({
   path,
   ogTitle,
   ogDescription,
+  article,
 }: PageMetadata): Metadata {
+  const shared = {
+    url: path,
+    siteName: siteConfig.name,
+    locale: "en_GB",
+    title: ogTitle ?? title,
+    description: ogDescription ?? description,
+    images: [ogImage],
+  };
   return {
     title: absolute ? { absolute: title } : title,
     description,
     alternates: { canonical: path },
-    openGraph: {
-      type: "website",
-      url: path,
-      siteName: siteConfig.name,
-      locale: "en_GB",
-      title: ogTitle ?? title,
-      description: ogDescription ?? description,
-      images: [ogImage],
-    },
+    openGraph: article
+      ? {
+          type: "article",
+          publishedTime: article.publishedTime,
+          modifiedTime: article.modifiedTime ?? article.publishedTime,
+          ...shared,
+        }
+      : { type: "website", ...shared },
   };
 }

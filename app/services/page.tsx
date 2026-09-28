@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/site/Container";
-import { LandingPage } from "@/components/landing/LandingPage";
+import { ClosingCta } from "@/components/landing/ClosingCta";
+import { PageHero } from "@/components/landing/PageHero";
+import { ArrowLink } from "@/components/site/Button";
+import { Editorial } from "@/components/site/Editorial";
 import { JsonLd } from "@/components/site/JsonLd";
+import { Section } from "@/components/site/Section";
 import { services } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { buildPageSchema } from "@/lib/schema/organization";
@@ -11,8 +14,6 @@ const page = {
   title: "Services",
   description:
     "madebyobra services: creative direction, product development, sampling and manufacturing, procurement and costing, branding and packaging, e-commerce, fulfilment, event support and logistics.",
-  intro:
-    "Everything between the first idea and finished stock at your door, handled in one place.",
 };
 
 export const metadata: Metadata = pageMetadata({
@@ -30,30 +31,74 @@ export default function ServicesPage() {
           crumbs: [{ name: "Home", path: "/" }, { name: page.title }],
         })}
       />
-      <LandingPage title="Our services." intro={page.intro}>
-        <section data-tone="bone" className="bg-bg text-fg">
-          <Container className="pb-24 md:pb-32">
-            <h2 className="sr-only">All services</h2>
-            <ol className="border-t border-line">
-              {services.map((service, index) => (
-                <li
-                  key={service.slug}
-                  id={service.slug}
-                  className="grid scroll-mt-28 gap-3 border-b border-line py-8 md:grid-cols-12 md:gap-x-12 md:py-10"
-                >
-                  <span className="type-meta text-muted md:col-span-1">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="type-title md:col-span-4">{service.title}</h3>
-                  <p className="type-body max-w-[44ch] text-muted md:col-span-6">
-                    {service.description}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </Container>
-        </section>
-      </LandingPage>
+
+      <PageHero
+        title="Services."
+        aside={
+          <div className="flex flex-col gap-head">
+            <p className="type-lede">
+              Everything between the first idea and finished stock at your
+              door, handled in one place.
+            </p>
+            <p className="type-body text-muted">
+              Nine services. Most projects use several, and one team runs
+              them all.
+            </p>
+          </div>
+        }
+      />
+
+      {/* No top padding: the list follows straight on from the hero. Each
+          row carries the service slug as its id, so /services/#fulfilment
+          lands on the row, clear of the fixed header. */}
+      <Section tone="bone" size="compact" containerClassName="pt-0">
+        <h2 className="sr-only">All services</h2>
+        <ol className="index-list">
+          {services.map((service, index) => (
+            <li
+              key={service.slug}
+              id={service.slug}
+              className="index-row grid scroll-mt-24 grid-cols-[2.75rem_minmax(0,1fr)] gap-x-3 md:grid-cols-12 md:gap-x-8 lg:gap-x-12"
+            >
+              <span className="type-meta pt-1 text-muted md:col-span-1">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 className="type-title md:col-span-4 lg:col-span-3">
+                {service.title}
+              </h3>
+              <p className="type-body col-start-2 mt-2 max-w-[44ch] text-muted md:col-span-7 md:col-start-6 md:mt-0 lg:col-span-6 lg:col-start-5">
+                {service.description}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* Copy left, heading right. */}
+      <Section tone="stone">
+        <Editorial
+          reverse
+          heading={<h2 className="type-display">One team, end to end.</h2>}
+          aside={
+            <div className="flex flex-col gap-5">
+              <p className="type-lede text-muted">
+                We manage the whole project from the first brief to production
+                and delivery: creative, product, factories, costing, packaging,
+                freight and the shop it sells through.
+              </p>
+              <p className="type-body text-muted">
+                Stock arrives retail-ready, with nothing left for you to
+                stitch together.
+              </p>
+              <div>
+                <ArrowLink href="/about/">How we work</ArrowLink>
+              </div>
+            </div>
+          }
+        />
+      </Section>
+
+      <ClosingCta />
     </>
   );
 }

@@ -1,29 +1,48 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LandingPage } from "@/components/landing/LandingPage";
+import { ClosingCta } from "@/components/landing/ClosingCta";
+import { PageHero } from "@/components/landing/PageHero";
+import { Steps, type Step } from "@/components/landing/Steps";
+import { BigList } from "@/components/home/BigList";
+import { Button } from "@/components/site/Button";
+import { Editorial } from "@/components/site/Editorial";
 import { JsonLd } from "@/components/site/JsonLd";
-import {
-  audiences,
-  findLandingPage,
-  pageHref,
-  products,
-} from "@/content/site";
+import { Section } from "@/components/site/Section";
+import { findProduct, pageHref, primaryCta, products } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { buildPageSchema } from "@/lib/schema/organization";
 
 /**
- * One template for the audience pages (/festivals/, /artists/, /events/,
- * /culture-led-brands/) and the product pages (/headwear/, /t-shirts/, /tops/,
- * /sportswear/, /retro-football-shirts/, /trainingwear/). Every slug is
- * pre-rendered at build time; anything else is a 404.
+ * One template for the product pages (/headwear/, /t-shirts/, /tops/,
+ * /sportswear/, /retro-football-shirts/, /trainingwear/). Every slug in
+ * content/site.ts is pre-rendered at build time; anything else is a 404.
+ * The audience pages have their own static routes (app/festivals/ etc.).
  */
 
 type Params = { slug: string };
 
+const parent = { label: "What we make", href: "/what-we-make/" };
+
+/** The same three steps for every product; the detail is in the brief. */
+const steps: Step[] = [
+  {
+    title: "Start from a proven block",
+    text: "A pattern, fit and construction that has already run in production, so the fundamentals are settled before the brief arrives.",
+  },
+  {
+    title: "Develop it around the brand",
+    text: "Fabric, fit, colour and trims first, then labels, tags and packaging, so the piece reads as part of the collection.",
+  },
+  {
+    title: "Sample, approve, produce",
+    text: "Samples for sign-off, then production and quality control through our factory network.",
+  },
+];
+
 export const dynamicParams = false;
 
 export function generateStaticParams(): Params[] {
-  return [...audiences, ...products].map(({ slug }) => ({ slug }));
+  return products.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -32,7 +51,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const page = findLandingPage(slug);
+  const page = findProduct(slug);
   if (!page) return {};
   return pageMetadata({
     title: page.title,
@@ -41,25 +60,21 @@ export async function generateMetadata({
   });
 }
 
-export default async function Landing({
+export default async function ProductPage({
   params,
 }: {
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const page = findLandingPage(slug);
+  const page = findProduct(slug);
   if (!page) notFound();
 
-  const isAudience = audiences.some((entry) => entry.slug === slug);
-  const parent = isAudience
-    ? { label: "Who for", href: "/who-for/" }
-    : { label: "What we make", href: "/what-we-make/" };
-  const siblings = (isAudience ? audiences : products)
-    .filter((entry) => entry.slug !== slug)
-    .map((entry) => ({ label: entry.label, href: pageHref(entry.slug) }));
-  const related = isAudience
-    ? siblings
-    : [...siblings, { label: "+ More", href: "/what-we-make/" }];
+  const others = [
+    ...products
+      .filter((entry) => entry.slug !== slug)
+      .map((entry) => ({ label: entry.label, href: pageHref(entry.slug) })),
+    { label: "+ More", href: parent.href },
+  ];
 
   return (
     <>
@@ -75,13 +90,36 @@ export default async function Landing({
           ],
         })}
       />
-      <LandingPage
-        title={page.title}
-        intro={page.intro}
+
+      <PageHero
+        full
         parent={parent}
-        related={related}
-        relatedTitle={isAudience ? "Also for." : "Also make."}
+        title={page.label}
+        aside={
+          <div className="flex flex-col gap-body">
+            <p className="type-lede">{page.intro}</p>
+            <div>
+              <Button href={primaryCta.href}>{primaryCta.label}</Button>
+            </div>
+          </div>
+        }
       />
+
+      {/* Heading left, the three steps as a hairline list on the right. */}
+      <Section tone="stone">
+        <Editorial
+          align="start"
+          heading={<h2 className="type-display">How we develop it.</h2>}
+          aside={<Steps steps={steps} />}
+        />
+      </Section>
+
+      <Section tone="ink" size="compact">
+        <h2 className="type-display">Also make.</h2>
+        <BigList className="mt-body" size="type-link-sm" items={others} />
+      </Section>
+
+      <ClosingCta />
     </>
   );
 }

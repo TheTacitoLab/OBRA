@@ -34,8 +34,7 @@ export function NoteList({
 // The underline lives on a span inside the heading, so the row (the `a`)
 // drives it through the group: `a:hover > .u-wipe` in globals.css only
 // reaches direct children.
-const wipe =
-  "u-wipe u-lime group-hover:[background-size:100%_var(--u-size)] group-hover:[background-position:0_100%] group-focus-visible:[background-size:100%_var(--u-size)] group-focus-visible:[background-position:0_100%]";
+const wipe = "u-wipe u-lime";
 
 function NoteRow({
   note,

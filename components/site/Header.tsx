@@ -143,7 +143,7 @@ export function Header() {
       >
         <nav
           aria-label="Mobile"
-          className="mx-auto flex h-full w-full max-w-[90rem] flex-col justify-between overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
+          className="mx-auto flex h-full w-full max-w-[90rem] flex-col overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
         >
           <div>
             <ul className="biglist flex flex-col">
@@ -183,7 +183,7 @@ export function Header() {
           </div>
 
           <div
-            className="site-menu__item mt-8 flex flex-col gap-6"
+            className="site-menu__item mt-10 flex flex-col gap-6"
             style={{ "--i": navLinks.length + 1 } as React.CSSProperties}
           >
             <Link href={primaryCta.href} className="btn btn-primary self-start">

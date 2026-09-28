@@ -20,7 +20,7 @@ export function Block({
   className?: string;
 }) {
   return (
-    <div className={`block block-${tone} ${className}`}>
+    <div className={`panel panel-${tone} ${className}`}>
       <div className="flex items-start justify-between gap-6">
         <h3 className="type-headline max-w-[14ch]">{title}</h3>
         {meta && <span className="type-meta shrink-0 text-muted">{meta}</span>}

@@ -34,6 +34,7 @@ export async function generateMetadata({
     title: note.title,
     description: note.standfirst,
     path: noteHref(slug),
+    article: { publishedTime: note.date },
   });
 }
 
