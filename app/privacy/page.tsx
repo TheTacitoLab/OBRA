@@ -1,40 +1,40 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/Container";
+import { Container } from "@/components/site/Container";
 import { pageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
-    "How OBRA collects, uses and protects your personal data, and your rights under UK data protection law.",
+    "How madebyobra collects, uses and protects your personal data, and your rights under UK data protection law.",
   path: "/privacy/",
 });
 
 export default function PrivacyPage() {
   return (
-    <section className="pb-24 pt-32 sm:pt-40 md:pb-32">
-      <Container>
-        <div className="prose-privacy mx-auto max-w-3xl">
-          <p className="text-label text-yellow">Legal</p>
-          <h1 className="mt-5 font-display text-[clamp(2rem,4vw,3rem)] font-black uppercase leading-[1.02] text-white">
-            Privacy Policy
-          </h1>
-          <p className="mt-4 text-body text-mute">Last updated 24 June 2026</p>
+    <section data-tone="bone" className="bg-bg text-fg">
+      <Container className="pb-24 pt-40 md:pb-32 md:pt-48">
+        <div className="max-w-3xl">
+          <h1 className="type-display">Privacy policy.</h1>
+          <p className="type-meta mt-6 text-muted">
+            Last updated 28 September 2026
+          </p>
 
-          <p className="mt-8 text-body text-ash">
-            This privacy policy explains how OBRA (&ldquo;OBRA&rdquo;,
+          <p className="type-body mt-10 text-muted">
+            This privacy policy explains how madebyobra (&ldquo;madebyobra&rdquo;,
             &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;), a TACITO
             Group company, collects, uses and protects your personal data when
             you visit {siteConfig.url.replace("https://", "")}, contact us or
-            start a brief. We are committed to handling your personal data in
+            start a project. We are committed to handling your personal data in
             line with the UK General Data Protection Regulation (UK GDPR) and the
             Data Protection Act 2018.
           </p>
 
           <h2 className="privacy-h2">1. Who we are</h2>
           <p className="privacy-p">
-            OBRA is a football jersey studio operated by TACITO Group. For the
-            purposes of UK data protection law, OBRA is the data controller
+            madebyobra is a bespoke merchandise studio operated by TACITO
+            Group. For the purposes of UK data protection law, madebyobra is the
+            data controller
             responsible for your personal data. If you have any questions about
             this policy or how we handle your data, you can contact us at{" "}
             <a className="privacy-link" href={`mailto:${siteConfig.email}`}>
@@ -47,13 +47,13 @@ export default function PrivacyPage() {
           <p className="privacy-p">We may collect and process the following:</p>
           <ul className="privacy-ul">
             <li>
-              <strong className="text-white">Information you give us.</strong>{" "}
-              When you submit a brief or contact us, this can include your name,
+              <strong className="text-fg">Information you give us.</strong>{" "}
+              When you send a project brief or contact us, this can include your name,
               email address, the brand, project or organisation you represent,
               and any details you choose to share about your project.
             </li>
             <li>
-              <strong className="text-white">
+              <strong className="text-fg">
                 Information we collect automatically.
               </strong>{" "}
               When you use our website we may collect technical and usage data

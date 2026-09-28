@@ -4,14 +4,34 @@
 # redirects do not fire on a static export: the site is served as plain files
 # from /out, so the CDN has to issue them.
 
-# The old festival URL predates this codebase and still receives external
-# traffic. Redirect both the slash and no-slash variants permanently.
+# Retired URLs from the OBRA site. Both the slash and no-slash variants
+# redirect permanently to their madebyobra equivalents.
 [[redirects]]
   from = "/festival"
-  to = "/custom-football-shirts-for-festivals/"
+  to = "/festivals/"
   status = 301
 
 [[redirects]]
   from = "/festival/"
-  to = "/custom-football-shirts-for-festivals/"
+  to = "/festivals/"
+  status = 301
+
+[[redirects]]
+  from = "/custom-football-shirts-for-festivals"
+  to = "/festivals/"
+  status = 301
+
+[[redirects]]
+  from = "/custom-football-shirts-for-festivals/"
+  to = "/festivals/"
+  status = 301
+
+[[redirects]]
+  from = "/brief"
+  to = "/start-a-project/"
+  status = 301
+
+[[redirects]]
+  from = "/brief/"
+  to = "/start-a-project/"
   status = 301

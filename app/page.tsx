@@ -1,45 +1,40 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/sections/Hero";
-import { WhoItsFor } from "@/components/sections/WhoItsFor";
-import { WhatYouGet } from "@/components/sections/WhatYouGet";
-import { Process } from "@/components/sections/Process";
-import { Packages } from "@/components/sections/Packages";
-import { WhyObra } from "@/components/sections/WhyObra";
-import { ClosingCTA } from "@/components/sections/ClosingCTA";
-import { Overview } from "@/components/sections/Overview";
+import { Sheets } from "@/components/home/Sheets";
+import { Hero } from "@/components/home/Hero";
+import { WhoFor } from "@/components/home/WhoFor";
+import { Proposition } from "@/components/home/Proposition";
+import { RetailReady } from "@/components/home/RetailReady";
+import { Services } from "@/components/home/Services";
+import { Collection } from "@/components/home/Collection";
+import { WhatWeMake } from "@/components/home/WhatWeMake";
+import { Contact } from "@/components/home/Contact";
+import { JsonLd } from "@/components/site/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
-import { buildOrganizationSchema } from "@/lib/schema/organization";
+import { buildHomeSchema } from "@/lib/schema/organization";
 import { siteConfig } from "@/lib/siteConfig";
 
-// Canonical and og:url resolve against `metadataBase` in the root layout,
-// trailing-slashed to match `trailingSlash: true`.
 export const metadata: Metadata = pageMetadata({
-  title: "Football Jerseys From Concept to Creation | OBRA",
+  title: "madebyobra | Bespoke merchandise studio",
   absolute: true,
   description: siteConfig.description,
   path: "/",
-  ogTitle: "Football Jerseys From Concept to Creation",
+  ogTitle: "More product. Less promo.",
 });
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        // Static, first-party JSON built at compile time from site constants.
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(buildOrganizationSchema()),
-        }}
-      />
-
-      <Hero />
-      <WhoItsFor />
-      <WhatYouGet />
-      <Process />
-      <Packages />
-      <WhyObra />
-      <ClosingCTA />
-      <Overview />
+      <JsonLd data={buildHomeSchema()} />
+      <Sheets>
+        <Hero />
+        <WhoFor />
+        <Proposition />
+        <RetailReady />
+        <Services />
+        <Collection />
+        <WhatWeMake />
+        <Contact />
+      </Sheets>
     </>
   );
 }

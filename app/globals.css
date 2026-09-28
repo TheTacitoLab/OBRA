@@ -1,340 +1,796 @@
 @import "tailwindcss";
 
 /* =========================================================================
-   OBRA design tokens - single source of truth.
-   Tailwind v4 emits each of these as a CSS variable on :root AND generates the
-   matching utility (e.g. --color-coral -> bg-coral / text-coral / border-coral).
+   madebyobra design tokens - single source of truth.
+   Tailwind v4 emits each of these as a CSS variable on :root and generates
+   the matching utilities (--color-clay -> bg-clay / text-clay / border-clay).
    ========================================================================= */
 @theme {
-  /* Palette */
-  --color-void: #0e1311; /* page background, deepest */
-  --color-obsidian: #171c1a; /* primary dark surface */
-  --color-slate: #202624; /* surface alt, cards, form fields */
-  --color-line: #2e3633; /* borders, dividers */
-  --color-white: #ffffff; /* primary text */
-  --color-ash: #b6bbba; /* secondary text */
-  --color-mute: #6e7471; /* tertiary text, muted labels */
-  --color-electric: #3e53d8; /* accent - cobalt-indigo */
-  --color-magenta: #d44078; /* accent - raspberry */
-  --color-coral: #e85f40; /* accent - coral-red, primary CTA */
-  --color-flare: #ef9568; /* peach highlight, accents only */
-  --color-violet: #7e50a4; /* fifth accent */
-  --color-yellow: #fcde16; /* accent: buttons + icon marks */
+  /* Brand palette */
+  --color-bone: #f1eee7; /* Warm Bone - primary light background */
+  --color-ink: #171717; /* Soft Black - primary dark background, main text */
+  --color-stone: #d7d1c6; /* Muted Stone - secondary neutral */
+  --color-clay: #b8644a; /* Burnt Clay - expressive accent, section background */
+  --color-blue: #6e7d94; /* Dusty Blue - secondary expressive colour */
+  --color-lime: #d8e24f; /* Acid Lime - tiny details, hover and active states only */
 
-  /* Type families (the --font-* vars come from next/font in layout.tsx) */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-space-mono), ui-monospace, "SFMono-Regular", monospace;
-  --font-display: var(--font-archivo), var(--font-inter), system-ui, sans-serif;
+  /* One grotesk for everything. The --font-hanken var comes from next/font. */
+  --font-sans:
+    var(--font-hanken), "Helvetica Neue", Helvetica, Arial, ui-sans-serif,
+    system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Semantic colours follow the tone of the surface they sit on (see
+   [data-tone] below), so `bg-bg text-fg border-line text-muted` are correct
+   on bone, soft black, stone and clay alike. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+}
+
+/* =========================================================================
+   Surface tones
+   ========================================================================= */
+:root,
+[data-tone="bone"] {
+  --bg: var(--color-bone);
+  --fg: var(--color-ink);
+  --muted: color-mix(in srgb, var(--color-ink) 70%, var(--color-bone));
+  --line: color-mix(in srgb, var(--color-ink) 16%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-ink) 40%, transparent);
+}
+
+[data-tone="stone"] {
+  --bg: var(--color-stone);
+  --fg: var(--color-ink);
+  --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-stone));
+  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
+}
+
+[data-tone="ink"] {
+  --bg: var(--color-ink);
+  --fg: var(--color-bone);
+  --muted: color-mix(in srgb, var(--color-bone) 66%, var(--color-ink));
+  --line: color-mix(in srgb, var(--color-bone) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-bone) 44%, transparent);
+}
+
+[data-tone="clay"] {
+  --bg: var(--color-clay);
+  --fg: var(--color-bone);
+  /* Running copy on clay is set in ink: bone only clears AA at display sizes. */
+  --muted: var(--color-ink);
+  --line: color-mix(in srgb, var(--color-bone) 26%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-bone) 50%, transparent);
+}
+
+[data-tone="blue"] {
+  --bg: var(--color-blue);
+  --fg: var(--color-bone);
+  --muted: var(--color-ink);
+  --line: color-mix(in srgb, var(--color-bone) 26%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-bone) 50%, transparent);
+}
+
+/* The fixed header has no background of its own and follows whichever sheet
+   is beneath it. Sheets.tsx writes data-nav="dark" on <html> while a dark
+   sheet is under the header; every other page leaves it light. */
+:root {
+  --nav-fg: var(--color-ink);
+  --nav-bg: var(--color-bone);
+}
+html[data-nav="dark"] {
+  --nav-fg: var(--color-bone);
+  --nav-bg: var(--color-ink);
 }
 
 /* =========================================================================
    Base
    ========================================================================= */
 @layer base {
-  :root {
-    color-scheme: dark;
-  }
-
   html {
+    color-scheme: light;
     scroll-behavior: smooth;
-    /* Offset anchored sections so headings clear the fixed header. */
-    scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
   }
 
   body {
-    background-color: var(--color-void);
-    color: var(--color-white);
+    background-color: var(--color-bone);
+    color: var(--color-ink);
     font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01" 0, "kern" 1;
+    overflow-x: clip;
   }
 
   ::selection {
-    background: var(--color-yellow);
-    color: var(--color-void);
+    background: var(--color-lime);
+    color: var(--color-ink);
   }
 
-  /* Visible, on-brand focus ring for keyboard users. */
+  /* Focus follows the text colour so it stays visible on every tone. */
   :focus-visible {
-    outline: 2px solid var(--color-flare);
-    outline-offset: 2px;
-    border-radius: 2px;
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+    border-radius: 1px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 800;
+  }
+
+  b,
+  strong {
+    font-weight: 600;
   }
 }
 
 /* =========================================================================
-   Type scale
+   Type scale - the identity lives here.
    ========================================================================= */
 @layer components {
-  .text-poster {
-    font-family: var(--font-display);
+  /* Hero statement. Wraps to one word per line below ~400px by design. */
+  .type-hero {
     font-weight: 800;
+    font-size: clamp(3.25rem, 11vw, 10rem);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
     text-transform: uppercase;
-    font-size: clamp(3.5rem, 12vw, 12rem);
+  }
+
+  /* Section titles */
+  .type-display {
+    font-weight: 800;
+    font-size: clamp(2.5rem, 7vw, 6.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  /* Landing page titles */
+  .type-page {
+    font-weight: 800;
+    font-size: clamp(2.75rem, 8vw, 8rem);
     line-height: 0.9;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
     text-wrap: balance;
   }
 
-  .text-display {
-    font-family: var(--font-display);
+  /* The enormous list links (Who For, What We Make) */
+  .type-link {
     font-weight: 800;
+    font-size: clamp(2.5rem, 7.4vw, 7.5rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
     text-transform: uppercase;
-    font-size: clamp(2.5rem, 7vw, 6rem);
-    line-height: 0.96;
-    letter-spacing: -0.015em;
-    text-wrap: balance;
   }
 
-  .text-headline {
-    font-family: var(--font-display);
+  .type-link-sm {
+    font-weight: 800;
+    font-size: clamp(2.25rem, 5.6vw, 5.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  /* Service and column titles */
+  .type-title {
     font-weight: 700;
-    font-size: clamp(1.5rem, 3vw, 2.75rem);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
+    font-size: clamp(1.375rem, 0.9vw + 1rem, 1.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
   }
 
-  .text-lede {
-    font-family: var(--font-sans);
+  /* Supporting statements - the bold paragraph under a title */
+  .type-lede {
+    font-weight: 500;
+    font-size: clamp(1.25rem, 0.9vw + 0.85rem, 1.75rem);
+    line-height: 1.28;
+    letter-spacing: -0.015em;
+    text-wrap: pretty;
+  }
+
+  .type-body {
     font-weight: 400;
-    font-size: clamp(1.125rem, 1.8vw, 1.5rem);
-    line-height: 1.5;
+    font-size: 1.0625rem;
+    line-height: 1.55;
   }
 
-  .text-body {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.65;
+  .type-small {
+    font-weight: 500;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
   }
 
-  .text-label {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
+  .type-meta {
+    font-weight: 500;
+    font-size: 0.8125rem;
     line-height: 1.4;
   }
 
-  .text-tag {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    font-size: 0.65rem;
-    letter-spacing: 0.22em;
-    line-height: 1.3;
+  /* -------------------------------------------------------------------
+     Links: an underline that wipes in from the left and out to the right.
+     Uses a background gradient rather than text-decoration so it animates,
+     and box-decoration-break so wrapped lines each carry their own line.
+     ------------------------------------------------------------------- */
+  .u-wipe {
+    --u-color: currentColor;
+    --u-size: 1px;
+    background-image: linear-gradient(var(--u-color), var(--u-color));
+    background-size: 0% var(--u-size);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding-bottom: 0.06em;
+    transition: background-size 0.55s var(--ease-out-expo);
+  }
+  .u-wipe:hover,
+  .u-wipe:focus-visible,
+  a:hover > .u-wipe,
+  a:focus-visible > .u-wipe,
+  .u-wipe[aria-current="page"] {
+    background-size: 100% var(--u-size);
+    background-position: 0 100%;
+  }
+  .u-lime {
+    --u-color: var(--color-lime);
+    --u-size: 0.09em;
+  }
+  .u-thin {
+    --u-size: 1px;
+  }
+  .u-static {
+    background-size: 100% var(--u-size);
+    background-position: 0 100%;
   }
 
-  /* Long-form prose (privacy policy) */
-  .privacy-h2 {
-    margin-top: 2.5rem;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.35rem;
+  /* -------------------------------------------------------------------
+     Enormous link lists
+     ------------------------------------------------------------------- */
+  .biglist > li {
+    border-top: 1px solid var(--line);
+    transition:
+      transform 0.6s var(--ease-out-expo),
+      opacity 0.45s ease;
+  }
+  .biglist > li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .biglist:has(> li:hover) > li:not(:hover) {
+    opacity: 0.4;
+  }
+  .biglist > li:hover {
+    transform: translateX(0.35rem);
+  }
+  @media (min-width: 1024px) {
+    .biglist > li:hover {
+      transform: translateX(0.6rem);
+    }
+  }
+  .biglink {
+    display: block;
+    padding-block: 0.16em;
+    color: inherit;
+    text-decoration: none;
+  }
+  .biglink:focus-visible {
+    outline-offset: -2px;
+  }
+
+  /* -------------------------------------------------------------------
+     Buttons - solid, squared, quiet.
+     ------------------------------------------------------------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 0.9375rem;
     line-height: 1.2;
-    color: var(--color-white);
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s var(--ease-out-quart);
   }
-  .privacy-p {
-    margin-top: 1rem;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-ash);
+  .btn:active {
+    transform: translateY(1px);
   }
-  .privacy-ul {
-    margin-top: 1rem;
-    padding-left: 1.25rem;
-    list-style: disc;
-    color: var(--color-ash);
-  }
-  .privacy-ul li {
-    margin-top: 0.5rem;
-    line-height: 1.7;
-  }
-  .privacy-link {
-    color: var(--color-white);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: color 0.2s ease;
-  }
-  .privacy-link:hover {
-    color: var(--color-yellow);
-  }
-}
-
-/* =========================================================================
-   Texture, glow + surfaces
-   ========================================================================= */
-@layer utilities {
-  /* Film grain - desaturated fractal noise, tiled. Layer over colour. */
-  .bg-grain {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
-    background-repeat: repeat;
-  }
-
-  /* Soft accent bloom - stage lighting, used sparingly. */
-  .glow-coral {
-    box-shadow: 0 0 110px -28px color-mix(in srgb, var(--color-coral) 60%, transparent);
-  }
-  .glow-electric {
-    box-shadow: 0 0 110px -28px color-mix(in srgb, var(--color-electric) 60%, transparent);
-  }
-  .glow-magenta {
-    box-shadow: 0 0 110px -28px color-mix(in srgb, var(--color-magenta) 55%, transparent);
-  }
-
-  /* The brand gradient, rendered in CSS (no binary asset needed).
-     Warm coral/flare top-right, magenta + electric mid-right, deep void
-     bottom-left - the announcement surface for hero + closing CTA. */
-  .obra-gradient {
-    background-color: var(--color-void);
-    background-image:
-      radial-gradient(115% 90% at 82% 6%, color-mix(in srgb, var(--color-coral) 90%, transparent) 0%, transparent 42%),
-      radial-gradient(80% 70% at 96% 26%, color-mix(in srgb, var(--color-magenta) 82%, transparent) 0%, transparent 46%),
-      radial-gradient(130% 120% at 90% 72%, color-mix(in srgb, var(--color-electric) 78%, transparent) 0%, transparent 56%),
-      radial-gradient(95% 95% at 26% 92%, color-mix(in srgb, var(--color-violet) 62%, transparent) 0%, transparent 60%),
-      radial-gradient(60% 55% at 64% 46%, color-mix(in srgb, var(--color-flare) 42%, transparent) 0%, transparent 42%),
-      linear-gradient(150deg, var(--color-void) 6%, transparent 52%);
-  }
-
-  /* Dark scrims for text legibility over the gradient (keeps AA contrast). */
-  .scrim-hero {
-    background-image: linear-gradient(
-      102deg,
-      var(--color-void) 0%,
-      color-mix(in srgb, var(--color-void) 82%, transparent) 36%,
-      transparent 72%
-    );
-  }
-  .scrim-bottom {
-    background-image: linear-gradient(
-      to bottom,
-      transparent 40%,
-      color-mix(in srgb, var(--color-void) 88%, transparent) 100%
-    );
-  }
-  .scrim-soft {
-    background-color: color-mix(in srgb, var(--color-void) 58%, transparent);
-  }
-
-  /* Section colour blends, so the page flows from one surface to the next. */
-  .scrim-top {
-    background-image: linear-gradient(
-      to bottom,
-      var(--color-void) 0%,
-      transparent 38%
-    );
-  }
-  .blend-down-purple {
-    background-image: linear-gradient(
-      to bottom,
-      var(--color-void) 0%,
-      color-mix(in srgb, var(--color-violet) 50%, var(--color-void)) 100%
-    );
-  }
-  .blend-up-purple {
-    background-image: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-violet) 50%, var(--color-void)) 0%,
-      var(--color-void) 100%
-    );
-  }
-
-  /* Further blends, so a long page can flow through more than one colour.
-     Each pair meets at void, which keeps section joins seamless. */
-  .blend-down-electric {
-    background-image: linear-gradient(
-      to bottom,
-      var(--color-void) 0%,
-      color-mix(in srgb, var(--color-electric) 42%, var(--color-void)) 100%
-    );
-  }
-  .blend-up-electric {
-    background-image: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-electric) 42%, var(--color-void)) 0%,
-      var(--color-void) 100%
-    );
-  }
-  .blend-down-magenta {
-    background-image: linear-gradient(
-      to bottom,
-      var(--color-void) 0%,
-      color-mix(in srgb, var(--color-magenta) 34%, var(--color-void)) 100%
-    );
-  }
-  .blend-up-magenta {
-    background-image: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-magenta) 34%, var(--color-void)) 0%,
-      var(--color-void) 100%
-    );
-  }
-
-  /* Motion helpers */
-  .animate-drift {
-    animation: obra-drift 16s ease-in-out infinite;
-    transform-origin: 70% 40%;
-    will-change: transform;
-  }
-  .animate-marquee {
-    animation: obra-marquee var(--marquee-duration, 32s) linear infinite;
-    will-change: transform;
-  }
-  .animate-cue {
-    animation: obra-cue 2.2s ease-in-out infinite;
-  }
-}
-
-@keyframes obra-drift {
-  0% {
-    transform: scale(1.06) translate3d(0, 0, 0);
-  }
-  50% {
-    transform: scale(1.12) translate3d(-1.6%, -1.1%, 0);
-  }
-  100% {
-    transform: scale(1.06) translate3d(0, 0, 0);
-  }
-}
-
-@keyframes obra-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@keyframes obra-cue {
-  0%,
-  100% {
-    transform: translateY(0);
+  .btn:disabled {
+    cursor: not-allowed;
     opacity: 0.55;
   }
-  50% {
-    transform: translateY(7px);
+
+  .btn-primary {
+    background-color: var(--fg);
+    color: var(--bg);
+    border: 1px solid var(--fg);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-clay);
+    border-color: var(--color-clay);
+    color: var(--color-bone);
+  }
+  [data-tone="clay"] .btn-primary,
+  [data-tone="blue"] .btn-primary {
+    background-color: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-bone);
+  }
+  [data-tone="clay"] .btn-primary:hover:not(:disabled),
+  [data-tone="blue"] .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-bone);
+    border-color: var(--color-bone);
+    color: var(--color-ink);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--fg);
+    border: 1px solid var(--line-strong);
+  }
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--fg);
+  }
+
+  /* Header CTA follows the nav colours, not the page tone. */
+  .btn-nav {
+    background-color: var(--nav-fg);
+    color: var(--nav-bg);
+    border: 1px solid var(--nav-fg);
+    min-height: 2.5rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.875rem;
+  }
+  .btn-nav:hover {
+    background-color: var(--color-clay);
+    border-color: var(--color-clay);
+    color: var(--color-bone);
+  }
+
+  /* -------------------------------------------------------------------
+     Logo: the wordmark PNG as a mask so it takes the current text colour.
+     ------------------------------------------------------------------- */
+  .logo {
+    display: block;
+    aspect-ratio: 1146 / 182;
+    background-color: currentColor;
+    -webkit-mask: url("/brand/madebyobra.png") center / contain no-repeat;
+    mask: url("/brand/madebyobra.png") center / contain no-repeat;
+  }
+
+  /* -------------------------------------------------------------------
+     Header
+     ------------------------------------------------------------------- */
+  .site-header {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 60;
+    color: var(--nav-fg);
+    transition:
+      color 0.3s ease,
+      transform 0.45s var(--ease-out-expo);
+  }
+  .site-header[data-hidden="true"] {
+    transform: translateY(-100%);
+  }
+  .site-header[data-menu-open="true"] {
+    color: var(--color-ink);
+  }
+  .nav-link {
+    --u-size: 1px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    color: inherit;
+  }
+  .nav-link[aria-current="page"] {
+    --u-color: var(--color-lime);
+    --u-size: 2px;
+  }
+
+  /* Full-screen menu (mobile / tablet). Kept mounted; toggled via data-open so
+     the exit animation runs without a library. */
+  .site-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-1.5%);
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s var(--ease-out-expo),
+      visibility 0s linear 0.45s;
+  }
+  .site-menu[data-open="true"] {
     opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.35s ease,
+      transform 0.6s var(--ease-out-expo),
+      visibility 0s;
+  }
+  .site-menu__item {
+    opacity: 0;
+    transform: translateY(0.6rem);
+    transition:
+      opacity 0.4s ease,
+      transform 0.6s var(--ease-out-expo);
+    transition-delay: 0s;
+  }
+  .site-menu[data-open="true"] .site-menu__item {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(0.08s + var(--i, 0) * 0.05s);
+  }
+
+  /* Burger: two lines that fold into a cross. */
+  .burger {
+    position: relative;
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .burger__line {
+    position: absolute;
+    left: 0.75rem;
+    width: 1.25rem;
+    height: 1.5px;
+    background-color: currentColor;
+    transition:
+      transform 0.4s var(--ease-out-expo),
+      top 0.4s var(--ease-out-expo);
+  }
+  .burger__line:first-child {
+    top: calc(50% - 4px);
+  }
+  .burger__line:last-child {
+    top: calc(50% + 3px);
+  }
+  .burger[aria-expanded="true"] .burger__line:first-child {
+    top: 50%;
+    transform: rotate(45deg);
+  }
+  .burger[aria-expanded="true"] .burger__line:last-child {
+    top: 50%;
+    transform: rotate(-45deg);
+  }
+
+  /* -------------------------------------------------------------------
+     Stacked sheets - the homepage scroll experience.
+     Each sheet is sticky at the top of the viewport, so the following sheet
+     rises over it in normal document flow: no scroll hijacking. Sheets
+     taller than the viewport receive a negative --sheet-top from Sheets.tsx
+     so they stick once fully read. --rise and --cover (0-1) are written by
+     the same script and drive the subtle content movement and dimming.
+     ------------------------------------------------------------------- */
+  .sheets {
+    position: relative;
+  }
+  .sheet {
+    position: sticky;
+    top: var(--sheet-top, 0px);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+    background-color: var(--bg);
+    color: var(--fg);
+    box-shadow: 0 -18px 48px -28px rgba(23, 23, 23, 0.45);
+  }
+  .sheet::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-ink);
+    opacity: calc(var(--cover, 0) * 0.22);
+    pointer-events: none;
+  }
+  .sheet__inner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    opacity: calc(1 - var(--cover, 0) * 0.4);
+    transform: translate3d(
+        0,
+        calc((1 - var(--rise, 1)) * 7vh - var(--cover, 0) * 3vh),
+        0
+      )
+      scale(calc(1 - var(--cover, 0) * 0.035));
+    transform-origin: 50% 40%;
+    will-change: transform, opacity;
+  }
+  /* The final sheet scrolls away normally so the footer can follow it. */
+  .sheet[data-last="true"] {
+    position: relative;
+    top: auto;
+  }
+
+  /* -------------------------------------------------------------------
+     Load-in for the hero: lines rise from behind a mask, copy fades after.
+     ------------------------------------------------------------------- */
+  .rise-line {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.08em;
+    margin-block: -0.08em;
+  }
+  .rise-line > span {
+    display: block;
+    transform: translateY(105%);
+    animation: rise-in 1s var(--ease-out-expo) forwards;
+    animation-delay: var(--d, 0s);
+  }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    animation: fade-in 0.9s var(--ease-out-expo) forwards;
+    animation-delay: var(--d, 0s);
+  }
+
+  /* -------------------------------------------------------------------
+     Services grid: hairlines, no cards.
+     ------------------------------------------------------------------- */
+  .services {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+  .service {
+    position: relative;
+    display: block;
+    padding: 1.75rem 0 2rem;
+    border-top: 1px solid var(--line);
+    color: inherit;
+    text-decoration: none;
+  }
+  .service::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background-color: var(--color-lime);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s var(--ease-out-expo);
+  }
+  .service:hover::after,
+  .service:focus-visible::after {
+    transform: scaleX(1);
+  }
+  @media (min-width: 768px) {
+    .services {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .service {
+      padding: 2.25rem 2rem 2.75rem 0;
+    }
+    .service:nth-child(2n) {
+      padding-left: 2rem;
+      padding-right: 0;
+      border-left: 1px solid var(--line);
+    }
+    .service:nth-child(2n)::after {
+      left: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .services {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .service,
+    .service:nth-child(2n) {
+      padding: 2.5rem 2.5rem 3.25rem 0;
+      border-left: 0;
+    }
+    .service:nth-child(2n)::after {
+      left: 0;
+    }
+    .service:nth-child(3n + 2),
+    .service:nth-child(3n + 3) {
+      padding-left: 2.5rem;
+      border-left: 1px solid var(--line);
+    }
+    .service:nth-child(3n + 2)::after,
+    .service:nth-child(3n + 3)::after {
+      left: 2.5rem;
+    }
+    .service:nth-child(3n + 3) {
+      padding-right: 0;
+    }
+  }
+
+  /* -------------------------------------------------------------------
+     Form: quiet controls on a single baseline, no boxes.
+     ------------------------------------------------------------------- */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .field__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  .field__control {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line-strong);
+    border-radius: 0;
+    padding: 0.55rem 0 0.7rem;
+    font: inherit;
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    color: var(--fg);
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .field__control::placeholder {
+    color: color-mix(in srgb, var(--fg) 38%, transparent);
+  }
+  .field__control:focus {
+    outline: none;
+    border-color: var(--fg);
+    box-shadow: 0 1px 0 0 var(--fg);
+  }
+  .field__control:user-invalid {
+    border-color: var(--color-clay);
+    box-shadow: 0 1px 0 0 var(--color-clay);
+  }
+  textarea.field__control {
+    resize: vertical;
+    min-height: 7.5rem;
+  }
+  select.field__control {
+    padding-right: 1.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%23171717' stroke-width='1.5'%3E%3Cpath d='M2 5l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0 top 55%;
+    cursor: pointer;
+  }
+  select.field__control:invalid {
+    color: color-mix(in srgb, var(--fg) 38%, transparent);
+  }
+  .file:has(input:focus-visible) .btn-outline {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+}
+
+@keyframes rise-in {
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
 /* =========================================================================
-   Reduced motion - honour the user's preference everywhere.
+   Reduced motion: sheets become ordinary blocks, everything else is static.
    ========================================================================= */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .animate-drift,
-  .animate-marquee,
-  .animate-cue {
-    animation: none !important;
+  .sheet {
+    position: relative;
+    top: auto !important;
+    box-shadow: none;
   }
-  *,
-  *::before,
-  *::after {
+  .sheet::after {
+    display: none;
+  }
+  .sheet__inner {
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto;
+  }
+  .rise-line > span,
+  .fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .biglist > li,
+  .site-header,
+  .site-menu,
+  .site-menu__item,
+  .burger__line,
+  .service::after,
+  .u-wipe,
+  .btn {
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* =========================================================================
+   Long-form prose (privacy policy)
+   ========================================================================= */
+@layer components {
+  .privacy-h2 {
+    margin-top: 2.75rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .privacy-p {
+    margin-top: 1rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .privacy-ul {
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+    color: var(--muted);
+  }
+  .privacy-ul li {
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+  .privacy-link {
+    color: var(--fg);
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: color 0.2s ease;
+  }
+  .privacy-link:hover {
+    color: var(--color-clay);
   }
 }
