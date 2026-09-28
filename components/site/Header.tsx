@@ -4,19 +4,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "./Logo";
-import { navLinks, primaryCta } from "@/content/site";
+import { Arrow } from "./Button";
+import { navLinks, primaryCta, audiences, pageHref } from "@/content/site";
 import { siteConfig, socialLinks } from "@/lib/siteConfig";
 
 /**
- * Minimal fixed header. No background of its own: its colour follows the
- * surface beneath it (see --nav-fg in globals.css). It slips away while the
- * reader scrolls down and returns on the first scroll up, so it never sits
- * over copy for long.
+ * Compact fixed header. Transparent over the top of the page; once the
+ * reader scrolls it becomes a quiet bar in the colour of the surface
+ * beneath it (see --nav-bg in globals.css), slipping away on scroll down
+ * and returning on the first scroll up.
  */
 export function Header() {
   const pathname = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
@@ -26,7 +28,6 @@ export function Header() {
     [pathname],
   );
 
-  // Hide on scroll down, reveal on scroll up. Always visible near the top.
   useEffect(() => {
     let last = window.scrollY;
     let frame = 0;
@@ -34,6 +35,7 @@ export function Header() {
       frame = 0;
       const y = window.scrollY;
       const delta = y - last;
+      setScrolled(y > 12);
       if (y < 24) setHidden(false);
       else if (delta > 6) setHidden(true);
       else if (delta < -6) setHidden(false);
@@ -42,6 +44,7 @@ export function Header() {
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -54,8 +57,8 @@ export function Header() {
     setOpen(false);
   }, [pathname]);
 
-  // While the menu is open: lock scrolling, make the page inert, trap focus
-  // in the menu, close on Escape, and return focus to the toggle afterwards.
+  // While the menu is open: lock scrolling, make the page inert, move focus
+  // into the menu, close on Escape, and return focus to the toggle afterwards.
   useEffect(() => {
     const page = document.getElementById("page");
     if (!open) {
@@ -68,7 +71,7 @@ export function Header() {
     page?.setAttribute("inert", "");
     const focusTimer = window.setTimeout(
       () => firstLinkRef.current?.focus(),
-      80,
+      60,
     );
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
@@ -88,27 +91,29 @@ export function Header() {
       <header
         className="site-header"
         data-hidden={hidden && !open ? "true" : "false"}
+        data-scrolled={scrolled && !open ? "true" : "false"}
         data-menu-open={open ? "true" : "false"}
       >
-        <div className="mx-auto flex h-[4.5rem] w-full max-w-[90rem] items-center justify-between px-5 sm:px-8 lg:px-12">
-          <Logo className="relative z-[70] w-[6.75rem] sm:w-[7.5rem]" />
+        <div className="site-header__bar mx-auto w-full max-w-[90rem] px-5 sm:px-8 lg:px-12">
+          <Logo className="relative z-[70] w-[6.5rem] sm:w-[7.25rem]" />
 
-          <nav aria-label="Primary" className="hidden items-center gap-10 lg:flex">
-            <ul className="flex items-center gap-8">
+          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+            <ul className="flex items-center gap-7">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="nav-link u-wipe"
+                    className="nav-link"
                     aria-current={isCurrent(link.href) ? "page" : undefined}
                   >
-                    {link.label}
+                    <span className="u-wipe">{link.label}</span>
                   </Link>
                 </li>
               ))}
             </ul>
             <Link href={primaryCta.href} className="btn btn-nav">
-              {primaryCta.label}
+              <span>{primaryCta.label}</span>
+              <Arrow />
             </Link>
           </nav>
 
@@ -138,37 +143,56 @@ export function Header() {
       >
         <nav
           aria-label="Mobile"
-          className="mx-auto flex h-full w-full max-w-[90rem] flex-col justify-between px-5 pb-8 pt-28 sm:px-8"
+          className="mx-auto flex h-full w-full max-w-[90rem] flex-col justify-between overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
         >
-          <ul className="biglist flex flex-col">
-            {navLinks.map((link, index) => (
-              <li
-                key={link.href}
-                className="site-menu__item"
-                style={{ "--i": index } as React.CSSProperties}
-              >
-                <Link
-                  ref={index === 0 ? firstLinkRef : undefined}
-                  href={link.href}
-                  className="biglink type-link-sm"
-                  aria-current={isCurrent(link.href) ? "page" : undefined}
+          <div>
+            <ul className="biglist flex flex-col">
+              {navLinks.map((link, index) => (
+                <li
+                  key={link.href}
+                  className="site-menu__item"
+                  style={{ "--i": index } as React.CSSProperties}
                 >
-                  <span className="u-wipe u-lime">{link.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                  <Link
+                    ref={index === 0 ? firstLinkRef : undefined}
+                    href={link.href}
+                    className="biglink type-link-sm"
+                    aria-current={isCurrent(link.href) ? "page" : undefined}
+                  >
+                    <span className="u-wipe u-lime">{link.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <ul
+              className="site-menu__item mt-6 flex flex-wrap gap-x-5 gap-y-1"
+              style={{ "--i": navLinks.length } as React.CSSProperties}
+              aria-label="Who for"
+            >
+              {audiences.map((audience) => (
+                <li key={audience.slug}>
+                  <Link
+                    href={pageHref(audience.slug)}
+                    className="nav-link"
+                  >
+                    <span className="u-wipe text-muted">{audience.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div
-            className="site-menu__item mt-10 flex flex-col gap-8"
-            style={{ "--i": navLinks.length } as React.CSSProperties}
+            className="site-menu__item mt-8 flex flex-col gap-6"
+            style={{ "--i": navLinks.length + 1 } as React.CSSProperties}
           >
             <Link href={primaryCta.href} className="btn btn-primary self-start">
-              {primaryCta.label}
+              <span>{primaryCta.label}</span>
+              <Arrow />
             </Link>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 type-small text-muted">
-              <a href={`mailto:${siteConfig.email}`} className="u-wipe">
-                {siteConfig.email}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1 type-small text-muted">
+              <a href={`mailto:${siteConfig.email}`} className="nav-link">
+                <span className="u-wipe">{siteConfig.email}</span>
               </a>
               {socialLinks.map((link) => (
                 <a
@@ -176,9 +200,9 @@ export function Header() {
                   href={link.url}
                   target="_blank"
                   rel="me noopener noreferrer"
-                  className="u-wipe"
+                  className="nav-link"
                 >
-                  {link.label}
+                  <span className="u-wipe">{link.label}</span>
                 </a>
               ))}
             </div>

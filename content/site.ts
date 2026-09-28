@@ -3,10 +3,10 @@ import { startHref } from "@/lib/siteConfig";
 export type NavLink = { label: string; href: string };
 
 /**
- * Everything the homepage and the placeholder landing pages read from: the
- * audiences, the product categories, the services and the nav. Landing page
- * copy is deliberately short; the pages exist to establish routing,
- * hierarchy and SEO structure, and are populated properly later.
+ * Everything the homepage, footer and landing pages read from: the
+ * audiences, the product categories, the services and the nav. The richer
+ * per-audience content lives in content/audiences.ts; notes in
+ * content/notes.ts.
  */
 
 /** Primary navigation, in order. */
@@ -15,62 +15,63 @@ export const navLinks: NavLink[] = [
   { label: "What we make", href: "/what-we-make/" },
   { label: "Services", href: "/services/" },
   { label: "About", href: "/about/" },
+  { label: "Notes", href: "/notes/" },
 ];
 
 export const primaryCta = { label: "Start a project", href: startHref };
 
 export type LandingPage = {
   slug: string;
-  /** Title as it appears in the enormous homepage lists (uppercase via CSS). */
+  /** Label as it appears in the enormous homepage lists (uppercase via CSS). */
   label: string;
-  /** Page <title> and h1. */
+  /** Page <title>. */
   title: string;
   description: string;
-  /** One short sentence under the h1. */
+  /** One short sentence used in previews and indexes. */
   intro: string;
 };
 
-/** Who For: audience landing pages. */
+/** Who for: the four audiences, in display order. */
 export const audiences: LandingPage[] = [
   {
     slug: "festivals",
     label: "Festivals",
     title: "Merchandise for festivals",
     description:
-      "Bespoke festival merchandise from madebyobra: original products built around your festival brand, produced at scale and delivered retail-ready.",
+      "Bespoke festival merchandise from madebyobra: original products built around the festival, limited editions, staff ranges and POS-ready stock, produced at scale.",
     intro:
-      "Original products built around your festival, from the first brief to on-site retail.",
-  },
-  {
-    slug: "artists",
-    label: "Artists",
-    title: "Merchandise for artists",
-    description:
-      "Bespoke artist merchandise from madebyobra: tour, release and online collections developed around your identity and produced at scale.",
-    intro:
-      "Tour, release and online collections that feel like part of the work.",
+      "Merchandise as part of the experience: limited editions, retail ranges and staff product, ready for the site.",
   },
   {
     slug: "events",
     label: "Events",
     title: "Merchandise for events",
     description:
-      "Bespoke event merchandise from madebyobra: collections planned, produced and delivered around your dates, with stock and retail support on the day.",
+      "Bespoke event merchandise from madebyobra: branded product, gifting and retail built around the event identity, with production and logistics handled to the date.",
     intro:
-      "Collections planned around your dates, with stock and retail support on the day.",
+      "Product built around the event identity, from gifting to retail, delivered to the date.",
   },
   {
-    slug: "culture-led-brands",
-    label: "Culture-led brands",
-    title: "Merchandise for culture-led brands",
+    slug: "brands",
+    label: "Brands",
+    title: "Merchandise for brands",
     description:
-      "Bespoke merchandise for culture-led brands from madebyobra: proper product ranges developed around your brand, not blanks with a logo added.",
+      "Bespoke merchandise for brands from madebyobra: custom product development, brand extensions, campaign drops and customer merchandise that feels like real product.",
     intro:
-      "Proper product, developed around your brand, that belongs in your world rather than beside it.",
+      "Custom product development for campaigns, drops and brand extensions that belong in your world.",
+  },
+  {
+    slug: "artists",
+    label: "Artists",
+    title: "Merchandise for artists",
+    description:
+      "Bespoke artist merchandise from madebyobra: tour ranges, drops, jerseys and apparel developed around the identity, with production and fulfilment handled.",
+    intro:
+      "Tour ranges, drops and apparel that carry the identity, with production and fulfilment handled.",
   },
 ];
 
-/** What We Make: product category landing pages. */
+/** What we make: product category landing pages. */
 export const products: LandingPage[] = [
   {
     slug: "headwear",
@@ -105,8 +106,7 @@ export const products: LandingPage[] = [
     title: "Sportswear",
     description:
       "Bespoke sportswear from madebyobra: performance pieces designed and manufactured around your brand through our factory network.",
-    intro:
-      "Performance pieces designed and manufactured around your brand.",
+    intro: "Performance pieces designed and manufactured around your brand.",
   },
   {
     slug: "retro-football-shirts",
@@ -203,9 +203,11 @@ export const budgetOptions = [
 
 export const pageHref = (slug: string) => `/${slug}/`;
 
-export function findLandingPage(slug: string) {
-  return (
-    audiences.find((page) => page.slug === slug) ??
-    products.find((page) => page.slug === slug)
-  );
-}
+export const findAudience = (slug: string) =>
+  audiences.find((page) => page.slug === slug);
+
+export const findProduct = (slug: string) =>
+  products.find((page) => page.slug === slug);
+
+export const findService = (slug: string) =>
+  services.find((service) => service.slug === slug);

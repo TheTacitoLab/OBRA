@@ -44,7 +44,7 @@ export default function RootLayout({
           href="#main"
           className="btn btn-primary fixed left-4 top-4 z-[80] -translate-y-[200%] focus:translate-y-0"
         >
-          Skip to content
+          <span>Skip to content</span>
         </a>
         <Header />
         {/* Wrapped so the header can make the page inert while its menu is open. */}
