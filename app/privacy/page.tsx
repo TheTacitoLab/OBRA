@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/site/Container";
+import { Section } from "@/components/site/Section";
 import { pageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -12,15 +12,14 @@ export const metadata: Metadata = pageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <section data-tone="bone" className="bg-bg text-fg">
-      <Container className="pb-24 pt-40 md:pb-32 md:pt-48">
-        <div className="max-w-3xl">
+    <Section tone="bone" containerClassName="pt-28 md:pt-36">
+      <div className="max-w-3xl">
           <h1 className="type-display">Privacy policy.</h1>
           <p className="type-meta mt-6 text-muted">
             Last updated 28 September 2026
           </p>
 
-          <p className="type-body mt-10 text-muted">
+          <p className="type-body mt-8 text-muted">
             This privacy policy explains how madebyobra (&ldquo;madebyobra&rdquo;,
             &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;), a TACITO
             Group company, collects, uses and protects your personal data when
@@ -195,8 +194,7 @@ export default function PrivacyPage() {
             , though we would appreciate the chance to address your concerns
             first.
           </p>
-        </div>
-      </Container>
-    </section>
+      </div>
+    </Section>
   );
 }

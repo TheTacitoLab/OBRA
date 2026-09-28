@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { audiences, pageHref, products } from "@/content/site";
+import { noteHref, notes } from "@/content/notes";
 import { privacyHref, siteConfig, startHref } from "@/lib/siteConfig";
 
 /**
@@ -16,10 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entry = (
     path: string,
     priority: number,
-    changeFrequency: "monthly" | "yearly" = "monthly",
+    changeFrequency: "weekly" | "monthly" | "yearly" = "monthly",
+    modified: Date = lastModified,
   ) => ({
     url: `${siteConfig.url}${path}`,
-    lastModified,
+    lastModified: modified,
     changeFrequency,
     priority,
   });
@@ -30,9 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/who-for/", 0.8),
     entry("/what-we-make/", 0.8),
     entry("/services/", 0.8),
-    entry("/about/", 0.6),
-    ...audiences.map((page) => entry(pageHref(page.slug), 0.7)),
+    entry("/about/", 0.7),
+    entry("/notes/", 0.7, "weekly"),
+    ...audiences.map((page) => entry(pageHref(page.slug), 0.8)),
     ...products.map((page) => entry(pageHref(page.slug), 0.7)),
+    ...notes.map((note) =>
+      entry(noteHref(note.slug), 0.5, "yearly", new Date(note.date)),
+    ),
     entry(privacyHref, 0.1, "yearly"),
   ];
 }

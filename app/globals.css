@@ -205,9 +205,9 @@ html[data-nav="dark"] {
     text-transform: uppercase;
     text-wrap: balance;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     .type-display {
-      font-size: clamp(4rem, 8.5vw, 7.5rem);
+      font-size: clamp(3.25rem, 8.25vw, 7.5rem);
     }
   }
 
@@ -220,9 +220,9 @@ html[data-nav="dark"] {
     text-transform: uppercase;
     text-wrap: balance;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     .type-display-xl {
-      font-size: clamp(6rem, 11vw, 10rem);
+      font-size: clamp(4.5rem, 11vw, 10rem);
     }
   }
 
@@ -244,9 +244,9 @@ html[data-nav="dark"] {
     letter-spacing: -0.05em;
     text-transform: uppercase;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     .type-link {
-      font-size: clamp(4rem, 12.5vw, 11rem);
+      font-size: clamp(3.25rem, 10.5vw, 11rem);
     }
   }
 

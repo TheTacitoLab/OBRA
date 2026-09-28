@@ -35,3 +35,14 @@
   from = "/brief/"
   to = "/start-a-project/"
   status = 301
+
+# The Brands page was briefly published as /culture-led-brands/.
+[[redirects]]
+  from = "/culture-led-brands"
+  to = "/brands/"
+  status = 301
+
+[[redirects]]
+  from = "/culture-led-brands/"
+  to = "/brands/"
+  status = 301
