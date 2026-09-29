@@ -45,8 +45,11 @@ export function Hero() {
               festivals, events and agencies.
             </p>
             <p className="type-body max-w-[42ch] text-muted">
-              We design, develop and manufacture retail-ready collections,
-              from limited runs to large-scale production.
+              We design, develop and manufacture{" "}
+              <span className="whitespace-nowrap">retail-ready</span>{" "}
+              collections, from limited runs to{" "}
+              <span className="whitespace-nowrap">large-scale</span>{" "}
+              production.
             </p>
           </div>
 
