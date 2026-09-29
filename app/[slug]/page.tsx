@@ -24,8 +24,8 @@ type Params = { slug: string };
 
 const parent = { label: "What we make", href: "/what-we-make/" };
 
-/** The same three steps for every product; the detail is in the brief. */
-const steps: Step[] = [
+/** Fallback for a product without its own `develop` steps in content. */
+const genericSteps: Step[] = [
   {
     title: "Start from the right base",
     text: "A pattern, fit and construction that has already run in production, so the fundamentals are settled before the brief arrives and the first run can be small without the re-run costing more.",
@@ -111,7 +111,7 @@ export default async function ProductPage({
           align="start"
           stackMd
           heading={<h2 className="type-display">How we develop it.</h2>}
-          aside={<Steps steps={steps} />}
+          aside={<Steps steps={page.develop ?? genericSteps} />}
         />
       </Section>
 

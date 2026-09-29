@@ -118,7 +118,8 @@ export function Sheets({ children }: { children: ReactNode }) {
     };
     const onClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0) return;
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        return;
       const anchor = (event.target as Element | null)?.closest("a[href]");
       if (!anchor) return;
       const href = anchor.getAttribute("href") ?? "";
@@ -130,6 +131,57 @@ export function Sheets({ children }: { children: ReactNode }) {
     };
     const onHashChange = () => scrollToHash(window.location.hash, true);
 
+    // Keyboard focus can land on a link the next sheet has already slid
+    // over (the browser scrolls the link's box into view without knowing it
+    // is painted under). Scroll so the link sits clear of the header with
+    // the next sheet's edge beneath it, judged from geometry rather than
+    // --cover, which is not written under prefers-reduced-motion.
+    const onFocusIn = (event: FocusEvent) => {
+      if (phone.matches) return;
+      const target = event.target as HTMLElement | null;
+      const sheet = target?.closest<HTMLElement>(".sheet") ?? null;
+      if (!target || !sheet) return;
+      const index = sheets.indexOf(sheet);
+      const next = sheets[index + 1];
+      if (index < 0 || !next) return;
+      const vh = viewport();
+      const rect = target.getBoundingClientRect();
+      const nextTop = next.getBoundingClientRect().top;
+      const header =
+        document.querySelector(".site-header")?.getBoundingClientRect()
+          .height ?? 68;
+      const clear = 24;
+      const visible =
+        rect.top >= header && rect.bottom + clear <= Math.min(nextTop, vh);
+      if (visible) return;
+      const sheetTop = flowTop(sheet);
+      const nextFlowTop = flowTop(next);
+      if (sheetTop === null || nextFlowTop === null) return;
+      // Layout offset within the sheet, read from offsetTop so the inner
+      // wrapper's cover transform (a shift and a 3% scale) does not skew it.
+      let offset = 0;
+      for (
+        let node: HTMLElement | null = target;
+        node && node !== sheet && sheet.contains(node);
+        node = node.offsetParent as HTMLElement | null
+      ) {
+        offset += node.offsetTop;
+      }
+      const overflow = Math.max(0, sheet.offsetHeight - vh);
+      // Pinned, the sheet sits at -overflow: a link far enough down stays on
+      // screen, so scroll until the next sheet's edge is just beneath it.
+      // Otherwise leave the sheet in flow with the link under the header.
+      const pinnedTop = offset - overflow;
+      const top =
+        pinnedTop >= header + clear
+          ? nextFlowTop - (pinnedTop + rect.height + clear)
+          : sheetTop + offset - header - clear;
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: reduce.matches ? "auto" : "smooth",
+      });
+    };
+
     const observer = new ResizeObserver(onResize);
     sheets.forEach((sheet) => observer.observe(sheet));
     window.addEventListener("scroll", schedule, { passive: true });
@@ -138,6 +190,7 @@ export function Sheets({ children }: { children: ReactNode }) {
     phone.addEventListener("change", onResize);
     document.addEventListener("click", onClick, true);
     window.addEventListener("hashchange", onHashChange);
+    root.addEventListener("focusin", onFocusIn);
     measure();
     update();
     // Arriving with a hash (from another page or a shared link): land on the
@@ -156,6 +209,7 @@ export function Sheets({ children }: { children: ReactNode }) {
       phone.removeEventListener("change", onResize);
       document.removeEventListener("click", onClick, true);
       window.removeEventListener("hashchange", onHashChange);
+      root.removeEventListener("focusin", onFocusIn);
       if (frame) cancelAnimationFrame(frame);
       delete html.dataset.nav;
     };

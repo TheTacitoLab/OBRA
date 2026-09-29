@@ -44,7 +44,7 @@ const handles = [
   },
   {
     title: "Logistics",
-    text: "Freight, import, customs and delivery, plus storage, pick and pack and direct-to-customer fulfilment when you would rather not hold stock.",
+    text: "Freight, import, customs and delivery, plus storage, pick and pack and direct-to-customer fulfilment for anyone who does not want to hold stock.",
   },
 ];
 

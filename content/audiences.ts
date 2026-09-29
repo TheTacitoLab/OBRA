@@ -75,7 +75,7 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Gifting and partners",
-        text: "Artist, sponsor and partner pieces from the same range as the retail line, packed and labelled so they are ready to hand over, or fulfilled direct to the recipient.",
+        text: "Artist, sponsor and partner pieces, packed and labelled so they are ready to hand over, or fulfilled direct to the recipient.",
       },
     ],
     products: ["t-shirts", "retro-football-shirts", "headwear", "tops"],
@@ -117,7 +117,7 @@ export const audienceContent: AudienceContent[] = [
       text: "We can build the product and production setup once, then use it across future events and collections.",
     },
     ctaCopy:
-      "Tell us the dates, the capacity and what sold last year, and we’ll come back with a range and a plan for the stand.",
+      "Dates, capacity and what sold last year are enough to plan the range and the stand.",
   },
   {
     slug: "events",
@@ -167,15 +167,15 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Gifting quantities",
-        text: "From a few dozen to a few thousand, with quantities planned to the guest list, packed per recipient and labelled by day, session or table.",
+        text: "From a few dozen to a few thousand, with quantities planned to the guest list and labelled by day, session or table.",
       },
       {
-        title: "Sponsor activations and pop-ups",
-        text: "One-off runs for sponsor activations and pop-ups, with the point of sale set up for the days it runs and the leftover stock planned for.",
+        title: "Leftover stock planned for",
+        text: "Runs sized to the days the stand is open, with the point of sale set up for those days and what is left at the end decided before production, not after.",
       },
     ],
     ctaCopy:
-      "Tell us the date, the numbers and who it’s for, and we’ll come back with product, quantities and a delivery plan.",
+      "Give us the date, the numbers and who it’s for. Product, quantities and delivery follow from that.",
   },
   {
     slug: "brands",
@@ -232,7 +232,7 @@ export const audienceContent: AudienceContent[] = [
       text: "Use a smaller run to prove the idea, then move into larger production without starting the whole process again.",
     },
     ctaCopy:
-      "Tell us what you’re launching, roughly how many and the budget you’re working to, and we’ll come back with a range.",
+      "What you’re launching, a rough number and the budget you’re working to. That’s enough to start a range.",
   },
   {
     slug: "artists",
@@ -243,11 +243,11 @@ export const audienceContent: AudienceContent[] = [
     points: [
       {
         title: "Tour merchandise",
-        text: "A range planned around the dates: the hero piece, the tee everyone buys and the piece that carries the margin.",
+        text: "A range planned around the dates and the rooms, with quantities set so the last night is not spent selling off the first night’s stock.",
       },
       {
         title: "Drops",
-        text: "Limited runs around a release or a moment, timed and sized to sell through, not sit in boxes, and re-run at the same specification when they do.",
+        text: "Limited runs around a release, an announcement or a tour date, sized to sell out, not sit in boxes.",
       },
       {
         title: "Jerseys and apparel",
@@ -279,7 +279,7 @@ export const audienceContent: AudienceContent[] = [
     benefits: [
       {
         title: "Fulfilment handled",
-        text: "Storage, pick and pack and direct-to-fan delivery from our side. A drop does not turn into a week of parcels on the kitchen table, and returns and re-runs work the same way.",
+        text: "A drop does not turn into a week of parcels on the kitchen table. Stock sits with us, orders go straight to fans, and returns and re-runs work the same way.",
       },
       {
         title: "Stock by city",
@@ -291,7 +291,7 @@ export const audienceContent: AudienceContent[] = [
       },
     ],
     ctaCopy:
-      "Tell us the dates or the release, roughly how many and where it needs to go, and we’ll come back with a range and a plan.",
+      "Send the tour dates or the release, where the stock needs to go and how many you expect to sell. We’ll build the range around it.",
   },
   {
     slug: "agencies",
@@ -329,7 +329,7 @@ export const audienceContent: AudienceContent[] = [
     products: ["t-shirts", "headwear", "tops", "accessories", "retro-football-shirts"],
     productsHeading: "Made for the brief.",
     productNote:
-      "The categories agency briefs ask for most, developed so each piece reads as the client’s product rather than a promotional item.",
+      "The categories agency briefs ask for most, made to the standard the client would expect from their own range.",
     services: [
       "white-label-production",
       "product-development",
@@ -339,7 +339,7 @@ export const audienceContent: AudienceContent[] = [
       "logistics",
     ],
     ctaCopy:
-      "Tell us what the client needs, roughly how many and when, and we’ll come back with product, pricing and a plan you can take into the room.",
+      "Send the client’s brief and we’ll price it so you can take it into the room.",
   },
 ];
 

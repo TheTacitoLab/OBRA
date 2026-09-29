@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useEffect,
   useId,
   useRef,
   useState,
@@ -26,9 +27,12 @@ const REQUIRED: Record<string, string> = {
   message: "Tell us a little about the project.",
 };
 
-function messageFor(control: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+function messageFor(
+  control: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+) {
   if (control.validity.valid) return null;
-  if (control.validity.valueMissing) return REQUIRED[control.name] ?? "This field is required.";
+  if (control.validity.valueMissing)
+    return REQUIRED[control.name] ?? "This field is required.";
   if (control.validity.typeMismatch && control.name === "email")
     return "That email address does not look right.";
   return "Please check this field.";
@@ -62,9 +66,7 @@ function Field({
     <div className="field">
       <label htmlFor={id} className="field__label">
         {label}
-        {optional && (
-          <span className="type-meta text-muted"> (optional)</span>
-        )}
+        {optional && <span className="type-meta text-muted"> (optional)</span>}
       </label>
       {children({ id, describedBy, invalid: Boolean(error) })}
       {hint && !error && (
@@ -107,7 +109,21 @@ export function ProjectForm({
   const [fileError, setFileError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const confirmRef = useRef<HTMLDivElement>(null);
   const uploadId = useId();
+
+  // The form unmounts on success, so move focus to the confirmation; the
+  // live region below is always in the DOM, so the change is announced.
+  useEffect(() => {
+    if (status === "success") confirmRef.current?.focus();
+  }, [status]);
+  const announce = (
+    <p className="sr-only" role="status" aria-live="polite">
+      {status === "success"
+        ? "Brief received. Thank you. We’ll read it properly and reply with a plan."
+        : ""}
+    </p>
+  );
 
   function validateControl(
     control: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
@@ -117,11 +133,16 @@ export function ProjectForm({
   }
 
   function onFieldChange(
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) {
     const control = event.currentTarget;
     if (!(control.name in errors) || errors[control.name] === null) return;
-    setErrors((prev) => ({ ...prev, [control.name]: validateControl(control) }));
+    setErrors((prev) => ({
+      ...prev,
+      [control.name]: validateControl(control),
+    }));
   }
 
   function onFiles(event: ChangeEvent<HTMLInputElement>) {
@@ -188,169 +209,51 @@ export function ProjectForm({
 
   if (status === "success") {
     return (
-      <div className="flex min-h-[20rem] flex-col justify-center" role="status">
-        <p className="type-headline">Brief received.</p>
-        <p className="type-body mt-3 max-w-[40ch] text-muted">
-          Thank you. We&rsquo;ll read it properly and come back to you with the
-          best way to approach the project.
-        </p>
-      </div>
+      <>
+        {announce}
+        <div
+          ref={confirmRef}
+          tabIndex={-1}
+          className="flex min-h-[20rem] flex-col justify-center outline-none"
+        >
+          <p className="type-headline">Brief received.</p>
+          <p className="type-body mt-3 max-w-[40ch] text-muted">
+            Thank you. We&rsquo;ll read it properly and reply with a plan.
+          </p>
+        </div>
+      </>
     );
   }
 
   const control = "field__control";
 
   return (
-    <form
-      ref={formRef}
-      onSubmit={handleSubmit}
-      noValidate
-      className="grid gap-x-10 gap-y-7 sm:grid-cols-2 sm:gap-y-9"
-    >
-      {/* Honeypot: Web3Forms rejects the submission if this is filled. */}
-      <input
-        type="checkbox"
-        name="botcheck"
-        className="hidden"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-      />
+    <>
+      {announce}
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        noValidate
+        className="grid gap-x-10 gap-y-7 sm:grid-cols-2 sm:gap-y-9"
+      >
+        {/* Honeypot: Web3Forms rejects the submission if this is filled. */}
+        <input
+          type="checkbox"
+          name="botcheck"
+          className="hidden"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
 
-      <Field label="Name" error={errors.name}>
-        {({ id, describedBy, invalid }) => (
-          <input
-            id={id}
-            name="name"
-            type="text"
-            required
-            autoComplete="name"
-            aria-describedby={describedBy}
-            aria-invalid={invalid || undefined}
-            onChange={onFieldChange}
-            className={control}
-          />
-        )}
-      </Field>
-
-      <Field label="Email" error={errors.email}>
-        {({ id, describedBy, invalid }) => (
-          <input
-            id={id}
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            inputMode="email"
-            aria-describedby={describedBy}
-            aria-invalid={invalid || undefined}
-            onChange={onFieldChange}
-            className={control}
-          />
-        )}
-      </Field>
-
-      <Field label="Company / Organisation" optional>
-        {({ id }) => (
-          <input
-            id={id}
-            name="organisation"
-            type="text"
-            autoComplete="organization"
-            className={control}
-          />
-        )}
-      </Field>
-
-      <Field label="What are you looking to make?" error={errors.product}>
-        {({ id, describedBy, invalid }) => (
-          <input
-            id={id}
-            name="product"
-            type="text"
-            required
-            placeholder="Caps, tees, a full range..."
-            autoComplete="off"
-            aria-describedby={describedBy}
-            aria-invalid={invalid || undefined}
-            onChange={onFieldChange}
-            className={control}
-          />
-        )}
-      </Field>
-
-      <Field label="Estimated quantity" error={errors.quantity}>
-        {({ id, describedBy, invalid }) => (
-          <select
-            id={id}
-            name="quantity"
-            required
-            defaultValue=""
-            aria-describedby={describedBy}
-            aria-invalid={invalid || undefined}
-            onChange={onFieldChange}
-            className={control}
-          >
-            <option value="" disabled>
-              Select a range
-            </option>
-            {quantityOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        )}
-      </Field>
-
-      <Field label="Project budget" error={errors.budget}>
-        {({ id, describedBy, invalid }) => (
-          <select
-            id={id}
-            name="budget"
-            required
-            defaultValue=""
-            aria-describedby={describedBy}
-            aria-invalid={invalid || undefined}
-            onChange={onFieldChange}
-            className={control}
-          >
-            <option value="" disabled>
-              Select a range
-            </option>
-            {budgetOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        )}
-      </Field>
-
-      <div className="sm:col-span-2">
-        <Field label="Target launch / event date" optional>
-          {({ id }) => (
+        <Field label="Name" error={errors.name}>
+          {({ id, describedBy, invalid }) => (
             <input
               id={id}
-              name="date"
+              name="name"
               type="text"
-              placeholder="A date, a month or a season"
-              autoComplete="off"
-              className={control}
-            />
-          )}
-        </Field>
-      </div>
-
-      <div className="sm:col-span-2">
-        <Field label="Tell us about the project" error={errors.message}>
-          {({ id, describedBy, invalid }) => (
-            <textarea
-              id={id}
-              name="message"
               required
-              rows={4}
-              placeholder="The idea, audience, where it will be sold or given..."
+              autoComplete="name"
               aria-describedby={describedBy}
               aria-invalid={invalid || undefined}
               onChange={onFieldChange}
@@ -358,80 +261,211 @@ export function ProjectForm({
             />
           )}
         </Field>
-      </div>
 
-      <div className="field sm:col-span-2">
-        <label htmlFor={uploadId} className="field__label">
-          Upload brief / artwork / references{" "}
-          <span className="type-meta text-muted">(optional)</span>
-        </label>
-        {/* The native control is visually hidden but stays focusable and is
+        <Field label="Email" error={errors.email}>
+          {({ id, describedBy, invalid }) => (
+            <input
+              id={id}
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              inputMode="email"
+              aria-describedby={describedBy}
+              aria-invalid={invalid || undefined}
+              onChange={onFieldChange}
+              className={control}
+            />
+          )}
+        </Field>
+
+        <Field label="Company / Organisation" optional>
+          {({ id }) => (
+            <input
+              id={id}
+              name="organisation"
+              type="text"
+              autoComplete="organization"
+              className={control}
+            />
+          )}
+        </Field>
+
+        <Field label="What are you looking to make?" error={errors.product}>
+          {({ id, describedBy, invalid }) => (
+            <input
+              id={id}
+              name="product"
+              type="text"
+              required
+              placeholder="Caps, tees, a full range..."
+              autoComplete="off"
+              aria-describedby={describedBy}
+              aria-invalid={invalid || undefined}
+              onChange={onFieldChange}
+              className={control}
+            />
+          )}
+        </Field>
+
+        <Field label="Estimated quantity" error={errors.quantity}>
+          {({ id, describedBy, invalid }) => (
+            <select
+              id={id}
+              name="quantity"
+              required
+              defaultValue=""
+              aria-describedby={describedBy}
+              aria-invalid={invalid || undefined}
+              onChange={onFieldChange}
+              className={control}
+            >
+              <option value="" disabled>
+                Select a range
+              </option>
+              {quantityOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          )}
+        </Field>
+
+        <Field label="Project budget" error={errors.budget}>
+          {({ id, describedBy, invalid }) => (
+            <select
+              id={id}
+              name="budget"
+              required
+              defaultValue=""
+              aria-describedby={describedBy}
+              aria-invalid={invalid || undefined}
+              onChange={onFieldChange}
+              className={control}
+            >
+              <option value="" disabled>
+                Select a range
+              </option>
+              {budgetOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          )}
+        </Field>
+
+        <div className="sm:col-span-2">
+          <Field label="Target launch / event date" optional>
+            {({ id }) => (
+              <input
+                id={id}
+                name="date"
+                type="text"
+                placeholder="A date, a month or a season"
+                autoComplete="off"
+                className={control}
+              />
+            )}
+          </Field>
+        </div>
+
+        <div className="sm:col-span-2">
+          <Field label="Tell us about the project" error={errors.message}>
+            {({ id, describedBy, invalid }) => (
+              <textarea
+                id={id}
+                name="message"
+                required
+                rows={4}
+                placeholder="The idea, audience, where it will be sold or given..."
+                aria-describedby={describedBy}
+                aria-invalid={invalid || undefined}
+                onChange={onFieldChange}
+                className={control}
+              />
+            )}
+          </Field>
+        </div>
+
+        <div className="field sm:col-span-2">
+          <label htmlFor={uploadId} className="field__label">
+            Upload brief / artwork / references{" "}
+            <span className="type-meta text-muted">(optional)</span>
+          </label>
+          {/* The native control is visually hidden but stays focusable and is
             named by the label above; the outlined area is its visible face
             and forwards a click to it. */}
-        <div
-          className="upload"
-          onClick={(event) => {
-            if (event.target !== fileRef.current) fileRef.current?.click();
-          }}
-        >
-          <input
-            ref={fileRef}
-            id={uploadId}
-            name="attachment"
-            type="file"
-            multiple
-            accept=".pdf,.png,.jpg,.jpeg,.webp,.ai,.eps,.svg,.zip,.ppt,.pptx,.key"
-            className="sr-only"
-            aria-describedby={`${uploadId}-hint`}
-            onChange={onFiles}
-          />
-          <span className="upload__cta">
-            {files.length === 0 ? "Add files" : "Replace files"}
-          </span>
-          <span id={`${uploadId}-hint`} className="type-small text-muted">
-            PDF, images or a deck. Up to 10MB total.
-          </span>
-          {files.length > 0 && (
-            <ul className="upload__files" aria-label="Selected files">
-              {files.map((file) => (
-                <li key={`${file.name}-${file.size}`}>
-                  {file.name}{" "}
-                  <span className="type-meta">({formatBytes(file.size)})</span>
-                </li>
-              ))}
-            </ul>
+          <div
+            className="upload"
+            onClick={(event) => {
+              if (event.target !== fileRef.current) fileRef.current?.click();
+            }}
+          >
+            <input
+              ref={fileRef}
+              id={uploadId}
+              name="attachment"
+              type="file"
+              multiple
+              accept=".pdf,.png,.jpg,.jpeg,.webp,.ai,.eps,.svg,.zip,.ppt,.pptx,.key"
+              className="sr-only"
+              aria-describedby={`${uploadId}-hint`}
+              onChange={onFiles}
+            />
+            <span className="upload__cta">
+              {files.length === 0 ? "Add files" : "Replace files"}
+            </span>
+            <span id={`${uploadId}-hint`} className="type-small text-muted">
+              PDF, images or a deck. Up to 10MB total.
+            </span>
+            {files.length > 0 && (
+              <ul className="upload__files" aria-label="Selected files">
+                {files.map((file) => (
+                  <li key={`${file.name}-${file.size}`}>
+                    {file.name}{" "}
+                    <span className="type-meta">
+                      ({formatBytes(file.size)})
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          {fileError && (
+            <p className="field__error" role="alert">
+              {fileError}
+            </p>
           )}
         </div>
-        {fileError && (
-          <p className="field__error" role="alert">
-            {fileError}
+
+        <div className="flex flex-col gap-6 pt-2 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+          <button
+            type="submit"
+            disabled={status === "submitting"}
+            className="btn btn-primary self-start"
+          >
+            <span>
+              {status === "submitting" ? "Sending…" : "Send project brief"}
+            </span>
+            <Arrow />
+          </button>
+          <p className="type-small text-muted sm:max-w-[36ch]">
+            We only use your details to reply about this project.
+          </p>
+        </div>
+
+        {status === "error" && (
+          <p className="type-small text-clay-deep sm:col-span-2" role="alert">
+            Something went wrong sending the brief. Please email us at{" "}
+            <a className="u-wipe u-static" href={`mailto:${siteConfig.email}`}>
+              {siteConfig.email}
+            </a>
+            .
           </p>
         )}
-      </div>
-
-      <div className="flex flex-col gap-6 pt-2 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-        <button
-          type="submit"
-          disabled={status === "submitting"}
-          className="btn btn-primary self-start"
-        >
-          <span>{status === "submitting" ? "Sending…" : "Send project brief"}</span>
-          <Arrow />
-        </button>
-        <p className="type-small text-muted sm:max-w-[36ch]">
-          We only use your details to reply about this project.
-        </p>
-      </div>
-
-      {status === "error" && (
-        <p className="type-small text-clay-deep sm:col-span-2" role="alert">
-          Something went wrong sending the brief. Please email us at{" "}
-          <a className="u-wipe u-static" href={`mailto:${siteConfig.email}`}>
-            {siteConfig.email}
-          </a>
-          .
-        </p>
-      )}
-    </form>
+      </form>
+    </>
   );
 }
