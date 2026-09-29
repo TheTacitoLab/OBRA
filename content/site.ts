@@ -31,7 +31,7 @@ export type PageEntry = {
   intro: string;
 };
 
-/** Who for: the four audiences, in display order. */
+/** Who for: the five audiences, in display order. */
 export const audiences: PageEntry[] = [
   {
     slug: "festivals",
@@ -58,7 +58,7 @@ export const audiences: PageEntry[] = [
     description:
       "Bespoke merchandise for brands from madebyobra: custom product development, brand extensions, campaign drops and customer merchandise that feels like real product.",
     intro:
-      "Custom product development for campaigns, drops and brand extensions that belong in your world.",
+      "Custom product development for campaigns, drops, collaborations and brand extensions that belong in your world.",
   },
   {
     slug: "artists",
@@ -68,6 +68,15 @@ export const audiences: PageEntry[] = [
       "Bespoke artist merchandise from madebyobra: tour ranges, drops, jerseys and apparel made to the artist’s identity, with production and fulfilment handled.",
     intro:
       "Tour ranges, drops and apparel that carry the identity, with production and fulfilment handled.",
+  },
+  {
+    slug: "agencies",
+    label: "Agencies",
+    title: "Merchandise for agencies",
+    description:
+      "madebyobra works behind the scenes with creative, experiential, event and brand agencies: product development and manufacturing for their clients, white label when needed.",
+    intro:
+      "Product development and manufacturing behind the scenes for your clients, white label when needed.",
   },
 ];
 
@@ -111,7 +120,7 @@ export const products: PageEntry[] = [
     label: "Retro football shirts",
     title: "Retro football shirts",
     description:
-      "Bespoke retro football shirts from madebyobra: fully custom jerseys for festivals, artists, events and brands, from limited runs to larger production.",
+      "Bespoke retro football shirts from madebyobra: fully custom jerseys for festivals, artists, events, brands and agencies, from limited runs to larger production.",
     intro: "Fully custom jerseys, from limited runs to larger production.",
   },
   {
@@ -184,11 +193,17 @@ export const services: Service[] = [
     title: "Logistics",
     description: "Freight, import, customs and final delivery.",
   },
+  {
+    slug: "white-label-production",
+    title: "White Label Production",
+    description:
+      "Behind-the-scenes product development and manufacturing for agencies and partners.",
+  },
 ];
 
 /** Contact form options. */
 export const quantityOptions = [
-  "25–99",
+  "Under 100",
   "100–249",
   "250–499",
   "500–999",

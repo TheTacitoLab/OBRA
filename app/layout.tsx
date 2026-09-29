@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { DM_Sans, Figtree } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ogImage } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
-// One family for display and text, variable weight, so the hero's 900 and
-// the body's 400 come from one file.
+// Two families: the display face for headings, navigation and buttons, and
+// DM Sans for running text. Both are variable fonts, so every weight comes
+// from one file each.
 //
-// Aeonik is the intended typeface. It is a licensed font and is not bundled
-// here; Figtree is the closest available stand-in (geometric-leaning, round
-// full stop, weights to 900). To drop Aeonik in once the licensed files are
-// in the repo:
+// Aeonik is the intended display typeface. It is a licensed font and is not
+// bundled here; Figtree is the closest available stand-in (geometric-leaning,
+// round full stop, weights to 900). To drop Aeonik in once the licensed
+// files are in the repo:
 //
 //   import localFont from "next/font/local";
 //   const aeonik = localFont({
@@ -26,19 +27,25 @@ import { siteConfig } from "@/lib/siteConfig";
 //     display: "swap",
 //   });
 //
-// and add `aeonik.variable` to the <html> className below. The stack in
-// globals.css prefers --font-aeonik when it is defined and falls back to
-// --font-figtree otherwise, so nothing else changes.
+// and add `aeonik.variable` to the <html> className below. The display
+// stack in globals.css prefers --font-aeonik when it is defined and falls
+// back to --font-figtree otherwise, so nothing else changes; update
+// --font-ascent and --font-cap there to Aeonik's metrics for the lime block.
 const figtree = Figtree({
   subsets: ["latin"],
   variable: "--font-figtree",
+  display: "swap",
+});
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "madebyobra | Bespoke merchandise studio",
+    default: "madebyobra | Merchandise and product studio",
     template: "%s | madebyobra",
   },
   description: siteConfig.description,
@@ -59,7 +66,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className={`${figtree.variable} h-full`}>
+    <html
+      lang="en-GB"
+      className={`${figtree.variable} ${dmSans.variable} h-full`}
+    >
       <body className="flex min-h-full flex-col bg-bone text-ink">
         <a
           href="#main"

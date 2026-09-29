@@ -21,8 +21,8 @@ export function Proposition() {
         aside={
           <div className="flex flex-col gap-5">
             <p className="type-lede text-muted">
-              Proven product blocks give us the starting point. Everything
-              else is built to fit the brief.
+              Start with the right product, then build the details around the
+              brief.
             </p>
             <ArrowLink href="/about/">How we work</ArrowLink>
           </div>

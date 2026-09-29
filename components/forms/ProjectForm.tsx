@@ -38,11 +38,14 @@ function Field({
   label,
   hint,
   error,
+  optional = false,
   children,
 }: {
   label: string;
   hint?: string;
   error?: string | null;
+  /** Marks the few fields that are not required. */
+  optional?: boolean;
   children: (props: {
     id: string;
     describedBy: string | undefined;
@@ -59,6 +62,9 @@ function Field({
     <div className="field">
       <label htmlFor={id} className="field__label">
         {label}
+        {optional && (
+          <span className="type-meta text-muted"> (optional)</span>
+        )}
       </label>
       {children({ id, describedBy, invalid: Boolean(error) })}
       {hint && !error && (
@@ -100,6 +106,7 @@ export function ProjectForm({
   const [files, setFiles] = useState<{ name: string; size: number }[]>([]);
   const [fileError, setFileError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const uploadId = useId();
 
   function validateControl(
@@ -243,7 +250,7 @@ export function ProjectForm({
         )}
       </Field>
 
-      <Field label="Company / Organisation">
+      <Field label="Company / Organisation" optional>
         {({ id }) => (
           <input
             id={id}
@@ -321,7 +328,7 @@ export function ProjectForm({
       </Field>
 
       <div className="sm:col-span-2">
-        <Field label="Target launch / event date">
+        <Field label="Target launch / event date" optional>
           {({ id }) => (
             <input
               id={id}
@@ -355,12 +362,20 @@ export function ProjectForm({
 
       <div className="field sm:col-span-2">
         <label htmlFor={uploadId} className="field__label">
-          Upload brief / artwork / references
+          Upload brief / artwork / references{" "}
+          <span className="type-meta text-muted">(optional)</span>
         </label>
-        {/* The native control is visually hidden but stays focusable; the
-            outlined area is its visible face. */}
-        <label className="upload" htmlFor={uploadId}>
+        {/* The native control is visually hidden but stays focusable and is
+            named by the label above; the outlined area is its visible face
+            and forwards a click to it. */}
+        <div
+          className="upload"
+          onClick={(event) => {
+            if (event.target !== fileRef.current) fileRef.current?.click();
+          }}
+        >
           <input
+            ref={fileRef}
             id={uploadId}
             name="attachment"
             type="file"
@@ -371,7 +386,7 @@ export function ProjectForm({
             onChange={onFiles}
           />
           <span className="upload__cta">
-            {files.length === 0 ? "Choose files" : "Change files"}
+            {files.length === 0 ? "Add files" : "Replace files"}
           </span>
           <span id={`${uploadId}-hint`} className="type-small text-muted">
             PDF, images or a deck. Up to 10MB total.
@@ -386,7 +401,7 @@ export function ProjectForm({
               ))}
             </ul>
           )}
-        </label>
+        </div>
         {fileError && (
           <p className="field__error" role="alert">
             {fileError}
@@ -409,7 +424,7 @@ export function ProjectForm({
       </div>
 
       {status === "error" && (
-        <p className="type-small text-clay sm:col-span-2" role="alert">
+        <p className="type-small text-clay-deep sm:col-span-2" role="alert">
           Something went wrong sending the brief. Please email us at{" "}
           <a className="u-wipe u-static" href={`mailto:${siteConfig.email}`}>
             {siteConfig.email}

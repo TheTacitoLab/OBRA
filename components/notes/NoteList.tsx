@@ -73,7 +73,7 @@ function NoteRow({
           </Heading>
           {/* Under the title on tablets, beside it from xl where the
               side column is wide enough to read. */}
-          <p className="type-body hidden text-muted md:col-span-8 md:col-start-4 md:block xl:col-span-3 xl:col-start-10">
+          <p className="type-body mt-3 text-muted md:col-span-8 md:col-start-4 md:mt-0 xl:col-span-3 xl:col-start-10">
             {note.standfirst}
           </p>
         </>

@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
+
+export const metadata: Metadata = {
+  title: "Not found",
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (

@@ -20,8 +20,9 @@ export function BigList({
   className?: string;
 }) {
   const label = hover === "block" ? "mark-hover" : "u-wipe u-lime";
+  const list = hover === "block" ? "biglist biglist--block" : "biglist";
   return (
-    <ul className={`biglist flex flex-col ${className}`}>
+    <ul className={`${list} flex flex-col ${className}`}>
       {items.map((item) => (
         <li key={item.href}>
           <Link href={item.href} className={`biglink ${size}`}>

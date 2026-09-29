@@ -13,7 +13,7 @@ const page = {
   path: "/services/",
   title: "Services",
   description:
-    "madebyobra services: creative direction, product development, sampling and manufacturing, procurement and costing, branding and packaging, e-commerce, fulfilment, event support and logistics.",
+    "madebyobra services: creative direction, product development, sampling and manufacturing, procurement and costing, branding and packaging, e-commerce, fulfilment, event support, logistics and white label production.",
 };
 
 export const metadata: Metadata = pageMetadata({
@@ -65,29 +65,37 @@ export default function ServicesPage() {
                 {String(index + 1).padStart(2, "0")}
               </span>
               <h3 className="type-headline md:col-span-6">{service.title}</h3>
-              <p className="type-body col-start-2 mt-2 max-w-[44ch] text-muted md:col-span-5 md:col-start-8 md:mt-0 md:self-end">
-                {service.description}
-              </p>
+              <div className="col-start-2 mt-2 flex flex-col gap-3 md:col-span-5 md:col-start-8 md:mt-0 md:self-end">
+                <p className="type-body max-w-[44ch] text-muted">
+                  {service.description}
+                </p>
+                {service.slug === "white-label-production" && (
+                  <div>
+                    <ArrowLink href="/agencies/">Built for agencies</ArrowLink>
+                  </div>
+                )}
+              </div>
             </li>
           ))}
         </ol>
       </Section>
 
-      {/* Copy left, heading right. */}
+      {/* Copy left, heading right: the commercial side of the work. */}
       <Section tone="stone">
         <Editorial
           reverse
-          heading={<h2 className="type-display">One team, start to finish.</h2>}
+          heading={<h2 className="type-display">Range, quantity, price.</h2>}
           aside={
             <div className="flex flex-col gap-5">
               <p className="type-lede text-muted">
-                We manage the whole project from the first brief to production
-                and delivery: creative, product, factories, costing, packaging,
-                freight and the shop it sells through.
+                Range structure, quantities and pricing are part of the job,
+                not an afterthought.
               </p>
               <p className="type-body text-muted">
-                Stock arrives retail-ready, with nothing left for you to
-                stitch together.
+                Hero pieces carry the identity, entry pieces carry the volume,
+                and the numbers are planned so stock sells through rather
+                than sits in boxes. When something works, it re-runs without
+                starting again.
               </p>
               <div>
                 <ArrowLink href="/about/">How we work</ArrowLink>

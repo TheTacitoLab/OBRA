@@ -5,7 +5,7 @@ import { ArrowLink } from "../site/Button";
 import { services } from "@/content/site";
 
 /**
- * The nine services as a numbered editorial list: two columns from 768px,
+ * The ten services as a numbered editorial list: two columns from 768px,
  * separators between rows only. The numbers are the one place on the site
  * they are kept, because the list is referenced by number elsewhere.
  */

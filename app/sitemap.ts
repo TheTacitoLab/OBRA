@@ -6,22 +6,22 @@ import { privacyHref, siteConfig, startHref } from "@/lib/siteConfig";
 /**
  * XML sitemap. `trailingSlash: true` in next.config.ts means the canonical
  * form of every URL carries a trailing slash, so they are listed that way.
- * `lastmod` is stamped at build time, which keeps it current on every deploy.
+ * Only the notes carry `lastmod` (their published date); the static pages
+ * would otherwise claim to change on every deploy.
  */
 
 // Required by `output: "export"`: generated once at build time.
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   const entry = (
     path: string,
     priority: number,
     changeFrequency: "weekly" | "monthly" | "yearly" = "monthly",
-    modified: Date = lastModified,
+    modified?: Date,
   ) => ({
     url: `${siteConfig.url}${path}`,
-    lastModified: modified,
+    ...(modified ? { lastModified: modified } : {}),
     changeFrequency,
     priority,
   });

@@ -10,7 +10,7 @@ export const notesIndex = {
   path: "/notes/",
   title: "Notes",
   description:
-    "Notes from madebyobra: projects, product development, merchandise observations, manufacturing insight, launches, event merchandise thinking and the occasional opinion.",
+    "Notes from madebyobra: projects, product development, manufacturing, launches, event retail, behind-the-scenes work, merchandise observations and the occasional opinion.",
 };
 
 type Crumb = { name: string; path?: string };

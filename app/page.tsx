@@ -3,6 +3,7 @@ import { Sheets } from "@/components/home/Sheets";
 import { Hero } from "@/components/home/Hero";
 import { WhoFor } from "@/components/home/WhoFor";
 import { WhatWeMake } from "@/components/home/WhatWeMake";
+import { RetailReady } from "@/components/home/RetailReady";
 import { Proposition } from "@/components/home/Proposition";
 import { Services } from "@/components/home/Services";
 import { Collection } from "@/components/home/Collection";
@@ -16,11 +17,11 @@ import { buildHomeSchema } from "@/lib/schema/organization";
 import { siteConfig } from "@/lib/siteConfig";
 
 export const metadata: Metadata = pageMetadata({
-  title: "madebyobra | Bespoke merchandise studio",
+  title: "madebyobra | Merchandise and product studio",
   absolute: true,
   description: siteConfig.description,
   path: "/",
-  ogTitle: "More product. Less promo.",
+  ogTitle: "Less bland. More brand.",
 });
 
 export default function Home() {
@@ -34,10 +35,11 @@ export default function Home() {
         <WhoFor />
         <WhatWeMake />
       </Sheets>
-      <Proposition />
+      <RetailReady />
       <Services />
-      <Collection />
+      <Proposition />
       <Procurement />
+      <Collection />
       <AboutPreview />
       <NotesPreview />
       <Contact />

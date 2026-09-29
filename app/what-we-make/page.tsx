@@ -41,8 +41,8 @@ export default function WhatWeMakePage() {
         aside={
           <div className="flex flex-col gap-body">
             <p className="type-lede">
-              Headwear, tees, tops, sportswear and more, made as pieces that
-              belong in a collection.
+              Seven categories we develop most often, plus the pieces that
+              come up on request, every one made to sit in a collection.
             </p>
             <div>
               <Button href={primaryCta.href}>{primaryCta.label}</Button>

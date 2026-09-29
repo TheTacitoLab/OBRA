@@ -6,6 +6,7 @@ import { ArrowLink, Button } from "../site/Button";
 import { BigList, type BigLink } from "../home/BigList";
 import { ClosingCta } from "./ClosingCta";
 import { pageTitleClass } from "./PageHero";
+import { MarkedTitle } from "../site/MarkedTitle";
 import { getAudience } from "@/content/audiences";
 import {
   findProduct,
@@ -27,9 +28,11 @@ const benefitLayout: { tone: BlockTone; className: string }[] = [
 ];
 
 /**
- * The "Who for" landing page: one component, four audiences. Everything
+ * The "Who for" landing page: one component, five audiences. Everything
  * audience-specific comes from content/audiences.ts; the compositions change
- * from section to section so the page never repeats itself.
+ * from section to section so the page never repeats itself, and the
+ * optional sections (retail readiness, benefits, a closing statement) let
+ * each audience's page carry a different shape.
  */
 export function AudiencePage({ slug }: { slug: string }) {
   const { page, content } = getAudience(slug);
@@ -47,16 +50,26 @@ export function AudiencePage({ slug }: { slug: string }) {
 
   return (
     <>
-      {/* Hero: parent link, full-width statement, intro and CTA in the right column. */}
+      {/* Hero: full-width statement, intro and CTA in the right column. */}
       <Section tone="bone" size="large" hero>
         <h1 className={pageTitleClass(content.headline, content.headlineTier)}>
-          {content.headline}
+          <MarkedTitle title={content.headline} mark={content.headlineMark} />
         </h1>
         <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
           <div className="flex flex-col gap-body md:col-span-6 md:col-start-7 lg:col-span-4 lg:col-start-9">
-            <p className="type-lede">{content.intro}</p>
-            <div>
+            <div className="flex flex-col gap-4">
+              <p className="type-lede">{content.intro}</p>
+              {content.secondary && (
+                <p className="type-body text-muted">{content.secondary}</p>
+              )}
+            </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
               <Button href={primaryCta.href}>{primaryCta.label}</Button>
+              {content.secondaryCta && (
+                <ArrowLink href={content.secondaryCta.href}>
+                  {content.secondaryCta.label}
+                </ArrowLink>
+              )}
             </div>
           </div>
         </div>
@@ -69,7 +82,8 @@ export function AudiencePage({ slug }: { slug: string }) {
         <div className="grid gap-y-head md:grid-cols-12 md:gap-x-8 lg:items-start lg:gap-x-12">
           <div className="md:col-span-12 lg:col-span-8">
             <h2 className="type-display">
-              What we do for {page.label.toLowerCase()}.
+              {content.pointsHeading ??
+                `What we do for ${page.label.toLowerCase()}.`}
             </h2>
           </div>
           <ul className="index-list md:col-span-8 md:col-start-5 lg:col-span-4 lg:col-start-9">
@@ -101,6 +115,34 @@ export function AudiencePage({ slug }: { slug: string }) {
         />
       </Section>
 
+      {/* Retail readiness: a short heading and one line, compact. */}
+      {content.ready && (
+        <Section tone="blue-soft" size="compact">
+          <Editorial
+            heading={
+              <h2 className="type-display">
+                <MarkedTitle
+                  title={content.ready.heading}
+                  mark={content.ready.mark}
+                />
+              </h2>
+            }
+            aside={
+              <div className="flex flex-col gap-5">
+                <p className="type-lede text-muted">{content.ready.text}</p>
+                {content.ready.link && (
+                  <div>
+                    <ArrowLink href={content.ready.link.href}>
+                      {content.ready.link.label}
+                    </ArrowLink>
+                  </div>
+                )}
+              </div>
+            }
+          />
+        </Section>
+      )}
+
       {/* Services: title column and a two-column hairline list. Phones get a
           titles-only two-up index so it reads differently from "What we do";
           tablets stack the title above the list; the side-by-side split
@@ -109,7 +151,7 @@ export function AudiencePage({ slug }: { slug: string }) {
         <div className="grid gap-y-head lg:grid-cols-12 lg:gap-x-12">
           <div className="flex flex-col gap-body lg:col-span-4">
             <div>
-              <h2 className="type-display-sm">Handled in one place.</h2>
+              <h2 className="type-display-sm">Where we come in.</h2>
               <p className="type-body mt-3 text-muted lg:max-w-[26ch]">
                 The services a range like this leans on most.
               </p>
@@ -142,24 +184,47 @@ export function AudiencePage({ slug }: { slug: string }) {
       </Section>
 
       {/* Benefits: full-width heading, then three blocks of unequal size. */}
-      <Section tone="bone">
-        <h2 className="type-display max-w-[12ch]">{content.benefitsHeading}</h2>
-        <div className="mt-body grid gap-3 md:mt-section-sm md:grid-cols-12 md:gap-4 lg:grid-rows-2">
-          {content.benefits.map((benefit, index) => {
-            const layout = benefitLayout[index] ?? benefitLayout[2];
-            return (
-              <Block
-                key={benefit.title}
-                tone={layout.tone}
-                title={benefit.title}
-                className={layout.className}
-              >
-                {benefit.text}
-              </Block>
-            );
-          })}
-        </div>
-      </Section>
+      {content.benefits && content.benefits.length > 0 && (
+        <Section tone="bone">
+          <h2 className="type-display max-w-[12ch]">
+            {content.benefitsHeading}
+          </h2>
+          <div className="mt-body grid gap-3 md:mt-section-sm md:grid-cols-12 md:gap-4 lg:grid-rows-2">
+            {content.benefits.map((benefit, index) => {
+              const layout = benefitLayout[index] ?? benefitLayout[2];
+              return (
+                <Block
+                  key={benefit.title}
+                  tone={layout.tone}
+                  title={benefit.title}
+                  className={layout.className}
+                >
+                  {benefit.text}
+                </Block>
+              );
+            })}
+          </div>
+        </Section>
+      )}
+
+      {/* Closing statement: copy left, heading right-aligned. */}
+      {content.statement && (
+        <Section tone="ink">
+          <Editorial
+            reverse
+            headingAlign="right"
+            mobileAlignRight
+            heading={
+              <h2 className="type-display">
+                <MarkedTitle title={content.statement.heading} />
+              </h2>
+            }
+            aside={
+              <p className="type-lede text-muted">{content.statement.text}</p>
+            }
+          />
+        </Section>
+      )}
 
       <ClosingCta copy={content.ctaCopy} />
     </>

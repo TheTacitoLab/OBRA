@@ -13,9 +13,8 @@ export function Contact() {
               <MarkedTitle title="Start a project." mark="project." />
             </h2>
             <p className="type-lede mt-head text-muted">
-              Tell us what you&rsquo;re making, roughly how many you need and
-              when you need it. We&rsquo;ll come back with the best way to
-              approach it.
+              The product, a rough number and a date is enough to start.
+              We&rsquo;ll come back with the best way to approach it.
             </p>
             <p className="type-small mt-6 text-muted">
               Prefer email?{" "}

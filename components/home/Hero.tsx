@@ -40,14 +40,13 @@ export function Hero() {
             className="fade-in flex flex-col gap-4 md:col-span-7 lg:col-span-6"
             style={{ "--d": "0.4s" } as React.CSSProperties}
           >
-            <p className="type-lede max-w-[28ch]">
+            <p className="type-lede max-w-[30ch]">
               madebyobra creates bespoke merchandise for brands, artists,
-              festivals and events.
+              festivals, events and agencies.
             </p>
             <p className="type-body max-w-[42ch] text-muted">
-              We design, develop and manufacture collections that feel like
-              real product, with the quality, detail and pricing to work
-              properly at scale.
+              We design, develop and manufacture retail-ready collections,
+              from limited runs to large-scale production.
             </p>
           </div>
 

@@ -1,8 +1,7 @@
 # madebyobra
 
-Brochure and lead-generation site for **madebyobra**, a bespoke merchandise
-studio creating original products for brands, artists, events and
-organisations.
+Brochure and lead-generation site for **madebyobra**, a merchandise and
+product studio for brands, artists, festivals, events and agencies.
 
 ## Stack
 
@@ -30,7 +29,7 @@ app/
   layout.tsx             Root layout - font, metadata, header + footer shell
   globals.css            Design system: palette, tones, type scale, rhythm
   page.tsx               Homepage
-  festivals/ events/ brands/ artists/   Audience landing pages
+  festivals/ events/ brands/ artists/ agencies/   Audience landing pages
   [slug]/page.tsx        Product landing pages (one template)
   what-we-make/ who-for/ services/ about/ notes/ start-a-project/ privacy/
 components/
@@ -64,15 +63,18 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   wipe (`.u-wipe`). The block is sized from the font's metrics
   (`--font-ascent`, `--font-cap` in `app/globals.css`); update those two
   numbers when the typeface changes.
-- **Type**: Aeonik is the intended typeface (Black for display, Bold and
-  Regular for text). It is licensed and not bundled; Figtree from next/font
-  stands in with the same weights, and `app/layout.tsx` documents the
-  drop-in (`--font-aeonik` takes over the stack once the files are wired).
-  Display sizes run at 900
-  Display sizes (`type-hero`, `type-display`, `type-display-xl`, `type-page`,
-  `type-link`, `type-link-sm`) are tuned to measured glyph widths so the
-  longest word in each role fits the narrowest viewport it appears at, with
-  separate formulas for phones, tablets and desktop.
+- **Type**: two families. Display (headings, navigation, buttons) is
+  Aeonik by intent (Black for display, Bold and Medium below it); it is
+  licensed and not bundled, so Figtree from next/font stands in with the
+  same weights and `app/layout.tsx` documents the drop-in (`--font-aeonik`
+  takes over the display stack once the files are wired; update
+  `--font-ascent` / `--font-cap` for the lime block). Running text is DM
+  Sans from next/font (`--font-sans`). Display sizes (`type-hero`,
+  `type-display`, `type-display-xl`, `type-page`, `type-link`,
+  `type-link-sm`) are tuned to measured glyph widths so the longest word in
+  each role fits the narrowest viewport it appears at, with separate
+  formulas for phones, tablets and desktop; the container widens to 140rem
+  so 1900px and 2200px screens use their width.
 - **Rhythm**: `--spacing-section`, `-sm`, `-lg`, `--spacing-head`,
   `--spacing-body` drive `py-section`, `mt-head`, `mt-body` and friends;
   mobile sits at the low end of each clamp.

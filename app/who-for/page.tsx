@@ -12,7 +12,7 @@ const page = {
   path: "/who-for/",
   title: "Who for",
   description:
-    "madebyobra makes bespoke merchandise for festivals, events, brands and artists: original products made to the identity, produced at scale.",
+    "madebyobra makes bespoke merchandise for festivals, events, brands, artists and agencies: original products made to the identity, from limited runs to larger production.",
 };
 
 export const metadata: Metadata = pageMetadata({
@@ -37,12 +37,12 @@ export default function WhoForPage() {
         aside={
           <div className="flex flex-col gap-head">
             <p className="type-lede">
-              Festivals, events, brands and artists. Different audiences, the
-              same approach: original product built around the identity, not
-              a blank with a logo added.
+              Festivals, events, brands, artists and agencies. Different
+              audiences, the same approach: product made to the identity,
+              developed from the pattern up.
             </p>
             <p className="type-body text-muted">
-              Four pages on what that looks like for each.
+              Five pages on what that looks like for each.
             </p>
           </div>
         }

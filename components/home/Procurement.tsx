@@ -3,6 +3,12 @@ import { Editorial } from "../site/Editorial";
 import { Block } from "../site/Block";
 import { ArrowLink } from "../site/Button";
 
+/**
+ * Factory direct: the manufacturing side. Heading left, the scale line
+ * right, three blocks of unequal width in one row, then the experience
+ * statement in a quiet two-column row; the one place on the homepage it
+ * appears.
+ */
 export function Procurement() {
   return (
     <Section id="factory-direct" tone="bone">
@@ -10,9 +16,12 @@ export function Procurement() {
         heading={<h2 className="type-display">Factory direct.</h2>}
         aside={
           <div className="flex flex-col gap-5">
-            <p className="type-lede text-muted">
-              Direct factory relationships let us shape the product around
-              your budget, balancing specification, volume and finish.
+            <p className="type-lede">
+              Small runs when you&rsquo;re testing. Thousands when it works.
+            </p>
+            <p className="type-body text-muted">
+              Direct factory relationships, so a one-off project, a limited
+              edition and a repeat programme all run through the same setup.
             </p>
             <ArrowLink href="/services/#procurement-and-costing">
               Procurement and costing
@@ -20,38 +29,48 @@ export function Procurement() {
           </div>
         }
       />
-      <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4 lg:grid-rows-2">
+      <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4">
         <Block
           tone="stone"
-          title="Sampling and QC through our factory network"
-          className="md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem] lg:justify-between"
+          title="Sampling and QC"
+          className="md:col-span-12 lg:col-span-5 lg:min-h-[16rem] lg:justify-between"
         >
           <p>
             Every product is sampled, approved and checked in production
-            before it ships. The factories are ones we work with directly,
-            across headwear, tees, tops, sportswear and trainingwear.
+            before it ships.
           </p>
         </Block>
         <Block
           tone="accent"
           title="Costed to the budget"
-          className="md:col-span-6 lg:col-span-5"
+          className="md:col-span-6 lg:col-span-4"
         >
           <p>
             Specification, volume and finish are balanced together, so the
-            number works before the sample does.
+            numbers work before the sample does.
           </p>
         </Block>
         <Block
           tone="outline"
           title="Retail-ready at your door"
-          className="md:col-span-6 lg:col-span-5"
+          className="md:col-span-6 lg:col-span-3"
         >
           <p>
-            We manage the whole project through production and delivery.
-            Finished stock arrives ready to sell, use or gift.
+            We manage production through to delivery so stock arrives ready
+            to sell, use or gift.
           </p>
         </Block>
+      </div>
+      <div className="mt-body grid gap-y-4 md:grid-cols-12 md:gap-x-8 md:items-end lg:gap-x-12">
+        <p className="type-statement md:col-span-7 max-w-[30ch]">
+          31 years of combined manufacturing experience across sport and
+          fashion.
+        </p>
+        <p className="type-body text-muted md:col-span-5 lg:col-span-4 lg:col-start-9">
+          That experience goes beyond production. We understand brand, margin,
+          positioning and how the product needs to work commercially once it
+          leaves the factory.
+        </p>
       </div>
     </Section>
   );

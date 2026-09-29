@@ -1,15 +1,16 @@
 import { findAudience, type PageEntry } from "./site";
 
 /**
- * The four "Who for" pages: /festivals/, /events/, /brands/ and /artists/.
- * Titles, descriptions and the enormous-list labels stay in content/site.ts
- * (the nav, footer and index pages read them); everything the landing page
- * itself says lives here, keyed by the same slug.
+ * The five "Who for" pages: /festivals/, /events/, /brands/, /artists/ and
+ * /agencies/. Titles, descriptions and the enormous-list labels stay in
+ * content/site.ts (the nav, footer and index pages read them); everything
+ * the landing page itself says lives here, keyed by the same slug.
  *
  * Width rules for the display headings, measured against the type scale at
  * weight 900: every word in `headline` is 11 characters or fewer (it sets
  * full width), and `productsHeading` sits in a 7/12 column so its words stay
- * at 7 characters or fewer. `benefitsHeading` sets full width.
+ * at 7 characters or fewer. `benefitsHeading` sets full width. A "\n" in a
+ * heading forces the line break there.
  */
 
 export type AudiencePoint = { title: string; text: string };
@@ -18,24 +19,36 @@ export type AudienceContent = {
   slug: string;
   /** Hero statement in sentence case, 2-5 words, ending with a full stop. */
   headline: string;
+  /** The end of the headline set on the lime block, when it has one. */
+  headlineMark?: string;
+  /** Overrides the phone title tier when the longest word is glyph-narrow. */
+  headlineTier?: "short" | "mid" | "default" | "long";
   /** One or two sentences: what madebyobra does for this audience. */
   intro: string;
-  /** What we do, specific to the audience. Three or four items. */
+  /** A second, shorter line beneath the intro. */
+  secondary?: string;
+  /** A second call to action beside Start a project. */
+  secondaryCta?: { label: string; href: string };
+  /** Title of the first section; defaults to "What we do for {label}." */
+  pointsHeading?: string;
+  /** What we do, specific to the audience. Three to five items. */
   points: AudiencePoint[];
   /** Product slugs from content/site.ts, most relevant first. */
   products: string[];
   /** Section title above the product list. Short words only. */
-  /** Overrides the phone title tier when the longest word is glyph-narrow. */
-  headlineTier?: "short" | "mid" | "default" | "long";
   productsHeading: string;
   /** Why those products for this audience, one sentence or two. */
   productNote: string;
+  /** Retail readiness for this audience: a short heading and one line. */
+  ready?: { heading: string; mark?: string; text: string; link?: { label: string; href: string } };
   /** Service slugs from content/site.ts, in display order. */
   services: string[];
   /** Section title above the benefits. Full width, short words. */
-  benefitsHeading: string;
+  benefitsHeading?: string;
   /** Three commercial or operational benefits. The first is the lead block. */
-  benefits: AudiencePoint[];
+  benefits?: AudiencePoint[];
+  /** A closing statement before the call to action. */
+  statement?: { heading: string; text: string };
   /** Closing call to action copy, where it should differ from the default. */
   ctaCopy?: string;
 };
@@ -54,7 +67,7 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Retail ranges",
-        text: "Hero pieces, entry price points and margin pieces planned as one range, with the stand in mind from the first sample.",
+        text: "Hero pieces, entry price points and margin pieces planned as one range, with bundles and the stand in mind from the first sample.",
       },
       {
         title: "Crew and staff ranges",
@@ -69,6 +82,12 @@ export const audienceContent: AudienceContent[] = [
     productsHeading: "Made for the field.",
     productNote:
       "Tees and shirts carry the year. Caps and hoodies cover the weather. All of it sells from a rail with a queue in front of it.",
+    ready: {
+      heading: "Retail ready.",
+      mark: "ready.",
+      text: "From barcodes and product data to packaging and stock preparation, we can get the collection ready to sell before it reaches site.",
+      link: { label: "Event support", href: "/services/#event-support" },
+    },
     services: [
       "product-development",
       "sampling-and-manufacturing",
@@ -77,11 +96,11 @@ export const audienceContent: AudienceContent[] = [
       "event-support",
       "logistics",
     ],
-    benefitsHeading: "Ready for the weekend.",
+    benefitsHeading: "Stocked for the weekend.",
     benefits: [
       {
         title: "POS-ready stock",
-        text: "Every line labelled, bagged and boxed by size, with restock split out from opening stock so the team can find it on Saturday night without opening every box.",
+        text: "Every line labelled, bagged and boxed by size. Restock is split out from opening stock, so the team can find it on Saturday night without opening every box.",
       },
       {
         title: "Size forecasting",
@@ -92,6 +111,10 @@ export const audienceContent: AudienceContent[] = [
         text: "Reserve stock staged and labelled by line, so a restock is a box number rather than a search.",
       },
     ],
+    statement: {
+      heading: "One event\nor a full calendar.",
+      text: "We can build the product and production setup once, then use it across future events and collections.",
+    },
     ctaCopy:
       "Tell us the dates, the capacity and what sold last year, and we’ll come back with a range and a plan for the stand.",
   },
@@ -99,7 +122,7 @@ export const audienceContent: AudienceContent[] = [
     slug: "events",
     headline: "Made for the moment.",
     intro:
-      "Product built around the event identity, from delegate gifting to the retail stand and the crew, produced and delivered to the date.",
+      "Gifting for the delegates, a stand for the retail, kit for the crew: one product family, produced and delivered for the day itself.",
     points: [
       {
         title: "Branded product",
@@ -111,17 +134,22 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Retail and pop-ups",
-        text: "Short runs for the stand or the pop-up, with a range sized for a two-day window rather than a season.",
+        text: "Short runs for the stand or the pop-up, with a range sized for a two-day window, not a season.",
       },
       {
-        title: "Crew, volunteers and sponsors",
-        text: "Team and sponsor product that reads as part of the event rather than a uniform, sized and delivered by role.",
+        title: "Sponsors, crew and volunteers",
+        text: "Sponsor activation product and team kit that read as part of the event rather than a uniform, sized and delivered by role.",
       },
     ],
     products: ["tops", "headwear", "t-shirts", "trainingwear"],
-    productsHeading: "Made for the date.",
+    productsHeading: "Gift or rail.",
     productNote:
       "Pieces that work as a gift and on a rail. Hoodies and caps people keep wearing, tees for the crew and the pop-up.",
+    ready: {
+      heading: "Ready to use.",
+      text: "Retail, gifting or activation stock can arrive labelled, packed and ready to use.",
+      link: { label: "Event support", href: "/services/#event-support" },
+    },
     services: [
       "creative-direction",
       "product-development",
@@ -134,15 +162,15 @@ export const audienceContent: AudienceContent[] = [
     benefits: [
       {
         title: "Delivered to the date",
-        text: "Sampling and production planned back from the event date, with freight, customs and delivery to the venue handled from our side, so the only date you track is the one on the invitation.",
+        text: "Sampling and production are planned back from the event date. Freight, customs and delivery to the venue run from our side, so the only date you track is the one on the invitation.",
       },
       {
         title: "Gifting quantities",
         text: "From a few dozen to a few thousand, packed per recipient and labelled by day, session or table.",
       },
       {
-        title: "Temporary activations",
-        text: "One-off runs for pop-ups and activations, with the point of sale set up for the days it runs and the leftover stock planned for.",
+        title: "Sponsor activations and pop-ups",
+        text: "One-off runs for sponsor activations and pop-ups, with the point of sale set up for the days it runs and the leftover stock planned for.",
       },
     ],
     ctaCopy:
@@ -152,7 +180,7 @@ export const audienceContent: AudienceContent[] = [
     slug: "brands",
     headline: "Your brand, as product.",
     intro:
-      "Custom product development for campaigns, drops and brand extensions: pieces made to your standard until they read as part of the range.",
+      "Pieces developed to your standard, for a campaign, a drop, a collaboration or a permanent line beside the core range.",
     points: [
       {
         title: "Product development",
@@ -160,11 +188,11 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Brand extension",
-        text: "Product that sits beside your core range rather than a merch line off to the side of it.",
+        text: "Product that sits beside your core range, not off to the side of it.",
       },
       {
-        title: "Campaigns and drops",
-        text: "Limited runs built around a launch or a moment, timed and sized so they land on the day and sell through.",
+        title: "Campaigns, drops and collaborations",
+        text: "Limited runs for a launch, a collaboration or a moment, timed and sized so they land on the day and sell through.",
       },
       {
         title: "Retail product and limited runs",
@@ -186,8 +214,8 @@ export const audienceContent: AudienceContent[] = [
     benefitsHeading: "Product, not promo.",
     benefits: [
       {
-        title: "Costed to the budget",
-        text: "Direct factory relationships let us shape specification, volume and finish to the number you have, rather than trimming the idea to fit a catalogue. The piece stays the piece.",
+        title: "Built to the number",
+        text: "Direct factory relationships let us move the spec, the quantity and the finish to the number you have, instead of trimming the idea to fit a catalogue. The piece stays the piece.",
       },
       {
         title: "Ready for your store",
@@ -195,17 +223,22 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Repeatable",
-        text: "Once a block is developed it re-runs at the same specification and cost, so a drop can become a line.",
+        text: "Once a product is developed it re-runs at the same specification and cost, so a drop can become a line.",
       },
     ],
+    statement: {
+      heading: "Start small.\nScale when it works.",
+      text: "Use a smaller run to prove the idea, then move into larger production without starting the whole process again.",
+    },
     ctaCopy:
       "Tell us what you’re launching, roughly how many and the budget you’re working to, and we’ll come back with a range.",
   },
   {
     slug: "artists",
-    headline: "Merch worth keeping.",
+    headline: "Product worth keeping.",
+    headlineTier: "mid",
     intro:
-      "Tour ranges, drops and apparel made to the identity, with sampling, production and fulfilment handled, so the merch is as considered as the work.",
+      "The tour range, the drop and the jersey, made to the identity and as considered as the work, with production and delivery taken care of.",
     points: [
       {
         title: "Tour merchandise",
@@ -213,7 +246,7 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Drops",
-        text: "Limited runs around a release or a moment, timed and sized to sell through rather than sit in boxes.",
+        text: "Limited runs around a release or a moment, timed and sized to sell through, not sit in boxes, and re-run at the same specification when they do.",
       },
       {
         title: "Jerseys and apparel",
@@ -228,6 +261,11 @@ export const audienceContent: AudienceContent[] = [
     productsHeading: "Made for the tour.",
     productNote:
       "The football shirt and the hoodie are the hero pieces. The tee and the cap are the ones everybody buys.",
+    ready: {
+      heading: "Ready to sell.",
+      text: "Products can arrive labelled, packed and ready for tour retail, online sales or fulfilment.",
+      link: { label: "Fulfilment", href: "/services/#fulfilment" },
+    },
     services: [
       "creative-direction",
       "product-development",
@@ -240,19 +278,67 @@ export const audienceContent: AudienceContent[] = [
     benefits: [
       {
         title: "Fulfilment handled",
-        text: "Storage, pick and pack and direct-to-fan delivery from our side, so a drop does not turn into a week of parcels on the kitchen table. Returns and re-runs handled the same way.",
+        text: "Storage, pick and pack and direct-to-fan delivery from our side. A drop does not turn into a week of parcels on the kitchen table, and returns and re-runs work the same way.",
       },
       {
         title: "Stock by city",
-        text: "Splits by venue and size, with restock routed ahead to the next date rather than following the van.",
+        text: "Splits by venue and size, with restock routed ahead to the next date instead of following the van.",
       },
       {
-        title: "Store-ready",
+        title: "Live before the announcement",
         text: "Product listings, data and a store set up before the announcement, so the link works the moment it is posted.",
       },
     ],
     ctaCopy:
       "Tell us the dates or the release, roughly how many and where it needs to go, and we’ll come back with a range and a plan.",
+  },
+  {
+    slug: "agencies",
+    headline: "Built for\nyour client.",
+    headlineMark: "client.",
+    headlineTier: "default",
+    intro:
+      "madebyobra works behind the scenes with creative, experiential, event and brand agencies to design, develop and manufacture merchandise for their clients.",
+    secondary:
+      "You keep the client relationship. We handle the product work behind it.",
+    secondaryCta: { label: "Our services", href: "/services/" },
+    pointsHeading: "How we work with agencies.",
+    points: [
+      {
+        title: "White-label when needed",
+        text: "We can operate completely behind the scenes, join client conversations as your product specialist, or work somewhere in between.",
+      },
+      {
+        title: "Your client stays your client",
+        text: "We do not use agency projects as a route to approach the end client.",
+      },
+      {
+        title: "Room for your margin",
+        text: "We can structure project pricing with agency resale and commercial margin in mind.",
+      },
+      {
+        title: "Use us where you need us",
+        text: "Bring us into product development, sampling, manufacturing, packaging, logistics or the entire project.",
+      },
+      {
+        title: "Built for repeat work",
+        text: "Once the setup is in place, we can use it across future briefs, campaigns and client projects.",
+      },
+    ],
+    products: ["t-shirts", "headwear", "tops", "accessories", "retro-football-shirts"],
+    productsHeading: "Made for the brief.",
+    productNote:
+      "The categories agency briefs ask for most, developed so each piece reads as the client’s product rather than a promotional item.",
+    services: [
+      "white-label-production",
+      "product-development",
+      "sampling-and-manufacturing",
+      "branding-and-packaging",
+      "procurement-and-costing",
+      "logistics",
+    ],
+    ctaCopy:
+      "Tell us what the client needs, roughly how many and when, and we’ll come back with product, pricing and a plan you can take into the room.",
   },
 ];
 

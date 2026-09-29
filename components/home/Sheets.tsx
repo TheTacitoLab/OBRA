@@ -3,7 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
-const DARK_TONES = new Set(["ink", "clay", "blue"]);
+const DARK_TONES = new Set(["ink", "clay"]);
 
 /**
  * Drives the stacked-sheet scroll on the homepage.
@@ -79,7 +79,7 @@ export function Sheets({ children }: { children: ReactNode }) {
       }
 
       // The sheet under the header: the last one whose top has crossed the
-      // header's midline (the header is 4.5rem tall).
+      // header's midline (the bar is 3.5rem tall, 4.25rem from lg).
       let tone = sheets[0].dataset.tone ?? "bone";
       for (let index = 0; index < sheets.length; index += 1) {
         if (tops[index] > 36) break;

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-
-export type Tone = "bone" | "ink" | "stone" | "clay" | "blue";
+import type { Tone } from "../site/Section";
 
 /**
  * One homepage chapter. Full viewport height minimum, its own tone, and the

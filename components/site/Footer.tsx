@@ -1,27 +1,22 @@
 import Link from "next/link";
 import { Container } from "./Container";
-import { Arrow } from "./Button";
 import { audiences, navLinks, pageHref, primaryCta } from "@/content/site";
 import { privacyHref, siteConfig, socialLinks } from "@/lib/siteConfig";
 
-/** Compact editorial footer: wordmark, one set of links, contact, baseline. */
+/**
+ * Compact editorial footer: wordmark, one set of links, contact, baseline,
+ * and the line as a sign-off, set enormous and cut by the page edge.
+ */
 export function Footer() {
   const siteLinks = navLinks.filter((link) => link.href !== "/who-for/");
   return (
     <footer data-tone="ink" className="bg-bg text-fg">
-      <Container className="py-section-sm">
+      <Container className="pt-section-sm">
         <div className="grid gap-x-8 gap-y-10 md:grid-cols-12">
-          <div className="md:col-span-5">
+          <p className="md:col-span-5">
+            <span className="sr-only">madebyobra.</span>
             <span className="logo w-[8.5rem]" aria-hidden="true" />
-            <p className="type-body mt-5 max-w-[30ch] text-muted">
-              Bespoke merchandise for brands, artists, events and
-              organisations. The maker&rsquo;s mark on everything we produce.
-            </p>
-            <Link href={primaryCta.href} className="btn btn-primary mt-7">
-              <span>{primaryCta.label}</span>
-              <Arrow />
-            </Link>
-          </div>
+          </p>
 
           <nav
             aria-label="Footer"
@@ -85,6 +80,7 @@ export function Footer() {
                       className="nav-link"
                     >
                       <span className="u-wipe">{link.label}</span>
+                      <span className="sr-only"> (opens in a new tab)</span>
                     </a>
                   </li>
                 ))}
@@ -102,6 +98,12 @@ export function Footer() {
             <span className="u-wipe">Privacy</span>
           </Link>
         </div>
+      </Container>
+      <Container>
+        <p className="footer-mark" aria-hidden="true">
+          <span>Less bland. </span>
+          <span>More brand.</span>
+        </p>
       </Container>
     </footer>
   );

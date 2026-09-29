@@ -11,7 +11,7 @@ import { siteConfig } from "@/lib/siteConfig";
  */
 export function ClosingCta({
   title = "Start a project.",
-  copy = "Tell us what you’re looking to make, roughly how many you need and when you need it.",
+  copy = "Send the brief, or the start of one, and we’ll take it from there.",
 }: {
   title?: string;
   copy?: string;

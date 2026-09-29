@@ -10,28 +10,34 @@
   --color-bone: #f1eee7; /* Warm Bone - primary light background */
   --color-ink: #171717; /* Soft Black - primary dark background, main text */
   --color-stone: #d7d1c6; /* Muted Stone - secondary neutral */
-  --color-clay: #b8644a; /* Burnt Clay - expressive accent, section background */
-  --color-blue: #6e7d94; /* Dusty Blue - secondary expressive colour */
-  --color-lime: #d8e24f; /* Acid Lime - tiny details, hover and active states */
+  --color-clay: #b8644a; /* Burnt Orange / Clay - supporting accent, one section */
+  --color-blue: #6e7d94; /* Dusty Blue - supporting cool accent */
+  --color-lime: #d8e24f; /* Acid Lime - the main accent: the block behind one heading word, hover blocks, focus, underlines */
 
   /* Washed variants of the brand hues for the occasional accent block. */
   --color-lime-soft: #e6e9b6;
-  --color-blue-soft: #d0d3d3;
+  --color-blue-soft: #c9d1dc;
   --color-clay-soft: #e5cbbf;
+  /* Clay deepened for small text on bone (about 5.2:1; clay alone is 3.4:1). */
+  --color-clay-deep: #8f4f3b;
 
-  /* One family for everything. --font-aeonik is defined only once the
-     licensed Aeonik files are wired up in app/layout.tsx; until then the
-     stack falls through to Figtree from next/font. */
-  --font-sans:
+  /* Two families. Display (headings, navigation, buttons): --font-aeonik is
+     defined only once the licensed Aeonik files are wired up in
+     app/layout.tsx; until then the stack falls through to Figtree from
+     next/font. Text: DM Sans from next/font. */
+  --font-display:
     var(--font-aeonik, var(--font-figtree)), "Aeonik", "Helvetica Neue",
     Helvetica, Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    var(--font-dm-sans), "DM Sans", "Helvetica Neue", Helvetica, Arial,
+    ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Responsive rhythm. Mobile values sit at the low end of each clamp. */
   --spacing-section: clamp(3.5rem, 4.5vw + 2rem, 8rem);
-  --spacing-section-sm: clamp(2.75rem, 3vw + 1.5rem, 5.5rem);
+  --spacing-section-sm: clamp(3rem, 3vw + 1.5rem, 5.5rem);
   --spacing-section-lg: clamp(4.5rem, 6vw + 2.5rem, 10rem);
   --spacing-head: clamp(1.25rem, 1.5vw + 0.75rem, 2.25rem);
   --spacing-body: clamp(1.5rem, 2vw + 0.75rem, 3rem);
@@ -60,7 +66,7 @@
   --muted: color-mix(in srgb, var(--color-ink) 70%, var(--color-bone));
   --line: color-mix(in srgb, var(--color-ink) 16%, transparent);
   --line-strong: color-mix(in srgb, var(--color-ink) 40%, transparent);
-  --accent: var(--color-clay);
+  --accent: var(--color-lime);
 }
 
 [data-tone="stone"] {
@@ -69,7 +75,7 @@
   --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-stone));
   --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
   --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
-  --accent: var(--color-clay);
+  --accent: var(--color-lime);
 }
 
 [data-tone="ink"] {
@@ -98,7 +104,7 @@
   --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-blue-soft));
   --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
   --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
-  --accent: var(--color-clay);
+  --accent: var(--color-lime);
 }
 
 [data-tone="lime-soft"] {
@@ -107,7 +113,7 @@
   --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-lime-soft));
   --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
   --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
-  --accent: var(--color-clay);
+  --accent: var(--color-ink);
 }
 
 /* Vertical metrics of the display face, in em, for the lime block behind a
@@ -185,6 +191,29 @@ html[data-nav="dark"] {
    longest word in each role fits the narrowest viewport it appears at.
    ========================================================================= */
 @layer components {
+  /* Everything set in the display face; running text inherits DM Sans from
+     the body. */
+  .type-hero,
+  .type-display,
+  .type-display-sm,
+  .type-display-xl,
+  .type-page,
+  .type-link,
+  .type-link-sm,
+  .type-link-xs,
+  .type-headline,
+  .type-title,
+  .type-statement,
+  .btn,
+  .link-arrow,
+  .nav-link,
+  .upload__cta,
+  .footer-mark,
+  .prose-note > h2,
+  .privacy-h2 {
+    font-family: var(--font-display);
+  }
+
   /* Hero statement. One word per line on phones, two lines from 768px.
      Limits at weight 900, -0.045em: "BRAND." 3.54em, "MORE BRAND." 6.46em. */
   .type-hero {
@@ -199,7 +228,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 768px) {
     .type-hero {
-      font-size: min(13.8vw, 16rem);
+      font-size: min(13.8vw, 19rem);
       line-height: 0.9;
     }
     .type-hero .word {
@@ -256,7 +285,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 1024px) {
     .type-display-xl {
-      font-size: clamp(6rem, 11.5vw, 15rem);
+      font-size: clamp(6rem, 11.5vw, 16rem);
     }
   }
   /* Homepage chapter titles (What we make., Notes.): the display-xl voice a
@@ -294,11 +323,11 @@ html[data-nav="dark"] {
     .type-page,
     .type-page-short,
     .type-page-mid {
-      font-size: min(13vw, 15rem);
+      font-size: min(13vw, 17rem);
     }
     /* "TRAININGWEAR" (7.39em) needs the smaller step at every width. */
     .type-page-long {
-      font-size: min(12vw, 13.5rem);
+      font-size: min(12vw, 15rem);
     }
   }
 
@@ -368,7 +397,7 @@ html[data-nav="dark"] {
 
   /* Service and column titles */
   .type-title {
-    font-weight: 800;
+    font-weight: 700;
     font-size: clamp(1.25rem, 0.7vw + 1rem, 1.625rem);
     line-height: 1.08;
     letter-spacing: -0.03em;
@@ -428,7 +457,7 @@ html[data-nav="dark"] {
     margin-top: 1.25em;
   }
   .prose-note > h2 {
-    font-weight: 800;
+    font-weight: 700;
     font-size: clamp(1.375rem, 1vw + 1rem, 1.75rem);
     line-height: 1.1;
     letter-spacing: -0.03em;
@@ -505,6 +534,10 @@ html[data-nav="dark"] {
     background-position: 0 var(--mark-y);
     color: var(--color-ink);
   }
+  /* A block after other words on its line keeps the word space in front. */
+  .mark--mid {
+    margin-inline-start: 0;
+  }
   .mark-hover {
     background-size: 0% var(--mark-h);
     background-position: 100% var(--mark-y);
@@ -543,7 +576,7 @@ html[data-nav="dark"] {
     .biglist:has(> li:hover) > li:not(:hover) {
       opacity: 0.45;
     }
-    .biglist > li:hover {
+    .biglist:not(.biglist--block) > li:hover {
       transform: translateX(0.35rem);
     }
   }
@@ -566,7 +599,8 @@ html[data-nav="dark"] {
      case the link would otherwise pass down as computed values. */
   .biglink__intro {
     display: block;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
+    font-family: var(--font-sans);
     max-width: 40ch;
     font-weight: 400;
     font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
@@ -636,19 +670,16 @@ html[data-nav="dark"] {
 
   .btn-primary {
     --btn-accent: var(--color-lime);
-    background-color: var(--fg);
-    color: var(--bg);
-    border: 1px solid var(--fg);
-  }
-  [data-tone="ink"] .btn-primary,
-  [data-tone="clay"] .btn-primary {
-    --btn-accent: var(--color-clay);
-  }
-  [data-tone="clay"] .btn-primary {
     background-color: var(--color-ink);
-    border-color: var(--color-ink);
     color: var(--color-bone);
-    --btn-accent: var(--color-lime);
+    border: 1px solid var(--color-ink);
+  }
+  /* On soft black the button inverts, or it would vanish. */
+  [data-tone="ink"] .btn-primary {
+    --btn-accent: var(--color-clay);
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+    border-color: var(--color-bone);
   }
 
   .btn-outline {
@@ -695,7 +726,6 @@ html[data-nav="dark"] {
   .link-arrow:hover .btn__arrow,
   .link-arrow:focus-visible .btn__arrow {
     transform: translateX(3px);
-    color: var(--accent);
   }
 
   /* -------------------------------------------------------------------
@@ -707,6 +737,35 @@ html[data-nav="dark"] {
     background-color: currentColor;
     -webkit-mask: url("/brand/madebyobra.png") center / contain no-repeat;
     mask: url("/brand/madebyobra.png") center / contain no-repeat;
+  }
+
+  /* Footer sign-off: the line set enormous and cut by the page edge. Two
+     lines on phones, one from 768px; the box shows the top two thirds of
+     the last line's caps (caps sit 0.15em to 0.85em into a 1em line). */
+  .footer-mark {
+    display: block;
+    overflow: hidden;
+    height: 1.62em;
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    font-size: clamp(2.5rem, 13.5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--fg);
+  }
+  .footer-mark > span {
+    display: block;
+  }
+  @media (min-width: 768px) {
+    .footer-mark {
+      height: 0.62em;
+      font-size: min(7.1vw, 8.25rem);
+    }
+    .footer-mark > span {
+      display: inline;
+    }
   }
 
   /* -------------------------------------------------------------------
@@ -724,7 +783,7 @@ html[data-nav="dark"] {
       color 0.2s ease,
       background-color 0.25s ease,
       border-color 0.25s ease,
-      transform 0.3s var(--ease-out-quart);
+      transform 0.25s var(--ease-out-quart);
   }
   .site-header[data-scrolled="true"] {
     background-color: color-mix(in srgb, var(--nav-bg) 94%, transparent);
@@ -732,6 +791,10 @@ html[data-nav="dark"] {
   }
   .site-header[data-hidden="true"] {
     transform: translateY(-100%);
+  }
+  /* Keyboard focus inside the hidden bar brings it back on screen. */
+  .site-header:focus-within {
+    transform: none;
   }
   .site-header[data-menu-open="true"] {
     color: var(--color-ink);
@@ -920,7 +983,7 @@ html[data-nav="dark"] {
   /* Phones and tablets: the copy follows the title closely. */
   @media (max-width: 1023.98px) {
     .panel {
-      gap: 1rem;
+      gap: 1.25rem;
     }
   }
 
@@ -967,98 +1030,6 @@ html[data-nav="dark"] {
   }
   .panel-outline {
     border: 1px solid var(--line-strong);
-  }
-
-  /* -------------------------------------------------------------------
-     Services grid: hairlines, no cards.
-     ------------------------------------------------------------------- */
-  .services {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-  .services > li:first-child > .service {
-    border-top: 0;
-  }
-  .service {
-    position: relative;
-    display: block;
-    padding: 0.9rem 0 1rem;
-    border-top: 1px solid var(--line);
-    color: inherit;
-    text-decoration: none;
-  }
-  .service::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    height: 2px;
-    background-color: var(--color-lime);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s var(--ease-out-quart);
-  }
-  .service:hover::after,
-  .service:focus-visible::after,
-  .service:active::after {
-    transform: scaleX(1);
-  }
-  /* The list items are display: contents, so column rules walk through
-     the li to reach the link that is the actual grid item. */
-  @media (min-width: 640px) {
-    .services {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .service {
-      padding: 1.5rem 1.75rem 2rem 0;
-    }
-    .services > li:nth-child(2n) > .service {
-      padding-left: 1.75rem;
-      padding-right: 0;
-      border-left: 1px solid var(--line);
-    }
-    .services > li:nth-child(2n) > .service::after {
-      left: 1.75rem;
-    }
-    .services > li:nth-child(-n + 2) > .service {
-      border-top: 0;
-    }
-  }
-  /* At two columns an odd last item closes the grid at full width. */
-  @media (min-width: 640px) and (max-width: 1023.98px) {
-    .services > li:last-child:nth-child(odd) > .service {
-      grid-column: 1 / -1;
-      padding-right: 0;
-    }
-  }
-  @media (min-width: 1024px) {
-    .services {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .service,
-    .services > li:nth-child(2n) > .service {
-      padding: 2rem 2.25rem 2.75rem 0;
-      border-left: 0;
-    }
-    .services > li:nth-child(2n) > .service::after {
-      left: 0;
-    }
-    .services > li:nth-child(3n + 2) > .service,
-    .services > li:nth-child(3n + 3) > .service {
-      padding-left: 2.25rem;
-      border-left: 1px solid var(--line);
-    }
-    .services > li:nth-child(3n + 2) > .service::after,
-    .services > li:nth-child(3n + 3) > .service::after {
-      left: 2.25rem;
-    }
-    .services > li:nth-child(3n + 3) > .service {
-      padding-right: 0;
-    }
-    .services > li:nth-child(-n + 3) > .service {
-      border-top: 0;
-    }
   }
 
   /* -------------------------------------------------------------------
@@ -1138,8 +1109,10 @@ html[data-nav="dark"] {
   }
   .field__control:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 1px 0 0 var(--accent);
+    border-color: var(--fg);
+    box-shadow:
+      0 2px 0 0 var(--color-lime),
+      0 3px 0 0 var(--fg);
   }
   .field__control[aria-invalid="true"] {
     border-color: var(--color-clay);
@@ -1148,7 +1121,7 @@ html[data-nav="dark"] {
   .field__error {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-clay);
+    color: var(--color-clay-deep);
   }
   textarea.field__control {
     resize: none;
@@ -1170,7 +1143,7 @@ html[data-nav="dark"] {
   }
   .upload:hover,
   .upload:has(input:focus-visible) {
-    border-color: var(--accent);
+    border-color: var(--color-lime);
   }
   .upload:has(input:focus-visible) {
     outline: 2px solid currentColor;
@@ -1206,7 +1179,7 @@ html[data-nav="dark"] {
   .privacy-h2 {
     margin-top: 2.25em;
     margin-bottom: 0.5em;
-    font-weight: 800;
+    font-weight: 700;
     font-size: clamp(1.375rem, 1vw + 1rem, 1.75rem);
     line-height: 1.1;
     letter-spacing: -0.03em;

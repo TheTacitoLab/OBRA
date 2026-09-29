@@ -8,7 +8,7 @@ export const siteConfig = {
   // TODO: confirm the exact mailbox; the domain is madebyobra.com.
   email: "hello@madebyobra.com",
   description:
-    "madebyobra is a bespoke merchandise studio creating original products for brands, artists, festivals and events. We design, develop and manufacture collections that feel like real product, with the quality, detail and pricing to work properly at scale.",
+    "madebyobra is a merchandise and product studio for brands, artists, festivals, events and agencies. We design, develop and manufacture merchandise that feels like real product, from limited runs to large-scale production.",
   // Canonical profile URLs exactly as the platforms serve them. Footer links
   // and schema.org sameAs both read from here and must match character for
   // character so the profiles resolve to one entity.

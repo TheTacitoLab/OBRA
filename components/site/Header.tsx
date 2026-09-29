@@ -5,7 +5,13 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "./Logo";
 import { Arrow } from "./Button";
-import { navLinks, primaryCta, audiences, pageHref } from "@/content/site";
+import {
+  navLinks,
+  primaryCta,
+  audiences,
+  products,
+  pageHref,
+} from "@/content/site";
 import { siteConfig, socialLinks } from "@/lib/siteConfig";
 
 /**
@@ -22,9 +28,21 @@ export function Header() {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
+  // A nav item is current on its own page, on anything beneath it, and on
+  // the landing pages it indexes (Who for on /festivals/, What we make on
+  // /headwear/, and so on).
   const isCurrent = useCallback(
-    (href: string) =>
-      pathname === href || (href !== "/" && pathname.startsWith(href)),
+    (href: string) => {
+      if (pathname === href) return true;
+      if (href !== "/" && pathname.startsWith(href)) return true;
+      const children =
+        href === "/who-for/"
+          ? audiences
+          : href === "/what-we-make/"
+            ? products
+            : [];
+      return children.some((page) => pathname.startsWith(pageHref(page.slug)));
+    },
     [pathname],
   );
 
@@ -94,7 +112,7 @@ export function Header() {
         data-scrolled={scrolled && !open ? "true" : "false"}
         data-menu-open={open ? "true" : "false"}
       >
-        <div className="site-header__bar mx-auto w-full max-w-[112rem] px-5 sm:px-8 lg:px-12 2xl:px-16">
+        <div className="site-header__bar mx-auto w-full max-w-[140rem] px-5 sm:px-8 lg:px-12 2xl:px-16 min-[1900px]:px-20">
           <Logo className="relative z-[70] w-[6.5rem] sm:w-[7.25rem]" />
 
           <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
@@ -143,7 +161,7 @@ export function Header() {
       >
         <nav
           aria-label="Mobile"
-          className="mx-auto flex h-full w-full max-w-[112rem] flex-col overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
+          className="mx-auto flex h-full w-full max-w-[140rem] flex-col overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
         >
           <div>
             <ul className="biglist flex flex-col">
@@ -203,6 +221,7 @@ export function Header() {
                   className="nav-link"
                 >
                   <span className="u-wipe">{link.label}</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               ))}
             </div>

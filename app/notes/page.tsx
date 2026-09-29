@@ -22,8 +22,8 @@ export default function NotesPage() {
           aside={
             <p className="type-lede">
               Projects, product development and what we notice about
-              merchandise along the way: manufacturing insight, launches,
-              event retail thinking and the occasional opinion.
+              merchandise along the way: manufacturing, launches, event
+              retail, behind-the-scenes work and the occasional opinion.
             </p>
           }
         />

@@ -34,7 +34,7 @@ export default function PrivacyPage() {
 
           <h2 className="privacy-h2">1. Who we are</h2>
           <p className="privacy-p">
-            madebyobra is a bespoke merchandise studio operated by TACITO
+            madebyobra is a merchandise and product studio operated by TACITO
             Group. For the purposes of UK data protection law, madebyobra is the
             data controller
             responsible for your personal data. If you have any questions about

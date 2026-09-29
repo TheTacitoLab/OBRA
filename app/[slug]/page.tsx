@@ -14,7 +14,8 @@ import { buildPageSchema } from "@/lib/schema/organization";
 
 /**
  * One template for the product pages (/headwear/, /t-shirts/, /tops/,
- * /sportswear/, /retro-football-shirts/, /trainingwear/). Every slug in
+ * /sportswear/, /retro-football-shirts/, /trainingwear/, /accessories/).
+ * Every slug in
  * content/site.ts is pre-rendered at build time; anything else is a 404.
  * The audience pages have their own static routes (app/festivals/ etc.).
  */
@@ -27,7 +28,7 @@ const parent = { label: "What we make", href: "/what-we-make/" };
 const steps: Step[] = [
   {
     title: "Start from the right base",
-    text: "A pattern, fit and construction that has already run in production, so the fundamentals are settled before the brief arrives.",
+    text: "A pattern, fit and construction that has already run in production, so the fundamentals are settled before the brief arrives and the first run can be small without the re-run costing more.",
   },
   {
     title: "Detail it properly",

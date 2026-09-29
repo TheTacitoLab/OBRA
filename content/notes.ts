@@ -30,20 +30,20 @@ export type Note = {
 
 export const notes: Note[] = [
   {
-    slug: "developed-not-decorated",
-    title: "Developed, not decorated",
+    slug: "blanks-are-not-product",
+    title: "Blanks are not product",
     standfirst:
-      "Why every product we make starts from a block that already works, and what that frees up for the brand.",
+      "Why every product we make starts from a base that already works, and what that frees up for the brand.",
     date: "2026-09-10",
     category: "Product development",
     body: [
       {
         type: "p",
-        text: "A blank is a finished product waiting for a logo. A block is a pattern, a fit and a construction that have been through production before, that we know how to cost, sample and scale. It is the difference between decorating and developing.",
+        text: "A blank is a finished product waiting for a logo. A base is a pattern, a fit and a construction that have been through production before, that we know how to cost, sample and scale. It is the difference between decorating and developing.",
       },
       {
         type: "p",
-        text: "Starting from a block that has already run takes the risk out of the parts of a product nobody thanks you for: the fit that runs true across sizes, the neckline that holds its shape, the seam that survives the fortieth wash. Those problems are solved before the brief arrives.",
+        text: "Starting from a base that has already run takes the risk out of the parts of a product nobody thanks you for: the fit that runs true across sizes, the neckline that holds its shape, the seam that survives the fortieth wash. Those problems are solved before the brief arrives.",
       },
       {
         type: "h2",
@@ -55,7 +55,7 @@ export const notes: Note[] = [
       },
       {
         type: "p",
-        text: "It also changes what a first order can be. A block that has already run at volume prices the same way whether the first run is two hundred pieces or two thousand, so the range can start small without looking small.",
+        text: "It also changes what a first order can be. A base that has already run at volume prices the same way whether the first run is two hundred pieces or two thousand, so the range can start small without looking small.",
       },
     ],
   },

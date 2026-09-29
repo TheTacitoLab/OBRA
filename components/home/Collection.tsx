@@ -13,13 +13,12 @@ export function Collection() {
         aside={
           <div className="flex flex-col gap-5">
             <p className="type-lede text-muted">
-              We build each range as a whole, balancing hero products,
-              accessible price points and stronger-margin pieces.
+              We plan each range as a whole: the hero piece, the one everybody
+              can afford and the one that carries the margin.
             </p>
             <p className="type-body max-w-[36ch] text-muted">
-              Then we shape bundles, retail structure and forecasting around
-              the audience, so the collection works commercially as well as
-              creatively.
+              Then the bundles, the quantities and the size split, worked out
+              around who is buying so it sells through.
             </p>
           </div>
         }
