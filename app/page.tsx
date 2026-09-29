@@ -7,7 +7,6 @@ import { Proposition } from "@/components/home/Proposition";
 import { Services } from "@/components/home/Services";
 import { Collection } from "@/components/home/Collection";
 import { Procurement } from "@/components/home/Procurement";
-import { SelectedProducts } from "@/components/home/SelectedProducts";
 import { AboutPreview } from "@/components/home/AboutPreview";
 import { NotesPreview } from "@/components/home/NotesPreview";
 import { Contact } from "@/components/home/Contact";
@@ -39,7 +38,6 @@ export default function Home() {
       <Services />
       <Collection />
       <Procurement />
-      <SelectedProducts />
       <AboutPreview />
       <NotesPreview />
       <Contact />

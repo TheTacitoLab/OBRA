@@ -109,6 +109,7 @@ export default async function ProductPage({
       <Section tone="stone">
         <Editorial
           align="start"
+          stackMd
           heading={<h2 className="type-display">How we develop it.</h2>}
           aside={<Steps steps={steps} />}
         />
@@ -116,7 +117,7 @@ export default async function ProductPage({
 
       <Section tone="ink" size="compact">
         <h2 className="type-display">Also make.</h2>
-        <BigList className="mt-body" size="type-link-sm" items={others} />
+        <BigList className="mt-body" size="type-link-xs" items={others} />
       </Section>
 
       <ClosingCta />

@@ -33,6 +33,7 @@ export default function ServicesPage() {
       />
 
       <PageHero
+        size="default"
         title="Services."
         aside={
           <div className="flex flex-col gap-head">
@@ -63,10 +64,8 @@ export default function ServicesPage() {
               <span className="type-meta pt-1 text-muted md:col-span-1">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 className="type-title md:col-span-4 lg:col-span-3">
-                {service.title}
-              </h3>
-              <p className="type-body col-start-2 mt-2 max-w-[44ch] text-muted md:col-span-7 md:col-start-6 md:mt-0 lg:col-span-6 lg:col-start-5">
+              <h3 className="type-headline md:col-span-6">{service.title}</h3>
+              <p className="type-body col-start-2 mt-2 max-w-[44ch] text-muted md:col-span-5 md:col-start-8 md:mt-0 md:self-end">
                 {service.description}
               </p>
             </li>

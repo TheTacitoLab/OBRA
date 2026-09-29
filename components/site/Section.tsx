@@ -9,6 +9,11 @@ const padding: Record<SectionSize, string> = {
   default: "py-section",
   large: "py-section-lg",
 };
+const paddingBottom: Record<SectionSize, string> = {
+  compact: "pb-section-sm",
+  default: "pb-section",
+  large: "pb-section-lg",
+};
 
 /**
  * A toned page section with responsive vertical rhythm. Sizes differ on
@@ -19,6 +24,7 @@ export function Section({
   tone = "bone",
   size = "default",
   as: Tag = "section",
+  hero = false,
   className = "",
   containerClassName = "",
   children,
@@ -27,13 +33,16 @@ export function Section({
   tone?: Tone;
   size?: SectionSize;
   as?: ElementType;
+  /** First section of a page: top padding clears the fixed header. */
+  hero?: boolean;
   className?: string;
   containerClassName?: string;
   children: ReactNode;
 }) {
+  const rhythm = hero ? `hero-pad ${paddingBottom[size]}` : padding[size];
   return (
     <Tag id={id} data-tone={tone} className={`bg-bg text-fg ${className}`}>
-      <Container className={`${padding[size]} ${containerClassName}`}>
+      <Container className={`${rhythm} ${containerClassName}`}>
         {children}
       </Container>
     </Tag>

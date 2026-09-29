@@ -22,7 +22,7 @@ export default function NotesPage() {
       <Section
         tone="bone"
         size="compact"
-        containerClassName="pt-[calc(var(--spacing-header)+var(--spacing-section))]"
+        hero
       >
         <Editorial
           heading={<h1 className="type-display-xl">Notes.</h1>}

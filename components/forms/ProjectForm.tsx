@@ -3,6 +3,7 @@
 import { useId, useState, type ChangeEvent, type FormEvent } from "react";
 import { budgetOptions, quantityOptions } from "@/content/site";
 import { siteConfig } from "@/lib/siteConfig";
+import { Arrow } from "@/components/site/Button";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -104,7 +105,7 @@ export function ProjectForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid gap-x-10 gap-y-9 sm:grid-cols-2"
+      className="grid gap-x-10 gap-y-7 sm:grid-cols-2 sm:gap-y-9"
     >
       {/* Honeypot: Web3Forms rejects the submission if this is filled. */}
       <input
@@ -188,18 +189,6 @@ export function ProjectForm({
         )}
       </Field>
 
-      <Field label="Target launch / event date">
-        {(id) => (
-          <input
-            id={id}
-            name="date"
-            type="text"
-            placeholder="A date, a month or a season"
-            className="field__control"
-          />
-        )}
-      </Field>
-
       <Field label="Budget range">
         {(id) => (
           <select
@@ -220,6 +209,20 @@ export function ProjectForm({
           </select>
         )}
       </Field>
+
+      <div className="sm:col-span-2">
+      <Field label="Target launch / event date">
+        {(id) => (
+          <input
+            id={id}
+            name="date"
+            type="text"
+            placeholder="A date, a month or a season"
+            className="field__control"
+          />
+        )}
+      </Field>
+      </div>
 
       <div className="sm:col-span-2">
         <Field label="Tell us about the project">
@@ -274,11 +277,12 @@ export function ProjectForm({
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="btn btn-primary"
+          className="btn btn-primary self-start"
         >
-          {status === "submitting" ? "Sending…" : "Send Project Brief"}
+          <span>{status === "submitting" ? "Sending…" : "Send project brief"}</span>
+          <Arrow />
         </button>
-        <p className="type-meta max-w-[36ch] text-muted">
+        <p className="type-meta text-muted sm:max-w-[36ch]">
           We only use your details to reply about this project.
         </p>
       </div>

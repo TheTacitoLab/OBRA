@@ -48,7 +48,7 @@ function NoteRow({
   return (
     <Link
       href={noteHref(note.slug)}
-      className="index-row group grid gap-y-3 md:grid-cols-12 md:gap-x-8 lg:gap-x-12"
+      className="index-row group grid gap-y-2 md:grid-cols-12 md:gap-x-8 md:gap-y-3 lg:gap-x-12"
     >
       <p className="type-meta flex flex-wrap items-baseline gap-x-2 text-muted md:col-span-3 md:flex-col md:gap-y-1">
         <time dateTime={note.date}>{formatNoteDate(note.date)}</time>
@@ -68,10 +68,12 @@ function NoteRow({
         </>
       ) : (
         <>
-          <Heading className="type-headline md:col-span-6">
+          <Heading className="type-headline md:col-span-9 xl:col-span-6">
             <span className={wipe}>{note.title}</span>
           </Heading>
-          <p className="type-body hidden text-muted md:col-span-3 md:block">
+          {/* Under the title on tablets, beside it from xl where the
+              side column is wide enough to read. */}
+          <p className="type-body hidden text-muted md:col-span-8 md:col-start-4 md:block xl:col-span-3 xl:col-start-10">
             {note.standfirst}
           </p>
         </>

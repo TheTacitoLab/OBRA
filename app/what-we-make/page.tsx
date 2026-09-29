@@ -35,6 +35,7 @@ export default function WhatWeMakePage() {
       />
 
       <PageHero
+        size="default"
         title="What we make."
         aside={
           <div className="flex flex-col gap-body">

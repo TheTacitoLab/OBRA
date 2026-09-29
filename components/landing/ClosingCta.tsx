@@ -23,9 +23,9 @@ export function ClosingCta({
               <Button href={primaryCta.href}>{primaryCta.label}</Button>
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="type-small u-wipe text-muted"
+                className="type-small inline-flex min-h-11 items-center text-muted"
               >
-                {siteConfig.email}
+                <span className="u-wipe u-static">{siteConfig.email}</span>
               </a>
             </div>
           </div>

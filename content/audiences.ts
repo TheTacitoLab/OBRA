@@ -116,12 +116,13 @@ export const audienceContent: AudienceContent[] = [
       },
     ],
     products: ["tops", "headwear", "t-shirts", "trainingwear"],
-    productsHeading: "What we make for events.",
+    productsHeading: "Made for the date.",
     productNote:
       "Pieces that work as a gift and on a rail. Hoodies and caps people keep wearing, tees for the crew and the pop-up.",
     services: [
       "creative-direction",
       "product-development",
+      "sampling-and-manufacturing",
       "branding-and-packaging",
       "event-support",
       "logistics",

@@ -5,6 +5,7 @@ import { Block, type BlockTone } from "../site/Block";
 import { ArrowLink, Button } from "../site/Button";
 import { BigList, type BigLink } from "../home/BigList";
 import { ClosingCta } from "./ClosingCta";
+import { pageTitleClass } from "./PageHero";
 import { getAudience } from "@/content/audiences";
 import {
   findProduct,
@@ -45,7 +46,7 @@ export function AudiencePage({ slug }: { slug: string }) {
   return (
     <>
       {/* Hero: parent link, full-width statement, intro and CTA in the right column. */}
-      <Section tone="bone" size="large" containerClassName="pt-hero">
+      <Section tone="bone" size="large" hero>
         <p className="type-small text-muted">
           <Link
             href={parent.href}
@@ -54,7 +55,9 @@ export function AudiencePage({ slug }: { slug: string }) {
             <span className="u-wipe">{parent.label}</span>
           </Link>
         </p>
-        <h1 className="type-page mt-2 md:mt-4">{content.headline}</h1>
+        <h1 className={`${pageTitleClass(content.headline)} mt-2 md:mt-4`}>
+          {content.headline}
+        </h1>
         <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
           <div className="flex flex-col gap-body md:col-span-6 md:col-start-7 lg:col-span-4 lg:col-start-9">
             <p className="type-lede">{content.intro}</p>
@@ -70,12 +73,12 @@ export function AudiencePage({ slug }: { slug: string }) {
           at the 13vw display size between 768 and 1023px. */}
       <Section tone="stone">
         <div className="grid gap-y-head md:grid-cols-12 md:gap-x-8 lg:items-start lg:gap-x-12">
-          <div className="md:col-span-12 lg:col-span-7">
+          <div className="md:col-span-12 lg:col-span-8">
             <h2 className="type-display">
               What we do for {page.label.toLowerCase()}.
             </h2>
           </div>
-          <ul className="index-list md:col-span-8 md:col-start-5 lg:col-span-5 lg:col-start-8">
+          <ul className="index-list md:col-span-8 md:col-start-5 lg:col-span-4 lg:col-start-9">
             {content.points.map((point) => (
               <li key={point.title} className="index-row">
                 <h3 className="type-title">{point.title}</h3>
@@ -104,12 +107,15 @@ export function AudiencePage({ slug }: { slug: string }) {
         />
       </Section>
 
-      {/* Services: narrow title column, two-column hairline list. */}
+      {/* Services: title column and a two-column hairline list. Phones get a
+          titles-only two-up index so it reads differently from "What we do";
+          tablets stack the title above the list; the side-by-side split
+          starts at lg. */}
       <Section tone="stone" size="compact">
-        <div className="grid gap-y-head md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
-          <div className="flex flex-col gap-body md:col-span-4 lg:col-span-3">
+        <div className="grid gap-y-head lg:grid-cols-12 lg:gap-x-12">
+          <div className="flex flex-col gap-body lg:col-span-3">
             <div>
-              <h2 className="type-headline">Handled in one place.</h2>
+              <h2 className="type-display-sm">Handled in one place.</h2>
               <p className="type-body mt-3 max-w-[26ch] text-muted">
                 The services a range like this leans on most.
               </p>
@@ -118,11 +124,11 @@ export function AudiencePage({ slug }: { slug: string }) {
               <ArrowLink href="/services/">All services</ArrowLink>
             </div>
           </div>
-          <ul className="grid border-t border-line md:col-span-8 md:grid-cols-2 md:gap-x-8 lg:col-span-9 lg:gap-x-12">
+          <ul className="grid grid-cols-2 gap-x-5 border-t border-line md:gap-x-8 lg:col-span-9 lg:gap-x-12">
             {services.map((service) => (
               <li
                 key={service.slug}
-                className="border-b border-line py-5 md:py-6"
+                className="border-b border-line py-3 md:py-6"
               >
                 <h3 className="type-title">
                   <Link
@@ -132,7 +138,7 @@ export function AudiencePage({ slug }: { slug: string }) {
                     <span className="u-wipe">{service.title}</span>
                   </Link>
                 </h3>
-                <p className="type-body mt-2 max-w-[36ch] text-muted">
+                <p className="type-body mt-2 hidden max-w-[36ch] text-muted md:block">
                   {service.description}
                 </p>
               </li>

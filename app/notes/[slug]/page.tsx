@@ -55,8 +55,8 @@ export default async function NotePage({
       <NoteArticle note={note} />
       {others.length > 0 && (
         <Section tone="stone" size="compact">
-          <h2 className="type-headline">More notes.</h2>
-          <div className="mt-head">
+          <h2 className="type-display">More notes.</h2>
+          <div className="mt-body">
             <NoteList notes={others} />
           </div>
         </Section>

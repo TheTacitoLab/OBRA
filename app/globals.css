@@ -82,8 +82,9 @@
 [data-tone="clay"] {
   --bg: var(--color-clay);
   --fg: var(--color-bone);
-  /* Running copy on clay is set in ink: bone only clears AA at display sizes. */
-  --muted: var(--color-ink);
+  /* Running copy on clay is true black: ink is 4.23:1 on clay, black 4.96:1,
+     and bone only clears AA at display sizes. */
+  --muted: #000000;
   --line: color-mix(in srgb, var(--color-bone) 26%, transparent);
   --line-strong: color-mix(in srgb, var(--color-bone) 50%, transparent);
   --accent: var(--color-lime);
@@ -199,7 +200,7 @@ html[data-nav="dark"] {
   /* Section titles that sit in a column on desktop. Limit: "MERCHANDISE". */
   .type-display {
     font-weight: 900;
-    font-size: clamp(2.625rem, 13vw, 7.5rem);
+    font-size: clamp(2.5rem, 11.5vw, 7.5rem);
     line-height: 0.88;
     letter-spacing: -0.05em;
     text-transform: uppercase;
@@ -209,6 +210,24 @@ html[data-nav="dark"] {
     .type-display {
       font-size: clamp(3.25rem, 7.9vw, 7.5rem);
     }
+  }
+  /* A display heading whose lines are long ("Your merchandise" on one line):
+     a step down from lg so the composition holds three lines in 8 columns. */
+  @media (min-width: 1024px) {
+    .type-display-long {
+      font-size: clamp(3.5rem, 5.9vw, 5.5rem);
+    }
+  }
+
+  /* Mid-level section titles in the display voice (The studio., Handled in
+     one place.), sized below type-display so hierarchy holds. */
+  .type-display-sm {
+    font-weight: 900;
+    font-size: clamp(2.125rem, 4.4vw, 4.25rem);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    text-wrap: balance;
   }
 
   /* Full-width or short-word titles (What we make, Notes, About, Services). */
@@ -235,13 +254,22 @@ html[data-nav="dark"] {
     text-transform: uppercase;
     text-wrap: balance;
   }
-  /* For a title whose longest word runs past 11 characters ("Trainingwear"). */
+  /* Phone size steps by the title's longest word so short titles lead the
+     page and long ones still clear the gutters (PageHero picks the tier). */
+  .type-page-short {
+    font-size: clamp(3rem, 16.5vw, 11rem);
+  }
+  .type-page-mid {
+    font-size: clamp(2.75rem, 14.5vw, 11rem);
+  }
   .type-page-long {
     font-size: clamp(2.5rem, 12vw, 11rem);
   }
 
-  /* Hero sections clear the fixed header from the same tokens. */
-  .pt-hero {
+  /* Hero sections clear the fixed header from the same tokens. Applied by
+     Section's `hero` prop alongside a bottom-only padding utility, so no
+     `py-*` utility competes with it. */
+  .hero-pad {
     padding-top: calc(var(--spacing-header) + var(--spacing-section));
   }
 
@@ -262,16 +290,21 @@ html[data-nav="dark"] {
   /* Product links. Limit: "RETRO FOOTBALL" on one line, "SHIRTS" on the next. */
   .type-link-sm {
     font-weight: 900;
-    font-size: clamp(2.25rem, 11.6vw, 7.5rem);
+    font-size: clamp(2.2rem, 11vw, 7.5rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
     text-transform: uppercase;
+  }
+  @media (min-width: 768px) {
+    .type-link-sm {
+      font-size: clamp(2.2rem, 9.5vw, 7.5rem);
+    }
   }
 
   /* Product index labels that share a row with copy from md up. */
   .type-link-xs {
     font-weight: 900;
-    font-size: clamp(2.25rem, 11.6vw, 8rem);
+    font-size: clamp(2.2rem, 11vw, 8rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
     text-transform: uppercase;
@@ -302,8 +335,8 @@ html[data-nav="dark"] {
   /* Supporting statements - the bold paragraph under a title */
   .type-lede {
     font-weight: 500;
-    font-size: clamp(1.0625rem, 0.95rem + 0.55vw, 1.375rem);
-    line-height: 1.3;
+    font-size: clamp(1.1875rem, 0.95rem + 0.55vw, 1.375rem);
+    line-height: 1.25;
     letter-spacing: -0.015em;
     text-wrap: pretty;
     max-width: 34ch;
@@ -324,6 +357,7 @@ html[data-nav="dark"] {
     font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
     line-height: 1.5;
     max-width: 58ch;
+    text-wrap: pretty;
   }
 
   .type-small {
@@ -337,6 +371,7 @@ html[data-nav="dark"] {
     font-weight: 500;
     font-size: 0.8125rem;
     line-height: 1.4;
+    text-wrap: pretty;
   }
 
   /* Notes body copy */
@@ -378,8 +413,10 @@ html[data-nav="dark"] {
   }
   .u-wipe:hover,
   .u-wipe:focus-visible,
+  .u-wipe:active,
   a:hover .u-wipe,
   a:focus-visible .u-wipe,
+  a:active .u-wipe,
   .u-wipe[aria-current="page"] {
     background-size: 100% var(--u-size);
     background-position: 0 100%;
@@ -426,8 +463,31 @@ html[data-nav="dark"] {
   .biglink:active {
     opacity: 0.7;
   }
+  /* A sentence beneath an enormous link. Resets the display tracking and
+     case the link would otherwise pass down as computed values. */
+  .biglink__intro {
+    display: block;
+    margin-top: 0.5rem;
+    max-width: 40ch;
+    font-weight: 400;
+    font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
+    line-height: 1.5;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  @media (min-width: 768px) {
+    .biglink__intro {
+      margin-top: 0.75rem;
+    }
+  }
   .biglink:focus-visible {
     outline-offset: -2px;
+  }
+  .biglink[aria-current="page"] > .u-wipe {
+    background-size: 100% var(--u-size);
+    background-position: 0 100%;
   }
 
   /* -------------------------------------------------------------------
@@ -509,7 +569,7 @@ html[data-nav="dark"] {
     background-color: var(--nav-fg);
     color: var(--nav-bg);
     border: 1px solid var(--nav-fg);
-    min-height: 2.5rem;
+    min-height: 2.75rem;
     padding: 0.5rem 0.9rem 0.5rem 1rem;
     gap: 0.75rem;
     font-size: 0.875rem;
@@ -670,17 +730,17 @@ html[data-nav="dark"] {
       transform 0.25s var(--ease-out-quart),
       top 0.25s var(--ease-out-quart);
   }
-  .burger__line:first-child {
+  .burger__line--a {
     top: calc(50% - 4px);
   }
-  .burger__line:last-child {
+  .burger__line--b {
     top: calc(50% + 3px);
   }
-  .burger[aria-expanded="true"] .burger__line:first-child {
+  .burger[aria-expanded="true"] .burger__line--a {
     top: 50%;
     transform: rotate(45deg);
   }
-  .burger[aria-expanded="true"] .burger__line:last-child {
+  .burger[aria-expanded="true"] .burger__line--b {
     top: 50%;
     transform: rotate(-45deg);
   }
@@ -705,7 +765,6 @@ html[data-nav="dark"] {
     min-height: 100svh;
     background-color: var(--bg);
     color: var(--fg);
-    box-shadow: 0 -18px 48px -28px rgba(23, 23, 23, 0.45);
   }
   .sheet::after {
     content: "";
@@ -741,7 +800,10 @@ html[data-nav="dark"] {
       position: relative;
       top: auto !important;
       min-height: 0;
-      box-shadow: none;
+    }
+    .panel {
+      justify-content: flex-start;
+      gap: 1rem;
     }
     .sheet::after {
       display: none;
@@ -809,7 +871,7 @@ html[data-nav="dark"] {
   .service {
     position: relative;
     display: block;
-    padding: 1.25rem 0 1.5rem;
+    padding: 0.9rem 0 1rem;
     border-top: 1px solid var(--line);
     color: inherit;
     text-decoration: none;
@@ -831,20 +893,27 @@ html[data-nav="dark"] {
   .service:active::after {
     transform: scaleX(1);
   }
+  /* The list items are display: contents, so column rules walk through
+     the li to reach the link that is the actual grid item. */
   @media (min-width: 640px) {
     .services {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .service {
-      padding: 1.75rem 1.75rem 2.25rem 0;
+      padding: 1.5rem 1.75rem 2rem 0;
     }
-    .service:nth-child(2n) {
+    .services > li:nth-child(2n) > .service {
       padding-left: 1.75rem;
       padding-right: 0;
       border-left: 1px solid var(--line);
     }
-    .service:nth-child(2n)::after {
+    .services > li:nth-child(2n) > .service::after {
       left: 1.75rem;
+    }
+    /* An odd last item closes the grid at full width. */
+    .services > li:last-child:nth-child(odd) > .service {
+      grid-column: 1 / -1;
+      padding-right: 0;
     }
   }
   @media (min-width: 1024px) {
@@ -852,23 +921,25 @@ html[data-nav="dark"] {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .service,
-    .service:nth-child(2n) {
+    .services > li:nth-child(2n) > .service,
+    .services > li:last-child:nth-child(odd) > .service {
+      grid-column: auto;
       padding: 2rem 2.25rem 2.75rem 0;
       border-left: 0;
     }
-    .service:nth-child(2n)::after {
+    .services > li:nth-child(2n) > .service::after {
       left: 0;
     }
-    .service:nth-child(3n + 2),
-    .service:nth-child(3n + 3) {
+    .services > li:nth-child(3n + 2) > .service,
+    .services > li:nth-child(3n + 3) > .service {
       padding-left: 2.25rem;
       border-left: 1px solid var(--line);
     }
-    .service:nth-child(3n + 2)::after,
-    .service:nth-child(3n + 3)::after {
+    .services > li:nth-child(3n + 2) > .service::after,
+    .services > li:nth-child(3n + 3) > .service::after {
       left: 2.25rem;
     }
-    .service:nth-child(3n + 3) {
+    .services > li:nth-child(3n + 3) > .service {
       padding-right: 0;
     }
   }
@@ -886,6 +957,9 @@ html[data-nav="dark"] {
   .index-list > :last-child > .index-row,
   .index-list > .index-row:last-child {
     border-bottom: 1px solid var(--line);
+  }
+  a.index-row:active {
+    opacity: 0.7;
   }
 
   /* -------------------------------------------------------------------
@@ -954,22 +1028,28 @@ html[data-nav="dark"] {
      Long-form prose (privacy policy)
      ------------------------------------------------------------------- */
   .privacy-h2 {
-    margin-top: 2.5rem;
+    margin-top: 2.25em;
+    margin-bottom: 0.5em;
     font-weight: 800;
-    font-size: 1.25rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.375rem, 1vw + 1rem, 1.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
   }
   .privacy-p {
     margin-top: 0.9rem;
+    max-width: 58ch;
     line-height: 1.55;
     color: var(--muted);
+    text-wrap: pretty;
   }
   .privacy-ul {
     margin-top: 0.9rem;
+    max-width: calc(58ch + 1.25rem);
     padding-left: 1.25rem;
     list-style: disc;
     color: var(--muted);
+    text-wrap: pretty;
   }
   .privacy-ul li {
     margin-top: 0.5rem;
@@ -1010,7 +1090,6 @@ html[data-nav="dark"] {
   .sheet {
     position: relative;
     top: auto !important;
-    box-shadow: none;
   }
   .sheet::after {
     display: none;

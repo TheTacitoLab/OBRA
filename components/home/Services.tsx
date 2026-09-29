@@ -24,7 +24,8 @@ export function Services() {
           <li key={service.slug} className="contents">
             <Link href={`/services/#${service.slug}`} className="service">
               <h3 className="type-title">{service.title}</h3>
-              <p className="type-body mt-2 max-w-[32ch] text-muted">
+              {/* Titles only on phones: the descriptions live on /services/. */}
+              <p className="type-body mt-2 hidden max-w-[32ch] text-muted sm:block">
                 {service.description}
               </p>
             </Link>

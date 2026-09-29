@@ -6,21 +6,19 @@ import { Editorial } from "../site/Editorial";
 export type Parent = { label: string; href: string };
 
 /**
- * Top padding that clears the fixed header on every page hero, from the
- * same tokens the sections use (see --spacing-header in globals.css).
+ * The type-page phone size steps by the title's longest word, so a short
+ * title ("Tops", "Headwear") leads its page while an 11-character word
+ * ("Merchandise") still fits a 320px viewport and a longer one
+ * ("Trainingwear") drops a step. The desktop cap is the same for all.
  */
-const heroTop = "pt-hero";
-
-/**
- * The type-page size is tuned so an 11-character word ("MERCHANDISE") fits
- * a 320px viewport. A longer word (there is one: "Trainingwear") drops to
- * 12vw so it still clears the gutters; the cap stays the same on desktop.
- */
-function pageTitleClass(title: string) {
+export function pageTitleClass(title: string) {
   const longest = Math.max(
-    ...title.split(/\s+/).map((word) => word.replace(/[.,]$/, "").length),
+    ...title.split(/\s+/).map((word) => word.replace(/[.,:!?]$/, "").length),
   );
-  return longest > 11 ? "type-page type-page-long" : "type-page";
+  if (longest <= 7) return "type-page type-page-short";
+  if (longest <= 9) return "type-page type-page-mid";
+  if (longest <= 11) return "type-page";
+  return "type-page type-page-long";
 }
 
 /**
@@ -49,7 +47,7 @@ export function PageHero({
 }) {
   if (full) {
     return (
-      <Section tone="bone" size={size} containerClassName={heroTop}>
+      <Section tone="bone" size={size} hero>
         {parent && (
           <p className="type-small text-muted">
             {/* 44px tap target; the underline stays on the text via the span. */}
@@ -74,7 +72,7 @@ export function PageHero({
   }
 
   return (
-    <Section tone="bone" size={size} containerClassName={heroTop}>
+    <Section tone="bone" size={size} hero>
       <Editorial
         heading={<h1 className="type-display-xl">{title}</h1>}
         aside={aside}

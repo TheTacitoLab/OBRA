@@ -171,7 +171,7 @@ export default function AboutPage() {
       <Section tone="blue-soft">
         <div className="grid gap-y-head md:grid-cols-12 md:gap-x-8 md:items-end lg:gap-x-12">
           <h2 className="type-display md:col-span-12 lg:col-span-7">
-            Developed, not decorated.
+            Made, not decorated.
           </h2>
           <p className="type-statement md:col-span-8 lg:col-span-5 lg:col-start-8">
             Every product starts from a block that already works and is
@@ -179,9 +179,15 @@ export default function AboutPage() {
             rather than a blank with a logo added.
           </p>
         </div>
-        <ul className="mt-body grid gap-y-5 md:grid-cols-3 md:gap-x-8 lg:gap-x-12">
-          {development.map((item) => (
-            <li key={item.title} className="border-t border-line pt-4 md:pt-5">
+        {/* Three unequal columns from lg; a single column before that. */}
+        <ul className="mt-body grid gap-y-5 lg:grid-cols-12 lg:gap-x-12">
+          {development.map((item, index) => (
+            <li
+              key={item.title}
+              className={`border-t border-line pt-4 md:pt-5 ${
+                ["lg:col-span-5", "lg:col-span-4", "lg:col-span-3"][index]
+              }`}
+            >
               <h3 className="type-title">{item.title}</h3>
               <p className="type-body mt-2 text-muted">{item.text}</p>
             </li>

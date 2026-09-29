@@ -126,8 +126,8 @@ export function Header() {
             onClick={() => setOpen((value) => !value)}
           >
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            <span className="burger__line" aria-hidden="true" />
-            <span className="burger__line" aria-hidden="true" />
+            <span className="burger__line burger__line--a" aria-hidden="true" />
+            <span className="burger__line burger__line--b" aria-hidden="true" />
           </button>
         </div>
       </header>

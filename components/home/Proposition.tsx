@@ -4,11 +4,16 @@ import { ArrowLink } from "../site/Button";
 
 export function Proposition() {
   return (
-    <Section id="proposition" tone="stone" size="large">
+    <Section id="proposition" tone="stone">
+      {/* Copy left, statement right in three deliberate lines from lg. */}
       <Editorial
+        reverse
+        wide
         heading={
-          <h2 className="type-display">
-            Your merchandise should feel like your product.
+          <h2 className="type-display type-display-long">
+            <span className="lg:block">Your merchandise </span>
+            <span className="lg:block">should feel like </span>
+            <span className="lg:block">your product.</span>
           </h2>
         }
         aside={

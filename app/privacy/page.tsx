@@ -12,14 +12,17 @@ export const metadata: Metadata = pageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <Section tone="bone" containerClassName="pt-hero">
-      <div className="max-w-3xl">
-          <h1 className="type-display">Privacy policy.</h1>
+    <Section tone="bone" size="large" hero>
+      <div className="grid gap-y-6 md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
+        <div className="md:col-span-12">
+          <h1 className="type-display-xl">Privacy policy.</h1>
           <p className="type-meta mt-6 text-muted">
             Last updated 28 September 2026
           </p>
 
-          <p className="type-body mt-8 text-muted">
+        </div>
+        <div className="md:col-span-10 md:col-start-2 lg:col-span-7 lg:col-start-5">
+          <p className="type-body text-muted">
             This privacy policy explains how madebyobra (&ldquo;madebyobra&rdquo;,
             &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;), a TACITO
             Group company, collects, uses and protects your personal data when
@@ -194,6 +197,7 @@ export default function PrivacyPage() {
             , though we would appreciate the chance to address your concerns
             first.
           </p>
+        </div>
       </div>
     </Section>
   );

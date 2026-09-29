@@ -25,12 +25,15 @@ export function Footer() {
 
           <nav
             aria-label="Footer"
-            className="grid grid-cols-2 gap-x-6 gap-y-8 md:col-span-7 md:grid-cols-3"
+            className="grid grid-cols-2 gap-x-6 gap-y-8 md:col-span-7 lg:grid-cols-3"
           >
             <div>
               <h2 className="type-meta text-muted">
-                <Link href="/who-for/" className="u-wipe">
-                  Who for
+                <Link
+                  href="/who-for/"
+                  className="-my-3 inline-flex min-h-11 items-center"
+                >
+                  <span className="u-wipe u-static">Who for</span>
                 </Link>
               </h2>
               <ul className="mt-3 space-y-1.5">
@@ -63,12 +66,12 @@ export function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="col-span-2 md:col-span-1">
+            <div className="col-span-2 lg:col-span-1">
               <h2 className="type-meta text-muted">Contact</h2>
               <ul className="mt-3 space-y-1.5">
                 <li>
                   <a href={`mailto:${siteConfig.email}`} className="nav-link">
-                    <span className="u-wipe break-all">{siteConfig.email}</span>
+                    <span className="u-wipe">{siteConfig.email}</span>
                   </a>
                 </li>
                 {socialLinks.map((link) => (
@@ -92,8 +95,11 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col gap-2 border-t border-line pt-5 type-meta text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 madebyobra. A TACITO Group company.</p>
-          <Link href={privacyHref} className="u-wipe self-start">
-            Privacy
+          <Link
+            href={privacyHref}
+            className="-my-3 inline-flex min-h-11 items-center self-start"
+          >
+            <span className="u-wipe">Privacy</span>
           </Link>
         </div>
       </Container>

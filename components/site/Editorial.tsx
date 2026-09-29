@@ -11,6 +11,8 @@ export function Editorial({
   heading,
   aside,
   reverse = false,
+  wide = false,
+  stackMd = false,
   headingAlign = "left",
   mobileAlignRight = false,
   align = "end",
@@ -18,18 +20,29 @@ export function Editorial({
 }: {
   heading: ReactNode;
   aside?: ReactNode;
+  /** Content first, heading on the right. Stacks on tablets, splits from lg. */
   reverse?: boolean;
+  /** Heading takes 8 columns from lg (used with `reverse` for long lines). */
+  wide?: boolean;
+  /** Stack on tablets and split only from lg (for asides that hold lists). */
+  stackMd?: boolean;
   headingAlign?: "left" | "right";
   mobileAlignRight?: boolean;
   align?: "start" | "end";
   className?: string;
 }) {
   const headingCols = reverse
-    ? "md:col-span-7 md:col-start-6 md:order-2"
-    : "md:col-span-7 lg:col-span-8";
+    ? wide
+      ? "md:col-span-12 lg:col-span-8 lg:col-start-5 lg:order-2"
+      : "md:col-span-12 lg:col-span-7 lg:col-start-6 lg:order-2"
+    : stackMd
+      ? "md:col-span-12 lg:col-span-8"
+      : "md:col-span-7 lg:col-span-8";
   const asideCols = reverse
-    ? "md:col-span-5 md:col-start-1 md:order-1 lg:col-span-4"
-    : "md:col-span-5 lg:col-span-4 lg:col-start-9";
+    ? "md:col-span-8 lg:col-span-4 lg:col-start-1 lg:order-1"
+    : stackMd
+      ? "md:col-span-8 md:col-start-5 lg:col-span-4 lg:col-start-9"
+      : "md:col-span-5 lg:col-span-4 lg:col-start-9";
   const headingText = [
     headingAlign === "right" ? "md:text-right" : "",
     mobileAlignRight ? "text-right md:text-left" : "",

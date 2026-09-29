@@ -16,13 +16,13 @@ export function Contact() {
             </p>
             <p className="type-small mt-6 text-muted">
               Prefer email?{" "}
-              <a href={`mailto:${siteConfig.email}`} className="u-wipe text-fg">
+              <a href={`mailto:${siteConfig.email}`} className="u-wipe u-static text-fg">
                 {siteConfig.email}
               </a>
             </p>
           </div>
         </div>
-        <div className="lg:col-span-7 lg:col-start-7">
+        <div className="lg:col-span-6 lg:col-start-7">
           <ProjectForm
             accessKey={siteConfig.web3formsKeys.homepage}
             subject="New project brief (homepage)"

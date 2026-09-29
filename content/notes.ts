@@ -61,7 +61,7 @@ export const notes: Note[] = [
   },
   {
     slug: "costing-a-collection",
-    title: "Costing a collection: hero, entry, margin",
+    title: "Costing a collection: hero, entry and margin",
     standfirst:
       "A range works commercially when every piece has a job. Here is how we balance the three that matter.",
     date: "2026-08-22",

@@ -14,7 +14,7 @@ export function Logo({
   return (
     <Link
       href={href}
-      className={`inline-block shrink-0 ${className}`}
+      className={`inline-flex min-h-11 shrink-0 items-center ${className}`}
       aria-label="madebyobra home"
     >
       <span className="logo w-full" aria-hidden="true" />
