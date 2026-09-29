@@ -36,11 +36,11 @@
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Responsive rhythm. Mobile values sit at the low end of each clamp. */
-  --spacing-section: clamp(3.5rem, 4.5vw + 2rem, 8rem);
+  --spacing-section: clamp(3rem, 4.5vw + 2rem, 10rem);
   --spacing-section-sm: clamp(3rem, 3vw + 1.5rem, 5.5rem);
-  --spacing-section-lg: clamp(4.5rem, 6vw + 2.5rem, 10rem);
-  --spacing-head: clamp(1.25rem, 1.5vw + 0.75rem, 2.25rem);
-  --spacing-body: clamp(1.5rem, 2vw + 0.75rem, 3rem);
+  --spacing-section-lg: clamp(3.5rem, 6vw + 2.5rem, 12.5rem);
+  --spacing-head: clamp(1.25rem, 1.5vw + 0.75rem, 2.75rem);
+  --spacing-body: clamp(1.5rem, 2vw + 0.75rem, 3.5rem);
   --spacing-header: 3.5rem;
 }
 
@@ -248,7 +248,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 1024px) {
     .type-display {
-      font-size: clamp(4rem, 7.9vw, 9.5rem);
+      font-size: clamp(4rem, 7.9vw, 11rem);
     }
   }
   /* A display heading whose lines are long ("YOUR MERCHANDISE" 9.67em):
@@ -295,7 +295,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 768px) {
     .type-chapter {
-      font-size: clamp(3rem, 11vw, 12rem);
+      font-size: clamp(3rem, 11vw, 14rem);
     }
   }
 
@@ -323,11 +323,11 @@ html[data-nav="dark"] {
     .type-page,
     .type-page-short,
     .type-page-mid {
-      font-size: min(13vw, 17rem);
+      font-size: min(13vw, 19.5rem);
     }
     /* "TRAININGWEAR" (7.39em) needs the smaller step at every width. */
     .type-page-long {
-      font-size: min(12vw, 15rem);
+      font-size: min(12vw, 16.5rem);
     }
   }
 
@@ -342,13 +342,13 @@ html[data-nav="dark"] {
   .type-link {
     font-weight: 900;
     font-size: clamp(3rem, 15vw, 12.5rem);
-    line-height: 0.96;
+    line-height: 0.92;
     letter-spacing: -0.045em;
     text-transform: uppercase;
   }
   @media (min-width: 768px) {
     .type-link {
-      font-size: clamp(3.25rem, 10vw, 12.5rem);
+      font-size: clamp(3.25rem, 10vw, 15rem);
     }
   }
 
@@ -357,7 +357,7 @@ html[data-nav="dark"] {
   .type-link-sm {
     font-weight: 900;
     font-size: clamp(2rem, 10.5vw, 9.5rem);
-    line-height: 0.98;
+    line-height: 0.92;
     letter-spacing: -0.045em;
     text-transform: uppercase;
   }
@@ -368,7 +368,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 1024px) {
     .type-link-sm {
-      font-size: clamp(2rem, 7.7vw, 8.75rem);
+      font-size: clamp(2rem, 7.7vw, 10.5rem);
     }
   }
 
@@ -376,7 +376,7 @@ html[data-nav="dark"] {
   .type-link-xs {
     font-weight: 900;
     font-size: clamp(1.875rem, 9.5vw, 6.5rem);
-    line-height: 0.98;
+    line-height: 0.92;
     letter-spacing: -0.045em;
     text-transform: uppercase;
   }
@@ -440,7 +440,7 @@ html[data-nav="dark"] {
 
   .type-meta {
     font-weight: 500;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     line-height: 1.4;
     text-wrap: pretty;
   }
@@ -498,7 +498,7 @@ html[data-nav="dark"] {
   }
   .u-accent {
     --u-color: var(--accent);
-    --u-size: 2px;
+    --u-size: 0.18em;
   }
   .u-static {
     background-size: 100% var(--u-size);
@@ -573,7 +573,7 @@ html[data-nav="dark"] {
     border-top: 0;
   }
   @media (hover: hover) {
-    .biglist:has(> li:hover) > li:not(:hover) {
+    .biglist:not(.biglist--block):has(> li:hover) > li:not(:hover) {
       opacity: 0.45;
     }
     .biglist:not(.biglist--block) > li:hover {

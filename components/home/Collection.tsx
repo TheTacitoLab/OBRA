@@ -3,7 +3,7 @@ import { Editorial } from "../site/Editorial";
 
 export function Collection() {
   return (
-    <Section id="design-by-collection" tone="clay" size="large">
+    <Section id="design-by-collection" tone="stone" size="large">
       <Editorial
         reverse
         headingAlign="right"

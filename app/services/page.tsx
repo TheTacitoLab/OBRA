@@ -98,7 +98,7 @@ export default function ServicesPage() {
                 starting again.
               </p>
               <div>
-                <ArrowLink href="/about/">How we work</ArrowLink>
+                <ArrowLink href="/about/#how-we-work">How we work</ArrowLink>
               </div>
             </div>
           }

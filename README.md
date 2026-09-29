@@ -36,6 +36,9 @@ components/
   site/                  Header, Footer, Logo, Container, Section, Editorial,
                          Block, Button, JsonLd
   home/                  Sheets (scroll engine), Sheet, BigList, the sections
+                         (Hero, WhoFor, WhatWeMake, RetailReady, Services,
+                         Proposition, Procurement, Collection, AboutPreview,
+                         NotesPreview, Contact)
   landing/               AudiencePage, product/landing templates, ClosingCta
   notes/                 NoteList, article rendering
   forms/                 ProjectForm (Web3Forms)
@@ -55,14 +58,18 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   the occasional accent block. Every surface sets `data-tone`, which resolves
   the semantic `bg-bg / text-fg / text-muted / border-line` utilities.
 - **Lime block**: the brand punctuation. `.mark` puts the end of a heading
-  on a solid lime block, on its own line (the hero's "More brand.", "Make."
-  on the What we make section and page, "Your product." in the blue break,
-  "Project." on every Start a project heading; `MarkedTitle` in
-  `components/site/` renders the split), and `.mark-hover` is the same
-  block wiping in on hover for the homepage audience list only. Everything else keeps the underline
-  wipe (`.u-wipe`). The block is sized from the font's metrics
-  (`--font-ascent`, `--font-cap` in `app/globals.css`); update those two
-  numbers when the typeface changes.
+  on a solid lime block (the hero's "More brand.", "Make." on the What we
+  make section and page, "Your product." in the blue break, "Ready." on
+  Retail ready, "Client." on the agencies page, "Project." on every Start a
+  project heading). `MarkedTitle` in `components/site/` renders the split:
+  the break goes before the marked word, or wherever a `\n` in the title
+  puts it, in which case a mid-line word keeps its word space
+  (`.mark--mid`). `.mark-hover` is the same block wiping in on hover for
+  the homepage audience list only; everything else keeps the underline wipe
+  (`.u-wipe`). The block is sized from the font's metrics (`--font-ascent`,
+  `--font-cap` in `app/globals.css`); update those two numbers when the
+  typeface changes. The footer signs off with the line set enormous and cut
+  by the page edge (`.footer-mark`).
 - **Type**: two families. Display (headings, navigation, buttons) is
   Aeonik by intent (Black for display, Bold and Medium below it); it is
   licensed and not bundled, so Figtree from next/font stands in with the

@@ -418,7 +418,7 @@ export function ProjectForm({
           <span>{status === "submitting" ? "Sending…" : "Send project brief"}</span>
           <Arrow />
         </button>
-        <p className="type-meta text-muted sm:max-w-[36ch]">
+        <p className="type-small text-muted sm:max-w-[36ch]">
           We only use your details to reply about this project.
         </p>
       </div>

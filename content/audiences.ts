@@ -75,7 +75,7 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Gifting and partners",
-        text: "Artist, sponsor and partner pieces from the same range as the retail line, packed and labelled so they are ready to hand over.",
+        text: "Artist, sponsor and partner pieces from the same range as the retail line, packed and labelled so they are ready to hand over, or fulfilled direct to the recipient.",
       },
     ],
     products: ["t-shirts", "retro-football-shirts", "headwear", "tops"],
@@ -94,6 +94,7 @@ export const audienceContent: AudienceContent[] = [
       "procurement-and-costing",
       "e-commerce",
       "event-support",
+      "fulfilment",
       "logistics",
     ],
     benefitsHeading: "Stocked for the weekend.",
@@ -166,7 +167,7 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Gifting quantities",
-        text: "From a few dozen to a few thousand, packed per recipient and labelled by day, session or table.",
+        text: "From a few dozen to a few thousand, with quantities planned to the guest list, packed per recipient and labelled by day, session or table.",
       },
       {
         title: "Sponsor activations and pop-ups",

@@ -93,7 +93,7 @@ export default function AboutPage() {
 
       {/* Heading left, copy right, then the six things we handle as
           editorial rows: title in one column, the explanation in the other. */}
-      <Section tone="bone">
+      <Section id="how-we-work" tone="bone" className="scroll-mt-16">
         <Editorial
           heading={<h2 className="type-display">What we handle.</h2>}
           aside={

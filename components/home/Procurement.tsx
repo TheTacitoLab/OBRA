@@ -29,7 +29,7 @@ export function Procurement() {
           </div>
         }
       />
-      <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4">
+      <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4 lg:items-start">
         <Block
           tone="stone"
           title="Sampling and QC"
@@ -62,7 +62,7 @@ export function Procurement() {
         </Block>
       </div>
       <div className="mt-body grid gap-y-4 md:grid-cols-12 md:gap-x-8 md:items-end lg:gap-x-12">
-        <p className="type-statement md:col-span-7 max-w-[30ch]">
+        <p className="type-lede md:col-span-7">
           31 years of combined manufacturing experience across sport and
           fashion.
         </p>

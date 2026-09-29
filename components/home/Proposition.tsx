@@ -24,7 +24,7 @@ export function Proposition() {
               Start with the right product, then build the details around the
               brief.
             </p>
-            <ArrowLink href="/about/">How we work</ArrowLink>
+            <ArrowLink href="/about/#how-we-work">How we work</ArrowLink>
           </div>
         }
       />
