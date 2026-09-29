@@ -30,8 +30,8 @@ export type Note = {
 
 export const notes: Note[] = [
   {
-    slug: "proven-blocks-beat-blanks",
-    title: "Proven blocks beat blanks",
+    slug: "developed-not-decorated",
+    title: "Developed, not decorated",
     standfirst:
       "Why every product we make starts from a block that already works, and what that frees up for the brand.",
     date: "2026-09-10",
@@ -43,7 +43,7 @@ export const notes: Note[] = [
       },
       {
         type: "p",
-        text: "Starting from a proven block takes the risk out of the parts of a product nobody thanks you for: the fit that runs true across sizes, the neckline that holds its shape, the seam that survives the fortieth wash. Those problems are solved before the brief arrives.",
+        text: "Starting from a block that has already run takes the risk out of the parts of a product nobody thanks you for: the fit that runs true across sizes, the neckline that holds its shape, the seam that survives the fortieth wash. Those problems are solved before the brief arrives.",
       },
       {
         type: "h2",

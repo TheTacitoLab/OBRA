@@ -4,7 +4,7 @@ import { ArrowLink } from "../site/Button";
 
 export function Proposition() {
   return (
-    <Section id="proposition" tone="stone">
+    <Section id="proposition" tone="blue-soft" size="compact">
       {/* Copy left, statement right in three deliberate lines from lg. */}
       <Editorial
         reverse
@@ -19,8 +19,8 @@ export function Proposition() {
         aside={
           <div className="flex flex-col gap-5">
             <p className="type-lede text-muted">
-              Proven product blocks give us the starting point. Everything else
-              is built around your brand.
+              Proven product blocks give us the starting point. Everything
+              else is built to fit the brief.
             </p>
             <ArrowLink href="/about/">How we work</ArrowLink>
           </div>

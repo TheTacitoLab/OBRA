@@ -12,29 +12,19 @@ export const metadata: Metadata = pageMetadata(notesIndex);
 
 export default function NotesPage() {
   const sorted = notesByDate();
-  // Categories in use, in the order they first appear. A line of text, not
-  // a filter.
-  const categories = Array.from(new Set(sorted.map((note) => note.category)));
 
   return (
     <>
       <JsonLd data={buildNotesIndexSchema()} />
-      <Section
-        tone="bone"
-        size="compact"
-        hero
-      >
+      <Section tone="bone" size="compact" hero>
         <Editorial
           heading={<h1 className="type-display-xl">Notes.</h1>}
           aside={
-            <div className="flex flex-col gap-head">
-              <p className="type-lede">
-                Projects, product development and what we notice about
-                merchandise along the way: manufacturing insight, launches,
-                event merch thinking and the occasional opinion.
-              </p>
-              <p className="type-meta text-muted">{categories.join(", ")}</p>
-            </div>
+            <p className="type-lede">
+              Projects, product development and what we notice about
+              merchandise along the way: manufacturing insight, launches,
+              event retail thinking and the occasional opinion.
+            </p>
           }
         />
       </Section>

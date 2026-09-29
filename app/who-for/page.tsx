@@ -12,7 +12,7 @@ const page = {
   path: "/who-for/",
   title: "Who for",
   description:
-    "madebyobra makes bespoke merchandise for festivals, events, brands and artists: original products developed around the identity, produced at scale.",
+    "madebyobra makes bespoke merchandise for festivals, events, brands and artists: original products made to the identity, produced at scale.",
 };
 
 export const metadata: Metadata = pageMetadata({

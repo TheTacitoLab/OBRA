@@ -30,14 +30,19 @@ export default function StartAProjectPage() {
         })}
       />
       <Section tone="bone" size="default" hero>
-        <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
-          <div className="lg:col-span-5">
+        {/* Two lines at every width: "Start a" never breaks. */}
+        <h1 className={pageTitleClass("Start a project.")}>
+          <span className="whitespace-nowrap">Start a</span>
+          <br />
+          project.
+        </h1>
+        <div className="mt-body grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
+          <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-24">
-              <h1 className={pageTitleClass("Start a project.")}>Start a project.</h1>
-              <p className="type-lede mt-head text-muted">
-                Tell us what you&rsquo;re looking to make, roughly how many
-                you need and when you need it. We&rsquo;ll come back to you
-                with the best way to approach it.
+              <p className="type-lede text-muted">
+                Tell us what you&rsquo;re making, roughly how many you need
+                and when you need it. We&rsquo;ll come back with the best way
+                to approach it.
               </p>
               <p className="type-small mt-6 text-muted">
                 Prefer email?{" "}
@@ -50,7 +55,7 @@ export default function StartAProjectPage() {
               </p>
             </div>
           </div>
-          <div className="lg:col-span-6 lg:col-start-7">
+          <div className="lg:col-span-7 lg:col-start-6">
             <ProjectForm
               accessKey={siteConfig.web3formsKeys.brief}
               subject="New project brief"

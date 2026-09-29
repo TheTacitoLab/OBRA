@@ -14,7 +14,7 @@ const page = {
   path: "/about/",
   title: "About",
   description:
-    "madebyobra is a bespoke merchandise studio. Proven product blocks as the starting point, developed around the client's brand, with direct factory relationships and costing that works at scale.",
+    "madebyobra is a bespoke merchandise studio. We design, develop and manufacture merchandise that feels like real product, with direct factory relationships and costing that works at scale.",
 };
 
 export const metadata: Metadata = pageMetadata({
@@ -34,7 +34,7 @@ const steps: Step[] = [
     text: "Concepts, artwork and the shape of the range: hero pieces, entry price points, margin pieces.",
   },
   {
-    title: "Proven block",
+    title: "The right base",
     text: "The pattern, fit and construction each product starts from, chosen for the job it has to do.",
   },
   {
@@ -54,11 +54,11 @@ const steps: Step[] = [
 /** What development covers, once the block is chosen. */
 const development = [
   {
-    title: "Proven blocks",
+    title: "The right base",
     text: "Patterns, fits and constructions that have already run in production. The fundamentals are settled before the brief arrives.",
   },
   {
-    title: "Developed around the brand",
+    title: "Developed to the brief",
     text: "Fabric, fit, colour and trims, then labels, tags and packaging. The development budget goes where it is visible.",
   },
   {
@@ -131,7 +131,6 @@ export default function AboutPage() {
         <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4 lg:grid-rows-2">
           <Block
             tone="stone"
-            meta="01"
             title="Direct relationships"
             className="md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem] lg:justify-between"
           >
@@ -143,7 +142,6 @@ export default function AboutPage() {
           </Block>
           <Block
             tone="accent"
-            meta="02"
             title="Sampling and QC"
             className="md:col-span-6 lg:col-span-5"
           >
@@ -154,7 +152,6 @@ export default function AboutPage() {
           </Block>
           <Block
             tone="outline"
-            meta="03"
             title="Costed to the budget"
             className="md:col-span-6 lg:col-span-5"
           >
@@ -174,17 +171,17 @@ export default function AboutPage() {
             Made, not decorated.
           </h2>
           <p className="type-statement md:col-span-8 lg:col-span-5 lg:col-start-8">
-            Every product starts from a block that already works and is
-            developed around the brand, so it reads as part of a collection
+            Every product starts from a base that already works and is
+            developed to the brief, so it reads as part of a collection
             rather than a blank with a logo added.
           </p>
         </div>
         {/* Three unequal columns from lg; a single column before that. */}
-        <ul className="mt-body grid gap-y-5 lg:grid-cols-12 lg:gap-x-12">
+        <ul className="mt-body grid gap-y-6 lg:grid-cols-12 lg:gap-x-12">
           {development.map((item, index) => (
             <li
               key={item.title}
-              className={`border-t border-line pt-4 md:pt-5 ${
+              className={`border-t border-line pt-5 first:border-t-0 first:pt-0 lg:border-t-0 lg:pt-0 ${
                 ["lg:col-span-5", "lg:col-span-4", "lg:col-span-3"][index]
               }`}
             >

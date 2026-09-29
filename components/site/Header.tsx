@@ -94,7 +94,7 @@ export function Header() {
         data-scrolled={scrolled && !open ? "true" : "false"}
         data-menu-open={open ? "true" : "false"}
       >
-        <div className="site-header__bar mx-auto w-full max-w-[90rem] px-5 sm:px-8 lg:px-12">
+        <div className="site-header__bar mx-auto w-full max-w-[112rem] px-5 sm:px-8 lg:px-12 2xl:px-16">
           <Logo className="relative z-[70] w-[6.5rem] sm:w-[7.25rem]" />
 
           <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
@@ -143,7 +143,7 @@ export function Header() {
       >
         <nav
           aria-label="Mobile"
-          className="mx-auto flex h-full w-full max-w-[90rem] flex-col overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
+          className="mx-auto flex h-full w-full max-w-[112rem] flex-col overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
         >
           <div>
             <ul className="biglist flex flex-col">

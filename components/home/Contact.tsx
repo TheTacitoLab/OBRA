@@ -6,13 +6,13 @@ export function Contact() {
   return (
     <Section id="start-a-project" tone="bone" size="large">
       <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
-        <div className="lg:col-span-5">
+        <div className="lg:col-span-6">
           <div className="lg:sticky lg:top-24">
             <h2 className="type-display">Start a project.</h2>
             <p className="type-lede mt-head text-muted">
-              Tell us what you&rsquo;re looking to make, roughly how many you
-              need and when you need it. We&rsquo;ll come back to you with the
-              best way to approach it.
+              Tell us what you&rsquo;re making, roughly how many you need and
+              when you need it. We&rsquo;ll come back with the best way to
+              approach it.
             </p>
             <p className="type-small mt-6 text-muted">
               Prefer email?{" "}

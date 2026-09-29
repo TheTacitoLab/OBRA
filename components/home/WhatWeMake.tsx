@@ -14,9 +14,8 @@ export function WhatWeMake() {
           aside={
             <div className="flex flex-col gap-5">
               <p className="type-lede text-muted">
-                Proven product blocks across headwear, tees, tops, sportswear
-                and more, developed into pieces that feel like part of your
-                collection.
+                Headwear, tees, tops, sportswear and more, made as pieces that
+                belong in a collection.
               </p>
               <ArrowLink href="/what-we-make/">Everything we make</ArrowLink>
             </div>
@@ -29,6 +28,7 @@ export function WhatWeMake() {
             ...products.map((page) => ({
               label: page.label,
               href: pageHref(page.slug),
+              intro: page.intro,
             })),
             { label: "+ More", href: "/what-we-make/" },
           ]}

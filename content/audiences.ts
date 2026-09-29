@@ -46,10 +46,10 @@ export const audienceContent: AudienceContent[] = [
     headline: "Part of the experience.",
     headlineTier: "mid",
     intro:
-      "The festival’s own product line: limited editions, retail ranges and crew product, built on proven blocks and delivered to site ready to sell.",
+      "The festival’s own product line: limited drops, retail ranges, crew product and gifting, planned as one collection and delivered to site ready to sell.",
     points: [
       {
-        title: "Limited editions",
+        title: "Limited drops",
         text: "The year’s shirt, the one-off colourway, the piece that only exists on site. Reasons to join the queue.",
       },
       {
@@ -61,8 +61,8 @@ export const audienceContent: AudienceContent[] = [
         text: "Team product cut from the same range as the retail line, so the whole site reads as one place.",
       },
       {
-        title: "Made for the queue",
-        text: "Products chosen for how festival retail works: easy to size, easy to carry and wearable the same day.",
+        title: "Gifting and partners",
+        text: "Artist, sponsor and partner pieces from the same range as the retail line, packed and labelled so they are ready to hand over.",
       },
     ],
     products: ["t-shirts", "retro-football-shirts", "headwear", "tops"],
@@ -102,8 +102,8 @@ export const audienceContent: AudienceContent[] = [
       "Product built around the event identity, from delegate gifting to the retail stand and the crew, produced and delivered to the date.",
     points: [
       {
-        title: "Event identity",
-        text: "One product family for the whole event: the same trims, labels and finish across gifting, retail and crew.",
+        title: "Branded product",
+        text: "One product family for the whole event: the same trims, labels and finish across gifting, retail, crew and sponsors.",
       },
       {
         title: "Gifting",
@@ -114,8 +114,8 @@ export const audienceContent: AudienceContent[] = [
         text: "Short runs for the stand or the pop-up, with a range sized for a two-day window rather than a season.",
       },
       {
-        title: "Crew and volunteers",
-        text: "Team product that reads as part of the event rather than a uniform, sized and delivered by role.",
+        title: "Crew, volunteers and sponsors",
+        text: "Team and sponsor product that reads as part of the event rather than a uniform, sized and delivered by role.",
       },
     ],
     products: ["tops", "headwear", "t-shirts", "trainingwear"],
@@ -152,11 +152,11 @@ export const audienceContent: AudienceContent[] = [
     slug: "brands",
     headline: "Your brand, as product.",
     intro:
-      "Custom product development for campaigns, drops and brand extensions: proven blocks, built around your brand until they read as part of the range.",
+      "Custom product development for campaigns, drops and brand extensions: pieces made to your standard until they read as part of the range.",
     points: [
       {
         title: "Product development",
-        text: "Proven blocks developed to your standard: fabric, fit, trims, labels and packaging, sampled until it is right.",
+        text: "Fabric, fit, trims, labels and packaging to your standard, sampled until it is right.",
       },
       {
         title: "Brand extension",
@@ -167,8 +167,8 @@ export const audienceContent: AudienceContent[] = [
         text: "Limited runs built around a launch or a moment, timed and sized so they land on the day and sell through.",
       },
       {
-        title: "Customer merchandise",
-        text: "Pieces for customers, members and staff that carry the brand properly, at quantities that make sense.",
+        title: "Retail product and limited runs",
+        text: "Pieces for customers, members and staff that sell as product, in limited runs or at quantities that make sense.",
       },
     ],
     products: ["t-shirts", "tops", "headwear", "sportswear", "trainingwear"],
@@ -205,10 +205,10 @@ export const audienceContent: AudienceContent[] = [
     slug: "artists",
     headline: "Merch worth keeping.",
     intro:
-      "Tour ranges, drops and apparel developed around the identity, with sampling, production and fulfilment handled, so the merch is as considered as the work.",
+      "Tour ranges, drops and apparel made to the identity, with sampling, production and fulfilment handled, so the merch is as considered as the work.",
     points: [
       {
-        title: "Tour ranges",
+        title: "Tour merchandise",
         text: "A range planned around the dates: the hero piece, the tee everyone buys and the piece that carries the margin.",
       },
       {
@@ -217,10 +217,10 @@ export const audienceContent: AudienceContent[] = [
       },
       {
         title: "Jerseys and apparel",
-        text: "Football shirts, jerseys, hoodies and tees on proven blocks, so the fit is right before the artwork goes on.",
+        text: "Football shirts, jerseys, hoodies and tees with the fit right before the artwork goes on.",
       },
       {
-        title: "Identity",
+        title: "Audience and community",
         text: "Product your audience wears as a signal long after the show, because it was designed as a piece rather than a print.",
       },
     ],

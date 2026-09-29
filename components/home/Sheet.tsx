@@ -11,12 +11,14 @@ export function Sheet({
   tone,
   last = false,
   className = "",
+  sectionClassName = "",
   children,
 }: {
   id: string;
   tone: Tone;
   last?: boolean;
   className?: string;
+  sectionClassName?: string;
   children: ReactNode;
 }) {
   return (
@@ -24,7 +26,7 @@ export function Sheet({
       id={id}
       data-tone={tone}
       data-last={last ? "true" : undefined}
-      className="sheet"
+      className={`sheet ${sectionClassName}`}
     >
       <div className={`sheet__inner ${className}`}>{children}</div>
     </section>

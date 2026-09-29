@@ -42,8 +42,8 @@ export default function ServicesPage() {
               door, handled in one place.
             </p>
             <p className="type-body text-muted">
-              Nine services. Most projects use several, and one team runs
-              them all.
+              Use what you need. We can handle individual stages or the whole
+              project.
             </p>
           </div>
         }
@@ -77,7 +77,7 @@ export default function ServicesPage() {
       <Section tone="stone">
         <Editorial
           reverse
-          heading={<h2 className="type-display">One team, end to end.</h2>}
+          heading={<h2 className="type-display">One team, start to finish.</h2>}
           aside={
             <div className="flex flex-col gap-5">
               <p className="type-lede text-muted">

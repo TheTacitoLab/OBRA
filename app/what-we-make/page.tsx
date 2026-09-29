@@ -15,7 +15,7 @@ const page = {
   path: "/what-we-make/",
   title: "What we make",
   description:
-    "Headwear, t-shirts, tops, sportswear, retro football shirts, trainingwear and more: bespoke merchandise from madebyobra, developed around your brand.",
+    "Headwear, t-shirts, tops, sportswear, retro football shirts, trainingwear, accessories and more: bespoke merchandise from madebyobra.",
 };
 
 export const metadata: Metadata = pageMetadata({
@@ -40,9 +40,8 @@ export default function WhatWeMakePage() {
         aside={
           <div className="flex flex-col gap-body">
             <p className="type-lede">
-              Proven product blocks across headwear, tees, tops, sportswear
-              and more, developed into pieces that feel like part of your
-              collection.
+              Headwear, tees, tops, sportswear and more, made as pieces that
+              belong in a collection.
             </p>
             <div>
               <Button href={primaryCta.href}>{primaryCta.label}</Button>
@@ -66,9 +65,8 @@ export default function WhatWeMakePage() {
           aside={
             <div className="flex flex-col gap-5">
               <p className="type-lede text-muted">
-                Bags, accessories, outerwear, socks, scarves, drinkware and
-                packaging are developed the same way, from proven blocks. If
-                it belongs in the range, ask.
+                Outerwear, scarves, drinkware, packaging and one-off pieces are
+                made the same way. If it belongs in the range, ask.
               </p>
               <div>
                 <ArrowLink href={startHref}>Ask about a product</ArrowLink>

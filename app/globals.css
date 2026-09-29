@@ -19,10 +19,12 @@
   --color-blue-soft: #d0d3d3;
   --color-clay-soft: #e5cbbf;
 
-  /* One grotesk for everything. The --font-hanken var comes from next/font. */
+  /* One family for everything. --font-aeonik is defined only once the
+     licensed Aeonik files are wired up in app/layout.tsx; until then the
+     stack falls through to Figtree from next/font. */
   --font-sans:
-    var(--font-hanken), "Helvetica Neue", Helvetica, Arial, ui-sans-serif,
-    system-ui, sans-serif;
+    var(--font-aeonik, var(--font-figtree)), "Aeonik", "Helvetica Neue",
+    Helvetica, Arial, ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
@@ -175,21 +177,21 @@ html[data-nav="dark"] {
    longest word in each role fits the narrowest viewport it appears at.
    ========================================================================= */
 @layer components {
-  /* Hero statement. Four lines below 1024px (one word per line), two above.
-     Below lg the limit is "PRODUCT." (4.4em); above it is the full line. */
+  /* Hero statement. One word per line on phones, two lines from 768px.
+     Limits at weight 900, -0.045em: "BRAND." 3.54em, "MORE BRAND." 6.46em. */
   .type-hero {
     font-weight: 900;
-    font-size: clamp(3.5rem, 19.5vw, 9rem);
+    font-size: clamp(4.5rem, 24vw, 12rem);
     line-height: 0.86;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
   }
   .type-hero .word {
     display: block;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 768px) {
     .type-hero {
-      font-size: min(12.4vw, 11.5rem);
+      font-size: min(13.8vw, 16rem);
       line-height: 0.84;
     }
     .type-hero .word {
@@ -197,34 +199,29 @@ html[data-nav="dark"] {
     }
   }
 
-  /* Section titles that sit in a column on desktop. Limit: "MERCHANDISE". */
+  /* Section titles that sit in a column. Limit: "COLLECTION." 6.23em in
+     seven columns from 1024px; full width below. */
   .type-display {
     font-weight: 900;
-    font-size: clamp(2.25rem, 10vw, 7.5rem);
-    line-height: 0.88;
-    letter-spacing: -0.05em;
+    font-size: clamp(2.25rem, 10.5vw, 9.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
     text-wrap: balance;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .type-display {
-      font-size: clamp(3.25rem, 7.9vw, 7.5rem);
+      font-size: clamp(4rem, 7.9vw, 9.5rem);
     }
   }
-  /* A display heading whose lines are long ("Your merchandise" on one line):
-     a step down from type-display so the three-line composition holds on
-     phones from 360px, full width on tablets, and in 8 columns from lg. */
+  /* A display heading whose lines are long ("YOUR MERCHANDISE" 9.67em):
+     three deliberate lines at every width, eight columns from 1024px. */
   .type-display-long {
-    font-size: clamp(2.125rem, 9.5vw, 7.5rem);
-  }
-  @media (min-width: 768px) {
-    .type-display-long {
-      font-size: clamp(3.25rem, 7.9vw, 7.5rem);
-    }
+    font-size: clamp(1.75rem, 9vw, 7.5rem);
   }
   @media (min-width: 1024px) {
     .type-display-long {
-      font-size: clamp(3.5rem, 6.3vw, 5.75rem);
+      font-size: clamp(3.5rem, 5.9vw, 7rem);
     }
   }
 
@@ -232,57 +229,69 @@ html[data-nav="dark"] {
      one place.), sized below type-display so hierarchy holds. */
   .type-display-sm {
     font-weight: 900;
-    font-size: clamp(2.125rem, 5.4vw, 4.25rem);
+    font-size: clamp(2.125rem, 4.7vw, 5.5rem);
     line-height: 0.9;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
     text-wrap: balance;
   }
 
-  /* Full-width or short-word titles (What we make, Notes, About, Services). */
+  /* Short-word titles (Notes., Services., Who for.): full width on phones
+     and tablets, eight columns from 1024px. Limit "FESTIVALS." 5.1em. */
   .type-display-xl {
     font-weight: 900;
-    font-size: clamp(3.5rem, 18vw, 10rem);
+    font-size: clamp(3.5rem, 17.5vw, 15rem);
     line-height: 0.86;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
     text-wrap: balance;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .type-display-xl {
-      font-size: clamp(4.5rem, 11vw, 10rem);
+      font-size: clamp(6rem, 11.5vw, 15rem);
     }
   }
   /* Homepage chapter titles (What we make., Notes.): the display-xl voice a
      step below the hero so the h1 leads the page. */
   .type-chapter {
-    font-size: clamp(3rem, 15vw, 8.75rem);
+    font-size: clamp(3rem, 15vw, 12rem);
   }
   @media (min-width: 768px) {
     .type-chapter {
-      font-size: clamp(4rem, 9.5vw, 8.75rem);
+      font-size: clamp(3rem, 11vw, 12rem);
     }
   }
 
-  /* Landing page titles, full width. */
+  /* Page titles, full width. Below 1024px the size steps by the title's
+     longest word (PageHero picks the tier: "MERCHANDISE" 6.82em is the
+     default limit); from 1024px every tier shares one size. */
   .type-page {
     font-weight: 900;
-    font-size: clamp(2.625rem, 13vw, 11rem);
+    font-size: clamp(2.5rem, 12.6vw, 16rem);
     line-height: 0.88;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
     text-wrap: balance;
   }
-  /* Phone size steps by the title's longest word so short titles lead the
-     page and long ones still clear the gutters (PageHero picks the tier). */
   .type-page-short {
-    font-size: clamp(3rem, 16.5vw, 11rem);
+    font-size: clamp(3rem, 18.5vw, 16rem);
   }
   .type-page-mid {
-    font-size: clamp(2.75rem, 14.5vw, 11rem);
+    font-size: clamp(2.75rem, 14.5vw, 16rem);
   }
   .type-page-long {
-    font-size: clamp(2.5rem, 12vw, 11rem);
+    font-size: clamp(2.25rem, 11.6vw, 16rem);
+  }
+  @media (min-width: 1024px) {
+    .type-page,
+    .type-page-short,
+    .type-page-mid {
+      font-size: min(13vw, 15rem);
+    }
+    /* "TRAININGWEAR" (7.39em) needs the smaller step at every width. */
+    .type-page-long {
+      font-size: min(12vw, 13.5rem);
+    }
   }
 
   /* Hero sections clear the fixed header from the same tokens. Applied by
@@ -292,54 +301,60 @@ html[data-nav="dark"] {
     padding-top: calc(var(--spacing-header) + var(--spacing-section));
   }
 
-  /* The enormous audience links. Limit: "FESTIVALS" in an 8/12 column. */
+  /* The audience links. Limit: "FESTIVALS" 4.81em, eight columns from lg. */
   .type-link {
     font-weight: 900;
-    font-size: clamp(3rem, 15vw, 9rem);
+    font-size: clamp(3rem, 15vw, 12.5rem);
     line-height: 0.96;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
   }
   @media (min-width: 768px) {
     .type-link {
-      font-size: clamp(3.25rem, 10.5vw, 10rem);
+      font-size: clamp(3.25rem, 10vw, 12.5rem);
     }
   }
 
-  /* Product links. Limit: "RETRO FOOTBALL" on one line, "SHIRTS" on the next. */
+  /* Product links. "RETRO FOOTBALL" (8.13em) on one line on phones with
+     "SHIRTS" beneath; the whole name on one line from 1024px. */
   .type-link-sm {
     font-weight: 900;
-    font-size: clamp(2.2rem, 11vw, 7.5rem);
+    font-size: clamp(2rem, 10.5vw, 9.5rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
     text-transform: uppercase;
   }
   @media (min-width: 768px) {
     .type-link-sm {
-      font-size: clamp(2.2rem, 9.5vw, 7.5rem);
+      font-size: clamp(2rem, 9.5vw, 9.5rem);
+    }
+  }
+  @media (min-width: 1024px) {
+    .type-link-sm {
+      font-size: clamp(2rem, 7.7vw, 8.75rem);
     }
   }
 
   /* Product index labels that share a row with copy from md up. */
   .type-link-xs {
     font-weight: 900;
-    font-size: clamp(2rem, 9.5vw, 8rem);
+    font-size: clamp(1.875rem, 9.5vw, 6.5rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
     text-transform: uppercase;
   }
   @media (min-width: 768px) {
     .type-link-xs {
-      font-size: clamp(2.5rem, 5.5vw, 5rem);
+      font-size: clamp(2.25rem, 5.3vw, 6.5rem);
     }
   }
 
   /* Mid-size heavy titles: notes, article headlines, block titles. */
   .type-headline {
     font-weight: 900;
-    font-size: clamp(1.75rem, 2vw + 1rem, 3rem);
+    font-size: clamp(1.75rem, 2vw + 1rem, 3.25rem);
     line-height: 1;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
 
@@ -354,7 +369,7 @@ html[data-nav="dark"] {
   /* Supporting statements - the bold paragraph under a title */
   .type-lede {
     font-weight: 500;
-    font-size: clamp(1.1875rem, 0.95rem + 0.55vw, 1.375rem);
+    font-size: clamp(1.1875rem, 0.95rem + 0.55vw, 1.5rem);
     line-height: 1.25;
     letter-spacing: -0.015em;
     text-wrap: pretty;
@@ -456,14 +471,15 @@ html[data-nav="dark"] {
   /* -------------------------------------------------------------------
      Enormous link lists
      ------------------------------------------------------------------- */
+  /* Internal separators only: no line above the first row or below the last. */
   .biglist > li {
     border-top: 1px solid var(--line);
     transition:
       transform 0.25s var(--ease-out-quart),
       opacity 0.2s ease;
   }
-  .biglist > li:last-child {
-    border-bottom: 1px solid var(--line);
+  .biglist > li:first-child {
+    border-top: 0;
   }
   @media (hover: hover) {
     .biglist:has(> li:hover) > li:not(:hover) {
@@ -475,9 +491,15 @@ html[data-nav="dark"] {
   }
   .biglink {
     display: block;
-    padding-block: 0.14em;
+    padding-block: 0.16em;
     color: inherit;
     text-decoration: none;
+  }
+  .biglist > li:first-child > .biglink {
+    padding-top: 0;
+  }
+  .biglist > li:last-child > .biglink {
+    padding-bottom: 0;
   }
   .biglink:active {
     opacity: 0.7;
@@ -486,7 +508,7 @@ html[data-nav="dark"] {
      case the link would otherwise pass down as computed values. */
   .biglink__intro {
     display: block;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     max-width: 40ch;
     font-weight: 400;
     font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
@@ -498,7 +520,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 768px) {
     .biglink__intro {
-      margin-top: 0.75rem;
+      margin-top: 1.25rem;
     }
   }
   .biglink:focus-visible {
@@ -812,6 +834,14 @@ html[data-nav="dark"] {
     position: relative;
     top: auto;
   }
+  /* The hero sits at its natural height from md so its copy stays close to
+     the headline and the next chapter shows beneath it instead of a blank
+     band; the stack still pins it while the next sheet slides over. */
+  @media (min-width: 768px) {
+    .sheet--hero {
+      min-height: 0;
+    }
+  }
   /* Phones get their own layout: the chapters flow at their natural height
      with no stacking, so nothing on the first screens is padding. */
   @media (max-width: 767px) {
@@ -887,7 +917,9 @@ html[data-nav="dark"] {
   .services {
     display: grid;
     grid-template-columns: 1fr;
-    border-bottom: 1px solid var(--line);
+  }
+  .services > li:first-child > .service {
+    border-top: 0;
   }
   .service {
     position: relative;
@@ -931,6 +963,9 @@ html[data-nav="dark"] {
     .services > li:nth-child(2n) > .service::after {
       left: 1.75rem;
     }
+    .services > li:nth-child(-n + 2) > .service {
+      border-top: 0;
+    }
   }
   /* At two columns an odd last item closes the grid at full width. */
   @media (min-width: 640px) and (max-width: 1023.98px) {
@@ -963,6 +998,9 @@ html[data-nav="dark"] {
     .services > li:nth-child(3n + 3) > .service {
       padding-right: 0;
     }
+    .services > li:nth-child(-n + 3) > .service {
+      border-top: 0;
+    }
   }
 
   /* -------------------------------------------------------------------
@@ -975,9 +1013,32 @@ html[data-nav="dark"] {
     border-top: 1px solid var(--line);
     padding-block: clamp(1.25rem, 2vw, 2rem);
   }
+  .index-list > :first-child > .index-row,
+  .index-list > .index-row:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
   .index-list > :last-child > .index-row,
   .index-list > .index-row:last-child {
-    border-bottom: 1px solid var(--line);
+    padding-bottom: 0;
+  }
+  /* Two-column and three-column hairline lists: separators between rows only. */
+  .twoup > li {
+    border-top: 1px solid var(--line);
+  }
+  .twoup > li:nth-child(-n + 2) {
+    border-top: 0;
+  }
+  .numlist > li {
+    border-top: 1px solid var(--line);
+  }
+  .numlist > li:first-child {
+    border-top: 0;
+  }
+  @media (min-width: 768px) {
+    .numlist > li:nth-child(2) {
+      border-top: 0;
+    }
   }
   a.index-row:active {
     opacity: 0.7;
@@ -992,22 +1053,22 @@ html[data-nav="dark"] {
     gap: 0.4rem;
   }
   .field__label {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--muted);
+    color: var(--fg);
   }
   .field__control {
     appearance: none;
     -webkit-appearance: none;
     width: 100%;
-    min-height: 2.75rem;
+    min-height: 3rem;
     background: transparent;
     border: 0;
     border-bottom: 1px solid color-mix(in srgb, var(--fg) 52%, transparent);
     border-radius: 0;
-    padding: 0.5rem 0 0.65rem;
+    padding: 0.55rem 0 0.75rem;
     font: inherit;
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.4;
     color: var(--fg);
     transition:
@@ -1019,16 +1080,55 @@ html[data-nav="dark"] {
   }
   .field__control:focus {
     outline: none;
-    border-color: var(--fg);
-    box-shadow: 0 1px 0 0 var(--fg);
+    border-color: var(--accent);
+    box-shadow: 0 1px 0 0 var(--accent);
   }
-  .field__control:user-invalid {
+  .field__control[aria-invalid="true"] {
     border-color: var(--color-clay);
     box-shadow: 0 1px 0 0 var(--color-clay);
   }
+  .field__error {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-clay);
+  }
   textarea.field__control {
-    resize: vertical;
-    min-height: 7rem;
+    resize: none;
+    field-sizing: content;
+    min-height: 8rem;
+  }
+  /* Upload: an outlined area that stands in for the browser control. */
+  .upload {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    min-height: 4.5rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid color-mix(in srgb, var(--fg) 52%, transparent);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  .upload:hover,
+  .upload:has(input:focus-visible) {
+    border-color: var(--accent);
+  }
+  .upload:has(input:focus-visible) {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+  .upload__cta {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+  .upload__files {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+    font-size: 0.9375rem;
+    color: var(--muted);
   }
   select.field__control {
     padding-right: 1.75rem;
@@ -1040,10 +1140,7 @@ html[data-nav="dark"] {
   select.field__control:invalid {
     color: var(--muted);
   }
-  .file:has(input:focus-visible) .btn-outline {
-    outline: 2px solid currentColor;
-    outline-offset: 4px;
-  }
+
 
   /* -------------------------------------------------------------------
      Long-form prose (privacy policy)

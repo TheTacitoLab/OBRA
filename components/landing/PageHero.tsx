@@ -1,9 +1,6 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { Section, type SectionSize } from "../site/Section";
 import { Editorial } from "../site/Editorial";
-
-export type Parent = { label: string; href: string };
 
 /**
  * The type-page phone size steps by the title's longest word, so a short
@@ -43,33 +40,18 @@ export function pageTitleClass(title: string, tier?: TitleTier) {
 export function PageHero({
   title,
   aside,
-  parent,
   full = false,
   size = "large",
 }: {
   title: string;
   aside: ReactNode;
-  parent?: Parent;
   full?: boolean;
   size?: SectionSize;
 }) {
   if (full) {
     return (
       <Section tone="bone" size={size} hero>
-        {parent && (
-          <p className="type-small text-muted">
-            {/* 44px tap target; the underline stays on the text via the span. */}
-            <Link
-              href={parent.href}
-              className="inline-flex min-h-11 items-center"
-            >
-              <span className="u-wipe">{parent.label}</span>
-            </Link>
-          </p>
-        )}
-        <h1 className={`${pageTitleClass(title)} ${parent ? "mt-2 md:mt-4" : ""}`}>
-          {title}
-        </h1>
+        <h1 className={pageTitleClass(title)}>{title}</h1>
         <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
           <div className="md:col-span-6 md:col-start-7 lg:col-span-4 lg:col-start-9">
             {aside}

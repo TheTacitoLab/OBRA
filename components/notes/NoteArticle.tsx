@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Section } from "@/components/site/Section";
 import { formatNoteDate, type Note } from "@/content/notes";
 
@@ -12,15 +11,6 @@ export function NoteArticle({ note }: { note: Note }) {
   return (
     <Section tone="bone" size="large" hero>
       <div className="grid gap-y-4 md:grid-cols-12 md:gap-x-8 md:gap-y-head lg:gap-x-12">
-        <p className="type-small md:col-span-12">
-          {/* 44px tap target; the underline stays on the text via the span. */}
-          <Link
-            href="/notes/"
-            className="-my-3 inline-flex min-h-11 items-center"
-          >
-            <span className="u-wipe u-static">Notes</span>
-          </Link>
-        </p>
         <p className="type-meta flex flex-wrap items-baseline gap-x-2 text-muted md:col-span-4 md:row-start-3 md:flex-col md:gap-y-1">
           <span>{note.category}</span>
           <span aria-hidden="true" className="md:hidden">

@@ -55,7 +55,11 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   variants (`--color-lime-soft`, `--color-blue-soft`, `--color-clay-soft`) for
   the occasional accent block. Every surface sets `data-tone`, which resolves
   the semantic `bg-bg / text-fg / text-muted / border-line` utilities.
-- **Type**: one grotesk (Hanken Grotesk, variable weight) at 900 for display.
+- **Type**: Aeonik is the intended typeface (Black for display, Bold and
+  Regular for text). It is licensed and not bundled; Figtree from next/font
+  stands in with the same weights, and `app/layout.tsx` documents the
+  drop-in (`--font-aeonik` takes over the stack once the files are wired).
+  Display sizes run at 900
   Display sizes (`type-hero`, `type-display`, `type-display-xl`, `type-page`,
   `type-link`, `type-link-sm`) are tuned to measured glyph widths so the
   longest word in each role fits the narrowest viewport it appears at, with

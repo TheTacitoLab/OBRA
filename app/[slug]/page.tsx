@@ -26,11 +26,11 @@ const parent = { label: "What we make", href: "/what-we-make/" };
 /** The same three steps for every product; the detail is in the brief. */
 const steps: Step[] = [
   {
-    title: "Start from a proven block",
+    title: "Start from the right base",
     text: "A pattern, fit and construction that has already run in production, so the fundamentals are settled before the brief arrives.",
   },
   {
-    title: "Develop it around the brand",
+    title: "Detail it properly",
     text: "Fabric, fit, colour and trims first, then labels, tags and packaging, so the piece reads as part of the collection.",
   },
   {
@@ -93,7 +93,6 @@ export default async function ProductPage({
 
       <PageHero
         full
-        parent={parent}
         title={page.label}
         aside={
           <div className="flex flex-col gap-body">

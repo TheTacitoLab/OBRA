@@ -3,18 +3,18 @@ import { Container } from "../site/Container";
 import { Button, ArrowLink } from "../site/Button";
 
 /**
- * The opening statement. Four lines on phones and tablets (one word per
- * line, see .type-hero .word), two lines from 1024px, sized to the viewport.
+ * The opening statement. One word per line on phones (see .type-hero
+ * .word), two lines from 768px, sized to the viewport at every width.
  */
 export function Hero() {
   return (
-    <Sheet id="top" tone="bone">
-      <Container className="flex flex-1 flex-col pb-12 pt-20 sm:pt-28 lg:pb-14 lg:pt-36">
+    <Sheet id="top" tone="bone" sectionClassName="sheet--hero">
+      <Container className="flex flex-1 flex-col pb-12 pt-20 sm:pt-28 lg:pb-16 lg:pt-36">
         <h1 className="type-hero">
           <span className="rise-line">
             <span>
-              <span className="word">More </span>
-              <span className="word">product.</span>
+              <span className="word">Less </span>
+              <span className="word">bland.</span>
             </span>
           </span>
           <span
@@ -22,24 +22,25 @@ export function Hero() {
             style={{ "--d": "0.08s" } as React.CSSProperties}
           >
             <span>
-              <span className="word">Less </span>
-              <span className="word">promo.</span>
+              <span className="word">More </span>
+              <span className="word">brand.</span>
             </span>
           </span>
         </h1>
 
-        <div className="mt-head grid gap-y-7 md:grid-cols-12 md:gap-x-8 lg:mt-auto lg:pt-[clamp(2.5rem,7vh,5.5rem)]">
+        <div className="mt-head grid gap-y-7 md:grid-cols-12 md:gap-x-8 lg:mt-[clamp(2rem,4vh,3.5rem)]">
           <div
             className="fade-in flex flex-col gap-4 md:col-span-7 lg:col-span-6"
             style={{ "--d": "0.4s" } as React.CSSProperties}
           >
-            <p className="type-lede max-w-[26ch]">
-              madebyobra creates bespoke merchandise for brands, artists, events
-              and organisations.
+            <p className="type-lede max-w-[28ch]">
+              madebyobra creates bespoke merchandise for brands, artists,
+              festivals and events.
             </p>
-            <p className="type-body max-w-[38ch] text-muted">
-              Original products developed with freedom, bespoke manufacturing
-              and pricing that actually works at scale.
+            <p className="type-body max-w-[42ch] text-muted">
+              We design, develop and manufacture collections that feel like
+              real product, with the quality, detail and pricing to work
+              properly at scale.
             </p>
           </div>
 

@@ -65,7 +65,7 @@ export const audiences: PageEntry[] = [
     label: "Artists",
     title: "Merchandise for artists",
     description:
-      "Bespoke artist merchandise from madebyobra: tour ranges, drops, jerseys and apparel developed around the identity, with production and fulfilment handled.",
+      "Bespoke artist merchandise from madebyobra: tour ranges, drops, jerseys and apparel made to the artist’s identity, with production and fulfilment handled.",
     intro:
       "Tour ranges, drops and apparel that carry the identity, with production and fulfilment handled.",
   },
@@ -78,53 +78,57 @@ export const products: PageEntry[] = [
     label: "Headwear",
     title: "Headwear",
     description:
-      "Bespoke headwear from madebyobra: caps, beanies and bucket hats developed around your brand, with custom trims, labels and packaging.",
-    intro:
-      "Caps, beanies and bucket hats developed around your brand, down to the trims and labels.",
+      "Bespoke headwear from madebyobra: caps, beanies and bucket hats with custom trims, labels and finishing.",
+    intro: "Caps, beanies and bucket hats, with custom trims, labels and finishing.",
   },
   {
     slug: "t-shirts",
     label: "T-shirts",
     title: "T-shirts",
     description:
-      "Bespoke t-shirts from madebyobra: proven blanks as the starting point, then fabric, fit, print and finishing built around your brand.",
+      "Bespoke t-shirts from madebyobra: different weights, fits, fabrics, print methods and finishing options.",
     intro:
-      "Proven blocks as the starting point. Fabric, fit, print and finishing built around you.",
+      "Different weights, fits, fabrics, print methods and finishing options.",
   },
   {
     slug: "tops",
     label: "Tops",
     title: "Tops",
     description:
-      "Bespoke tops from madebyobra: hoodies, sweatshirts, jerseys and long sleeves developed as part of a collection rather than as blanks.",
-    intro:
-      "Hoodies, sweatshirts, jerseys and long sleeves, developed as part of a range.",
+      "Bespoke tops from madebyobra: hoodies, sweatshirts, jerseys, polos and long sleeves made as part of a collection.",
+    intro: "Hoodies, sweatshirts, jerseys, polos and long sleeves.",
   },
   {
     slug: "sportswear",
     label: "Sportswear",
     title: "Sportswear",
     description:
-      "Bespoke sportswear from madebyobra: performance pieces designed and manufactured around your brand through our factory network.",
-    intro: "Performance pieces designed and manufactured around your brand.",
+      "Bespoke sportswear from madebyobra: performance pieces built for training, teams and active use, made through our factory network.",
+    intro: "Performance pieces built for training, teams and active use.",
   },
   {
     slug: "retro-football-shirts",
     label: "Retro football shirts",
     title: "Retro football shirts",
     description:
-      "Bespoke retro football shirts from madebyobra: fully custom shirts for festivals, artists, events and brands, from short runs to production programmes.",
-    intro:
-      "Fully custom shirts, from short runs to full production programmes.",
+      "Bespoke retro football shirts from madebyobra: fully custom jerseys for festivals, artists, events and brands, from limited runs to larger production.",
+    intro: "Fully custom jerseys, from limited runs to larger production.",
   },
   {
     slug: "trainingwear",
     label: "Trainingwear",
     title: "Trainingwear",
     description:
-      "Bespoke trainingwear from madebyobra: tracksuits, warm-ups and training pieces developed around your brand and produced at scale.",
-    intro:
-      "Tracksuits, warm-ups and training pieces developed around your brand.",
+      "Bespoke trainingwear from madebyobra: tracksuits, warm-ups, technical tops and training pieces, produced at scale.",
+    intro: "Tracksuits, warm-ups, technical tops and training pieces.",
+  },
+  {
+    slug: "accessories",
+    label: "Accessories",
+    title: "Accessories",
+    description:
+      "Bespoke accessories from madebyobra: bags, socks, buffs and smaller branded products made to the same standard as the rest of the range.",
+    intro: "Bags, socks, buffs and smaller branded products.",
   },
 ];
 
@@ -134,12 +138,13 @@ export const services: Service[] = [
   {
     slug: "creative-direction",
     title: "Creative Direction",
-    description: "Concepts, artwork and range direction.",
+    description: "Concepts, artwork and collection direction.",
   },
   {
     slug: "product-development",
     title: "Product Development",
-    description: "Proven product blocks developed around your brand.",
+    description:
+      "Fits, fabrics, trims and specifications worked into production-ready products.",
   },
   {
     slug: "sampling-and-manufacturing",
@@ -151,12 +156,12 @@ export const services: Service[] = [
     slug: "procurement-and-costing",
     title: "Procurement & Costing",
     description:
-      "Direct factory relationships let us shape the product around your budget, balancing specification, volume and finish.",
+      "We balance specification, quantity and finish against the available budget.",
   },
   {
     slug: "branding-and-packaging",
     title: "Branding & Packaging",
-    description: "Labels, trims, tags, packaging and finishing details.",
+    description: "Labels, trims, swing tags, packaging and final details.",
   },
   {
     slug: "e-commerce",
@@ -172,13 +177,12 @@ export const services: Service[] = [
     slug: "event-support",
     title: "Event Support",
     description:
-      "Merch planning, stock preparation, POS support and on-site retail requirements.",
+      "Stock planning, POS preparation and practical support for selling on site.",
   },
   {
     slug: "logistics",
     title: "Logistics",
-    description:
-      "Freight, import, customs and getting finished stock where it needs to be.",
+    description: "Freight, import, customs and final delivery.",
   },
 ];
 

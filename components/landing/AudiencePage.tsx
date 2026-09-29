@@ -15,8 +15,6 @@ import {
   type Service,
 } from "@/content/site";
 
-const parent = { label: "Who for", href: "/who-for/" };
-
 /** Lead block spans 7/12 and both rows; the other two stack beside it. */
 const benefitLayout: { tone: BlockTone; className: string }[] = [
   {
@@ -51,17 +49,7 @@ export function AudiencePage({ slug }: { slug: string }) {
     <>
       {/* Hero: parent link, full-width statement, intro and CTA in the right column. */}
       <Section tone="bone" size="large" hero>
-        <p className="type-small text-muted">
-          <Link
-            href={parent.href}
-            className="inline-flex min-h-11 items-center"
-          >
-            <span className="u-wipe">{parent.label}</span>
-          </Link>
-        </p>
-        <h1
-          className={`${pageTitleClass(content.headline, content.headlineTier)} mt-2 md:mt-4`}
-        >
+        <h1 className={pageTitleClass(content.headline, content.headlineTier)}>
           {content.headline}
         </h1>
         <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
@@ -130,11 +118,11 @@ export function AudiencePage({ slug }: { slug: string }) {
               <ArrowLink href="/services/">All services</ArrowLink>
             </div>
           </div>
-          <ul className="grid grid-cols-2 border-t border-line lg:col-span-8">
+          <ul className="twoup grid grid-cols-2 lg:col-span-8">
             {services.map((service) => (
               <li
                 key={service.slug}
-                className="border-b border-line py-3 odd:pr-3 even:pl-3 md:py-6 md:odd:pr-4 md:even:pl-4 lg:odd:pr-6 lg:even:pl-6"
+                className="py-3 odd:pr-3 even:pl-3 md:py-6 md:odd:pr-4 md:even:pl-4 lg:odd:pr-6 lg:even:pl-6"
               >
                 <h3 className="type-title">
                   <Link

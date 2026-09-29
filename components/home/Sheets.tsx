@@ -57,12 +57,21 @@ export function Sheets({ children }: { children: ReactNode }) {
     const update = () => {
       frame = 0;
       const vh = viewport();
-      const tops = sheets.map((sheet) => sheet.getBoundingClientRect().top);
+      const rects = sheets.map((sheet) => sheet.getBoundingClientRect());
+      const tops = rects.map((rect) => rect.top);
 
       if (!reduce.matches && !phone.matches) {
         sheets.forEach((sheet, index) => {
           const nextTop = tops[index + 1];
-          const cover = nextTop === undefined ? 0 : clamp((vh - nextTop) / vh);
+          // How far the next sheet has slid over this one's visible part. A
+          // sheet shorter than the viewport (the hero) starts uncovered even
+          // though the next sheet is already on screen beneath it.
+          const rect = rects[index];
+          const visible = Math.min(rect.height, vh);
+          const cover =
+            nextTop === undefined
+              ? 0
+              : clamp((rect.bottom - nextTop) / visible);
           const rise = index === 0 ? 1 : clamp((vh - tops[index]) / vh);
           sheet.style.setProperty("--cover", cover.toFixed(3));
           sheet.style.setProperty("--rise", rise.toFixed(3));
