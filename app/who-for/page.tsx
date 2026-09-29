@@ -52,7 +52,7 @@ export default function WhoForPage() {
       <Section tone="ink" size="compact">
         <h2 className="sr-only">Who we work with</h2>
         <BigList
-          size="type-link"
+          size="type-link-sm"
           items={audiences.map((audience) => ({
             label: audience.label,
             href: pageHref(audience.slug),

@@ -200,7 +200,7 @@ html[data-nav="dark"] {
   /* Section titles that sit in a column on desktop. Limit: "MERCHANDISE". */
   .type-display {
     font-weight: 900;
-    font-size: clamp(2.5rem, 11.5vw, 7.5rem);
+    font-size: clamp(2.25rem, 10vw, 7.5rem);
     line-height: 0.88;
     letter-spacing: -0.05em;
     text-transform: uppercase;
@@ -212,10 +212,19 @@ html[data-nav="dark"] {
     }
   }
   /* A display heading whose lines are long ("Your merchandise" on one line):
-     a step down from lg so the composition holds three lines in 8 columns. */
+     a step down from type-display so the three-line composition holds on
+     phones from 360px, full width on tablets, and in 8 columns from lg. */
+  .type-display-long {
+    font-size: clamp(2.125rem, 9.5vw, 7.5rem);
+  }
+  @media (min-width: 768px) {
+    .type-display-long {
+      font-size: clamp(3.25rem, 7.9vw, 7.5rem);
+    }
+  }
   @media (min-width: 1024px) {
     .type-display-long {
-      font-size: clamp(3.5rem, 5.9vw, 5.5rem);
+      font-size: clamp(3.5rem, 6.3vw, 5.75rem);
     }
   }
 
@@ -223,7 +232,7 @@ html[data-nav="dark"] {
      one place.), sized below type-display so hierarchy holds. */
   .type-display-sm {
     font-weight: 900;
-    font-size: clamp(2.125rem, 4.4vw, 4.25rem);
+    font-size: clamp(2.125rem, 5.4vw, 4.25rem);
     line-height: 0.9;
     letter-spacing: -0.05em;
     text-transform: uppercase;
@@ -304,7 +313,7 @@ html[data-nav="dark"] {
   /* Product index labels that share a row with copy from md up. */
   .type-link-xs {
     font-weight: 900;
-    font-size: clamp(2.2rem, 11vw, 8rem);
+    font-size: clamp(2rem, 9.5vw, 8rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
     text-transform: uppercase;
@@ -801,10 +810,6 @@ html[data-nav="dark"] {
       top: auto !important;
       min-height: 0;
     }
-    .panel {
-      justify-content: flex-start;
-      gap: 1rem;
-    }
     .sheet::after {
       display: none;
     }
@@ -812,6 +817,14 @@ html[data-nav="dark"] {
       transform: none !important;
       opacity: 1 !important;
       will-change: auto;
+    }
+  }
+  /* Below lg the panels sit in one or two columns at natural height, so the
+     copy follows the title instead of dropping to a distant foot. */
+  @media (max-width: 1023.98px) {
+    .panel {
+      justify-content: flex-start;
+      gap: 1rem;
     }
   }
 
@@ -910,7 +923,9 @@ html[data-nav="dark"] {
     .services > li:nth-child(2n) > .service::after {
       left: 1.75rem;
     }
-    /* An odd last item closes the grid at full width. */
+  }
+  /* At two columns an odd last item closes the grid at full width. */
+  @media (min-width: 640px) and (max-width: 1023.98px) {
     .services > li:last-child:nth-child(odd) > .service {
       grid-column: 1 / -1;
       padding-right: 0;
@@ -921,9 +936,7 @@ html[data-nav="dark"] {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .service,
-    .services > li:nth-child(2n) > .service,
-    .services > li:last-child:nth-child(odd) > .service {
-      grid-column: auto;
+    .services > li:nth-child(2n) > .service {
       padding: 2rem 2.25rem 2.75rem 0;
       border-left: 0;
     }
@@ -982,7 +995,7 @@ html[data-nav="dark"] {
     min-height: 2.75rem;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid var(--line-strong);
+    border-bottom: 1px solid color-mix(in srgb, var(--fg) 52%, transparent);
     border-radius: 0;
     padding: 0.5rem 0 0.65rem;
     font: inherit;
@@ -994,7 +1007,7 @@ html[data-nav="dark"] {
       box-shadow 0.2s ease;
   }
   .field__control::placeholder {
-    color: color-mix(in srgb, var(--fg) 38%, transparent);
+    color: var(--muted);
   }
   .field__control:focus {
     outline: none;
@@ -1017,7 +1030,7 @@ html[data-nav="dark"] {
     cursor: pointer;
   }
   select.field__control:invalid {
-    color: color-mix(in srgb, var(--fg) 38%, transparent);
+    color: var(--muted);
   }
   .file:has(input:focus-visible) .btn-outline {
     outline: 2px solid currentColor;

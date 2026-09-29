@@ -19,9 +19,12 @@ const parent = { label: "Who for", href: "/who-for/" };
 
 /** Lead block spans 7/12 and both rows; the other two stack beside it. */
 const benefitLayout: { tone: BlockTone; className: string }[] = [
-  { tone: "stone", className: "md:col-span-7 md:row-span-2 md:min-h-[24rem]" },
-  { tone: "accent", className: "md:col-span-5" },
-  { tone: "outline", className: "md:col-span-5" },
+  {
+    tone: "stone",
+    className: "md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem]",
+  },
+  { tone: "accent", className: "md:col-span-6 lg:col-span-5" },
+  { tone: "outline", className: "md:col-span-6 lg:col-span-5" },
 ];
 
 /**
@@ -55,7 +58,9 @@ export function AudiencePage({ slug }: { slug: string }) {
             <span className="u-wipe">{parent.label}</span>
           </Link>
         </p>
-        <h1 className={`${pageTitleClass(content.headline)} mt-2 md:mt-4`}>
+        <h1
+          className={`${pageTitleClass(content.headline, content.headlineTier)} mt-2 md:mt-4`}
+        >
           {content.headline}
         </h1>
         <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
@@ -113,10 +118,10 @@ export function AudiencePage({ slug }: { slug: string }) {
           starts at lg. */}
       <Section tone="stone" size="compact">
         <div className="grid gap-y-head lg:grid-cols-12 lg:gap-x-12">
-          <div className="flex flex-col gap-body lg:col-span-3">
+          <div className="flex flex-col gap-body lg:col-span-4">
             <div>
               <h2 className="type-display-sm">Handled in one place.</h2>
-              <p className="type-body mt-3 max-w-[26ch] text-muted">
+              <p className="type-body mt-3 text-muted lg:max-w-[26ch]">
                 The services a range like this leans on most.
               </p>
             </div>
@@ -124,11 +129,11 @@ export function AudiencePage({ slug }: { slug: string }) {
               <ArrowLink href="/services/">All services</ArrowLink>
             </div>
           </div>
-          <ul className="grid grid-cols-2 gap-x-5 border-t border-line md:gap-x-8 lg:col-span-9 lg:gap-x-12">
+          <ul className="grid grid-cols-2 border-t border-line lg:col-span-8">
             {services.map((service) => (
               <li
                 key={service.slug}
-                className="border-b border-line py-3 md:py-6"
+                className="border-b border-line py-3 odd:pr-3 even:pl-3 md:py-6 md:odd:pr-4 md:even:pl-4 lg:odd:pr-6 lg:even:pl-6"
               >
                 <h3 className="type-title">
                   <Link
@@ -150,7 +155,7 @@ export function AudiencePage({ slug }: { slug: string }) {
       {/* Benefits: full-width heading, then three blocks of unequal size. */}
       <Section tone="bone">
         <h2 className="type-display max-w-[12ch]">{content.benefitsHeading}</h2>
-        <div className="mt-body grid gap-3 md:mt-section-sm md:grid-cols-12 md:gap-4">
+        <div className="mt-body grid gap-3 md:mt-section-sm md:grid-cols-12 md:gap-4 lg:grid-rows-2">
           {content.benefits.map((benefit, index) => {
             const layout = benefitLayout[index] ?? benefitLayout[2];
             return (

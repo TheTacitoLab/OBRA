@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/siteConfig";
 /** The closing call to action used at the foot of every landing page. */
 export function ClosingCta({
   title = "Start a project.",
-  copy = "Tell us what you're looking to make, roughly how many you need and when you need it.",
+  copy = "Tell us what you’re looking to make, roughly how many you need and when you need it.",
 }: {
   title?: string;
   copy?: string;

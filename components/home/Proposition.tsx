@@ -11,9 +11,9 @@ export function Proposition() {
         wide
         heading={
           <h2 className="type-display type-display-long">
-            <span className="lg:block">Your merchandise </span>
-            <span className="lg:block">should feel like </span>
-            <span className="lg:block">your product.</span>
+            <span className="block">Your merchandise</span>
+            <span className="block">should feel like</span>
+            <span className="block">your product.</span>
           </h2>
         }
         aside={

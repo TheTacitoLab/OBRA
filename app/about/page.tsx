@@ -128,12 +128,12 @@ export default function AboutPage() {
             </div>
           }
         />
-        <div className="mt-body grid gap-3 md:grid-cols-12 md:grid-rows-2 md:gap-4">
+        <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4 lg:grid-rows-2">
           <Block
             tone="stone"
             meta="01"
             title="Direct relationships"
-            className="md:col-span-7 md:row-span-2 md:min-h-[24rem]"
+            className="md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem]"
           >
             <p>
               No agents and no middle layer. We work with the factories
@@ -145,7 +145,7 @@ export default function AboutPage() {
             tone="accent"
             meta="02"
             title="Sampling and QC"
-            className="md:col-span-5"
+            className="md:col-span-6 lg:col-span-5"
           >
             <p>
               Every product is sampled and approved before it runs, then
@@ -156,7 +156,7 @@ export default function AboutPage() {
             tone="outline"
             meta="03"
             title="Costed to the budget"
-            className="md:col-span-5"
+            className="md:col-span-6 lg:col-span-5"
           >
             <p>
               Specification, volume and finish, balanced against the budget

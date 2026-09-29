@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/site/Section";
 import { ProjectForm } from "@/components/forms/ProjectForm";
 import { JsonLd } from "@/components/site/JsonLd";
+import { pageTitleClass } from "@/components/landing/PageHero";
 import { pageMetadata } from "@/lib/metadata";
 import { buildPageSchema } from "@/lib/schema/organization";
 import { siteConfig, startHref } from "@/lib/siteConfig";
@@ -32,7 +33,7 @@ export default function StartAProjectPage() {
         <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-24">
-              <h1 className="type-display">Start a project.</h1>
+              <h1 className={pageTitleClass("Start a project.")}>Start a project.</h1>
               <p className="type-lede mt-head text-muted">
                 Tell us what you&rsquo;re looking to make, roughly how many
                 you need and when you need it. We&rsquo;ll come back to you
@@ -41,11 +42,11 @@ export default function StartAProjectPage() {
               <p className="type-small mt-6 text-muted">
                 Prefer email?{" "}
                 <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="u-wipe u-static text-fg"
-                >
-                  {siteConfig.email}
-                </a>
+                href={`mailto:${siteConfig.email}`}
+                className="-my-3 inline-flex min-h-11 items-center text-fg"
+              >
+                <span className="u-wipe u-static">{siteConfig.email}</span>
+              </a>
               </p>
             </div>
           </div>

@@ -25,6 +25,8 @@ export type AudienceContent = {
   /** Product slugs from content/site.ts, most relevant first. */
   products: string[];
   /** Section title above the product list. Short words only. */
+  /** Overrides the phone title tier when the longest word is glyph-narrow. */
+  headlineTier?: "short" | "mid" | "default" | "long";
   productsHeading: string;
   /** Why those products for this audience, one sentence or two. */
   productNote: string;
@@ -42,12 +44,13 @@ export const audienceContent: AudienceContent[] = [
   {
     slug: "festivals",
     headline: "Part of the experience.",
+    headlineTier: "mid",
     intro:
-      "The festival's own product line: limited editions, retail ranges and crew product, built on proven blocks and delivered to site ready to sell.",
+      "The festival’s own product line: limited editions, retail ranges and crew product, built on proven blocks and delivered to site ready to sell.",
     points: [
       {
         title: "Limited editions",
-        text: "The year's shirt, the one-off colourway, the piece that only exists on site. Reasons to join the queue.",
+        text: "The year’s shirt, the one-off colourway, the piece that only exists on site. Reasons to join the queue.",
       },
       {
         title: "Retail ranges",
@@ -90,7 +93,7 @@ export const audienceContent: AudienceContent[] = [
       },
     ],
     ctaCopy:
-      "Tell us the dates, the capacity and what sold last year, and we'll come back with a range and a plan for the stand.",
+      "Tell us the dates, the capacity and what sold last year, and we’ll come back with a range and a plan for the stand.",
   },
   {
     slug: "events",
@@ -143,7 +146,7 @@ export const audienceContent: AudienceContent[] = [
       },
     ],
     ctaCopy:
-      "Tell us the date, the numbers and who it's for, and we'll come back with product, quantities and a delivery plan.",
+      "Tell us the date, the numbers and who it’s for, and we’ll come back with product, quantities and a delivery plan.",
   },
   {
     slug: "brands",
@@ -196,7 +199,7 @@ export const audienceContent: AudienceContent[] = [
       },
     ],
     ctaCopy:
-      "Tell us what you're launching, roughly how many and the budget you're working to, and we'll come back with a range.",
+      "Tell us what you’re launching, roughly how many and the budget you’re working to, and we’ll come back with a range.",
   },
   {
     slug: "artists",
@@ -249,7 +252,7 @@ export const audienceContent: AudienceContent[] = [
       },
     ],
     ctaCopy:
-      "Tell us the dates or the release, roughly how many and where it needs to go, and we'll come back with a range and a plan.",
+      "Tell us the dates or the release, roughly how many and where it needs to go, and we’ll come back with a range and a plan.",
   },
 ];
 

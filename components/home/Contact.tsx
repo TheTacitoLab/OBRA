@@ -16,8 +16,11 @@ export function Contact() {
             </p>
             <p className="type-small mt-6 text-muted">
               Prefer email?{" "}
-              <a href={`mailto:${siteConfig.email}`} className="u-wipe u-static text-fg">
-                {siteConfig.email}
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="-my-3 inline-flex min-h-11 items-center text-fg"
+              >
+                <span className="u-wipe u-static">{siteConfig.email}</span>
               </a>
             </p>
           </div>

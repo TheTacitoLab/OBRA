@@ -28,7 +28,7 @@ export function Hero() {
           </span>
         </h1>
 
-        <div className="mt-head grid gap-y-7 md:grid-cols-12 md:gap-x-8 lg:mt-[clamp(2.5rem,7vh,5.5rem)]">
+        <div className="mt-head grid gap-y-7 md:grid-cols-12 md:gap-x-8 lg:mt-auto lg:pt-[clamp(2.5rem,7vh,5.5rem)]">
           <div
             className="fade-in flex flex-col gap-4 md:col-span-7 lg:col-span-6"
             style={{ "--d": "0.4s" } as React.CSSProperties}

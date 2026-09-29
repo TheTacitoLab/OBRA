@@ -11,14 +11,22 @@ export type Parent = { label: string; href: string };
  * ("Merchandise") still fits a 320px viewport and a longer one
  * ("Trainingwear") drops a step. The desktop cap is the same for all.
  */
-export function pageTitleClass(title: string) {
+export type TitleTier = "short" | "mid" | "default" | "long";
+
+export function pageTitleClass(title: string, tier?: TitleTier) {
   const longest = Math.max(
     ...title.split(/\s+/).map((word) => word.replace(/[.,:!?]$/, "").length),
   );
-  if (longest <= 7) return "type-page type-page-short";
-  if (longest <= 9) return "type-page type-page-mid";
-  if (longest <= 11) return "type-page";
-  return "type-page type-page-long";
+  const chosen: TitleTier =
+    tier ??
+    (longest <= 7
+      ? "short"
+      : longest <= 9
+        ? "mid"
+        : longest <= 11
+          ? "default"
+          : "long");
+  return chosen === "default" ? "type-page" : `type-page type-page-${chosen}`;
 }
 
 /**

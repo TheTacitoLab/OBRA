@@ -103,7 +103,7 @@ export const notes: Note[] = [
       },
       {
         type: "p",
-        text: "The shirt that sold out by Saturday afternoon was not the most elaborate one on the stand. It was the one that was clearly the year's shirt, in a colour that read from twenty metres, with the size split forecast against last year's data instead of a spreadsheet default.",
+        text: "The shirt that sold out by Saturday afternoon was not the most elaborate one on the stand. It was the one that was clearly the year’s shirt, in a colour that read from twenty metres, with the size split forecast against last year’s data instead of a spreadsheet default.",
       },
       {
         type: "h2",

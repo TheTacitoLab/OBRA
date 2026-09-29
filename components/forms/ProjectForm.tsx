@@ -130,18 +130,6 @@ export function ProjectForm({
         )}
       </Field>
 
-      <Field label="Company / Organisation">
-        {(id) => (
-          <input
-            id={id}
-            name="organisation"
-            type="text"
-            autoComplete="organization"
-            className="field__control"
-          />
-        )}
-      </Field>
-
       <Field label="Email">
         {(id) => (
           <input
@@ -150,6 +138,18 @@ export function ProjectForm({
             type="email"
             required
             autoComplete="email"
+            className="field__control"
+          />
+        )}
+      </Field>
+
+      <Field label="Company / Organisation">
+        {(id) => (
+          <input
+            id={id}
+            name="organisation"
+            type="text"
+            autoComplete="organization"
             className="field__control"
           />
         )}
