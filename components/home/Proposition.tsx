@@ -13,7 +13,9 @@ export function Proposition() {
           <h2 className="type-display type-display-long">
             <span className="block">Your merchandise</span>
             <span className="block">should feel like</span>
-            <span className="block">your product.</span>
+            <span className="block">
+              your <span className="mark mark--mid">product.</span>
+            </span>
           </h2>
         }
         aside={

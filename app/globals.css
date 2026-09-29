@@ -110,6 +110,14 @@
   --accent: var(--color-clay);
 }
 
+/* Vertical metrics of the display face, in em, for the lime block behind a
+   heading word (.mark below). Figtree: ascent 950, cap height 700 per 1000.
+   Update both when Aeonik is dropped in. */
+:root {
+  --font-ascent: 0.95;
+  --font-cap: 0.7;
+}
+
 /* The fixed header follows whichever surface is beneath it. Sheets.tsx
    writes data-nav="dark" on <html> while a dark sheet is under the header;
    every other page leaves it light. */
@@ -182,7 +190,7 @@ html[data-nav="dark"] {
   .type-hero {
     font-weight: 900;
     font-size: clamp(4.5rem, 24vw, 12rem);
-    line-height: 0.86;
+    line-height: 0.9;
     letter-spacing: -0.045em;
     text-transform: uppercase;
   }
@@ -192,7 +200,7 @@ html[data-nav="dark"] {
   @media (min-width: 768px) {
     .type-hero {
       font-size: min(13.8vw, 16rem);
-      line-height: 0.84;
+      line-height: 0.9;
     }
     .type-hero .word {
       display: inline;
@@ -241,7 +249,7 @@ html[data-nav="dark"] {
   .type-display-xl {
     font-weight: 900;
     font-size: clamp(3.5rem, 17.5vw, 15rem);
-    line-height: 0.86;
+    line-height: 0.9;
     letter-spacing: -0.045em;
     text-transform: uppercase;
     text-wrap: balance;
@@ -268,7 +276,7 @@ html[data-nav="dark"] {
   .type-page {
     font-weight: 900;
     font-size: clamp(2.5rem, 12.6vw, 16rem);
-    line-height: 0.88;
+    line-height: 0.9;
     letter-spacing: -0.045em;
     text-transform: uppercase;
     text-wrap: balance;
@@ -466,6 +474,60 @@ html[data-nav="dark"] {
   .u-static {
     background-size: 100% var(--u-size);
     background-position: 0 100%;
+  }
+
+  /* -------------------------------------------------------------------
+     Lime block: the brand punctuation. A solid block behind one word of a
+     heading, black type on the brand lime. It is a background painted per
+     line fragment and sized from the font's metrics so it clears the caps
+     by --mark-pad above and below whatever the line-height, and the
+     negative margins keep the block from moving the word or its
+     neighbours; a block that starts a line sits proud of the text column.
+     .mark is always on; .mark-hover wipes in like the underline.
+     ------------------------------------------------------------------- */
+  .mark,
+  .mark-hover {
+    --mark-pad: 0.12em;
+    --mark-inset: 0.12em;
+    --mark-h: calc(var(--font-cap) * 1em + var(--mark-pad) * 2);
+    --mark-y: calc(
+      (var(--font-ascent) - var(--font-cap)) * 1em - var(--mark-pad)
+    );
+    background-image: linear-gradient(var(--color-lime), var(--color-lime));
+    background-repeat: no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding-inline: var(--mark-inset);
+    margin-inline: calc(var(--mark-inset) * -1);
+  }
+  .mark {
+    background-size: 100% var(--mark-h);
+    background-position: 0 var(--mark-y);
+    color: var(--color-ink);
+  }
+  /* A block after other words on its line keeps the word space clear. */
+  .mark--mid {
+    margin-inline-start: 0;
+  }
+  .mark-hover {
+    background-size: 0% var(--mark-h);
+    background-position: 100% var(--mark-y);
+    transition:
+      background-size 0.25s var(--ease-out-quart),
+      color 0.2s var(--ease-out-quart);
+  }
+  a:hover .mark-hover,
+  a:focus-visible .mark-hover,
+  a:active .mark-hover {
+    background-size: 100% var(--mark-h);
+    background-position: 0 var(--mark-y);
+    color: var(--color-ink);
+  }
+  /* On phones the hero's two highlighted words stack, so they get a gap. */
+  @media (max-width: 767px) {
+    .type-hero .word:has(> .mark) + .word:has(> .mark) {
+      margin-top: 0.1em;
+    }
   }
 
   /* -------------------------------------------------------------------
@@ -872,12 +934,12 @@ html[data-nav="dark"] {
   .rise-line {
     display: block;
     overflow: hidden;
-    padding-block: 0.08em;
-    margin-block: -0.08em;
+    padding: 0.12em;
+    margin: -0.12em;
   }
   .rise-line > span {
     display: block;
-    transform: translateY(105%);
+    transform: translateY(120%);
     animation: rise-in 0.9s var(--ease-out-expo) forwards;
     animation-delay: var(--d, 0s);
   }
@@ -1230,6 +1292,7 @@ html[data-nav="dark"] {
   .burger__line,
   .service::after,
   .u-wipe,
+  .mark-hover,
   .btn,
   .btn__arrow {
     transition-duration: 0.01ms !important;

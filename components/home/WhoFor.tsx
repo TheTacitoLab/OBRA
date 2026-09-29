@@ -10,6 +10,7 @@ export function WhoFor() {
       <Container className="py-section">
         <h2 className="sr-only">Who we work with</h2>
         <BigList
+          hover="block"
           items={audiences.map((page) => ({
             label: page.label,
             href: pageHref(page.slug),

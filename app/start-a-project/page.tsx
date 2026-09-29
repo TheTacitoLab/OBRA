@@ -34,7 +34,7 @@ export default function StartAProjectPage() {
         <h1 className={pageTitleClass("Start a project.")}>
           <span className="whitespace-nowrap">Start a</span>
           <br />
-          project.
+          <span className="mark">project.</span>
         </h1>
         <div className="mt-body grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-4">

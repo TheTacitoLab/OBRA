@@ -55,6 +55,13 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   variants (`--color-lime-soft`, `--color-blue-soft`, `--color-clay-soft`) for
   the occasional accent block. Every surface sets `data-tone`, which resolves
   the semantic `bg-bg / text-fg / text-muted / border-line` utilities.
+- **Lime block**: the brand punctuation. `.mark` puts one word of a heading
+  on a solid lime block (the hero's "More brand.", "Make.", "Product.",
+  "Project."), and `.mark-hover` is the same block wiping in on hover for
+  the homepage audience list only. Everything else keeps the underline
+  wipe (`.u-wipe`). The block is sized from the font's metrics
+  (`--font-ascent`, `--font-cap` in `app/globals.css`); update those two
+  numbers when the typeface changes.
 - **Type**: Aeonik is the intended typeface (Black for display, Bold and
   Regular for text). It is licensed and not bundled; Figtree from next/font
   stands in with the same weights, and `app/layout.tsx` documents the

@@ -4,7 +4,8 @@ import { Button, ArrowLink } from "../site/Button";
 
 /**
  * The opening statement. One word per line on phones (see .type-hero
- * .word), two lines from 768px, sized to the viewport at every width.
+ * .word), two lines from 768px, sized to the viewport at every width, with
+ * the second line on the lime block.
  */
 export function Hero() {
   return (
@@ -22,8 +23,14 @@ export function Hero() {
             style={{ "--d": "0.08s" } as React.CSSProperties}
           >
             <span>
-              <span className="word">More </span>
-              <span className="word">brand.</span>
+              {/* One block on desktop: the first mark carries the space so
+                  the two join; on phones each word is a line with its own. */}
+              <span className="word">
+                <span className="mark">More </span>
+              </span>
+              <span className="word">
+                <span className="mark">brand.</span>
+              </span>
             </span>
           </span>
         </h1>
