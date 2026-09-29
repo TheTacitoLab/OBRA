@@ -112,7 +112,7 @@ export function Header() {
         data-scrolled={scrolled && !open ? "true" : "false"}
         data-menu-open={open ? "true" : "false"}
       >
-        <div className="site-header__bar mx-auto w-full max-w-[140rem] px-5 sm:px-8 lg:px-12 2xl:px-16 min-[1900px]:px-20">
+        <div className="site-header__bar mx-auto w-full max-w-[140rem] px-5 sm:px-8 lg:px-12 2xl:px-16 3xl:px-20">
           <Logo className="relative z-[70] w-[6.5rem] sm:w-[7.25rem]" />
 
           <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">

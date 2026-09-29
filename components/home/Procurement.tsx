@@ -29,11 +29,11 @@ export function Procurement() {
           </div>
         }
       />
-      <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4 lg:items-start">
+      <div className="mt-body grid gap-3 md:grid-cols-12 md:gap-4 xl:items-start">
         <Block
           tone="stone"
           title="Sampling and QC"
-          className="md:col-span-12 lg:col-span-5 lg:min-h-[16rem] lg:justify-between"
+          className="md:col-span-12 xl:col-span-5 xl:min-h-[16rem] xl:justify-between"
         >
           <p>
             Every product is sampled, approved and checked in production
@@ -43,7 +43,7 @@ export function Procurement() {
         <Block
           tone="accent"
           title="Costed to the budget"
-          className="md:col-span-6 lg:col-span-4"
+          className="md:col-span-6 xl:col-span-3"
         >
           <p>
             Specification, volume and finish are balanced together, so the
@@ -53,7 +53,7 @@ export function Procurement() {
         <Block
           tone="outline"
           title="Retail-ready at your door"
-          className="md:col-span-6 lg:col-span-3"
+          className="md:col-span-6 xl:col-span-4"
         >
           <p>
             We manage production through to delivery so stock arrives ready

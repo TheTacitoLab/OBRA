@@ -258,19 +258,19 @@ export const services: Service[] = [
   },
   {
     slug: "sampling-and-manufacturing",
-    title: "Sampling & Manufacturing",
+    title: "Sampling\u00a0& Manufacturing",
     description:
       "Sampling, production and quality control through our factory network.",
   },
   {
     slug: "procurement-and-costing",
-    title: "Procurement & Costing",
+    title: "Procurement\u00a0& Costing",
     description:
       "We balance specification, quantity and finish against the available budget.",
   },
   {
     slug: "branding-and-packaging",
-    title: "Branding & Packaging",
+    title: "Branding\u00a0& Packaging",
     description: "Labels, trims, swing tags, packaging and final details.",
   },
   {

@@ -179,7 +179,8 @@ export const audienceContent: AudienceContent[] = [
   },
   {
     slug: "brands",
-    headline: "Your brand, as product.",
+    headline: "Your brand,\nas product.",
+    headlineTier: "default",
     intro:
       "Pieces developed to your standard, for a campaign, a drop, a collaboration or a permanent line beside the core range.",
     points: [
@@ -228,7 +229,7 @@ export const audienceContent: AudienceContent[] = [
       },
     ],
     statement: {
-      heading: "Start small.\nScale when it works.",
+      heading: "Start small.\nScale when\nit works.",
       text: "Use a smaller run to prove the idea, then move into larger production without starting the whole process again.",
     },
     ctaCopy:

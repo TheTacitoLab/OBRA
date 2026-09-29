@@ -80,7 +80,7 @@ export function AudiencePage({ slug }: { slug: string }) {
           at the 13vw display size between 768 and 1023px. */}
       <Section tone="stone">
         <div className="grid gap-y-head md:grid-cols-12 md:gap-x-8 lg:items-start lg:gap-x-12">
-          <div className="md:col-span-12 lg:col-span-8">
+          <div className="md:col-span-12 lg:sticky lg:top-24 lg:col-span-8">
             <h2 className="type-display">
               {content.pointsHeading ??
                 `What we do for ${page.label.toLowerCase()}.`}
@@ -152,7 +152,7 @@ export function AudiencePage({ slug }: { slug: string }) {
           <div className="flex flex-col gap-body lg:col-span-4">
             <div>
               <h2 className="type-display-sm">Where we come in.</h2>
-              <p className="type-body mt-3 text-muted lg:max-w-[26ch]">
+              <p className="type-body mt-5 text-muted lg:max-w-[26ch]">
                 The services a range like this leans on most.
               </p>
             </div>
@@ -160,11 +160,11 @@ export function AudiencePage({ slug }: { slug: string }) {
               <ArrowLink href="/services/">All services</ArrowLink>
             </div>
           </div>
-          <ul className="twoup grid grid-cols-2 lg:col-span-8">
+          <ul className="twoup grid sm:grid-cols-2 lg:col-span-8">
             {services.map((service) => (
               <li
                 key={service.slug}
-                className="py-3 odd:pr-3 even:pl-3 md:py-6 md:odd:pr-4 md:even:pl-4 lg:odd:pr-6 lg:even:pl-6"
+                className="py-3 sm:odd:pr-3 sm:even:pl-3 md:py-6 md:odd:pr-4 md:even:pl-4 lg:odd:pr-6 lg:even:pl-6"
               >
                 <h3 className="type-title">
                   <Link

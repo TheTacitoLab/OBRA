@@ -18,6 +18,7 @@ export default function NotesPage() {
       <JsonLd data={buildNotesIndexSchema()} />
       <Section tone="bone" size="compact" hero>
         <Editorial
+          stackMd
           heading={<h1 className="type-display-xl">Notes.</h1>}
           aside={
             <p className="type-lede">

@@ -70,6 +70,7 @@ export function PageHero({
   return (
     <Section tone="bone" size={size} hero>
       <Editorial
+        stackMd
         heading={<h1 className="type-display-xl">{heading}</h1>}
         aside={aside}
       />

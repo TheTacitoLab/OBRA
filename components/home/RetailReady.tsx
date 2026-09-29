@@ -50,7 +50,7 @@ export function RetailReady() {
       />
       <ul
         aria-label="What retail ready covers"
-        className="mt-body grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-4 md:gap-y-4 lg:mt-section-sm"
+        className="mt-body grid gap-x-6 gap-y-3 min-[25rem]:grid-cols-2 md:grid-cols-4 md:gap-y-4 lg:mt-section-sm xl:max-w-[70rem]"
       >
         {covers.map((item) => (
           <li key={item} className="type-title">

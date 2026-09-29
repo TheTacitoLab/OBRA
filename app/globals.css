@@ -42,6 +42,9 @@
   --spacing-head: clamp(1.25rem, 1.5vw + 0.75rem, 2.75rem);
   --spacing-body: clamp(1.5rem, 2vw + 0.75rem, 3.5rem);
   --spacing-header: 3.5rem;
+
+  /* Wide desktop: the gutter steps up again from 1900px. */
+  --breakpoint-3xl: 118.75rem;
 }
 
 /* Semantic colours follow the tone of the surface they sit on (see
@@ -554,7 +557,7 @@ html[data-nav="dark"] {
   /* On phones the hero's two highlighted words stack, so they get a gap. */
   @media (max-width: 767px) {
     .type-hero .word:has(> .mark) + .word:has(> .mark) {
-      margin-top: 0.1em;
+      margin-top: 0.14em;
     }
   }
 
@@ -775,7 +778,7 @@ html[data-nav="dark"] {
   @media (min-width: 768px) {
     .footer-mark {
       height: 0.62em;
-      font-size: min(7.1vw, 8.25rem);
+      font-size: min(7.1vw, 10.5rem);
     }
     .footer-mark > span {
       display: inline;
@@ -1073,8 +1076,13 @@ html[data-nav="dark"] {
   .twoup > li {
     border-top: 1px solid var(--line);
   }
-  .twoup > li:nth-child(-n + 2) {
+  .twoup > li:first-child {
     border-top: 0;
+  }
+  @media (min-width: 640px) {
+    .twoup > li:nth-child(2) {
+      border-top: 0;
+    }
   }
   .numlist > li {
     border-top: 1px solid var(--line);
