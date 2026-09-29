@@ -25,7 +25,7 @@ export function Procurement() {
           tone="stone"
           meta="01"
           title="Sampling and QC through our factory network"
-          className="md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem]"
+          className="md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem] lg:justify-between"
         >
           <p>
             Every product is sampled, approved and checked in production

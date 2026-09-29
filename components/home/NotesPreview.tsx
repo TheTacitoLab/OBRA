@@ -9,7 +9,7 @@ export function NotesPreview() {
   return (
     <Section id="notes-preview" tone="blue-soft" size="compact">
       <Editorial
-        heading={<h2 className="type-display-xl">Notes.</h2>}
+        heading={<h2 className="type-display-xl type-chapter">Notes.</h2>}
         aside={
           <div className="flex flex-col gap-5">
             <p className="type-lede text-muted">

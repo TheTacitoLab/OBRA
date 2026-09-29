@@ -133,7 +133,7 @@ export default function AboutPage() {
             tone="stone"
             meta="01"
             title="Direct relationships"
-            className="md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem]"
+            className="md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem] lg:justify-between"
           >
             <p>
               No agents and no middle layer. We work with the factories

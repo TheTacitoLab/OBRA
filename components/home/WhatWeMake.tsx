@@ -10,7 +10,7 @@ export function WhatWeMake() {
     <Sheet id="what-we-make" tone="bone" last>
       <Container className="py-section">
         <Editorial
-          heading={<h2 className="type-display-xl">What we make.</h2>}
+          heading={<h2 className="type-display-xl type-chapter">What we make.</h2>}
           aside={
             <div className="flex flex-col gap-5">
               <p className="type-lede text-muted">

@@ -21,7 +21,8 @@ const parent = { label: "Who for", href: "/who-for/" };
 const benefitLayout: { tone: BlockTone; className: string }[] = [
   {
     tone: "stone",
-    className: "md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem]",
+    className:
+      "md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem] lg:justify-between",
   },
   { tone: "accent", className: "md:col-span-6 lg:col-span-5" },
   { tone: "outline", className: "md:col-span-6 lg:col-span-5" },
