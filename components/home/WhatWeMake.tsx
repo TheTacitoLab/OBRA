@@ -3,6 +3,7 @@ import { BigList } from "./BigList";
 import { Container } from "../site/Container";
 import { Editorial } from "../site/Editorial";
 import { ArrowLink } from "../site/Button";
+import { MarkedTitle } from "../site/MarkedTitle";
 import { pageHref, products } from "@/content/site";
 
 export function WhatWeMake() {
@@ -12,10 +13,7 @@ export function WhatWeMake() {
         <Editorial
           heading={
             <h2 className="type-display-xl type-chapter">
-              <span className="block">What we</span>
-              <span className="block">
-                <span className="mark">make.</span>
-              </span>
+              <MarkedTitle title="What we make." mark="make." />
             </h2>
           }
           aside={

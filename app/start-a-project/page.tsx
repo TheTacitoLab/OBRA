@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MarkedTitle } from "@/components/site/MarkedTitle";
 import { Section } from "@/components/site/Section";
 import { ProjectForm } from "@/components/forms/ProjectForm";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -32,9 +33,7 @@ export default function StartAProjectPage() {
       <Section tone="bone" size="default" hero>
         {/* Two lines at every width: "Start a" never breaks. */}
         <h1 className={pageTitleClass("Start a project.")}>
-          <span className="whitespace-nowrap">Start a</span>
-          <br />
-          <span className="mark">project.</span>
+          <MarkedTitle title="Start a project." mark="project." />
         </h1>
         <div className="mt-body grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-4">

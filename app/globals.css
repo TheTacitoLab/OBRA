@@ -505,10 +505,6 @@ html[data-nav="dark"] {
     background-position: 0 var(--mark-y);
     color: var(--color-ink);
   }
-  /* A block after other words on its line keeps the word space clear. */
-  .mark--mid {
-    margin-inline-start: 0;
-  }
   .mark-hover {
     background-size: 0% var(--mark-h);
     background-position: 100% var(--mark-y);

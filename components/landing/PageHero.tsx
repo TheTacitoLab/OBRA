@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Section, type SectionSize } from "../site/Section";
 import { Editorial } from "../site/Editorial";
+import { MarkedTitle } from "../site/MarkedTitle";
 
 /**
  * The type-page phone size steps by the title's longest word, so a short
@@ -36,22 +37,27 @@ export function pageTitleClass(title: string, tier?: TitleTier) {
  * The default puts the h1 at type-display-xl into the Editorial composition
  * with the copy beside it, bottom-aligned (the index pages: What we make,
  * Who for, Services).
+ *
+ * `mark` is the end of the title to set on the lime block, on its own line.
  */
 export function PageHero({
   title,
+  mark,
   aside,
   full = false,
   size = "large",
 }: {
   title: string;
+  mark?: string;
   aside: ReactNode;
   full?: boolean;
   size?: SectionSize;
 }) {
+  const heading = mark ? <MarkedTitle title={title} mark={mark} /> : title;
   if (full) {
     return (
       <Section tone="bone" size={size} hero>
-        <h1 className={pageTitleClass(title)}>{title}</h1>
+        <h1 className={pageTitleClass(title)}>{heading}</h1>
         <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
           <div className="md:col-span-6 md:col-start-7 lg:col-span-4 lg:col-start-9">
             {aside}
@@ -64,7 +70,7 @@ export function PageHero({
   return (
     <Section tone="bone" size={size} hero>
       <Editorial
-        heading={<h1 className="type-display-xl">{title}</h1>}
+        heading={<h1 className="type-display-xl">{heading}</h1>}
         aside={aside}
       />
     </Section>

@@ -14,7 +14,7 @@ export function Proposition() {
             <span className="block">Your merchandise</span>
             <span className="block">should feel like</span>
             <span className="block">
-              your <span className="mark mark--mid">product.</span>
+              <span className="mark">your product.</span>
             </span>
           </h2>
         }

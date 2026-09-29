@@ -55,10 +55,12 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   variants (`--color-lime-soft`, `--color-blue-soft`, `--color-clay-soft`) for
   the occasional accent block. Every surface sets `data-tone`, which resolves
   the semantic `bg-bg / text-fg / text-muted / border-line` utilities.
-- **Lime block**: the brand punctuation. `.mark` puts one word of a heading
-  on a solid lime block (the hero's "More brand.", "Make.", "Product.",
-  "Project."), and `.mark-hover` is the same block wiping in on hover for
-  the homepage audience list only. Everything else keeps the underline
+- **Lime block**: the brand punctuation. `.mark` puts the end of a heading
+  on a solid lime block, on its own line (the hero's "More brand.", "Make."
+  on the What we make section and page, "Your product." in the blue break,
+  "Project." on every Start a project heading; `MarkedTitle` in
+  `components/site/` renders the split), and `.mark-hover` is the same
+  block wiping in on hover for the homepage audience list only. Everything else keeps the underline
   wipe (`.u-wipe`). The block is sized from the font's metrics
   (`--font-ascent`, `--font-cap` in `app/globals.css`); update those two
   numbers when the typeface changes.
