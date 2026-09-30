@@ -41,7 +41,14 @@ export function Reveal() {
       { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
     );
     pending.forEach((el) => observer.observe(el));
+    // Printing never scrolls, so show everything before the page prints.
+    const showAll = () => {
+      pending.forEach(show);
+      observer.disconnect();
+    };
+    window.addEventListener("beforeprint", showAll);
     return () => {
+      window.removeEventListener("beforeprint", showAll);
       observer.disconnect();
       delete html.dataset.reveal;
     };

@@ -243,7 +243,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 768px) {
     .type-hero {
-      font-size: min(13.8vw, 19rem, 27vh);
+      font-size: min(13.8vw, 19rem, 24vh);
       line-height: 0.9;
     }
     .type-hero .word {
@@ -1482,5 +1482,19 @@ html[data-nav="dark"] {
   .btn__arrow {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
+  }
+}
+
+/* Print never scrolls: every entrance is complete on paper, and the cue
+   is not part of the page. */
+@media print {
+  html[data-reveal] [data-reveal],
+  html[data-reveal] [data-reveal-group] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .scroll-cue {
+    display: none;
   }
 }
