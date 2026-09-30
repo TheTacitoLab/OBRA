@@ -17,10 +17,8 @@ import { useEffect, useRef } from "react";
 
 // The arrow head and the smile share one shape: two cubic curves whose
 // control points collapse onto the line for the chevron.
-const CHEVRON = [4, 13, 4, 13, 12, 21, 12, 21, 12, 21, 12, 21, 20, 13, 20, 13];
-const SMILE = [
-  5, 13, 7, 18.5, 9.5, 20, 12, 20, 14.5, 20, 17, 18.5, 19, 13, 19, 13,
-];
+const CHEVRON = [4, 13, 4, 13, 12, 21, 12, 21, 12, 21, 12, 21, 20, 13];
+const SMILE = [5, 13, 7, 18.5, 9.5, 20, 12, 20, 14.5, 20, 17, 18.5, 19, 13];
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -29,7 +27,7 @@ const ramp = (p: number, from: number, to: number) =>
 
 function pathFor(t: number) {
   const v = CHEVRON.map((a, i) => a + (SMILE[i] - a) * t);
-  return `M${v[0]} ${v[1]} C${v[2]} ${v[3]} ${v[4]} ${v[5]} ${v[6]} ${v[7]} C${v[8]} ${v[9]} ${v[10]} ${v[11]} ${v[12]} ${v[13]} ${v[14]} ${v[15]}`;
+  return `M${v[0]} ${v[1]} C${v[2]} ${v[3]} ${v[4]} ${v[5]} ${v[6]} ${v[7]} C${v[8]} ${v[9]} ${v[10]} ${v[11]} ${v[12]} ${v[13]}`;
 }
 
 export function ScrollCue() {
@@ -45,24 +43,47 @@ export function ScrollCue() {
     const eyes = cue.querySelector<SVGGElement>("[data-eyes]");
     if (!spin || !stem || !head || !eyes) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const next =
+      document.querySelector<HTMLElement>("#who-for .biglist") ??
+      document.querySelector<HTMLElement>("#who-for");
     let raf = 0;
+    // Scroll distance the whole interaction plays out over.
+    let span = window.innerHeight * 0.5;
+
+    // Layout position, unaffected by the sticky sheets or their transforms.
+    const layoutTop = (el: HTMLElement) => {
+      let y = 0;
+      let node: HTMLElement | null = el;
+      while (node) {
+        y += node.offsetTop;
+        node = node.offsetParent as HTMLElement | null;
+      }
+      return y;
+    };
 
     // Pin the cue to the hero frame's bottom-right corner as it sits with
-    // the page at the top.
+    // the page at the top, and size the timeline so the cue has gone before
+    // the next section's first row scrolls up to where it sits.
     const place = () => {
       const rect = frame.getBoundingClientRect();
       const styles = getComputedStyle(frame);
       const right = rect.right - parseFloat(styles.paddingRight);
       const bottom =
-        rect.bottom + window.scrollY - parseFloat(styles.paddingBottom);
+        layoutTop(frame) +
+        frame.offsetHeight -
+        parseFloat(styles.paddingBottom);
+      const top = Math.round(bottom - cue.offsetHeight);
       cue.style.left = `${Math.round(right - cue.offsetWidth)}px`;
-      cue.style.top = `${Math.round(bottom - cue.offsetHeight)}px`;
+      cue.style.top = `${top}px`;
+      span = next
+        ? Math.max(120, layoutTop(next) - top - 24)
+        : window.innerHeight * 0.5;
     };
 
     const update = () => {
       raf = 0;
       const y = window.scrollY;
-      const p = clamp01(y / (window.innerHeight * 0.55));
+      const p = clamp01(y / span);
       cue.dataset.state = y > 2 ? "moving" : "rest";
       if (reduce.matches) {
         cue.style.opacity = y > 2 ? "0" : "1";

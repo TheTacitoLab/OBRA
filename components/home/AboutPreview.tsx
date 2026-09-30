@@ -6,7 +6,7 @@ export function AboutPreview() {
   return (
     <Section id="about-preview" tone="ink" size="compact" rounded>
       <div className="grid gap-y-4 md:grid-cols-12 md:gap-x-8 md:gap-y-6">
-        <h2 className="type-display-sm md:col-span-5" data-reveal="left">
+        <h2 className="type-display md:col-span-5" data-reveal="left">
           The studio.
         </h2>
         <p
