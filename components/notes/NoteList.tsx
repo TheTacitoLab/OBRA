@@ -12,16 +12,19 @@ export function NoteList({
   featured = false,
   compact = false,
   headingLevel = 3,
+  reveal,
 }: {
   notes: Note[];
   featured?: boolean;
   /** Date, title and standfirst stacked, for a column beside a title. */
   compact?: boolean;
   headingLevel?: 2 | 3;
+  /** Rows step in one after another from this side (homepage only). */
+  reveal?: "left" | "right" | "up";
 }) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
-    <div className="index-list">
+    <div className="index-list" data-reveal-group={reveal}>
       {notes.map((note, index) => (
         <NoteRow
           key={note.slug}

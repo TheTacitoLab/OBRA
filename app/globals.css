@@ -243,7 +243,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 768px) {
     .type-hero {
-      font-size: min(13.8vw, 19rem);
+      font-size: min(13.8vw, 19rem, 27vh);
       line-height: 0.9;
     }
     .type-hero .word {
@@ -267,13 +267,19 @@ html[data-nav="dark"] {
     }
   }
   /* A display heading whose lines are long ("YOUR MERCHANDISE" 9.67em):
-     three deliberate lines at every width, eight columns from 1024px. */
+     four lines on phones (the first word alone), three from 768px, eight
+     columns from 1024px. */
   .type-display-long {
-    font-size: clamp(1.75rem, 9vw, 7.5rem);
+    font-size: clamp(2rem, 10.4vw, 7.5rem);
+  }
+  @media (min-width: 768px) {
+    .type-display-long {
+      font-size: clamp(1.75rem, 9vw, 7.5rem);
+    }
   }
   @media (min-width: 1024px) {
     .type-display-long {
-      font-size: clamp(3.5rem, 5.9vw, 7rem);
+      font-size: clamp(3.5rem, 5.9vw, 8.125rem);
     }
   }
 
@@ -310,7 +316,7 @@ html[data-nav="dark"] {
   }
   @media (min-width: 768px) {
     .type-chapter {
-      font-size: clamp(3rem, 11vw, 14rem);
+      font-size: clamp(3rem, 11vw, 15rem);
     }
   }
 
@@ -491,6 +497,8 @@ html[data-nav="dark"] {
   .section-round {
     position: relative;
     margin-top: calc(var(--radius-section) * -1);
+    /* Give back the strip the next section laps over. */
+    padding-bottom: var(--radius-section);
     border-start-start-radius: var(--radius-section);
     border-start-end-radius: var(--radius-section);
   }
@@ -540,17 +548,25 @@ html[data-nav="dark"] {
   html[data-reveal] [data-reveal-delay="2"] {
     transition-delay: 180ms;
   }
+  /* A group's children step in 90ms apart; --reveal-base (set on the
+     copy column beside a heading) holds the whole group a step behind. */
+  html[data-reveal] [data-reveal-group] > :nth-child(1) {
+    transition-delay: var(--reveal-base, 0ms);
+  }
   html[data-reveal] [data-reveal-group] > :nth-child(2) {
-    transition-delay: 90ms;
+    transition-delay: calc(var(--reveal-base, 0ms) + 90ms);
   }
   html[data-reveal] [data-reveal-group] > :nth-child(3) {
-    transition-delay: 180ms;
+    transition-delay: calc(var(--reveal-base, 0ms) + 180ms);
   }
   html[data-reveal] [data-reveal-group] > :nth-child(4) {
-    transition-delay: 270ms;
+    transition-delay: calc(var(--reveal-base, 0ms) + 270ms);
   }
   html[data-reveal] [data-reveal-group] > :nth-child(n + 5) {
-    transition-delay: 360ms;
+    transition-delay: calc(var(--reveal-base, 0ms) + 360ms);
+  }
+  .reveal-after {
+    --reveal-base: 90ms;
   }
 
   /* -------------------------------------------------------------------

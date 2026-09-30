@@ -6,11 +6,14 @@ export function AboutPreview() {
   return (
     <Section id="about-preview" tone="ink" size="compact" rounded>
       <div className="grid gap-y-4 md:grid-cols-12 md:gap-x-8 md:gap-y-6">
-        <h2 className="type-display md:col-span-5" data-reveal="left">
+        <h2
+          className="type-display md:col-span-6 lg:col-span-5"
+          data-reveal="left"
+        >
           The studio.
         </h2>
         <p
-          className="type-statement md:col-span-7 md:row-span-2 lg:col-span-7 lg:col-start-6"
+          className="type-statement md:col-span-6 md:col-start-7 md:row-span-2 lg:col-span-7 lg:col-start-6"
           data-reveal="right"
           data-reveal-delay="1"
         >
@@ -18,7 +21,7 @@ export function AboutPreview() {
           it costs, what it sells for and what is left at the end.
         </p>
         <div
-          className="md:col-span-5 md:col-start-1 md:self-end"
+          className="md:col-span-6 md:col-start-1 md:self-end lg:col-span-5"
           data-reveal="left"
           data-reveal-delay="2"
         >

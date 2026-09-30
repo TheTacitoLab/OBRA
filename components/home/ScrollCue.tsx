@@ -50,33 +50,53 @@ export function ScrollCue() {
     // Scroll distance the whole interaction plays out over.
     let span = window.innerHeight * 0.5;
 
-    // Layout position, unaffected by the sticky sheets or their transforms.
-    const layoutTop = (el: HTMLElement) => {
+    // Where an element sits in the page flow, whatever the sticky sheets
+    // and their transforms are doing at the moment: offsets are summed up
+    // to the element's sheet, the sheet's place comes from the heights of
+    // the sheets before it, and the stack's own position is untouched by
+    // either.
+    const stack = frame.closest<HTMLElement>(".sheets");
+    const flowTop = (el: HTMLElement) => {
+      const sheet = el.closest<HTMLElement>(".sheet");
       let y = 0;
       let node: HTMLElement | null = el;
-      while (node) {
+      while (node && node !== sheet) {
         y += node.offsetTop;
         node = node.offsetParent as HTMLElement | null;
       }
-      return y;
+      if (!sheet || !stack) {
+        while (node) {
+          y += node.offsetTop;
+          node = node.offsetParent as HTMLElement | null;
+        }
+        return y;
+      }
+      let prev = sheet.previousElementSibling as HTMLElement | null;
+      while (prev) {
+        y += prev.offsetHeight;
+        prev = prev.previousElementSibling as HTMLElement | null;
+      }
+      return y + stack.getBoundingClientRect().top + window.scrollY;
     };
 
     // Pin the cue to the hero frame's bottom-right corner as it sits with
-    // the page at the top, and size the timeline so the cue has gone before
-    // the next section's first row scrolls up to where it sits.
+    // the page at the top (or the first screen's, when the hero runs past
+    // it), and size the timeline so the cue has gone before the next
+    // section's first row scrolls up to where it sits.
     const place = () => {
       const rect = frame.getBoundingClientRect();
       const styles = getComputedStyle(frame);
+      const gutter = parseFloat(styles.paddingBottom);
       const right = rect.right - parseFloat(styles.paddingRight);
-      const bottom =
-        layoutTop(frame) +
-        frame.offsetHeight -
-        parseFloat(styles.paddingBottom);
+      const bottom = Math.min(
+        flowTop(frame) + frame.offsetHeight - gutter,
+        document.documentElement.clientHeight - gutter,
+      );
       const top = Math.round(bottom - cue.offsetHeight);
       cue.style.left = `${Math.round(right - cue.offsetWidth)}px`;
       cue.style.top = `${top}px`;
       span = next
-        ? Math.max(120, layoutTop(next) - top - 24)
+        ? Math.max(120, flowTop(next) - top - 24)
         : window.innerHeight * 0.5;
     };
 

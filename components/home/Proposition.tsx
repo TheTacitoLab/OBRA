@@ -12,7 +12,10 @@ export function Proposition() {
         wide
         heading={
           <h2 className="type-display type-display-long">
-            <span className="block">Your merchandise</span>
+            <span className="block">
+              Your <br className="md:hidden" />
+              merchandise
+            </span>
             <span className="block">should feel like</span>
             <span className="block">
               <MarkedTitle title="your product." mark="your product." />

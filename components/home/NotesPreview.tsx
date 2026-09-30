@@ -24,8 +24,8 @@ export function NotesPreview() {
             </div>
           </div>
         </div>
-        <div className="lg:col-span-7" data-reveal-group="right">
-          <NoteList notes={latest} compact />
+        <div className="lg:col-span-7">
+          <NoteList notes={latest} compact reveal="right" />
         </div>
       </div>
     </Section>

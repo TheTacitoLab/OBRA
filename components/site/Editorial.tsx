@@ -60,7 +60,7 @@ export function Editorial({
       >
         {heading}
       </div>
-      {aside && <div className={asideCols}>{aside}</div>}
+      {aside && <div className={`reveal-after ${asideCols}`}>{aside}</div>}
     </div>
   );
 }

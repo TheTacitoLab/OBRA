@@ -51,7 +51,7 @@ export function Hero() {
               brands, festivals, artists, events and agencies. From the first
               idea to the finished collection.
             </p>
-            <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
+            <div className="flex flex-wrap items-center gap-x-7 gap-y-4 pr-16 md:pr-0">
               <Button href="/what-we-make/">Explore what we make</Button>
               {/* A plain anchor: Sheets.tsx scrolls it to the section's flow
                   position, which a router-driven scroll would not. */}

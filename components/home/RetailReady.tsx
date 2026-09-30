@@ -48,7 +48,7 @@ export function RetailReady() {
       />
       <ul
         aria-label="What retail ready covers"
-        className="mt-body grid gap-x-6 gap-y-3 min-[25rem]:grid-cols-2 md:grid-cols-4 md:gap-y-4 lg:mt-section-sm xl:max-w-[70rem]"
+        className="mt-body grid gap-x-6 gap-y-3 min-[25rem]:grid-cols-2 md:grid-cols-4 md:gap-y-4 md:mt-section-sm xl:max-w-[70rem]"
         data-reveal-group="up"
       >
         {covers.map((item) => (
