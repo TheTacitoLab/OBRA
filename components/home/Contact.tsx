@@ -5,9 +5,9 @@ import { siteConfig } from "@/lib/siteConfig";
 
 export function Contact() {
   return (
-    <Section id="start-a-project" tone="bone" size="large">
+    <Section id="start-a-project" tone="bone" size="large" rounded>
       <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-12">
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-6" data-reveal="left">
           <div className="lg:sticky lg:top-24">
             <h2 className="type-display">
               <MarkedTitle title="Start a project." mark="project." />
@@ -27,7 +27,11 @@ export function Contact() {
             </p>
           </div>
         </div>
-        <div className="lg:col-span-6 lg:col-start-7">
+        <div
+          className="lg:col-span-6 lg:col-start-7"
+          data-reveal="right"
+          data-reveal-delay="1"
+        >
           <ProjectForm
             accessKey={siteConfig.web3formsKeys.homepage}
             subject="New project brief (homepage)"

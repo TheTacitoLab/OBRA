@@ -1,16 +1,20 @@
 import { Sheet } from "./Sheet";
 import { Container } from "../site/Container";
-import { Button, ArrowLink } from "../site/Button";
+import { Button } from "../site/Button";
 
 /**
  * The opening statement. One word per line on phones (see .type-hero
  * .word), two lines from 768px, sized to the viewport at every width, with
- * the second line on the lime block.
+ * the second line on the lime block. The copy stays small beneath it and
+ * the first action is to explore, not to enquire.
  */
 export function Hero() {
   return (
     <Sheet id="top" tone="bone" sectionClassName="sheet--hero">
-      <Container className="flex flex-1 flex-col pb-12 pt-20 sm:pt-28 lg:pb-16 lg:pt-36">
+      <Container
+        data-hero-frame
+        className="flex flex-1 flex-col pb-12 pt-20 sm:pt-28 lg:pb-16 lg:pt-36"
+      >
         <h1 className="type-hero">
           <span className="rise-line">
             <span>
@@ -35,36 +39,26 @@ export function Hero() {
           </span>
         </h1>
 
+        {/* Copy and actions sit under the headline on the left; the
+            bottom-right corner is the scroll cue's (ScrollCue.tsx). */}
         <div className="mt-head grid gap-y-7 md:grid-cols-12 md:gap-x-8 lg:mt-[clamp(2rem,4vh,3.5rem)]">
           <div
-            className="fade-in flex flex-col gap-4 md:col-span-7 lg:col-span-6"
+            className="fade-in flex flex-col gap-6 md:col-span-8 lg:col-span-6"
             style={{ "--d": "0.4s" } as React.CSSProperties}
           >
-            <p className="type-lede max-w-[30ch]">
-              madebyobra creates bespoke merchandise for brands, artists,
-              festivals, events and agencies.
+            <p className="type-body max-w-[44ch] text-muted">
+              madebyobra designs and manufactures original merchandise for
+              brands, festivals, artists, events and agencies. From the first
+              idea to the finished collection.
             </p>
-            <p className="type-body max-w-[42ch] text-muted">
-              We design, develop and manufacture{" "}
-              <span className="whitespace-nowrap">retail-ready</span>{" "}
-              collections, from limited runs to{" "}
-              <span className="whitespace-nowrap">large-scale</span>{" "}
-              production.
-            </p>
-          </div>
-
-          <div
-            className="fade-in flex flex-wrap items-center gap-x-7 gap-y-3 md:col-span-5 md:items-end md:justify-end md:self-end lg:col-span-6"
-            style={{ "--d": "0.55s" } as React.CSSProperties}
-          >
-            {/* Plain anchors: Sheets.tsx scrolls these to the sheet's flow
-                position, which a router-driven scrollIntoView would not. */}
-            <Button href="#start-a-project" plain>
-              Start a project
-            </Button>
-            <ArrowLink href="#what-we-make" plain>
-              See what we make
-            </ArrowLink>
+            <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
+              <Button href="/what-we-make/">Explore what we make</Button>
+              {/* A plain anchor: Sheets.tsx scrolls it to the section's flow
+                  position, which a router-driven scroll would not. */}
+              <a href="#start-a-project" className="link-quiet">
+                <span className="u-wipe">Start a project</span>
+              </a>
+            </div>
           </div>
         </div>
       </Container>

@@ -27,9 +27,7 @@ export function BigList({
         <li key={item.href}>
           <Link href={item.href} className={`biglink ${size}`}>
             <span className={label}>{item.label}</span>
-            {item.intro && (
-              <span className="biglink__intro">{item.intro}</span>
-            )}
+            {item.intro && <span className="biglink__intro">{item.intro}</span>}
           </Link>
         </li>
       ))}

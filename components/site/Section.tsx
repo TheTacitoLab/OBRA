@@ -1,7 +1,14 @@
 import type { ElementType, ReactNode } from "react";
 import { Container } from "./Container";
 
-export type Tone = "bone" | "ink" | "stone" | "clay" | "blue-soft" | "lime-soft";
+export type Tone =
+  | "bone"
+  | "white"
+  | "ink"
+  | "stone"
+  | "clay"
+  | "blue-soft"
+  | "lime-soft";
 export type SectionSize = "compact" | "default" | "large";
 
 const padding: Record<SectionSize, string> = {
@@ -25,6 +32,7 @@ export function Section({
   size = "default",
   as: Tag = "section",
   hero = false,
+  rounded = false,
   className = "",
   containerClassName = "",
   children,
@@ -35,13 +43,19 @@ export function Section({
   as?: ElementType;
   /** First section of a page: top padding clears the fixed header. */
   hero?: boolean;
+  /** A softly rounded top edge that laps over the section before it. */
+  rounded?: boolean;
   className?: string;
   containerClassName?: string;
   children: ReactNode;
 }) {
   const rhythm = hero ? `hero-pad ${paddingBottom[size]}` : padding[size];
   return (
-    <Tag id={id} data-tone={tone} className={`bg-bg text-fg ${className}`}>
+    <Tag
+      id={id}
+      data-tone={tone}
+      className={`bg-bg text-fg ${rounded ? "section-round" : ""} ${className}`}
+    >
       <Container className={`${rhythm} ${containerClassName}`}>
         {children}
       </Container>

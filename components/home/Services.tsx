@@ -17,8 +17,8 @@ export function Services() {
         aside={
           <div className="flex flex-col gap-4">
             <p className="type-lede text-muted">
-              Everything between the first idea and finished stock at your
-              door, handled in one place.
+              Everything between the first idea and finished stock at your door,
+              handled in one place.
             </p>
             <p className="type-body text-muted">
               Use what you need. We can handle individual stages or the whole

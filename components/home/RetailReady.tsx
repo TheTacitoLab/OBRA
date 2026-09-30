@@ -22,7 +22,7 @@ const covers = [
  */
 export function RetailReady() {
   return (
-    <Section id="retail-ready" tone="stone">
+    <Section id="retail-ready" tone="stone" rounded>
       <Editorial
         heading={
           <h2 className="type-display">
@@ -30,15 +30,13 @@ export function RetailReady() {
           </h2>
         }
         aside={
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5" data-reveal-group="right">
             <p className="type-lede">
-              Good merchandise still has to work when it reaches the real
-              world.
+              Good merchandise still has to work when it reaches the real world.
             </p>
             <p className="type-body text-muted">
-              We can prepare products with the packaging, labels, SKUs,
-              barcodes and stock information needed for retail, events and
-              fulfilment.
+              We can prepare products with the packaging, labels, SKUs, barcodes
+              and stock information needed for retail, events and fulfilment.
             </p>
             <div>
               <ArrowLink href="/services/#event-support">
@@ -51,6 +49,7 @@ export function RetailReady() {
       <ul
         aria-label="What retail ready covers"
         className="mt-body grid gap-x-6 gap-y-3 min-[25rem]:grid-cols-2 md:grid-cols-4 md:gap-y-4 lg:mt-section-sm xl:max-w-[70rem]"
+        data-reveal-group="up"
       >
         {covers.map((item) => (
           <li key={item} className="type-title">

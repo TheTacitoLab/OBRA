@@ -6,7 +6,13 @@ import { audiences, pageHref } from "@/content/site";
 
 export function WhoFor() {
   return (
-    <Sheet id="who-for" tone="ink" className="justify-center">
+    <Sheet
+      id="who-for"
+      tone="ink"
+      last
+      sectionClassName="sheet--round"
+      className="justify-center"
+    >
       <Container className="py-section">
         <h2 className="sr-only">Who we work with</h2>
         <BigList

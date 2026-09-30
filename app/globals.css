@@ -45,6 +45,10 @@
 
   /* Wide desktop: the gutter steps up again from 1900px. */
   --breakpoint-3xl: 118.75rem;
+
+  /* The rounded top edge of a full-width section: about 12px on phones,
+     18px on tablets, 24px on desktop. */
+  --radius-section: clamp(0.75rem, 0.35rem + 1.15vw, 1.5rem);
 }
 
 /* Semantic colours follow the tone of the surface they sit on (see
@@ -68,6 +72,15 @@
   --fg: var(--color-ink);
   --muted: color-mix(in srgb, var(--color-ink) 70%, var(--color-bone));
   --line: color-mix(in srgb, var(--color-ink) 16%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-ink) 40%, transparent);
+  --accent: var(--color-lime);
+}
+
+[data-tone="white"] {
+  --bg: #ffffff;
+  --fg: var(--color-ink);
+  --muted: color-mix(in srgb, var(--color-ink) 68%, #ffffff);
+  --line: color-mix(in srgb, var(--color-ink) 14%, transparent);
   --line-strong: color-mix(in srgb, var(--color-ink) 40%, transparent);
   --accent: var(--color-lime);
 }
@@ -471,6 +484,76 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
+     Section edges: a full-width section with a softly rounded top that
+     laps over the one before it by its own radius, so the previous
+     background shows in the corners. Editorial layers, not cards.
+     ------------------------------------------------------------------- */
+  .section-round {
+    position: relative;
+    margin-top: calc(var(--radius-section) * -1);
+    border-start-start-radius: var(--radius-section);
+    border-start-end-radius: var(--radius-section);
+  }
+  .sheet--round,
+  .sheet--round::after {
+    border-start-start-radius: var(--radius-section);
+    border-start-end-radius: var(--radius-section);
+  }
+  /* The footer joins the homepage stack the same way. */
+  main:has(.sheets) + footer {
+    position: relative;
+    margin-top: calc(var(--radius-section) * -1);
+    border-start-start-radius: var(--radius-section);
+    border-start-end-radius: var(--radius-section);
+  }
+
+  /* -------------------------------------------------------------------
+     Entrances (Reveal.tsx): a section's parts settle in from a little low,
+     the title from its own side and the copy from the other, staggered.
+     Gated on html[data-reveal] so nothing hides without the script.
+     ------------------------------------------------------------------- */
+  html[data-reveal] [data-reveal],
+  html[data-reveal] [data-reveal-group] > * {
+    --rx: 0px;
+    opacity: 0;
+    transform: translate3d(var(--rx), 1.5rem, 0);
+    transition:
+      opacity 0.65s var(--ease-out-quart),
+      transform 0.65s var(--ease-out-quart);
+  }
+  html[data-reveal] [data-reveal="left"],
+  html[data-reveal] [data-reveal-group="left"] > * {
+    --rx: -0.875rem;
+  }
+  html[data-reveal] [data-reveal="right"],
+  html[data-reveal] [data-reveal-group="right"] > * {
+    --rx: 0.875rem;
+  }
+  html[data-reveal] [data-reveal].is-in,
+  html[data-reveal] [data-reveal-group].is-in > * {
+    opacity: 1;
+    transform: none;
+  }
+  html[data-reveal] [data-reveal-delay="1"] {
+    transition-delay: 90ms;
+  }
+  html[data-reveal] [data-reveal-delay="2"] {
+    transition-delay: 180ms;
+  }
+  html[data-reveal] [data-reveal-group] > :nth-child(2) {
+    transition-delay: 90ms;
+  }
+  html[data-reveal] [data-reveal-group] > :nth-child(3) {
+    transition-delay: 180ms;
+  }
+  html[data-reveal] [data-reveal-group] > :nth-child(4) {
+    transition-delay: 270ms;
+  }
+  html[data-reveal] [data-reveal-group] > :nth-child(n + 5) {
+    transition-delay: 360ms;
+  }
+
+  /* -------------------------------------------------------------------
      Links: an underline that wipes in from the left and out to the right.
      Uses a background gradient rather than text-decoration so it animates,
      and box-decoration-break so wrapped lines each carry their own line.
@@ -716,6 +799,18 @@ html[data-nav="dark"] {
   }
   .btn-nav:focus-visible {
     outline-color: var(--nav-fg);
+  }
+
+  /* The quiet second action beside a button: text with the underline. */
+  .link-quiet {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: inherit;
+    text-decoration: none;
   }
 
   /* Header CTA follows the nav colours, not the page tone. */
@@ -1017,6 +1112,58 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
+     Scroll cue (ScrollCue.tsx): the arrow in the hero's corner. Fixed at
+     the corner the hero holds at the top of the page and blended, so it
+     reads near-black on bone and light over soft black as the next sheet
+     slides beneath it. The script moves it; at rest it bounces a little.
+     ------------------------------------------------------------------- */
+  .scroll-cue {
+    position: fixed;
+    top: -100px;
+    left: -100px;
+    z-index: 30;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    visibility: hidden;
+    transform-origin: 50% 50%;
+  }
+  .scroll-cue[data-ready="true"] {
+    visibility: visible;
+  }
+  .scroll-cue svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    stroke: currentColor;
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .scroll-cue circle {
+    fill: currentColor;
+    stroke: none;
+  }
+  .scroll-cue [data-spin] {
+    transform-origin: 12px 12px;
+  }
+  .scroll-cue [data-stem] {
+    transform-origin: 12px 3px;
+  }
+  .scroll-cue[data-state="rest"] svg {
+    animation: cue-bounce 1.8s ease-in-out infinite;
+  }
+  @media (min-width: 768px) {
+    .scroll-cue {
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+  }
+
+  /* -------------------------------------------------------------------
      Load-in for the hero: lines rise from behind a mask, copy fades after.
      ------------------------------------------------------------------- */
   .rise-line {
@@ -1251,6 +1398,16 @@ html[data-nav="dark"] {
   }
 }
 
+@keyframes cue-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.35rem);
+  }
+}
+
 @keyframes rise-in {
   to {
     transform: translateY(0);
@@ -1287,6 +1444,15 @@ html[data-nav="dark"] {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  .scroll-cue svg {
+    animation: none !important;
+  }
+  html[data-reveal] [data-reveal],
+  html[data-reveal] [data-reveal-group] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
   .biglist > li,
   .site-header,

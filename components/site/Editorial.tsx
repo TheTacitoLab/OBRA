@@ -54,7 +54,12 @@ export function Editorial({
     <div
       className={`grid gap-y-head md:grid-cols-12 md:gap-x-8 lg:gap-x-12 ${alignItems} ${className}`}
     >
-      <div className={`${headingCols} ${headingText}`}>{heading}</div>
+      <div
+        className={`${headingCols} ${headingText}`}
+        data-reveal={reverse ? "right" : "left"}
+      >
+        {heading}
+      </div>
       {aside && <div className={asideCols}>{aside}</div>}
     </div>
   );

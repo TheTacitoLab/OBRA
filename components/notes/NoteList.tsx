@@ -10,10 +10,13 @@ import { formatNoteDate, noteHref, type Note } from "@/content/notes";
 export function NoteList({
   notes,
   featured = false,
+  compact = false,
   headingLevel = 3,
 }: {
   notes: Note[];
   featured?: boolean;
+  /** Date, title and standfirst stacked, for a column beside a title. */
+  compact?: boolean;
   headingLevel?: 2 | 3;
 }) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
@@ -25,6 +28,7 @@ export function NoteList({
           note={note}
           heading={Heading}
           lead={featured && index === 0}
+          compact={compact}
         />
       ))}
     </div>
@@ -40,11 +44,30 @@ function NoteRow({
   note,
   heading: Heading,
   lead,
+  compact,
 }: {
   note: Note;
   heading: "h2" | "h3";
   lead: boolean;
+  compact: boolean;
 }) {
+  if (compact) {
+    return (
+      <Link href={noteHref(note.slug)} className="index-row group block">
+        <p className="type-meta flex flex-wrap items-baseline gap-x-2 text-muted">
+          <time dateTime={note.date}>{formatNoteDate(note.date)}</time>
+          <span aria-hidden="true">&middot;</span>
+          <span>{note.category}</span>
+        </p>
+        <Heading className="type-headline mt-3">
+          <span className={wipe}>{note.title}</span>
+        </Heading>
+        <p className="type-body mt-3 max-w-[48ch] text-muted">
+          {note.standfirst}
+        </p>
+      </Link>
+    );
+  }
   return (
     <Link
       href={noteHref(note.slug)}
