@@ -342,6 +342,7 @@ html[data-nav="dark"] {
 
   /* The audience links. Limit: "FESTIVALS" 4.81em, eight columns from lg. */
   .type-link {
+    --u-y: calc(var(--font-ascent) * 1em + 0.08em);
     font-weight: 900;
     font-size: clamp(3rem, 15vw, 12.5rem);
     line-height: 0.92;
@@ -357,6 +358,7 @@ html[data-nav="dark"] {
   /* Product links. "RETRO FOOTBALL" (8.13em) on one line on phones with
      "SHIRTS" beneath; the whole name on one line from 1024px. */
   .type-link-sm {
+    --u-y: calc(var(--font-ascent) * 1em + 0.08em);
     font-weight: 900;
     font-size: clamp(2rem, 10.5vw, 9.5rem);
     line-height: 0.92;
@@ -376,6 +378,7 @@ html[data-nav="dark"] {
 
   /* Product index labels that share a row with copy from md up. */
   .type-link-xs {
+    --u-y: calc(var(--font-ascent) * 1em + 0.08em);
     font-weight: 900;
     font-size: clamp(1.875rem, 9.5vw, 6.5rem);
     line-height: 0.92;
@@ -475,10 +478,14 @@ html[data-nav="dark"] {
   .u-wipe {
     --u-color: currentColor;
     --u-size: 1px;
+    /* Where the line sits (--u-y, set by the link): the bottom of the inline
+       box for text, clear of descenders, or just under the baseline for the
+       uppercase display links, whose box would otherwise put the line on the
+       copy beneath. */
     background-image: linear-gradient(var(--u-color), var(--u-color));
     background-size: 0% var(--u-size);
     background-repeat: no-repeat;
-    background-position: 100% 100%;
+    background-position: 100% var(--u-y, 100%);
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
     padding-bottom: 0.06em;
@@ -492,7 +499,7 @@ html[data-nav="dark"] {
   a:active .u-wipe,
   .u-wipe[aria-current="page"] {
     background-size: 100% var(--u-size);
-    background-position: 0 100%;
+    background-position: 0 var(--u-y, 100%);
   }
   .u-lime {
     --u-color: var(--color-lime);
@@ -504,7 +511,7 @@ html[data-nav="dark"] {
   }
   .u-static {
     background-size: 100% var(--u-size);
-    background-position: 0 100%;
+    background-position: 0 var(--u-y, 100%);
   }
 
   /* -------------------------------------------------------------------
@@ -628,7 +635,7 @@ html[data-nav="dark"] {
   }
   .biglink[aria-current="page"] > .u-wipe {
     background-size: 100% var(--u-size);
-    background-position: 0 100%;
+    background-position: 0 var(--u-y, 100%);
   }
 
   /* -------------------------------------------------------------------
@@ -852,7 +859,7 @@ html[data-nav="dark"] {
     --u-color: var(--color-lime);
     --u-size: 2px;
     background-size: 100% var(--u-size);
-    background-position: 0 100%;
+    background-position: 0 var(--u-y, 100%);
   }
 
   /* Full-screen menu below the desktop breakpoint. Kept mounted; toggled via
