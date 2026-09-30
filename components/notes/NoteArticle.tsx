@@ -1,31 +1,29 @@
 import { Section } from "@/components/site/Section";
-import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { ArrowLink } from "@/components/site/Button";
 import { RichText } from "@/components/site/RichText";
+import { OnThisPage } from "@/components/guide/Toc";
 import {
   formatNoteDate,
   headingId,
   noteClusters,
   type Note,
 } from "@/content/notes";
-import type { Crumb } from "@/lib/schema/organization";
 
 /**
  * One note. The title runs full width; below it the meta sits in the left
  * column and the standfirst and body in the right two thirds, so the article
  * reads off-centre rather than as a centred column. Reading order on phones
- * is breadcrumbs, meta, title, standfirst, body.
+ * is meta, title, standfirst, body.
  *
  * Optional parts appear only when the note has them: the byline (a real
  * person), the updated date, a lead image, the contents for long pieces and
  * the link to the note's commercial page.
  */
-export function NoteArticle({ note, crumbs }: { note: Note; crumbs: Crumb[] }) {
+export function NoteArticle({ note }: { note: Note }) {
   const headings = note.body.filter((block) => block.type === "h2");
   const cluster = note.cluster ? noteClusters[note.cluster] : null;
   return (
     <Section tone="bone" size="large" hero>
-      <Breadcrumbs crumbs={crumbs} className="mb-6 md:mb-8" />
       <div className="grid gap-y-4 md:grid-cols-12 md:gap-x-8 md:gap-y-head lg:gap-x-12">
         <div className="type-meta flex flex-wrap items-baseline gap-x-2 text-muted md:col-span-4 md:row-start-3 md:flex-col md:gap-y-1">
           <span>{note.category}</span>
@@ -77,18 +75,14 @@ export function NoteArticle({ note, crumbs }: { note: Note; crumbs: Crumb[] }) {
             />
           )}
           {note.toc && headings.length >= 3 && (
-            <nav aria-label="On this page" className="mt-body">
-              <p className="eyebrow">On this page</p>
-              <ol className="toc">
-                {headings.map((block) => (
-                  <li key={block.text}>
-                    <a href={`#${headingId(block)}`} className="toc-link !grid-cols-1">
-                      <span>{block.text}</span>
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+            <div className="mt-body">
+              <OnThisPage
+                entries={headings.map((block) => ({
+                  id: headingId(block),
+                  label: block.text,
+                }))}
+              />
+            </div>
           )}
           <div className="prose-note mt-body border-t border-line pt-body">
             {note.body.map((block, index) => {

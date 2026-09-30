@@ -73,7 +73,7 @@ export function breadcrumbNode(page: string, crumbs: Crumb[]) {
 /**
  * WebPage + BreadcrumbList graph for a landing page. `crumbs` runs from Home
  * to the current page; the last crumb has no `item` by convention. The
- * visible Breadcrumbs component takes the same array, so the two match.
+ * trail is structured data only: no page shows breadcrumbs visibly.
  * `modified` is an ISO date set by hand when the page content changes.
  */
 export function buildPageSchema({

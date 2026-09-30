@@ -34,7 +34,7 @@ const wordCount = (note: Note) =>
     0,
   );
 
-/** Home > Notes > title: the visible breadcrumbs and the schema share it. */
+/** Home > Notes > title, for the note's BreadcrumbList. */
 export const noteCrumbs = (note: Note): Crumb[] => [
   { name: "Home", path: "/" },
   { name: notesIndex.title, path: notesIndex.path },

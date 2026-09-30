@@ -37,16 +37,17 @@ app/
 components/
   site/                  Header, Footer, Logo, Container, Section, Editorial,
                          Block, Button, MarkedTitle, Reveal, JsonLd,
-                         Breadcrumbs, RichText, Attribution
+                         RichText, Attribution
   home/                  Sheets (scroll engine), Sheet, BigList, ScrollCue and
                          the sections in page order (Hero, WhoFor,
                          Proposition, AboutPreview, Collection, RetailReady,
                          Procurement, NotesPreview, Contact)
   landing/               AudiencePage, product/landing templates, ClosingCta
-  guide/                 Long-form primitives: contents rail and disclosure,
-                         TocSpy, GuideSection, Callout, Faq, Figures
-  agencies/              The agency guide's own pieces (quantity bands,
-                         pricing strip, short version, closing CTA)
+  guide/                 Long-form primitives: OnThisPage, GuideSection,
+                         Callout, Faq, Figures
+  agencies/              The agencies page's own pieces (hero and intro
+                         sections, quantity bands, pricing strip, short
+                         version, closing CTA)
   notes/                 NoteList, article rendering
   forms/                 ProjectForm (Web3Forms)
 content/
@@ -56,7 +57,8 @@ content/
   pricing.ts             Published prices (approved figures only)
   notes.ts               Notes entries (example content to replace)
 lib/                     siteConfig, metadata helper, schema.org builders,
-                         attribution constants, inline-link syntax
+                         attribution constants, inline-link syntax,
+                         titleFit (display-face widths for fitted titles)
 scripts/                 preview-noindex.mjs (runs as npm postbuild)
 public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 ```
@@ -71,7 +73,7 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 - **Lime block**: the brand punctuation. `.mark` puts the end of a heading
   on a solid lime block (the hero's "More brand.", "Make." on the What we
   make section and page, "Your product." in the blue break, "Ready." on
-  Retail ready, "Agencies." in the agency guide's title, "Project." on
+  Retail ready, "Agencies." in the agencies title, "Project." on
   every Start a project heading). `MarkedTitle` in `components/site/` renders the split:
   the break goes before the marked word, or wherever a `\n` in the title
   puts it, in which case a mid-line word keeps its word space
@@ -104,24 +106,33 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   top edge of `--radius-section` (24px on desktop down to 12px on phones)
   that laps the section above by the same amount (`.section-round`,
   `.sheet--round` for the last stacked sheet, and the footer).
-- **Long-form guide** (`/agencies/`, reusable): a sticky contents rail
-  beside one reading column of about 720px (`--measure`), sentence-case
-  chapter headings, and the uppercase display voice kept for a few feature
-  moments. `.guide-main` is a size container, so the feature type and the
-  quantity bands size to the column (`cqi`, `@container`), not the
-  viewport. Below lg the contents fold into a native `<details>`; every
-  link is a plain fragment, so it all works without JavaScript. FAQ rows
-  are native disclosures with the answers in the HTML.
+- **Fitted titles**: the product-page hero (PageHero `full`, also About)
+  and the agencies hero size the h1 from its own words. `lib/titleFit.ts`
+  measures the title in em from the display face's glyph widths at build
+  time; CSS divides the space available by that (`--fit-em`, container
+  units), capped, so a short title (TOPS) runs large and a long one wraps
+  without overflowing. The copy sits beside the title rather than at the
+  far edge: from lg for a short title, from xl for the rest; stacked
+  otherwise. Remeasure the widths when Aeonik replaces Figtree.
+- **Agencies page**: brand first (a homepage-style hero with the scroll
+  cue, three alternating sections, one choice: read the guide or
+  enquire), then the full guide on the same URL at `#agency-guide`: one
+  quiet "On this page" block, a single centred reading column of about
+  720px (`--measure`), H2s at 34-46px, and a few broad rounded callouts
+  (lime, ink, or stone with a lime bar). The guide does not animate.
+  `.guide-main` is a size container, so feature type sizes to the column.
+  FAQ rows are native disclosures with the answers in the HTML.
 - **Motion**: two systems, both off under `prefers-reduced-motion`.
-  `Reveal` (mounted on the homepage and the agency guide, which uses the
-  quieter `data-reveal="soft"`) sets `html[data-reveal]` and marks
-  elements `.is-in` as they enter the viewport; `data-reveal="left|right|up"`
+  `Reveal` (mounted on the homepage and the top of the agencies page)
+  sets `html[data-reveal]` and marks elements `.is-in` as they enter the
+  viewport; `data-reveal="left|right|up"`
   on an element, or `data-reveal-group` on a parent, fades and lifts them
   in over 650ms (1.5rem up, 0.875rem from the title's side, 90ms stagger
   between siblings). Without the script nothing is hidden. `ScrollCue` is
   the hero's arrow at the bottom right of the frame: it bounces at rest,
   then rotates and morphs into a smile over the first half-viewport of
-  scroll, holds, and fades out before Who for; it is decorative and
+  scroll, holds, and fades out before Who for (or before the element its
+  `next` prop names: the agencies hero reuses it); it is decorative and
   not interactive.
 
 ## Search and indexing
@@ -143,8 +154,8 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `scripts/preview-noindex.mjs` adds `X-Robots-Tag: noindex` to branch
   deploys too (it reads Netlify's `CONTEXT` and never touches production).
 - **Structured data**: one Organization and WebSite node, reused by
-  `@id`; WebPage + BreadcrumbList per page (the visible `Breadcrumbs` take
-  the same array); Article for notes, with a Person author when the note
+  `@id`; WebPage + BreadcrumbList per page (structured data only: no page
+  shows breadcrumbs); Article for notes, with a Person author when the note
   names one. No FAQPage markup (Google shows FAQ rich results only for
   government and health sites) and no Product markup on category pages.
 - **Click events**: links carry `data-track` (the agency guide's

@@ -2,8 +2,7 @@ import type { ReactNode } from "react";
 import { Section, type SectionSize } from "../site/Section";
 import { Editorial } from "../site/Editorial";
 import { MarkedTitle } from "../site/MarkedTitle";
-import { Breadcrumbs } from "../site/Breadcrumbs";
-import type { Crumb } from "@/lib/schema/organization";
+import { longestWordEm } from "@/lib/titleFit";
 
 /**
  * The type-page phone size steps by the title's longest word, so a short
@@ -32,9 +31,14 @@ export function pageTitleClass(title: string, tier?: TitleTier) {
 /**
  * The opening section of a studio page. Two layouts:
  *
- * `full` runs the h1 at type-page across the whole width, with optional
- * breadcrumbs above it and the supporting copy in the right-hand column
- * beneath (the product and audience landing pages, About).
+ * `full` (the product pages, About) sizes the h1 to its own words: the
+ * longest word fills the space it has, capped higher for a very short title
+ * (TOPS) than for the rest. Side by side (a short title from lg, the rest
+ * from xl) the copy sits beside the title, not at the far edge: a short
+ * title gets a tight composition, a long one wraps across the width the
+ * copy leaves and the copy lines up with its last line. Otherwise title,
+ * copy and action stack. See .fit-* in globals.css; there are no per-page
+ * pixel values.
  *
  * The default puts the h1 at type-display-xl into the Editorial composition
  * with the copy beside it, bottom-aligned (the index pages: What we make,
@@ -48,26 +52,24 @@ export function PageHero({
   aside,
   full = false,
   size = "large",
-  crumbs,
 }: {
   title: string;
   mark?: string;
   aside: ReactNode;
   full?: boolean;
   size?: SectionSize;
-  /** The page's breadcrumb trail (the same array as its BreadcrumbList). */
-  crumbs?: Crumb[];
 }) {
   const heading = mark ? <MarkedTitle title={title} mark={mark} /> : title;
   if (full) {
+    const em = longestWordEm(title);
     return (
       <Section tone="bone" size={size} hero>
-        {crumbs && <Breadcrumbs crumbs={crumbs} className="mb-6 md:mb-8" />}
-        <h1 className={pageTitleClass(title)}>{heading}</h1>
-        <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
-          <div className="md:col-span-6 md:col-start-7 lg:col-span-4 lg:col-start-9">
-            {aside}
-          </div>
+        <div
+          className={`fit-hero ${em <= 3.5 ? "fit-hero--short" : ""}`}
+          style={{ "--fit-em": em } as React.CSSProperties}
+        >
+          <h1 className="fit-title">{heading}</h1>
+          <div className="fit-aside">{aside}</div>
         </div>
       </Section>
     );

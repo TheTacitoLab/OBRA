@@ -31,7 +31,6 @@ export function QuantityBands() {
     <ol
       className="bands guide-wide"
       aria-label="Planning bands by order quantity"
-      data-reveal="soft"
     >
       {bands.map((band) => (
         <li key={band.qty} className={`band ${band.sweet ? "band--sweet" : ""}`}>

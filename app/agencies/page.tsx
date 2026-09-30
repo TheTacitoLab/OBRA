@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { AgencyCta } from "@/components/agencies/AgencyCta";
+import {
+  AgencyDecision,
+  AgencyHero,
+  AgencyIntro,
+} from "@/components/agencies/AgencyIntro";
 import { BriefTemplateLink } from "@/components/agencies/BriefTemplateLink";
 import { FootballShirtPricing } from "@/components/agencies/FootballShirtPricing";
 import { QuantityBands } from "@/components/agencies/QuantityBands";
@@ -9,16 +14,12 @@ import { ShortVersion } from "@/components/agencies/ShortVersion";
 import { Faq } from "@/components/guide/Faq";
 import { Figures } from "@/components/guide/Figures";
 import { Callout, GuideSection } from "@/components/guide/GuideSection";
-import { sectionNumber, TocDisclosure, TocRail } from "@/components/guide/Toc";
-import { TocSpy } from "@/components/guide/TocSpy";
+import { OnThisPage } from "@/components/guide/Toc";
 import { NoteList } from "@/components/notes/NoteList";
-import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { ArrowLink, Button } from "@/components/site/Button";
 import { Container } from "@/components/site/Container";
 import { JsonLd } from "@/components/site/JsonLd";
-import { MarkedTitle } from "@/components/site/MarkedTitle";
 import { Reveal } from "@/components/site/Reveal";
-import { Section } from "@/components/site/Section";
 import {
   agencyEvents,
   agencyFaqs,
@@ -41,11 +42,8 @@ export const metadata: Metadata = pageMetadata({
   ogTitle: agencyPage.ogTitle,
 });
 
-/** Kicker number and contents label for a chapter, from the one list. */
-function chapter(id: AgencySectionId) {
-  const index = agencySections.findIndex((entry) => entry.id === id);
-  return { id, number: sectionNumber(index), label: agencySections[index].label };
-}
+/** A chapter's anchor, checked against the contents list. */
+const chapter = (id: AgencySectionId) => ({ id });
 
 /** An inline link in running copy; tracked links are plain anchors. */
 function InlineLink({
@@ -72,12 +70,12 @@ function InlineLink({
 }
 
 /**
- * /agencies/: the long-form guide for agency producers sourcing custom
- * merchandise, and the site's primary page for that topic. The hero runs
- * full width; below it the contents sit in a sticky rail beside a single
- * reading column (a disclosure above the column on phones and tablets),
- * with a few wide feature moments: the quantity bands, the dark
- * direct-to-factory panel, the callouts and the short version.
+ * /agencies/: the site's primary page for agency buyers. Brand first, then
+ * reassurance, then detail when wanted: a homepage-style hero, three
+ * alternating editorial sections and one choice (read the guide below, or
+ * enquire). The full guide follows on the same URL at #agency-guide, all of
+ * it in the HTML: one quiet contents block, a single reading column of
+ * about 720px, and a handful of broad callouts. The guide does not animate.
  */
 export default function AgenciesPage() {
   const further = notesInCluster("agencies");
@@ -95,83 +93,59 @@ export default function AgenciesPage() {
         })}
       />
       <Reveal />
-      <TocSpy ids={agencySections.map((entry) => entry.id)} />
 
-      <article className="guide">
-        {/* Hero: breadcrumbs, eyebrow and the title across the full width;
-            the introduction and actions on the reading column's axis. */}
-        <Section as="header" tone="bone" size="compact" hero>
-          <Breadcrumbs crumbs={agencyPage.crumbs} />
-          <div className="mt-8 guide-grid md:mt-10">
-            <div className="lg:col-span-2">
-              <p className="eyebrow">For agencies</p>
-              <h1 className="type-guide-title mt-5">
-                <MarkedTitle
-                  title="Custom merchandise production for agencies."
-                  mark="agencies."
-                />
-              </h1>
-            </div>
-            <div className="guide-intro mt-head lg:col-start-2">
-              <p>
-                A client wants merchandise in the campaign. The concept looks
-                great. There is a launch date that has somehow become
-                immovable, quantities are still being discussed and somebody
-                will eventually ask whether the whole thing can cost less.
-              </p>
-              <p className="font-semibold">Welcome.</p>
-              <p>
-                madebyobra works directly with creative, experiential,
-                activation and brand agencies to develop and manufacture
-                original merchandise for client campaigns, events, launches and
-                activations.
-              </p>
-              <p>
-                We can work behind the scenes under your agency relationship,
-                support your team when specialist product knowledge is useful,
-                or take a clear brief and handle the production side through
-                to delivery.
-              </p>
-              <p>
-                Our job is to help you get from the initial idea to something
-                you can actually price, approve, manufacture and put in
-                somebody&rsquo;s hands.
-              </p>
-              <div className="flex flex-wrap items-center gap-x-7 gap-y-3 !mt-8">
-                <Button href={agencyLinks.start} track={agencyEvents.sendBrief}>
-                  Send us a live brief
-                </Button>
-                <ArrowLink
-                  href={agencyLinks.start}
-                  track={agencyEvents.tradePricing}
-                >
-                  Request agency trade pricing
-                </ArrowLink>
-              </div>
-            </div>
-          </div>
-          <ul className="proof-strip mt-body" aria-label="In short">
-            <li>White-label when needed</li>
-            <li>Direct to factory</li>
-            <li>Small runs to full bespoke development</li>
-          </ul>
-        </Section>
+      <article>
+        <AgencyHero />
+        <AgencyIntro />
+        <AgencyDecision />
 
-        <Container>
-          <TocDisclosure entries={[...agencySections]} />
-          <div className="guide-grid">
-            <aside className="hidden lg:block">
-              <TocRail
-                entries={[...agencySections]}
-                cta={{
-                  label: "Send us a live brief",
-                  href: agencyLinks.start,
-                  track: agencyEvents.sendBrief,
-                }}
-              />
-            </aside>
-
+        <section
+          id="agency-guide"
+          aria-labelledby="agency-guide-title"
+          data-tone="bone"
+          className="guide section-round scroll-mt-12 bg-bg text-fg"
+        >
+          <Container className="py-section">
             <div className="guide-main">
+              <header className="guide-intro">
+                <h2 id="agency-guide-title" className="type-display-sm">
+                  The full agency guide
+                </h2>
+                <p className="type-lede mt-5 text-muted">
+                  Everything you might want to know before putting merchandise
+                  into a client brief.
+                </p>
+              </header>
+
+              <OnThisPage entries={[...agencySections]} />
+
+              <div className="guide-opening">
+                <p>
+                  A client wants merchandise in the campaign. The concept looks
+                  great. There is a launch date that has somehow become
+                  immovable, quantities are still being discussed and somebody
+                  will eventually ask whether the whole thing can cost less.
+                </p>
+                <p className="font-semibold">Welcome.</p>
+                <p>
+                  madebyobra works directly with creative, experiential,
+                  activation and brand agencies to develop and manufacture
+                  original merchandise for client campaigns, events, launches
+                  and activations.
+                </p>
+                <p>
+                  We can work behind the scenes under your agency relationship,
+                  support your team when specialist product knowledge is
+                  useful, or take a clear brief and handle the production side
+                  through to delivery.
+                </p>
+                <p>
+                  Our job is to help you get from the initial idea to something
+                  you can actually price, approve, manufacture and put in
+                  somebody&rsquo;s hands.
+                </p>
+              </div>
+
               <GuideSection
                 {...chapter("how-agencies-use-madebyobra")}
                 title="How agencies use madebyobra"
@@ -248,7 +222,7 @@ export default function AgenciesPage() {
                   &ldquo;At my quantity, how much of this product can
                   realistically be customised?&rdquo;
                 </p>
-                <div className="sweet guide-wide" data-reveal="soft">
+                <div className="sweet guide-wide" data-tone="ink">
                   <p className="sweet__figure">
                     250&ndash;1,000<small>units</small>
                   </p>
@@ -265,14 +239,7 @@ export default function AgenciesPage() {
 
               <GuideSection
                 {...chapter("direct-to-factory")}
-                tone="ink"
-                titleClassName="guide-display"
-                title={
-                  <>
-                    More of the budget <br className="hidden sm:block" />
-                    goes into the product.
-                  </>
-                }
+                title="Why direct-to-factory matters."
               >
                 <p className="guide-strong">
                   madebyobra works directly with its manufacturing partners.
@@ -309,11 +276,11 @@ export default function AgenciesPage() {
                   original product can come surprisingly close to the finished
                   cost of buying and decorating a premium blank.
                 </p>
-                <p className="guide-display panel-quote guide-wide" data-reveal="soft">
+                <Callout tone="lime">
                   Compare the finished cost, <br className="hidden sm:block" />
                   not the blank price.
-                </p>
-                <div className="capacity guide-wide">
+                </Callout>
+                <div className="capacity">
                   <p className="capacity__figure" aria-hidden="true">
                     <span className="block text-[0.28em] font-bold tracking-[-0.01em]">
                       Up to
@@ -554,7 +521,7 @@ export default function AgenciesPage() {
                     See football-shirt pricing and minimums
                   </ArrowLink>
                 </div>
-                <Callout>
+                <Callout tone="stone">
                   If the client already has a serious merchandise budget, ask
                   what that budget could{" "}
                   <span className="mark mark--mid">manufacture</span> before
@@ -644,6 +611,7 @@ export default function AgenciesPage() {
                   </ArrowLink>
                 </div>
                 <Callout
+                  tone="ink"
                   support="That might be specification, quantity or delivery method. The dangerous version is assuming all three can stay flexible until late in production."
                 >
                   When the date is fixed, decide what has{" "}
@@ -791,6 +759,10 @@ export default function AgenciesPage() {
                   to survive long after the event, it deserves a proper product
                   conversation.
                 </p>
+                <Callout tone="lime">
+                  Does it feel like a product, <br className="hidden sm:block" />
+                  or just another piece of event collateral?
+                </Callout>
                 <p>
                   Custom manufacturing becomes particularly compelling once
                   quantities move into the hundreds.
@@ -874,8 +846,8 @@ export default function AgenciesPage() {
                 </section>
               )}
             </div>
-          </div>
-        </Container>
+          </Container>
+        </section>
       </article>
 
       <AgencyCta />

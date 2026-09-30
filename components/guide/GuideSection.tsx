@@ -1,30 +1,22 @@
 import type { ReactNode } from "react";
 
 /**
- * One chapter of a long-form guide: a small numbered kicker (the contents
- * label, so a reader arriving from the contents knows where they are), the
- * H2, then the body. Direct children sit on the reading measure; anything
- * marked `guide-wide` (bands, pricing, panels) takes the full main column.
+ * One chapter of a long-form guide: the H2, then the body. Direct children
+ * sit on the reading measure; anything marked `guide-wide` (bands, prices,
+ * callouts) takes the full container. Chapters are separated by space,
+ * not rules, and do not animate: the read stays calm.
  *
- * `tone` turns the chapter into a full panel: "ink" for the one dark
- * feature, "stone" for the summary. Panels bleed to the screen edge below
- * lg and sit in the main column beside the contents from lg.
+ * `tone` turns a chapter into a rounded panel (the short version, on stone).
  */
 export function GuideSection({
   id,
-  number,
-  label,
   title,
-  titleClassName = "guide-h2",
   tone,
   children,
 }: {
   id: string;
-  number: string;
-  label: string;
   title: ReactNode;
-  titleClassName?: string;
-  tone?: "ink" | "stone";
+  tone?: "stone";
   children: ReactNode;
 }) {
   return (
@@ -32,36 +24,36 @@ export function GuideSection({
       id={id}
       aria-labelledby={`${id}-title`}
       data-tone={tone}
-      className={`guide-section ${tone ? `guide-panel bg-bg text-fg` : ""}`}
+      className={`guide-section ${tone ? "guide-panel guide-wide bg-bg text-fg" : ""}`}
     >
-      <header className="guide-head" data-reveal="soft">
-        <p className="guide-kicker">
-          <span>{number}</span>
-          {label}
-        </p>
-        <h2 id={`${id}-title`} className={titleClassName}>
-          {title}
-        </h2>
-      </header>
+      <h2 id={`${id}-title`} className="guide-h2">
+        {title}
+      </h2>
       {children}
     </section>
   );
 }
 
 /**
- * An editorial pull line: set large in the display face, the key words on
- * the lime block, a rule above. For advice worth remembering, not for
- * repeating what the paragraph above just said.
+ * A broad editorial interruption across the container, on a softly rounded
+ * block: lime with ink type, ink with bone type, or stone with a lime
+ * detail. The key words can sit on the lime block (.mark). Use a few, for
+ * advice worth remembering, not for repeating the paragraph above.
  */
 export function Callout({
   children,
   support,
+  tone = "lime",
 }: {
   children: ReactNode;
   support?: ReactNode;
+  tone?: "lime" | "ink" | "stone";
 }) {
   return (
-    <div className="callout guide-wide" data-reveal="soft">
+    <div
+      className={`callout callout--${tone} guide-wide`}
+      data-tone={tone === "lime" ? undefined : tone}
+    >
       <p className="callout__text">{children}</p>
       {support && <p className="callout__support">{support}</p>}
     </div>

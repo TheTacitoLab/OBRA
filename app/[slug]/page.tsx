@@ -96,7 +96,6 @@ export default async function ProductPage({
       <PageHero
         full
         title={page.label}
-        crumbs={crumbs}
         aside={
           <div className="flex flex-col gap-body">
             <p className="type-lede">{page.intro}</p>

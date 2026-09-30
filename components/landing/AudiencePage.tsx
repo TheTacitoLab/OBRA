@@ -7,7 +7,6 @@ import { BigList, type BigLink } from "../home/BigList";
 import { ClosingCta } from "./ClosingCta";
 import { pageTitleClass } from "./PageHero";
 import { MarkedTitle } from "../site/MarkedTitle";
-import { Breadcrumbs } from "../site/Breadcrumbs";
 import { getAudience } from "@/content/audiences";
 import {
   findProduct,
@@ -19,7 +18,7 @@ import {
 } from "@/content/site";
 import type { Crumb } from "@/lib/schema/organization";
 
-/** Home > Who for > the audience: shared by the page and its schema. */
+/** Home > Who for > the audience, for the page's BreadcrumbList. */
 export const audienceCrumbs = (page: PageEntry): Crumb[] => [
   { name: "Home", path: "/" },
   { name: "Who for", path: "/who-for/" },
@@ -63,7 +62,6 @@ export function AudiencePage({ slug }: { slug: string }) {
     <>
       {/* Hero: full-width statement, intro and CTA in the right column. */}
       <Section tone="bone" size="large" hero>
-        <Breadcrumbs crumbs={audienceCrumbs(page)} className="mb-6 md:mb-8" />
         <h1 className={pageTitleClass(content.headline, content.headlineTier)}>
           <MarkedTitle title={content.headline} mark={content.headlineMark} />
         </h1>

@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { Section } from "@/components/site/Section";
 import { findNote, noteHref, notes, relatedNotes } from "@/content/notes";
 import { pageMetadata } from "@/lib/metadata";
-import { buildNoteSchema, noteCrumbs } from "@/lib/schema/notes";
+import { buildNoteSchema } from "@/lib/schema/notes";
 
 /**
  * One route per note in content/notes.ts, pre-rendered at build time.
@@ -59,7 +59,7 @@ export default async function NotePage({
   return (
     <>
       <JsonLd data={buildNoteSchema(note)} />
-      <NoteArticle note={note} crumbs={noteCrumbs(note)} />
+      <NoteArticle note={note} />
       {others.length > 0 && (
         <Section tone="stone" size="compact">
           <h2 className="type-display-sm">More notes.</h2>

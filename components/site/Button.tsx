@@ -1,8 +1,17 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-/** Thin arrow used by buttons and arrow links. Decorative. */
-export function Arrow({ className = "btn__arrow" }: { className?: string }) {
+type ArrowDirection = "right" | "down";
+
+/** Thin arrow used by buttons and arrow links. Decorative. "down" is for
+ * links that scroll to a section further down the same page. */
+export function Arrow({
+  className = "btn__arrow",
+  direction = "right",
+}: {
+  className?: string;
+  direction?: ArrowDirection;
+}) {
   return (
     <svg
       viewBox="0 0 16 16"
@@ -12,9 +21,15 @@ export function Arrow({ className = "btn__arrow" }: { className?: string }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      className={className}
+      className={direction === "down" ? `${className} btn__arrow--down` : className}
     >
-      <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
+      <path
+        d={
+          direction === "down"
+            ? "M8 2.5v11M3.5 9 8 13.5 12.5 9"
+            : "M2.5 8h11M9 3.5 13.5 8 9 12.5"
+        }
+      />
     </svg>
   );
 }
@@ -35,6 +50,7 @@ export function Button({
   className = "",
   plain = false,
   track,
+  arrow = "right",
 }: {
   href: string;
   children: ReactNode;
@@ -42,20 +58,21 @@ export function Button({
   className?: string;
   plain?: boolean;
   track?: string;
+  arrow?: ArrowDirection;
 }) {
   const classes = `btn btn-${variant} ${className}`;
   if (plain || track) {
     return (
       <a href={href} className={classes} data-track={track}>
         <span>{children}</span>
-        <Arrow />
+        <Arrow direction={arrow} />
       </a>
     );
   }
   return (
     <Link href={href} className={classes}>
       <span>{children}</span>
-      <Arrow />
+      <Arrow direction={arrow} />
     </Link>
   );
 }

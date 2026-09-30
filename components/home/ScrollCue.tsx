@@ -13,6 +13,10 @@ import { useEffect, useRef } from "react";
  * light on soft black). Purely decorative: hidden from assistive tech and
  * not clickable. Under prefers-reduced-motion it is a still arrow that
  * simply goes when the page moves.
+ *
+ * `next` is the element the cue must be gone before (the homepage's Who
+ * for list by default); the agency guide passes its first section. The
+ * hero it sits in is marked data-hero-frame.
  */
 
 // The arrow head and the smile share one shape: two cubic curves whose
@@ -30,7 +34,11 @@ function pathFor(t: number) {
   return `M${v[0]} ${v[1]} C${v[2]} ${v[3]} ${v[4]} ${v[5]} ${v[6]} ${v[7]} C${v[8]} ${v[9]} ${v[10]} ${v[11]} ${v[12]} ${v[13]}`;
 }
 
-export function ScrollCue() {
+export function ScrollCue({
+  next: nextSelector = "#who-for .biglist, #who-for",
+}: {
+  next?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,9 +51,12 @@ export function ScrollCue() {
     const eyes = cue.querySelector<SVGGElement>("[data-eyes]");
     if (!spin || !stem || !head || !eyes) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // The first selector in the list that matches.
     const next =
-      document.querySelector<HTMLElement>("#who-for .biglist") ??
-      document.querySelector<HTMLElement>("#who-for");
+      nextSelector
+        .split(",")
+        .map((selector) => document.querySelector<HTMLElement>(selector.trim()))
+        .find((el): el is HTMLElement => el !== null) ?? null;
     let raf = 0;
     // Scroll distance the whole interaction plays out over.
     let span = window.innerHeight * 0.5;
@@ -140,7 +151,7 @@ export function ScrollCue() {
       window.removeEventListener("resize", onResize);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [nextSelector]);
 
   return (
     <div ref={ref} className="scroll-cue" aria-hidden="true">
