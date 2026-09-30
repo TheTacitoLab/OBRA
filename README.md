@@ -34,11 +34,11 @@ app/
   what-we-make/ who-for/ services/ about/ notes/ start-a-project/ privacy/
 components/
   site/                  Header, Footer, Logo, Container, Section, Editorial,
-                         Block, Button, JsonLd
-  home/                  Sheets (scroll engine), Sheet, BigList, the sections
-                         (Hero, WhoFor, WhatWeMake, RetailReady, Services,
-                         Proposition, Procurement, Collection, AboutPreview,
-                         NotesPreview, Contact)
+                         Block, Button, MarkedTitle, Reveal, JsonLd
+  home/                  Sheets (scroll engine), Sheet, BigList, ScrollCue and
+                         the sections in page order (Hero, WhoFor,
+                         Proposition, AboutPreview, Collection, RetailReady,
+                         Procurement, NotesPreview, Contact)
   landing/               AudiencePage, product/landing templates, ClosingCta
   notes/                 NoteList, article rendering
   forms/                 ProjectForm (Web3Forms)
@@ -88,7 +88,21 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 - **Composition**: `Section` (tone + size) and `Editorial` (large heading
   ~60% / supporting copy ~30%, optionally reversed or right-aligned) are the
   layout primitives. `Block` is the occasional content block; one accent per
-  group.
+  group. On the homepage the sections alternate sides (copy left and title
+  right, then the reverse) and each full-width section takes `rounded`, a
+  top edge of `--radius-section` (24px on desktop down to 12px on phones)
+  that laps the section above by the same amount (`.section-round`,
+  `.sheet--round` for the last stacked sheet, and the footer).
+- **Motion**: two systems, both off under `prefers-reduced-motion`.
+  `Reveal` (mounted on the homepage only) sets `html[data-reveal]` and marks
+  elements `.is-in` as they enter the viewport; `data-reveal="left|right|up"`
+  on an element, or `data-reveal-group` on a parent, fades and lifts them
+  in over 650ms (1.5rem up, 0.875rem from the title's side, 90ms stagger
+  between siblings). Without the script nothing is hidden. `ScrollCue` is
+  the hero's arrow at the bottom right of the frame: it bounces at rest,
+  then rotates and morphs into a smile over the first half-viewport of
+  scroll, holds, and fades out before Who for; it is decorative and
+  not interactive.
 
 ## Notes / placeholders
 
