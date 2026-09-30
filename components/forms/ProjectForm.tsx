@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { budgetOptions, quantityOptions } from "@/content/site";
+import { ENQUIRY_LABELS, UTM_PARAMS } from "@/lib/attribution";
 import { siteConfig } from "@/lib/siteConfig";
 import { Arrow } from "@/components/site/Button";
 
@@ -182,10 +183,21 @@ export function ProjectForm({
       return;
     }
 
+    // Where the brief came from: the tracked button that led here (the
+    // `enquiry` parameter, allow-listed) and the campaign parameters the
+    // visitor arrived with, both carried in the URL by Attribution.tsx.
+    const params = new URLSearchParams(window.location.search);
+    const enquiry = ENQUIRY_LABELS[params.get("enquiry") ?? ""];
+
     const formData = new FormData(form);
     formData.append("access_key", accessKey);
-    formData.append("subject", subject);
+    formData.append("subject", enquiry ? `${subject} (${enquiry})` : subject);
     formData.append("from_name", "madebyobra website");
+    if (enquiry) formData.append("enquiry", enquiry);
+    for (const key of UTM_PARAMS) {
+      const value = params.get(key);
+      if (value) formData.append(key, value.slice(0, 100));
+    }
 
     setStatus("submitting");
     try {

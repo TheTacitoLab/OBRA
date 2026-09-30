@@ -13,7 +13,8 @@ import { startHref } from "@/lib/siteConfig";
 
 const page = {
   path: "/what-we-make/",
-  title: "What we make",
+  title: "What we make: custom apparel and merchandise",
+  crumb: "What we make",
   description:
     "Headwear, t-shirts, tops, sportswear, retro football shirts, trainingwear, accessories and more: bespoke merchandise from madebyobra.",
 };
@@ -30,7 +31,7 @@ export default function WhatWeMakePage() {
       <JsonLd
         data={buildPageSchema({
           ...page,
-          crumbs: [{ name: "Home", path: "/" }, { name: page.title }],
+          crumbs: [{ name: "Home", path: "/" }, { name: page.crumb }],
         })}
       />
 

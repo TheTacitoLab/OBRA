@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { Section, type SectionSize } from "../site/Section";
 import { Editorial } from "../site/Editorial";
 import { MarkedTitle } from "../site/MarkedTitle";
+import { Breadcrumbs } from "../site/Breadcrumbs";
+import type { Crumb } from "@/lib/schema/organization";
 
 /**
  * The type-page phone size steps by the title's longest word, so a short
@@ -30,8 +32,8 @@ export function pageTitleClass(title: string, tier?: TitleTier) {
 /**
  * The opening section of a studio page. Two layouts:
  *
- * `full` runs the h1 at type-page across the whole width, with an optional
- * parent link above it and the supporting copy in the right-hand column
+ * `full` runs the h1 at type-page across the whole width, with optional
+ * breadcrumbs above it and the supporting copy in the right-hand column
  * beneath (the product and audience landing pages, About).
  *
  * The default puts the h1 at type-display-xl into the Editorial composition
@@ -46,17 +48,21 @@ export function PageHero({
   aside,
   full = false,
   size = "large",
+  crumbs,
 }: {
   title: string;
   mark?: string;
   aside: ReactNode;
   full?: boolean;
   size?: SectionSize;
+  /** The page's breadcrumb trail (the same array as its BreadcrumbList). */
+  crumbs?: Crumb[];
 }) {
   const heading = mark ? <MarkedTitle title={title} mark={mark} /> : title;
   if (full) {
     return (
       <Section tone="bone" size={size} hero>
+        {crumbs && <Breadcrumbs crumbs={crumbs} className="mb-6 md:mb-8" />}
         <h1 className={pageTitleClass(title)}>{heading}</h1>
         <div className="mt-head grid md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
           <div className="md:col-span-6 md:col-start-7 lg:col-span-4 lg:col-start-9">

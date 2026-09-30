@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AudiencePage } from "@/components/landing/AudiencePage";
+import { AudiencePage, audienceCrumbs } from "@/components/landing/AudiencePage";
 import { JsonLd } from "@/components/site/JsonLd";
 import { getAudience } from "@/content/audiences";
 import { pageHref } from "@/content/site";
@@ -24,11 +24,7 @@ export default function ArtistsPage() {
           path,
           title: page.title,
           description: page.description,
-          crumbs: [
-            { name: "Home", path: "/" },
-            { name: "Who for", path: "/who-for/" },
-            { name: page.title },
-          ],
+          crumbs: audienceCrumbs(page),
         })}
       />
       <AudiencePage slug={slug} />

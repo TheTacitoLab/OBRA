@@ -7,14 +7,24 @@ import { BigList, type BigLink } from "../home/BigList";
 import { ClosingCta } from "./ClosingCta";
 import { pageTitleClass } from "./PageHero";
 import { MarkedTitle } from "../site/MarkedTitle";
+import { Breadcrumbs } from "../site/Breadcrumbs";
 import { getAudience } from "@/content/audiences";
 import {
   findProduct,
   findService,
   pageHref,
   primaryCta,
+  type PageEntry,
   type Service,
 } from "@/content/site";
+import type { Crumb } from "@/lib/schema/organization";
+
+/** Home > Who for > the audience: shared by the page and its schema. */
+export const audienceCrumbs = (page: PageEntry): Crumb[] => [
+  { name: "Home", path: "/" },
+  { name: "Who for", path: "/who-for/" },
+  { name: page.label },
+];
 
 /** Lead block spans 7/12 and both rows; the other two stack beside it. */
 const benefitLayout: { tone: BlockTone; className: string }[] = [
@@ -28,7 +38,8 @@ const benefitLayout: { tone: BlockTone; className: string }[] = [
 ];
 
 /**
- * The "Who for" landing page: one component, five audiences. Everything
+ * The "Who for" landing page: one component, four audiences (agencies has
+ * its own long-form page). Everything
  * audience-specific comes from content/audiences.ts; the compositions change
  * from section to section so the page never repeats itself, and the
  * optional sections (retail readiness, benefits, a closing statement) let
@@ -52,6 +63,7 @@ export function AudiencePage({ slug }: { slug: string }) {
     <>
       {/* Hero: full-width statement, intro and CTA in the right column. */}
       <Section tone="bone" size="large" hero>
+        <Breadcrumbs crumbs={audienceCrumbs(page)} className="mb-6 md:mb-8" />
         <h1 className={pageTitleClass(content.headline, content.headlineTier)}>
           <MarkedTitle title={content.headline} mark={content.headlineMark} />
         </h1>

@@ -3,6 +3,7 @@ import { DM_Sans, Figtree } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { Attribution } from "@/components/site/Attribution";
 import { ogImage } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -85,6 +86,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
+        <Attribution />
       </body>
     </html>
   );

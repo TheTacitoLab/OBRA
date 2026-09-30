@@ -86,7 +86,6 @@ export default function AboutPage() {
           </p>
           <p className="type-body text-muted md:col-span-4 lg:col-span-4 lg:col-start-9">
             The name is also the maker&rsquo;s mark on everything we produce.
-            A TACITO Group company.
           </p>
         </div>
       </Section>

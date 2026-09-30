@@ -10,7 +10,8 @@ import { buildPageSchema } from "@/lib/schema/organization";
 
 const page = {
   path: "/who-for/",
-  title: "Who for",
+  title: "Who we work with",
+  crumb: "Who for",
   description:
     "madebyobra makes bespoke merchandise for festivals, events, brands, artists and agencies: original products made to the identity, from limited runs to larger production.",
 };
@@ -27,7 +28,7 @@ export default function WhoForPage() {
       <JsonLd
         data={buildPageSchema({
           ...page,
-          crumbs: [{ name: "Home", path: "/" }, { name: page.title }],
+          crumbs: [{ name: "Home", path: "/" }, { name: page.crumb }],
         })}
       />
 

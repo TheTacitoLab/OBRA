@@ -1,10 +1,12 @@
 import { findAudience, type PageEntry } from "./site";
 
 /**
- * The five "Who for" pages: /festivals/, /events/, /brands/, /artists/ and
- * /agencies/. Titles, descriptions and the enormous-list labels stay in
- * content/site.ts (the nav, footer and index pages read them); everything
- * the landing page itself says lives here, keyed by the same slug.
+ * Four of the five "Who for" pages: /festivals/, /events/, /brands/ and
+ * /artists/. /agencies/ is a long-form guide with its own page and content
+ * (content/agencies.ts). Titles, descriptions and the enormous-list labels
+ * stay in content/site.ts (the nav, footer and index pages read them);
+ * everything the landing page itself says lives here, keyed by the same
+ * slug.
  *
  * Width rules for the display headings, measured against the type scale at
  * weight 900: every word in `headline` is 11 characters or fewer (it sets
@@ -293,54 +295,6 @@ export const audienceContent: AudienceContent[] = [
     ],
     ctaCopy:
       "Send the tour dates or the release, where the stock needs to go and how many you expect to sell. We’ll build the range around it.",
-  },
-  {
-    slug: "agencies",
-    headline: "Built for\nyour client.",
-    headlineMark: "client.",
-    headlineTier: "default",
-    intro:
-      "madebyobra works behind the scenes with creative, experiential, event and brand agencies to design, develop and manufacture merchandise for their clients.",
-    secondary:
-      "You keep the client relationship. We handle the product work behind it.",
-    secondaryCta: { label: "Our services", href: "/services/" },
-    pointsHeading: "How we work with agencies.",
-    points: [
-      {
-        title: "White-label when needed",
-        text: "We can operate completely behind the scenes, join client conversations as your product specialist, or work somewhere in between.",
-      },
-      {
-        title: "Your client stays your client",
-        text: "We do not use agency projects as a route to approach the end client.",
-      },
-      {
-        title: "Room for your margin",
-        text: "We can structure project pricing with agency resale and commercial margin in mind.",
-      },
-      {
-        title: "Use us where you need us",
-        text: "Bring us into product development, sampling, manufacturing, packaging, logistics or the entire project.",
-      },
-      {
-        title: "Built for repeat work",
-        text: "Once the setup is in place, we can use it across future briefs, campaigns and client projects.",
-      },
-    ],
-    products: ["t-shirts", "headwear", "tops", "accessories", "retro-football-shirts"],
-    productsHeading: "Made for the brief.",
-    productNote:
-      "The categories agency briefs ask for most, made to the standard the client would expect from their own range.",
-    services: [
-      "white-label-production",
-      "product-development",
-      "sampling-and-manufacturing",
-      "branding-and-packaging",
-      "procurement-and-costing",
-      "logistics",
-    ],
-    ctaCopy:
-      "Send the client’s brief and we’ll price it so you can take it into the room.",
   },
 ];
 

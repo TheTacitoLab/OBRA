@@ -5,6 +5,19 @@
  * The three entries below are EXAMPLE notes written to establish the page
  * structure, tone and length. Replace them with real pieces before launch.
  * Dates are ISO strings; newest first is handled by `notesByDate`.
+ *
+ * Planned agency pieces (cluster "agencies"; each links into /agencies/
+ * and, where relevant, /services/, product pages and, once built,
+ * /pricing/ and /how-we-work/):
+ *   1. How to brief a merchandise manufacturer: an agency production checklist
+ *   2. How long does custom merchandise take? A realistic production timeline
+ *   3. How much does custom merchandise cost? What agencies should expect in
+ *      a production quote
+ *   4. Custom merchandise minimum orders explained: what MOQ actually applies to
+ *   5. White-label merchandise production: how agencies can outsource
+ *      production without losing the client relationship
+ * Publish each with a real author, `cluster: "agencies"` and `toc: true`
+ * when it runs long.
  */
 
 export type NoteCategory =
@@ -16,16 +29,60 @@ export type NoteCategory =
   | "Launches"
   | "Opinion";
 
-export type NoteBlock = { type: "p" | "h2"; text: string };
+/**
+ * Body blocks. Text may carry inline links written as [label](/path/), for
+ * contextual links into the commercial pages (/agencies/, /services/, a
+ * product page); `p` and list items render them, headings do not.
+ */
+export type NoteBlock =
+  | { type: "p"; text: string }
+  | { type: "h2"; text: string; id?: string }
+  | { type: "ul"; items: string[] };
+
+/** A real, named person. Never a placeholder or a pen name. */
+export type NoteAuthor = { name: string; role: string; url?: string };
+
+/**
+ * Topic clusters: a note in a cluster ends with a link to that cluster's
+ * commercial page, and that page lists the cluster's notes.
+ */
+export const noteClusters = {
+  agencies: {
+    href: "/agencies/",
+    heading: "Producing merchandise for a client?",
+    text: "How we work with agencies: quantities, pricing, sampling, deadlines and white-label production, in one guide.",
+    label: "Custom merchandise for agencies",
+  },
+} as const;
+
+export type NoteCluster = keyof typeof noteClusters;
 
 export type Note = {
   slug: string;
   title: string;
   standfirst: string;
-  /** ISO date, e.g. "2026-09-10". */
+  /** ISO date first published, e.g. "2026-09-10". */
   date: string;
+  /**
+   * ISO date of the last substantive edit, shown as "Updated" and used for
+   * dateModified and the sitemap. Leave unset rather than moving it for a
+   * typo fix.
+   */
+  updated?: string;
+  /** Leave unset and the studio is credited; never invent a byline. */
+  author?: NoteAuthor;
   category: NoteCategory;
   body: NoteBlock[];
+  /**
+   * Lead and share image from public/, at its own pixel size; alt says
+   * what is visible. The wordmark card is used when unset.
+   */
+  image?: { src: string; width: number; height: number; alt: string };
+  /** Show an "On this page" list built from the h2s (long pieces only). */
+  toc?: boolean;
+  /** Slugs of related notes, most relevant first; the latest otherwise. */
+  related?: string[];
+  cluster?: NoteCluster;
 };
 
 export const notes: Note[] = [
@@ -128,6 +185,29 @@ export const findNote = (slug: string) =>
   notes.find((note) => note.slug === slug);
 
 export const noteHref = (slug: string) => `/notes/${slug}/`;
+
+/** Newest first. */
+export const notesInCluster = (cluster: NoteCluster) =>
+  notesByDate().filter((note) => note.cluster === cluster);
+
+/** Up to three notes to read next: the chosen ones, then the latest. */
+export function relatedNotes(note: Note) {
+  const chosen = (note.related ?? [])
+    .map(findNote)
+    .filter((entry): entry is Note => Boolean(entry));
+  const rest = notesByDate().filter(
+    (entry) => entry.slug !== note.slug && !chosen.includes(entry),
+  );
+  return [...chosen, ...rest].slice(0, 3);
+}
+
+/** Anchor id for an h2, stable across edits unless the heading changes. */
+export const headingId = (block: { text: string; id?: string }) =>
+  block.id ??
+  block.text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 
 export function formatNoteDate(iso: string) {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {

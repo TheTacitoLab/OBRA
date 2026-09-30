@@ -1,6 +1,12 @@
 import { noteHref, notesByDate, type Note } from "@/content/notes";
 import { ogImage } from "@/lib/metadata";
-import { organizationNode, websiteNode } from "@/lib/schema/organization";
+import { plainText } from "@/lib/richText";
+import {
+  breadcrumbNode,
+  organizationNode,
+  websiteNode,
+  type Crumb,
+} from "@/lib/schema/organization";
 import { siteConfig } from "@/lib/siteConfig";
 
 const SITE = siteConfig.url;
@@ -13,28 +19,27 @@ export const notesIndex = {
     "Notes from madebyobra: projects, product development, manufacturing, launches, event retail, behind-the-scenes work, merchandise observations and the occasional opinion.",
 };
 
-type Crumb = { name: string; path?: string };
-
 const noteUrl = (note: Note) => `${SITE}${noteHref(note.slug)}`;
+
+const words = (text: string) =>
+  plainText(text).split(/\s+/).filter(Boolean).length;
 
 const wordCount = (note: Note) =>
   note.body.reduce(
-    (count, block) => count + block.text.split(/\s+/).filter(Boolean).length,
+    (count, block) =>
+      count +
+      (block.type === "ul"
+        ? block.items.reduce((sum, item) => sum + words(item), 0)
+        : words(block.text)),
     0,
   );
 
-function breadcrumbNode(page: string, crumbs: Crumb[]) {
-  return {
-    "@type": "BreadcrumbList",
-    "@id": `${page}#breadcrumb`,
-    itemListElement: crumbs.map((crumb, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: crumb.name,
-      ...(crumb.path ? { item: `${SITE}${crumb.path}` } : {}),
-    })),
-  };
-}
+/** Home > Notes > title: the visible breadcrumbs and the schema share it. */
+export const noteCrumbs = (note: Note): Crumb[] => [
+  { name: "Home", path: "/" },
+  { name: notesIndex.title, path: notesIndex.path },
+  { name: note.title },
+];
 
 /**
  * CollectionPage + BreadcrumbList (Home > Notes) for /notes/, listing every
@@ -78,11 +83,20 @@ export function buildNotesIndexSchema() {
 
 /**
  * Article + WebPage + BreadcrumbList (Home > Notes > title) for one note.
- * The studio is both author and publisher, so both point at the shared
- * Organization node.
+ * The author is the named person when the note has one, otherwise the
+ * studio; the publisher is always the shared Organization node.
  */
 export function buildNoteSchema(note: Note) {
   const page = noteUrl(note);
+  const author = note.author
+    ? {
+        "@type": "Person",
+        name: note.author.name,
+        jobTitle: note.author.role,
+        ...(note.author.url ? { url: note.author.url } : {}),
+        worksFor: { "@id": `${SITE}/#organization` },
+      }
+    : { "@id": `${SITE}/#organization` };
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -105,20 +119,16 @@ export function buildNoteSchema(note: Note) {
         description: note.standfirst,
         articleSection: note.category,
         datePublished: note.date,
-        dateModified: note.date,
+        dateModified: note.updated ?? note.date,
         wordCount: wordCount(note),
         inLanguage: "en-GB",
-        image: [`${SITE}${ogImage.url}`],
-        author: { "@id": `${SITE}/#organization` },
+        image: [`${SITE}${note.image?.src ?? ogImage.url}`],
+        author,
         publisher: { "@id": `${SITE}/#organization` },
         mainEntityOfPage: { "@id": `${page}#webpage` },
         isPartOf: { "@id": `${SITE}/#website` },
       },
-      breadcrumbNode(page, [
-        { name: "Home", path: "/" },
-        { name: notesIndex.title, path: notesIndex.path },
-        { name: note.title },
-      ]),
+      breadcrumbNode(page, noteCrumbs(note)),
     ],
   };
 }

@@ -225,7 +225,18 @@ html[data-nav="dark"] {
   .upload__cta,
   .footer-mark,
   .prose-note > h2,
-  .privacy-h2 {
+  .privacy-h2,
+  .type-guide-title,
+  .eyebrow,
+  .guide-h2,
+  .guide-h3,
+  .guide-display,
+  .callout__text,
+  .sweet__title,
+  .band__qty,
+  .price-list dd,
+  .faq-q,
+  .brief-slide {
     font-family: var(--font-display);
   }
 
@@ -477,8 +488,21 @@ html[data-nav="dark"] {
     font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
     line-height: 1.55;
   }
-  .prose-note > p + p {
+  .prose-note > p + p,
+  .prose-note > ul,
+  .prose-note > ul + p {
     margin-top: 1.25em;
+  }
+  .prose-note > ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-note > ul > li {
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+    line-height: 1.55;
+  }
+  .prose-note > ul > li + li {
+    margin-top: 0.5em;
   }
   .prose-note > h2 {
     font-weight: 700;
@@ -1371,6 +1395,779 @@ html[data-nav="dark"] {
 
 
   /* -------------------------------------------------------------------
+     Long-form guide (the agencies page; reusable for any long read).
+     Calmer than the homepage: a sticky contents rail beside one reading
+     column of about 720px, sentence-case chapter headings, and the loud
+     uppercase display voice kept for a few feature moments (the title,
+     the dark panel, the callouts). Wide features take the main column.
+     ------------------------------------------------------------------- */
+  .guide {
+    --rail: 15rem;
+    --rail-gap: clamp(2.5rem, 4vw, 5rem);
+    --measure: 45rem;
+  }
+  @media (min-width: 1280px) {
+    .guide {
+      --rail: 17rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .guide-grid {
+      display: grid;
+      grid-template-columns: var(--rail) minmax(0, 1fr);
+      column-gap: var(--rail-gap);
+    }
+  }
+  .guide-main {
+    container-type: inline-size;
+    min-width: 0;
+  }
+
+  /* Page title: the site's uppercase display voice, a size below type-page.
+     Limit "MERCHANDISE" 6.82em: 251px at 320px wide. */
+  .type-guide-title {
+    font-weight: 900;
+    font-size: clamp(2.25rem, 11.4vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  @media (min-width: 768px) {
+    .type-guide-title {
+      font-size: clamp(3rem, 8.2vw, 7.5rem);
+    }
+  }
+  @media (min-width: 1024px) {
+    .type-guide-title {
+      font-size: min(6.4vw, 8.5rem);
+    }
+  }
+
+  /* Small uppercase label with the lime chip: page eyebrow, contents title. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .eyebrow::before {
+    content: "";
+    flex: none;
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--color-lime);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 18%, transparent);
+  }
+
+  .guide-intro > p {
+    max-width: var(--measure);
+    font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .guide-intro > * + * {
+    margin-top: 1em;
+  }
+
+  /* The proposition strip under the intro: one line, hairlines, no icons. */
+  .proof-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.5rem;
+    padding-block: 1rem;
+    border-block: 1px solid var(--line);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.35;
+  }
+  .proof-strip > li {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .proof-strip > li + li::before {
+    content: "\00b7";
+    color: var(--muted);
+    margin-inline-start: -1.5rem;
+    width: 1.5rem;
+    text-align: center;
+  }
+  @media (max-width: 639px) {
+    .proof-strip {
+      flex-direction: column;
+    }
+    .proof-strip > li + li::before {
+      display: none;
+    }
+  }
+
+  /* Contents: the sticky rail from lg, a native disclosure below it. */
+  .guide-rail {
+    position: sticky;
+    top: 6rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+  }
+  .toc {
+    margin-top: 1rem;
+    border-inline-start: 1px solid var(--line);
+  }
+  .toc-link {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.4rem;
+    padding: 0.4rem 0 0.4rem 0.9rem;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .toc-link:hover {
+    color: var(--fg);
+  }
+  .toc-num {
+    align-self: start;
+    justify-self: start;
+    padding: 0.05em 0.3em;
+    border-radius: 1px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    transition: background-color 0.2s ease;
+  }
+  /* Current section: ink label at a heavier weight, the number on the lime
+     block and a rule on the track, so it never relies on colour alone. */
+  .toc-link[aria-current="true"] {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .toc-link[aria-current="true"] .toc-num {
+    background-color: var(--color-lime);
+    color: var(--color-ink);
+  }
+  .toc-link[aria-current="true"]::before {
+    content: "";
+    position: absolute;
+    inset-block: 0.35rem;
+    inset-inline-start: -1px;
+    width: 2px;
+    background-color: var(--fg);
+  }
+  .toc-disclosure {
+    border-block: 1px solid var(--line-strong);
+  }
+  .toc-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.5rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .toc-summary::-webkit-details-marker {
+    display: none;
+  }
+  .toc-disclosure .toc {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .toc-disclosure .toc-link {
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+
+  /* The + that turns into an x: a lime block with an ink cross, used by
+     the FAQ rows and the phone contents. The glyph is ink on lime (13:1). */
+  .plus-icon {
+    position: relative;
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 2px;
+    background-color: var(--color-lime);
+    transition: transform 0.25s var(--ease-out-quart);
+  }
+  .plus-icon::before,
+  .plus-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.8rem;
+    height: 2px;
+    background-color: var(--color-ink);
+    transform: translate(-50%, -50%);
+  }
+  .plus-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  details[open] > summary .plus-icon {
+    transform: rotate(45deg);
+  }
+
+  /* Chapters */
+  .guide-section {
+    position: relative;
+    scroll-margin-top: 5rem;
+    padding-block: clamp(3rem, 2rem + 3vw, 5.5rem);
+  }
+  .guide-section + .guide-section:not(.guide-panel) {
+    border-top: 1px solid var(--line);
+  }
+  .guide-panel + .guide-section {
+    border-top: 0;
+  }
+  .guide-section > :not(.guide-wide) {
+    max-width: var(--measure);
+  }
+  .guide-section > * + * {
+    margin-top: 1.15rem;
+  }
+  .guide-section > .guide-head + * {
+    margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  }
+  .guide-section > .guide-wide,
+  .guide-section > .guide-wide + * {
+    margin-top: clamp(2rem, 1.25rem + 2.5vw, 3.5rem);
+  }
+  /* Running copy: unclassed paragraphs only, so a classed line (a pull
+     quote, a caption) keeps its own size. */
+  .guide-section > p:not([class]),
+  .guide-section > .guide-strong,
+  .guide-list > li,
+  .faq-a {
+    font-size: clamp(1.0625rem, 0.98rem + 0.3vw, 1.1875rem);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .guide-kicker {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--muted);
+  }
+  .guide-kicker > span {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+  }
+  .guide-h2 {
+    margin-top: 0.85rem;
+    max-width: 24ch;
+    font-weight: 900;
+    font-size: clamp(1.875rem, 1.1rem + 2.4vw, 3.375rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+  .guide-h3 {
+    font-weight: 700;
+    font-size: clamp(1.375rem, 1rem + 1vw, 2rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .guide-section > h3.guide-h3 {
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+  }
+  /* The uppercase display voice, for the few feature moments. Sized to the
+     main column (cqi), not the viewport, because the contents rail takes
+     part of the width from lg. */
+  .guide-display {
+    margin-top: 0.85rem;
+    font-weight: 900;
+    font-size: clamp(2.25rem, 1rem + 5.4cqi, 6rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .guide-panel > .guide-head {
+    max-width: none;
+  }
+  .guide-strong {
+    font-weight: 600;
+  }
+  /* A line lifted out of the copy: the display face, a step above body. */
+  .guide-pull {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.375rem, 1rem + 1.2vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  /* The one short functional list on the page. */
+  .guide-list > li {
+    position: relative;
+    padding: 0.6rem 0 0.6rem 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .guide-list > li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .guide-list > li::before {
+    content: "";
+    position: absolute;
+    left: 0.15rem;
+    top: 1.35rem;
+    width: 0.6rem;
+    height: 2px;
+    background-color: var(--fg);
+  }
+
+  /* Inline links in running copy: always underlined, the lime line on hover. */
+  .text-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: var(--line-strong);
+    transition: text-decoration-color 0.2s ease;
+  }
+  .text-link:hover,
+  .text-link:focus-visible {
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 2px;
+  }
+
+  /* Dark (and stone) feature panels: edge to edge below lg, a panel in the
+     main column beside the contents from lg. */
+  .guide-panel {
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+    border-radius: var(--radius-section);
+  }
+  @media (min-width: 640px) {
+    .guide-panel {
+      margin-inline: -2rem;
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .guide-panel {
+      margin-inline: 0;
+      padding-inline: clamp(2rem, 4vw, 4.5rem);
+    }
+  }
+  .guide-panel {
+    padding-block: clamp(3rem, 2rem + 4vw, 6.5rem);
+  }
+  .guide-panel + .guide-panel,
+  .guide-section + .guide-panel {
+    margin-top: clamp(0.5rem, 1vw, 1rem);
+  }
+  .guide-panel > p:not([class]) {
+    color: var(--muted);
+  }
+  .guide-panel > p.guide-strong {
+    color: var(--fg);
+  }
+  /* The lime pull quote on the dark panel (lime on ink is 12.6:1). */
+  .panel-quote {
+    color: var(--color-lime);
+    font-size: clamp(2rem, 1rem + 4.4cqi, 5rem);
+  }
+
+  /* The sweet-spot feature: the figure large, the claim on the lime block. */
+  .sweet {
+    display: grid;
+    gap: 1rem 3rem;
+    padding-top: 1.25rem;
+    border-top: 3px solid var(--fg);
+  }
+  @container (min-width: 46rem) {
+    .sweet {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: end;
+    }
+    .sweet__text {
+      grid-column: 2;
+    }
+  }
+  .sweet__figure {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 1rem + 10cqi, 9rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+  }
+  .sweet__figure small {
+    display: block;
+    margin-top: 0.35em;
+    font-size: 0.28em;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .sweet__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.625rem, 1rem + 3cqi, 3rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .sweet__text {
+    max-width: 40ch;
+    font-weight: 500;
+    font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+    line-height: 1.4;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  /* Pull lines between chapters */
+  .callout {
+    padding-top: 1.25rem;
+    border-top: 3px solid var(--fg);
+  }
+  .callout__text {
+    max-width: 28ch;
+    font-weight: 900;
+    font-size: clamp(1.5rem, 1rem + 2.4cqi, 2.875rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .callout__support {
+    margin-top: 1.25rem;
+    max-width: 44ch;
+    font-size: clamp(1.0625rem, 0.98rem + 0.3vw, 1.1875rem);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  /* The quantity bands: stacked on phones, rows in a mid-width column,
+     three columns once the main column is wide enough, with the sweet spot
+     on the lime and standing proud of the other two. */
+  .bands {
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+  }
+  .band {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+  }
+  .band + .band {
+    border-top: 1px solid var(--line-strong);
+  }
+  .band--sweet {
+    --muted: color-mix(in srgb, var(--color-ink) 80%, var(--color-lime));
+    background-color: var(--color-lime);
+    color: var(--color-ink);
+  }
+  .band__tag {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .band__qty {
+    font-weight: 900;
+    font-size: clamp(2.5rem, 0.75rem + 3.2cqi, 3.75rem);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    font-variant-numeric: lining-nums;
+  }
+  .band__qty small {
+    display: block;
+    margin-top: 0.35em;
+    font-size: max(0.28em, 0.8125rem);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .band__lead {
+    font-weight: 600;
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    line-height: 1.3;
+    text-wrap: pretty;
+  }
+  .band__text {
+    font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
+    line-height: 1.5;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  @container (min-width: 36rem) and (max-width: 53.99rem) {
+    .band {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      column-gap: 2rem;
+    }
+    .band > :not(.band__qty) {
+      grid-column: 2;
+    }
+    .band__qty {
+      grid-column: 1;
+      grid-row: 1 / span 3;
+    }
+  }
+  @container (min-width: 54rem) {
+    .bands {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+    }
+    .band + .band {
+      border-top: 0;
+      border-inline-start: 1px solid var(--line-strong);
+    }
+    .band--sweet {
+      margin-block: -1.25rem;
+      padding-block: calc(clamp(1.25rem, 1rem + 1.5vw, 2.25rem) + 1.25rem);
+      border-radius: 2px;
+    }
+    .band--sweet + .band {
+      border-inline-start: 0;
+    }
+    .band--sweet .band__qty {
+      font-size: clamp(3rem, 1rem + 4.2cqi, 5rem);
+    }
+  }
+
+  /* A brief as it often arrives: set like a slide. */
+  .brief-slide {
+    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    border-radius: 2px;
+    background-color: var(--color-stone);
+    color: var(--color-ink);
+    font-weight: 700;
+    font-size: clamp(1.375rem, 1rem + 1.3vw, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .brief-slide footer {
+    margin-top: 1.25rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0;
+    color: color-mix(in srgb, var(--color-ink) 72%, var(--color-stone));
+  }
+
+  /* Two asks side by side (pitch support). */
+  .compare {
+    display: grid;
+    gap: 1rem;
+  }
+  @container (min-width: 40rem) {
+    .compare {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .compare > figure {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+  }
+  .compare figcaption {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .compare blockquote {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.1875rem, 1rem + 0.7vw, 1.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: pretty;
+  }
+
+  /* Published prices: a four-up strip, two-up on phones. */
+  .price-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 3px solid var(--fg);
+  }
+  @container (min-width: 40rem) {
+    .price-list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .price-list > div {
+    padding: 1rem 1rem 1.25rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .price-list dt {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  .price-list dd {
+    margin-top: 0.4rem;
+    font-weight: 900;
+    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .price-list dd.price-list__words {
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+  .price-list dd small {
+    font-size: 0.45em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* Network capacity on the dark panel. */
+  .capacity {
+    display: grid;
+    gap: 1rem 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  @container (min-width: 44rem) {
+    .capacity {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: end;
+    }
+  }
+  .capacity__figure {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 2rem + 4vw, 6rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+  }
+  .capacity__text {
+    max-width: 46ch;
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .capacity__text strong {
+    color: var(--fg);
+  }
+
+  /* FAQ: hairline rows, large question, the lime + control. */
+  .faq {
+    max-width: 52rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--line-strong);
+    scroll-margin-top: 5rem;
+  }
+  .faq-summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.25rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-q {
+    font-weight: 700;
+    font-size: clamp(1.1875rem, 1rem + 0.7vw, 1.625rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    text-wrap: pretty;
+  }
+  .faq-summary:hover .faq-q {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  .faq-a {
+    max-width: var(--measure);
+    padding-bottom: 1.75rem;
+  }
+  .faq-a > p + p {
+    margin-top: 0.9em;
+  }
+
+  /* The short version: one panel, easy to screenshot. */
+  .rules {
+    display: grid;
+    border-top: 1px solid var(--line-strong);
+  }
+  @container (min-width: 44rem) {
+    .rules {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .rules > li + li {
+      border-inline-start: 1px solid var(--line-strong);
+      padding-inline-start: 1.5rem;
+    }
+  }
+  .rules > li {
+    padding-block: 1.25rem;
+    padding-inline-end: 1.5rem;
+  }
+  .rules > li + li {
+    border-top: 1px solid var(--line-strong);
+  }
+  @container (min-width: 44rem) {
+    .rules > li + li {
+      border-top: 0;
+    }
+  }
+  .principles {
+    display: grid;
+    gap: 0 2.5rem;
+  }
+  @container (min-width: 44rem) {
+    .principles {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .principles > li {
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--line-strong);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: pretty;
+  }
+
+  /* The dark closing section runs into the dark footer; a hairline keeps
+     them apart. */
+  main:has(> .cta-dark:last-child) + footer {
+    border-top: 1px solid var(--line);
+  }
+
+  /* A softer entrance for the long read: a shorter lift and no side shift. */
+  html[data-reveal] [data-reveal="soft"] {
+    transform: translate3d(0, 1rem, 0);
+    transition-duration: 0.6s;
+  }
+
+  /* -------------------------------------------------------------------
      Long-form prose (privacy policy)
      ------------------------------------------------------------------- */
   .privacy-h2 {
@@ -1479,7 +2276,10 @@ html[data-nav="dark"] {
   .u-wipe,
   .mark-hover,
   .btn,
-  .btn__arrow {
+  .btn__arrow,
+  .plus-icon,
+  .toc-link,
+  .toc-num {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }

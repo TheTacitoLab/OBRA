@@ -1,13 +1,19 @@
 import type { MetadataRoute } from "next";
+import { agencyPage } from "@/content/agencies";
 import { audiences, pageHref, products } from "@/content/site";
 import { noteHref, notes } from "@/content/notes";
 import { privacyHref, siteConfig, startHref } from "@/lib/siteConfig";
 
 /**
- * XML sitemap. `trailingSlash: true` in next.config.ts means the canonical
- * form of every URL carries a trailing slash, so they are listed that way.
- * Only the notes carry `lastmod` (their published date); the static pages
- * would otherwise claim to change on every deploy.
+ * XML sitemap: canonical, indexable pages only, each URL exactly as its
+ * canonical tag gives it (https, no www, trailing slash, per
+ * `trailingSlash: true` in next.config.ts). Leave out anything noindex
+ * (campaign landing pages), redirects, the 404 and query-string variants.
+ *
+ * `lastmod` appears only where a real content date exists: a note's
+ * published or updated date, and the agencies page's hand-set `modified`.
+ * The other static pages carry none rather than claiming to change on
+ * every deploy.
  */
 
 // Required by `output: "export"`: generated once at build time.
@@ -18,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     path: string,
     priority: number,
     changeFrequency: "weekly" | "monthly" | "yearly" = "monthly",
-    modified?: Date,
+    modified?: string,
   ) => ({
     url: `${siteConfig.url}${path}`,
     ...(modified ? { lastModified: modified } : {}),
@@ -34,10 +40,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/services/", 0.8),
     entry("/about/", 0.7),
     entry("/notes/", 0.7, "weekly"),
-    ...audiences.map((page) => entry(pageHref(page.slug), 0.8)),
+    ...audiences.map((page) =>
+      page.slug === "agencies"
+        ? entry(agencyPage.path, 0.9, "monthly", agencyPage.modified)
+        : entry(pageHref(page.slug), 0.8),
+    ),
     ...products.map((page) => entry(pageHref(page.slug), 0.7)),
     ...notes.map((note) =>
-      entry(noteHref(note.slug), 0.5, "yearly", new Date(note.date)),
+      entry(noteHref(note.slug), 0.5, "yearly", note.updated ?? note.date),
     ),
     entry(privacyHref, 0.1, "yearly"),
   ];

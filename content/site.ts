@@ -31,6 +31,8 @@ export type PageEntry = {
   intro: string;
   /** Product pages only: how this category is developed, three short steps. */
   develop?: { title: string; text: string }[];
+  /** Product pages only: a contextual link beside Start a project. */
+  secondaryCta?: { label: string; href: string };
 };
 
 /** Who for: the five audiences, in display order. */
@@ -74,9 +76,11 @@ export const audiences: PageEntry[] = [
   {
     slug: "agencies",
     label: "Agencies",
-    title: "Merchandise for agencies",
+    title: "Custom merchandise for agencies",
+    // The /agencies/ meta description; its full <title> is in
+    // content/agencies.ts, which holds the rest of that page.
     description:
-      "madebyobra works behind the scenes with creative, experiential, event and brand agencies: product development and manufacturing for their clients, white label when needed.",
+      "Custom merchandise production for creative, experiential and activation agencies. Product development, sampling, manufacturing, packaging and delivery, with white-label support when you need it.",
     intro:
       "Your client’s product, developed and made under your name, in the room or behind it.",
   },
@@ -87,7 +91,7 @@ export const products: PageEntry[] = [
   {
     slug: "headwear",
     label: "Headwear",
-    title: "Headwear",
+    title: "Custom headwear: caps, beanies and bucket hats",
     description:
       "Bespoke headwear from madebyobra: caps, beanies and bucket hats with custom trims, labels and finishing.",
     intro:
@@ -110,7 +114,7 @@ export const products: PageEntry[] = [
   {
     slug: "t-shirts",
     label: "T-shirts",
-    title: "T-shirts",
+    title: "Custom T-shirts",
     description:
       "Bespoke t-shirts from madebyobra: different weights, fits, fabrics, print methods and finishing options.",
     intro:
@@ -133,7 +137,7 @@ export const products: PageEntry[] = [
   {
     slug: "tops",
     label: "Tops",
-    title: "Tops",
+    title: "Custom tops: hoodies, sweatshirts and polos",
     description:
       "Bespoke tops from madebyobra: hoodies, sweatshirts, jerseys, polos and long sleeves made as part of a collection.",
     intro: "Hoodies, sweatshirts, jerseys, polos and long sleeves.",
@@ -155,7 +159,7 @@ export const products: PageEntry[] = [
   {
     slug: "sportswear",
     label: "Sportswear",
-    title: "Sportswear",
+    title: "Custom sportswear for teams and training",
     description:
       "Bespoke sportswear from madebyobra: performance pieces built for training, teams and active use, made through our factory network.",
     intro: "Performance pieces built for training, teams and active use.",
@@ -177,10 +181,11 @@ export const products: PageEntry[] = [
   {
     slug: "retro-football-shirts",
     label: "Retro football shirts",
-    title: "Retro football shirts",
+    title: "Custom retro football shirts",
     description:
       "Bespoke retro football shirts from madebyobra: fully custom jerseys for festivals, artists, events, brands and agencies, from limited runs to larger production.",
     intro: "Fully custom jerseys, from limited runs to larger production.",
+    secondaryCta: { label: "How we work with agencies", href: "/agencies/" },
     develop: [
       {
         title: "Cut and fabric",
@@ -199,7 +204,7 @@ export const products: PageEntry[] = [
   {
     slug: "trainingwear",
     label: "Trainingwear",
-    title: "Trainingwear",
+    title: "Custom trainingwear: tracksuits and warm-ups",
     description:
       "Bespoke trainingwear from madebyobra: tracksuits, warm-ups, technical tops and training pieces, produced at scale.",
     intro: "Tracksuits, warm-ups, technical tops and training pieces.",
@@ -221,7 +226,7 @@ export const products: PageEntry[] = [
   {
     slug: "accessories",
     label: "Accessories",
-    title: "Accessories",
+    title: "Custom accessories: bags, socks and buffs",
     description:
       "Bespoke accessories from madebyobra: bags, socks, buffs and smaller branded products made to the same standard as the rest of the range.",
     intro: "Bags, socks, buffs and smaller branded products.",

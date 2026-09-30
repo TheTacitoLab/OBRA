@@ -11,7 +11,8 @@ import { buildPageSchema } from "@/lib/schema/organization";
 
 const page = {
   path: "/services/",
-  title: "Services",
+  title: "Merchandise services: development to delivery",
+  crumb: "Services",
   description:
     "madebyobra services: creative direction, product development, sampling and manufacturing, procurement and costing, branding and packaging, e-commerce, fulfilment, event support, logistics and white label production.",
 };
@@ -28,7 +29,7 @@ export default function ServicesPage() {
       <JsonLd
         data={buildPageSchema({
           ...page,
-          crumbs: [{ name: "Home", path: "/" }, { name: page.title }],
+          crumbs: [{ name: "Home", path: "/" }, { name: page.crumb }],
         })}
       />
 

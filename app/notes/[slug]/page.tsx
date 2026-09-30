@@ -5,9 +5,9 @@ import { NoteArticle } from "@/components/notes/NoteArticle";
 import { NoteList } from "@/components/notes/NoteList";
 import { JsonLd } from "@/components/site/JsonLd";
 import { Section } from "@/components/site/Section";
-import { findNote, noteHref, notes, notesByDate } from "@/content/notes";
+import { findNote, noteHref, notes, relatedNotes } from "@/content/notes";
 import { pageMetadata } from "@/lib/metadata";
-import { buildNoteSchema } from "@/lib/schema/notes";
+import { buildNoteSchema, noteCrumbs } from "@/lib/schema/notes";
 
 /**
  * One route per note in content/notes.ts, pre-rendered at build time.
@@ -34,7 +34,14 @@ export async function generateMetadata({
     title: note.title,
     description: note.standfirst,
     path: noteHref(slug),
-    article: { publishedTime: note.date },
+    ...(note.image
+      ? { image: { url: note.image.src, width: note.image.width, height: note.image.height, alt: note.image.alt } }
+      : {}),
+    article: {
+      publishedTime: note.date,
+      modifiedTime: note.updated,
+      authors: note.author ? [note.author.name] : undefined,
+    },
   });
 }
 
@@ -47,12 +54,12 @@ export default async function NotePage({
   const note = findNote(slug);
   if (!note) notFound();
 
-  const others = notesByDate().filter((entry) => entry.slug !== slug);
+  const others = relatedNotes(note);
 
   return (
     <>
       <JsonLd data={buildNoteSchema(note)} />
-      <NoteArticle note={note} />
+      <NoteArticle note={note} crumbs={noteCrumbs(note)} />
       {others.length > 0 && (
         <Section tone="stone" size="compact">
           <h2 className="type-display-sm">More notes.</h2>

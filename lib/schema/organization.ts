@@ -54,22 +54,40 @@ export function buildHomeSchema() {
   };
 }
 
-type Crumb = { name: string; path?: string };
+/** One step of a breadcrumb trail; the current page has no path. */
+export type Crumb = { name: string; path?: string };
+
+export function breadcrumbNode(page: string, crumbs: Crumb[]) {
+  return {
+    "@type": "BreadcrumbList",
+    "@id": `${page}#breadcrumb`,
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      ...(crumb.path ? { item: `${SITE}${crumb.path}` } : {}),
+    })),
+  };
+}
 
 /**
  * WebPage + BreadcrumbList graph for a landing page. `crumbs` runs from Home
- * to the current page; the last crumb has no `item` by convention.
+ * to the current page; the last crumb has no `item` by convention. The
+ * visible Breadcrumbs component takes the same array, so the two match.
+ * `modified` is an ISO date set by hand when the page content changes.
  */
 export function buildPageSchema({
   path,
   title,
   description,
   crumbs,
+  modified,
 }: {
   path: string;
   title: string;
   description: string;
   crumbs: Crumb[];
+  modified?: string;
 }) {
   const page = `${SITE}${path}`;
   return {
@@ -86,17 +104,9 @@ export function buildPageSchema({
         inLanguage: "en-GB",
         isPartOf: { "@id": `${SITE}/#website` },
         breadcrumb: { "@id": `${page}#breadcrumb` },
+        ...(modified ? { dateModified: modified } : {}),
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": `${page}#breadcrumb`,
-        itemListElement: crumbs.map((crumb, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: crumb.name,
-          ...(crumb.path ? { item: `${SITE}${crumb.path}` } : {}),
-        })),
-      },
+      breadcrumbNode(page, crumbs),
     ],
   };
 }

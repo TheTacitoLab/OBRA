@@ -29,24 +29,35 @@ app/
   layout.tsx             Root layout - font, metadata, header + footer shell
   globals.css            Design system: palette, tones, type scale, rhythm
   page.tsx               Homepage
-  festivals/ events/ brands/ artists/ agencies/   Audience landing pages
+  festivals/ events/ brands/ artists/   Audience landing pages (one template)
+  agencies/              The agency guide: long-form, its own layout
   [slug]/page.tsx        Product landing pages (one template)
   what-we-make/ who-for/ services/ about/ notes/ start-a-project/ privacy/
+  robots.ts sitemap.ts   robots.txt and sitemap.xml, generated at build
 components/
   site/                  Header, Footer, Logo, Container, Section, Editorial,
-                         Block, Button, MarkedTitle, Reveal, JsonLd
+                         Block, Button, MarkedTitle, Reveal, JsonLd,
+                         Breadcrumbs, RichText, Attribution
   home/                  Sheets (scroll engine), Sheet, BigList, ScrollCue and
                          the sections in page order (Hero, WhoFor,
                          Proposition, AboutPreview, Collection, RetailReady,
                          Procurement, NotesPreview, Contact)
   landing/               AudiencePage, product/landing templates, ClosingCta
+  guide/                 Long-form primitives: contents rail and disclosure,
+                         TocSpy, GuideSection, Callout, Faq, Figures
+  agencies/              The agency guide's own pieces (quantity bands,
+                         pricing strip, short version, closing CTA)
   notes/                 NoteList, article rendering
   forms/                 ProjectForm (Web3Forms)
 content/
   site.ts                Nav, audiences, products, services, form options
-  audiences.ts           Per-audience landing page content
+  audiences.ts           Per-audience landing page content (not agencies)
+  agencies.ts            Agency guide: metadata, contents, FAQ, links, images
+  pricing.ts             Published prices (approved figures only)
   notes.ts               Notes entries (example content to replace)
-lib/                     siteConfig, metadata helper, schema.org builders
+lib/                     siteConfig, metadata helper, schema.org builders,
+                         attribution constants, inline-link syntax
+scripts/                 preview-noindex.mjs (runs as npm postbuild)
 public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 ```
 
@@ -60,8 +71,8 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 - **Lime block**: the brand punctuation. `.mark` puts the end of a heading
   on a solid lime block (the hero's "More brand.", "Make." on the What we
   make section and page, "Your product." in the blue break, "Ready." on
-  Retail ready, "Client." on the agencies page, "Project." on every Start a
-  project heading). `MarkedTitle` in `components/site/` renders the split:
+  Retail ready, "Agencies." in the agency guide's title, "Project." on
+  every Start a project heading). `MarkedTitle` in `components/site/` renders the split:
   the break goes before the marked word, or wherever a `\n` in the title
   puts it, in which case a mid-line word keeps its word space
   (`.mark--mid`). `.mark-hover` is the same block wiping in on hover for
@@ -93,8 +104,17 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   top edge of `--radius-section` (24px on desktop down to 12px on phones)
   that laps the section above by the same amount (`.section-round`,
   `.sheet--round` for the last stacked sheet, and the footer).
+- **Long-form guide** (`/agencies/`, reusable): a sticky contents rail
+  beside one reading column of about 720px (`--measure`), sentence-case
+  chapter headings, and the uppercase display voice kept for a few feature
+  moments. `.guide-main` is a size container, so the feature type and the
+  quantity bands size to the column (`cqi`, `@container`), not the
+  viewport. Below lg the contents fold into a native `<details>`; every
+  link is a plain fragment, so it all works without JavaScript. FAQ rows
+  are native disclosures with the answers in the HTML.
 - **Motion**: two systems, both off under `prefers-reduced-motion`.
-  `Reveal` (mounted on the homepage only) sets `html[data-reveal]` and marks
+  `Reveal` (mounted on the homepage and the agency guide, which uses the
+  quieter `data-reveal="soft"`) sets `html[data-reveal]` and marks
   elements `.is-in` as they enter the viewport; `data-reveal="left|right|up"`
   on an element, or `data-reveal-group` on a parent, fades and lifts them
   in over 650ms (1.5rem up, 0.875rem from the title's side, 90ms stagger
@@ -104,10 +124,49 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   scroll, holds, and fades out before Who for; it is decorative and
   not interactive.
 
+## Search and indexing
+
+- **URLs**: https, no www, trailing slash (`trailingSlash: true`). Every
+  page's canonical, `og:url` and sitemap entry use exactly that form,
+  built from `siteConfig.url` and the route path.
+- **Metadata**: one call to `pageMetadata()` per route (title, description,
+  canonical, Open Graph; Twitter tags follow from Open Graph). Pass
+  `noindex: true` for a conversion-only campaign landing page that repeats
+  an organic page's pitch, and leave that page out of `app/sitemap.ts`.
+- **Sitemap**: canonical, indexable pages only. `lastmod` only where a real
+  content date exists (a note's date or `updated`, the agency guide's
+  hand-set `modified` in `content/agencies.ts`): bump it when the content
+  changes, not on deploy.
+- **robots.txt**: everything allowed; OAI-SearchBot (ChatGPT search) named
+  explicitly. GPTBot (training) has no rule of its own and falls under `*`.
+- **Previews**: Netlify noindexes Deploy Previews itself;
+  `scripts/preview-noindex.mjs` adds `X-Robots-Tag: noindex` to branch
+  deploys too (it reads Netlify's `CONTEXT` and never touches production).
+- **Structured data**: one Organization and WebSite node, reused by
+  `@id`; WebPage + BreadcrumbList per page (the visible `Breadcrumbs` take
+  the same array); Article for notes, with a Person author when the note
+  names one. No FAQPage markup (Google shows FAQ rich results only for
+  government and health sites) and no Product markup on category pages.
+- **Click events**: links carry `data-track` (the agency guide's
+  `agency_*` events). `Attribution.tsx` forwards them to gtag, a GTM
+  dataLayer or Plausible if one is installed (none is today), and carries
+  the event and any utm_* parameters to the brief form, which adds them to
+  the submission.
+- **Pages not built yet**: `/pricing/`, `/how-we-work/` and `/work/`. Links
+  that want them point at the nearest live page (`agencyLinks` in
+  `content/agencies.ts`); switch them there once each page exists. The
+  Agency Merchandise Brief Template download stays hidden until
+  `agencyLinks.briefTemplate` points at a real file.
+
 ## Notes / placeholders
 
 - **Notes** entries in `content/notes.ts` are example pieces written to set
-  the structure and tone. Replace before launch.
+  the structure and tone. Replace before launch. A note can carry a real
+  named `author`, an `updated` date, a lead `image`, `toc: true` for long
+  pieces, `related` slugs and `cluster: "agencies"` (a link to the agency
+  guide at its foot, and a listing on that page); body text takes inline
+  links as `[label](/path/)`. The five planned agency pieces are listed
+  there.
 - **Form** posts to Web3Forms from the client. File attachments are sent as
   multipart data; whether they are delivered depends on the Web3Forms plan
   attached to the access key.

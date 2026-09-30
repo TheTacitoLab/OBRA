@@ -8,8 +8,9 @@ import { useEffect } from "react";
  * transparent and settle as they come into view; globals.css holds the
  * motion, gated on html[data-reveal] so nothing is hidden before this runs
  * or where it does not. Anything already on screen is marked in the same
- * tick, so there is no flash on load. Mounted by the homepage only; the
- * gate is removed again when it unmounts.
+ * tick, so there is no flash on load. Mounted by the homepage and the
+ * agencies guide (which uses the quieter data-reveal="soft"); the gate is
+ * removed again when it unmounts.
  */
 export function Reveal() {
   useEffect(() => {

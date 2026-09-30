@@ -23,7 +23,10 @@ type Variant = "primary" | "outline" | "nav";
 
 /**
  * Solid, squared button. `plain` renders an <a> instead of next/link, for
- * in-page hash links the sheet script handles itself.
+ * in-page hash links the sheet script handles itself. `track` names the
+ * click event (components/site/Attribution.tsx); a tracked link is always a
+ * plain anchor, because the tracker decorates links to the brief form at
+ * click time and next/link would navigate to its own href instead.
  */
 export function Button({
   href,
@@ -31,17 +34,19 @@ export function Button({
   variant = "primary",
   className = "",
   plain = false,
+  track,
 }: {
   href: string;
   children: ReactNode;
   variant?: Variant;
   className?: string;
   plain?: boolean;
+  track?: string;
 }) {
   const classes = `btn btn-${variant} ${className}`;
-  if (plain) {
+  if (plain || track) {
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} data-track={track}>
         <span>{children}</span>
         <Arrow />
       </a>
@@ -61,11 +66,13 @@ export function ArrowLink({
   children,
   className = "",
   plain = false,
+  track,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
   plain?: boolean;
+  track?: string;
 }) {
   const classes = `link-arrow ${className}`;
   const inner = (
@@ -74,9 +81,9 @@ export function ArrowLink({
       <Arrow />
     </>
   );
-  if (plain) {
+  if (plain || track) {
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} data-track={track}>
         {inner}
       </a>
     );
