@@ -43,11 +43,12 @@ components/
                          Proposition, AboutPreview, Collection, RetailReady,
                          Procurement, NotesPreview, Contact)
   landing/               AudiencePage, product/landing templates, ClosingCta
-  guide/                 Long-form primitives: OnThisPage, GuideSection,
-                         Callout, Faq, Figures
+  guide/                 Long-form primitives: GuideChapter, Callout,
+                         GuideRail/GuideStrip + GuideSpy, Faq, Figures,
+                         OnThisPage (long notes)
   agencies/              The agencies page's own pieces (hero and intro
-                         sections, quantity bands, pricing strip, short
-                         version, closing CTA)
+                         sections, the guide, quantity bands, pricing
+                         strip, short version, closing CTA)
   notes/                 NoteList, article rendering
   forms/                 ProjectForm (Web3Forms)
 content/
@@ -114,14 +115,18 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   without overflowing. The copy sits beside the title rather than at the
   far edge: from lg for a short title, from xl for the rest; stacked
   otherwise. Remeasure the widths when Aeonik replaces Figtree.
-- **Agencies page**: brand first (a homepage-style hero with the scroll
-  cue, three alternating sections, one choice: read the guide or
-  enquire), then the full guide on the same URL at `#agency-guide`: one
-  quiet "On this page" block, a single centred reading column of about
-  720px (`--measure`), H2s at 34-46px, and a few broad rounded callouts
-  (lime, ink, or stone with a lime bar). The guide does not animate.
-  `.guide-main` is a size container, so feature type sizes to the column.
-  FAQ rows are native disclosures with the answers in the HTML.
+- **Agencies page**: two halves. First a commercial landing page in the
+  homepage's voice (fitted hero with the scroll cue, three alternating
+  sections, one choice: read the guide or enquire). Then the full guide on
+  the same URL (`#agency-guide`, `components/agencies/AgencyGuide.tsx`):
+  contents on the left from lg (a sticky rail), a sticky strip under the
+  header on phones and tablets (both inside the guide, so they appear
+  with it and leave before the closing CTA; `GuideSpy` marks the current
+  section), and sixteen numbered chapters on the right, each number,
+  title, introduction, body and at most one callout. One spacing system
+  (`--g-section`, `--g-open`, `--g-p`, `--g-block`), one lime callout
+  style, reading measure about 760px. The guide does not animate. FAQ rows
+  are native disclosures with the answers in the HTML.
 - **Motion**: two systems, both off under `prefers-reduced-motion`.
   `Reveal` (mounted on the homepage and the top of the agencies page)
   sets `html[data-reveal]` and marks elements `.is-in` as they enter the

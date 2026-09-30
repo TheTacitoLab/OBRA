@@ -69,24 +69,28 @@ export const agencyLinks = {
   work: null as string | null,
 };
 
-/** The contents: every chapter, in page order. */
+/**
+ * The guide's contents: every numbered section, in page order. `label` is
+ * the desktop rail's wording; `short` fits the phone's horizontal strip.
+ * The numbers shown beside each section come from this order.
+ */
 export const agencySections = [
-  { id: "how-agencies-use-madebyobra", label: "How agencies use madebyobra" },
-  { id: "quantity", label: "What your quantity lets you make" },
-  { id: "direct-to-factory", label: "Why direct-to-factory matters" },
-  { id: "what-we-make", label: "What we can make" },
-  { id: "white-label", label: "White-label agency production" },
-  { id: "concept-to-production", label: "From concept to something manufacturable" },
-  { id: "pricing", label: "Pricing and trade margins" },
-  { id: "sampling", label: "Sampling and approvals" },
-  { id: "deadlines", label: "Planning around your deadline" },
-  { id: "pitch-support", label: "Pitch support" },
-  { id: "packaging-and-handover", label: "Packaging and handover" },
-  { id: "brief", label: "Writing a useful manufacturing brief" },
-  { id: "when-custom-is-worth-it", label: "When custom manufacturing is worth it" },
-  { id: "common-mistakes", label: "Common mistakes" },
-  { id: "faqs", label: "FAQs" },
-  { id: "short-version", label: "The short version" },
+  { id: "how-agencies-use-madebyobra", label: "How agencies use madebyobra", short: "Overview" },
+  { id: "quantity", label: "What your quantity lets you make", short: "Quantity" },
+  { id: "direct-to-factory", label: "Why direct-to-factory matters", short: "Factory direct" },
+  { id: "what-we-make", label: "What we can make", short: "Products" },
+  { id: "white-label", label: "White-label agency production", short: "White label" },
+  { id: "concept-to-production", label: "From concept to something manufacturable", short: "Brief to product" },
+  { id: "pricing", label: "Pricing and trade margins", short: "Pricing" },
+  { id: "sampling", label: "Sampling and approvals", short: "Sampling" },
+  { id: "deadlines", label: "Planning around your deadline", short: "Deadlines" },
+  { id: "pitch-support", label: "Pitch support", short: "Pitches" },
+  { id: "packaging-and-handover", label: "Packaging and handover", short: "Handover" },
+  { id: "brief", label: "Writing a useful manufacturing brief", short: "The brief" },
+  { id: "when-custom-is-worth-it", label: "When custom manufacturing is worth it", short: "When custom" },
+  { id: "common-mistakes", label: "Common mistakes", short: "Mistakes" },
+  { id: "faqs", label: "FAQs", short: "FAQs" },
+  { id: "short-version", label: "The short version", short: "Short version" },
 ] as const;
 
 export type AgencySectionId = (typeof agencySections)[number]["id"];

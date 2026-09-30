@@ -1,7 +1,7 @@
 /**
- * The short version: the page's advice in one stone panel, arranged to be
- * read (or screenshotted) at a glance. The quantity rules echo the bands
- * above; the principles are short lines rather than a checklist.
+ * The body of the short version (its opening line is the chapter intro):
+ * the quantity rules echoing the bands, the principles as short lines
+ * rather than a checklist, and the closing line.
  */
 const rules = [
   {
@@ -28,10 +28,6 @@ const principles = [
 export function ShortVersion() {
   return (
     <>
-      <p className="type-statement !max-w-[30ch]">
-        If you are an agency planning merchandise, decide how original the
-        product needs to be before choosing the supplier route.
-      </p>
       <ol className="rules guide-wide" aria-label="By quantity">
         {rules.map((rule) => (
           <li key={rule.qty}>
@@ -45,7 +41,7 @@ export function ShortVersion() {
           <li key={line}>{line}</li>
         ))}
       </ul>
-      <p className="type-statement">
+      <p className="short-close">
         That is normally where the <span className="mark mark--mid">memorable bit</span>{" "}
         lives.
       </p>

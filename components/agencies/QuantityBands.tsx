@@ -1,8 +1,8 @@
 /**
  * The three quantity bands: what each order size lets a project change.
- * An ordered list, smallest to largest, each band's quantity its h3. The
- * sweet spot sits on the lime and stands proud, and says so in words too,
- * so its emphasis never rests on colour alone.
+ * An ordered list, smallest to largest; three open columns with the sweet
+ * spot marked by a lime rule and its lime label, and named in words too, so
+ * its emphasis never rests on colour alone.
  */
 const bands = [
   {
@@ -15,7 +15,7 @@ const bands = [
     qty: "250–1,000",
     tag: "The sweet spot",
     lead: "This is the sweet spot for many original merchandise collections.",
-    text: "There is enough volume to move well beyond decorated blanks, introduce more considered fabrics, finishes and trims, and build several products around one visual idea while keeping the project commercially sensible.",
+    text: "There is enough volume to move well beyond decorated blanks, introduce more considered fabrics, finishes and trims, and build several products around one visual idea while keeping the project commercially sensible. Enough volume to make the product genuinely distinctive without forcing the project into huge-volume manufacturing.",
     sweet: true,
   },
   {
@@ -34,10 +34,10 @@ export function QuantityBands() {
     >
       {bands.map((band) => (
         <li key={band.qty} className={`band ${band.sweet ? "band--sweet" : ""}`}>
-          <h3 className="band__qty">
+          <p className="band__qty">
             {band.qty}
             <small>units</small>
-          </h3>
+          </p>
           <p className="band__tag">{band.tag}</p>
           <p className="band__lead">{band.lead}</p>
           <p className="band__text">{band.text}</p>

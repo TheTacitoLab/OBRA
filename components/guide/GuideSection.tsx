@@ -1,59 +1,67 @@
 import type { ReactNode } from "react";
 
+/** Two-digit section number, shared by the contents and the chapters. */
+export const sectionNumber = (index: number) => String(index + 1).padStart(2, "0");
+
 /**
- * One chapter of a long-form guide: the H2, then the body. Direct children
- * sit on the reading measure; anything marked `guide-wide` (bands, prices,
- * callouts) takes the full container. Chapters are separated by space,
- * not rules, and do not animate: the read stays calm.
- *
- * `tone` turns a chapter into a rounded panel (the short version, on stone).
+ * One numbered chapter of a long-form guide, always the same anatomy:
+ * number and title, a short introduction opposite them (beneath them on
+ * narrow columns), then the body. The body sits on the reading measure;
+ * callouts and the few structured blocks (bands, prices) take the whole
+ * article column. Chapters are separated by space alone and do not animate.
  */
-export function GuideSection({
+export function GuideChapter({
   id,
+  number,
   title,
-  tone,
+  intro,
+  final = false,
   children,
 }: {
   id: string;
+  number: string;
   title: ReactNode;
-  tone?: "stone";
+  intro: ReactNode;
+  /** The closing chapter: the same anatomy on a stone panel. */
+  final?: boolean;
   children: ReactNode;
 }) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      data-tone={tone}
-      className={`guide-section ${tone ? "guide-panel guide-wide bg-bg text-fg" : ""}`}
+      data-tone={final ? "stone" : undefined}
+      className={`chapter ${final ? "chapter--final bg-bg text-fg" : ""}`}
     >
-      <h2 id={`${id}-title`} className="guide-h2">
-        {title}
-      </h2>
-      {children}
+      <div className="chapter__open">
+        <div>
+          <p className="chapter__num" aria-hidden="true">
+            {number}
+          </p>
+          <h2 id={`${id}-title`} className="chapter__title">
+            {title}
+          </h2>
+        </div>
+        <p className="chapter__intro">{intro}</p>
+      </div>
+      <div className="chapter__body">{children}</div>
     </section>
   );
 }
 
 /**
- * A broad editorial interruption across the container, on a softly rounded
- * block: lime with ink type, ink with bone type, or stone with a lime
- * detail. The key words can sit on the lime block (.mark). Use a few, for
- * advice worth remembering, not for repeating the paragraph above.
+ * The guide's one callout: a line worth remembering, in the display face on
+ * a softly rounded lime block. Used a few times across the whole guide.
  */
 export function Callout({
   children,
   support,
-  tone = "lime",
 }: {
   children: ReactNode;
   support?: ReactNode;
-  tone?: "lime" | "ink" | "stone";
 }) {
   return (
-    <div
-      className={`callout callout--${tone} guide-wide`}
-      data-tone={tone === "lime" ? undefined : tone}
-    >
+    <div className="callout">
       <p className="callout__text">{children}</p>
       {support && <p className="callout__support">{support}</p>}
     </div>
