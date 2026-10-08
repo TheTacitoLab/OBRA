@@ -1,34 +1,40 @@
 import { Sheet } from "./Sheet";
 import { Collage } from "./Collage";
 import { Container } from "../site/Container";
-import { Editorial } from "../site/Editorial";
 import { whoFor } from "@/content/home";
-import { whoForTiles } from "@/content/homeMedia";
+import { whoForLayout, whoForTiles } from "@/content/homeMedia";
 
 /**
- * The first chapter, rising over the hero: the five audiences as an
- * editorial collage, each leading to its own page. Title left, copy right.
+ * The first chapter, rising over the hero: the five audiences as one quick
+ * editorial row, each leading to its own page. A compact head (title on one
+ * line, the copy beside it), and the section sizes to its content rather
+ * than the screen, so the lime statement is already arriving beneath it.
  */
 export function WhoFor() {
   return (
-    <Sheet id="who-for" tone="ink" last sectionClassName="sheet--round">
-      <Container className="py-section">
-        <Editorial
-          heading={<h2 className="type-display">{whoFor.title}</h2>}
-          aside={
-            <p
-              className="type-lede max-w-[38ch] text-muted"
-              data-reveal="right"
-              data-reveal-delay="1"
-            >
-              {whoFor.copy}
-            </p>
-          }
-        />
+    <Sheet
+      id="who-for"
+      tone="ink"
+      last
+      sectionClassName="sheet--round sheet--auto"
+    >
+      <Container className="chapter">
+        <div className="chapter-head">
+          <h2 className="type-display type-display-tight" data-reveal="left">
+            {whoFor.title}
+          </h2>
+          <p
+            className="chapter-head__copy type-lede text-muted"
+            data-reveal="right"
+            data-reveal-delay="1"
+          >
+            {whoFor.copy}
+          </p>
+        </div>
         <Collage
-          className="mt-body"
-          variant="who"
+          className="chapter__media"
           tiles={whoForTiles}
+          layout={whoForLayout}
           event="who_for_tile_click"
           section="who_for"
         />

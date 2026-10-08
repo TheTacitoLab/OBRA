@@ -169,21 +169,35 @@ search) > "Have something in mind?" (white) > footer.
   the first laps the one before with the rounded section edge. Phones and
   `prefers-reduced-motion` get plain flow. The header tone follows the
   section actually under it.
-- **Collages** (`Collage.tsx`, `.collage--who|make|handle`): an asymmetric
-  grid per section and breakpoint, slot names from `content/homeMedia.ts`.
-  Labels are live text in the display face, lower case with a full stop,
-  sized from the tile (container units) and capped so the longest word
-  fits (`labelWordEm`). Photographs get lime labels over a low scrim;
-  tiles without a photograph are panels of the washed palette with ink
-  labels and the audience's one-line intro.
+- **Compact chapters**: Who for and What we make size to their content
+  (about 70-80% and 85-95% of a desktop screen), with the title on one line
+  and the copy beside it, so the next statement is already arriving as
+  they end. The statements keep their 80% height.
+- **Collages** (`Collage.tsx`, `lib/mosaic.ts`): built around the
+  photographs. Each photograph has a frame in `content/homeMedia.ts`
+  (`aspect`, plus `position` for object-position and an optional `zoom`
+  that only ever tightens), and each section has a layout per breakpoint:
+  a tree of rows and columns of tile ids. The mosaic turns that into grid
+  tracks and the collage's own aspect ratio at build time, so every tile
+  is drawn at its photograph's frame at every width and no photograph is
+  forced into an arbitrary box (and none is letterboxed). Change an aspect
+  or a layout in the manifest and the grid reflows. Labels are live text
+  in the display face, lower case with a full stop, sized from the tile
+  and capped so the longest word fits (`labelWordEm`); photographs get
+  lime labels over a low scrim (at least 3:1 over the lightest pixels
+  behind any label); tiles without a photograph are panels of the washed
+  palette with ink labels and the audience's one-line intro.
 - **Photography** comes from the public Supabase bucket "Website Builds",
   folder `madebyobra/`, through Supabase's render endpoint (WebP, resized
-  per `srcset`; `lib/media.ts` has a switch back to the original files).
-  Filenames are case-sensitive and irregular (`retro_jerseys.png`,
-  `techpacks.png`): copy them from the bucket, then run `npm run
-  check:media`. No audience, hoodie or accessory photographs exist there
-  yet; Who for shows panels until they do, and What we make shows only
-  categories with a photograph.
+  per `srcset` with `resize=contain`: without it the endpoint keeps the
+  full height and returns a narrow crop; `lib/media.ts` has a switch back
+  to the original files). Filenames are case-sensitive and irregular
+  (`retro_jerseys (1).png`, `manufacturing (1).png`, `hoods.png`): a
+  replacement uploaded under a new name must be switched in the manifest,
+  because the old name stops resolving. Run `npm run check:media` after
+  any change: it fails on a missing file or a resize that crops. No
+  audience or accessory photographs exist yet; Who for shows panels until
+  they do, and What we make shows only categories with a photograph.
 
 ## Analytics and consent
 

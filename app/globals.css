@@ -1369,88 +1369,110 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
+     Compact chapters (Who for, What we make): content-sized sections
+     that let the next one arrive during the scroll rather than each
+     filling a screen. Lighter padding, the title on one line with the
+     copy beside it from 1024px, and the photographs close beneath.
+     ------------------------------------------------------------------- */
+  .chapter {
+    padding-top: var(--spacing-section-sm);
+    padding-bottom: var(--spacing-section-sm);
+  }
+  .chapter-head {
+    display: grid;
+    gap: 1rem;
+  }
+  .chapter-head__copy {
+    max-width: 46ch;
+  }
+  .chapter__media {
+    margin-top: clamp(1.5rem, 1rem + 1.2vw, 2.25rem);
+  }
+  .chapter__action {
+    margin-top: clamp(1.25rem, 0.9rem + 1vw, 2rem);
+  }
+  @media (min-width: 1024px) {
+    .chapter-head {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 3rem;
+      align-items: end;
+    }
+    .chapter-head > h2 {
+      grid-column: 1 / span 5;
+    }
+    .chapter-head__copy {
+      grid-column: 6 / -1;
+      justify-self: end;
+      max-width: 52ch;
+      /* Level with the title's baseline rather than its line box. */
+      padding-bottom: 0.2em;
+    }
+    /* Copy left, the title on the right. */
+    .chapter-head--reverse > h2 {
+      grid-column: 5 / -1;
+      grid-row: 1;
+    }
+    .chapter-head--reverse .chapter-head__copy {
+      grid-column: 1 / span 4;
+      grid-row: 1;
+      justify-self: start;
+      max-width: 34ch;
+    }
+  }
+  /* The display title a step tighter from 1024px, so a chapter title sits
+     on one line ("WHAT WE MAKE." 7.8em in eight columns). Still the
+     display voice: about 100px on a 1440px screen. */
+  @media (min-width: 1024px) {
+    .type-display-tight {
+      font-size: min(7vw, 9.5rem);
+    }
+  }
+
+  /* -------------------------------------------------------------------
      Collage (Collage.tsx): the homepage's image-led chapters. An
-     asymmetric grid per section rather than a row of equal cards: one
-     lead tile, a tall one, pairs and a wide close, recomposed for phones,
-     tablets and desktop (each tile's slot is its `area` in
-     content/homeMedia.ts). Row heights are fixed per breakpoint, so the
-     photographs never shift the layout as they load.
+     asymmetric mosaic per section, recomposed for phones, tablets and
+     desktop, built around the photographs: each tile is drawn at its
+     photograph's chosen frame. The tracks, each tile's lines and the
+     collage's own aspect ratio come from content/homeMedia.ts through
+     lib/mosaic.ts as custom properties (-sm, -md, -lg). The collage's
+     height follows its width, so the photographs never shift the layout
+     as they load and keep their shape at every size.
      ------------------------------------------------------------------- */
   .collage {
     /* The surface's foreground, for focus rings outside the tiles. */
     --focus: var(--fg);
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+    aspect-ratio: var(--ar-sm);
+    grid-template-columns: var(--cols-sm);
+    grid-template-rows: var(--rows-sm);
   }
   .collage > li {
     min-width: 0;
-  }
-  .collage--who {
-    grid-template-areas: "a a" "b c" "b d" "e e";
-    grid-template-rows: 70vw 44vw 44vw 50vw;
-  }
-  .collage--make {
-    grid-template-areas: "j j" "t o" "t c";
-    grid-template-rows: 88vw 48vw 48vw;
-  }
-  .collage--handle {
-    grid-template-areas: "m m" "b l" "p k" "e e";
-    grid-template-rows: 78vw 46vw 46vw 52vw;
+    min-height: 0;
+    grid-column: var(--gc-sm);
+    grid-row: var(--gr-sm);
   }
   @media (min-width: 768px) {
     .collage {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      aspect-ratio: var(--ar-md);
+      grid-template-columns: var(--cols-md);
+      grid-template-rows: var(--rows-md);
     }
-    .collage--who {
-      grid-template-areas:
-        "a a a a a a"
-        "b b b c c c"
-        "b b b d d d"
-        "e e e e e e";
-      grid-template-rows: 44vw 26vw 26vw 28vw;
-    }
-    .collage--make {
-      grid-template-areas:
-        "j j j j t t"
-        "j j j j t t"
-        "o o o c c c";
-      grid-template-rows: 30vw 30vw 34vw;
-    }
-    .collage--handle {
-      grid-template-areas:
-        "m m m b b b"
-        "m m m l l l"
-        "p p k k k k"
-        "p p e e e e";
-      grid-template-rows: 30vw 30vw 28vw 28vw;
+    .collage > li {
+      grid-column: var(--gc-md);
+      grid-row: var(--gr-md);
     }
   }
   @media (min-width: 1024px) {
     .collage {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
+      aspect-ratio: var(--ar-lg);
+      grid-template-columns: var(--cols-lg);
+      grid-template-rows: var(--rows-lg);
     }
-    .collage--who {
-      grid-template-areas:
-        "a a a a a a a b b b b b"
-        "c c c d d d d b b b b b"
-        "e e e e e e e e e e e e";
-      grid-template-rows:
-        clamp(16rem, 30vw, 40rem) clamp(13rem, 20vw, 27rem)
-        clamp(12rem, 18vw, 24rem);
-    }
-    .collage--make {
-      grid-template-areas:
-        "j j j j j j t t t o o o"
-        "j j j j j j t t t c c c";
-      grid-template-rows: repeat(2, clamp(15rem, 24vw, 32rem));
-    }
-    .collage--handle {
-      grid-template-areas:
-        "m m m m m b b b b p p p"
-        "m m m m m l l l l p p p"
-        "k k k k k k k e e e e e";
-      grid-template-rows: repeat(3, clamp(13rem, 20vw, 27rem));
+    .collage > li {
+      grid-column: var(--gc-lg);
+      grid-row: var(--gr-lg);
     }
   }
 
@@ -1482,6 +1504,10 @@ html[data-nav="dark"] {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* --zoom (homeMedia.ts, never below 1) tightens the frame around the
+       photograph's focus point; hover adds a little on top. */
+    transform: scale(var(--zoom, 1));
+    transform-origin: var(--media-pos, 50% 50%);
     transition: transform 1.1s var(--ease-out-expo);
   }
   /* A low scrim under the label: the lime label holds at least 3:1 (it is
@@ -1555,7 +1581,7 @@ html[data-nav="dark"] {
   }
   @media (hover: hover) {
     a.tile:hover .tile__media {
-      transform: scale(1.04);
+      transform: scale(calc(var(--zoom, 1) * 1.04));
     }
     a.tile:hover::after {
       opacity: 1;
@@ -1568,7 +1594,7 @@ html[data-nav="dark"] {
     }
   }
   a.tile:focus-visible .tile__media {
-    transform: scale(1.04);
+    transform: scale(calc(var(--zoom, 1) * 1.04));
   }
   a.tile:focus-visible .tile__label {
     transform: translate3d(0.35rem, 0, 0);
@@ -2748,8 +2774,11 @@ html[data-nav="dark"] {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }
-  /* Still images and still labels: the hover state is a colour change. */
-  a.tile .tile__media,
+  /* Still images and still labels: the hover state is a colour change.
+     The art-directed zoom stays; only the hover movement goes. */
+  a.tile .tile__media {
+    transform: scale(var(--zoom, 1)) !important;
+  }
   a.tile .tile__label {
     transform: none !important;
   }

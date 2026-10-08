@@ -24,8 +24,12 @@ const encode = (file: string) => encodeURIComponent(file);
 export const mediaUrl = (file: string) =>
   `${PROJECT}/object/public/${FOLDER}/${encode(file)}`;
 
+// resize=contain scales the whole photograph down to the width. The
+// endpoint's default (cover) keeps the original height when only a width is
+// given, which returns a narrow centre slice of the picture, not a smaller
+// copy of it.
 const renderUrl = (file: string, width: number) =>
-  `${PROJECT}/render/image/public/${FOLDER}/${encode(file)}?width=${width}&quality=${QUALITY}`;
+  `${PROJECT}/render/image/public/${FOLDER}/${encode(file)}?width=${width}&resize=contain&quality=${QUALITY}`;
 
 /** src and srcSet for an <img>; sizes comes from the tile's layout. */
 export function mediaSources(file: string) {

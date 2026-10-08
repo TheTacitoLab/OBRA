@@ -4,7 +4,7 @@ import { Container } from "../site/Container";
 import { Editorial } from "../site/Editorial";
 import { Button } from "../site/Button";
 import { whatWeHandle } from "@/content/home";
-import { handleTiles } from "@/content/homeMedia";
+import { handleLayout, handleTiles } from "@/content/homeMedia";
 
 /**
  * Everything around the product: title left, copy right, then the services
@@ -29,8 +29,8 @@ export function WhatWeHandle() {
         />
         <Collage
           className="mt-body"
-          variant="handle"
           tiles={handleTiles}
+          layout={handleLayout}
           event="service_tile_click"
           section="what_we_handle"
         />
