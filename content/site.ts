@@ -1,6 +1,11 @@
-import { startHref } from "@/lib/siteConfig";
+import { contactHref } from "@/lib/siteConfig";
 
-export type NavLink = { label: string; href: string };
+/**
+ * A navigation item. `section` names the homepage section it scrolls to:
+ * on the homepage the link is a plain fragment (#who-for); everywhere else
+ * it leads back to that section (/#who-for).
+ */
+export type NavLink = { label: string; href: string; section?: string };
 
 /**
  * Everything the homepage, footer and landing pages read from: the
@@ -9,16 +14,32 @@ export type NavLink = { label: string; href: string };
  * content/notes.ts.
  */
 
-/** Primary navigation, in order. */
+/** Primary navigation, in order. Get in touch follows as the button. */
 export const navLinks: NavLink[] = [
-  { label: "Who for", href: "/who-for/" },
-  { label: "What we make", href: "/what-we-make/" },
-  { label: "Services", href: "/services/" },
-  { label: "About", href: "/about/" },
+  { label: "Who for", href: "/#who-for", section: "who-for" },
+  { label: "What we make", href: "/#what-we-make", section: "what-we-make" },
+  { label: "Services", href: "/#what-we-handle", section: "what-we-handle" },
   { label: "Notes", href: "/notes/" },
+  { label: "About", href: "/about/" },
 ];
 
-export const primaryCta = { label: "Start a project", href: startHref };
+/** A nav item's href on the page at `pathname`. */
+export const navHref = (link: NavLink, pathname: string) =>
+  link.section && pathname === "/" ? `#${link.section}` : link.href;
+
+/**
+ * The footer links to the pages themselves rather than the homepage
+ * sections, so the index pages stay linked from every page.
+ */
+export const footerLinks: NavLink[] = [
+  { label: "What we make", href: "/what-we-make/" },
+  { label: "Services", href: "/services/" },
+  { label: "Notes", href: "/notes/" },
+  { label: "About", href: "/about/" },
+];
+
+/** The sitewide enquiry action. */
+export const primaryCta = { label: "Get in touch", href: contactHref };
 
 export type PageEntry = {
   slug: string;
@@ -31,7 +52,7 @@ export type PageEntry = {
   intro: string;
   /** Product pages only: how this category is developed, three short steps. */
   develop?: { title: string; text: string }[];
-  /** Product pages only: a contextual link beside Start a project. */
+  /** Product pages only: a contextual link beside Get in touch. */
   secondaryCta?: { label: string; href: string };
 };
 

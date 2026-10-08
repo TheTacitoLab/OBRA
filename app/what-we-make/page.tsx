@@ -9,7 +9,7 @@ import { Section } from "@/components/site/Section";
 import { primaryCta, products } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 import { buildPageSchema } from "@/lib/schema/organization";
-import { startHref } from "@/lib/siteConfig";
+import { contactHref } from "@/lib/siteConfig";
 
 const page = {
   path: "/what-we-make/",
@@ -71,7 +71,7 @@ export default function WhatWeMakePage() {
                 made the same way. If it belongs in the range, ask.
               </p>
               <div>
-                <ArrowLink href={startHref}>Ask about a product</ArrowLink>
+                <ArrowLink href={contactHref}>Ask about a product</ArrowLink>
               </div>
             </div>
           }

@@ -15,7 +15,7 @@ import { useEffect, useRef } from "react";
  * simply goes when the page moves.
  *
  * `next` is the element the cue must be gone before (the homepage's Who
- * for list by default); the agency guide passes its first section. The
+ * for title by default); the agency guide passes its first section. The
  * hero it sits in is marked data-hero-frame.
  */
 
@@ -35,7 +35,7 @@ function pathFor(t: number) {
 }
 
 export function ScrollCue({
-  next: nextSelector = "#who-for .biglist, #who-for",
+  next: nextSelector = "#who-for h2, #who-for",
 }: {
   next?: string;
 }) {

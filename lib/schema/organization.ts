@@ -13,6 +13,8 @@ export function organizationNode() {
     "@id": `${SITE}/#organization`,
     name: siteConfig.name,
     url: `${SITE}/`,
+    description: siteConfig.description,
+    slogan: "Less bland. More brand.",
     logo: {
       "@type": "ImageObject",
       url: `${SITE}/brand/madebyobra.png`,

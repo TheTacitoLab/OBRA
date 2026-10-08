@@ -1,28 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
-import { UTM_PARAMS } from "@/lib/attribution";
-import { startHref } from "@/lib/siteConfig";
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-    dataLayer?: unknown[];
-    plausible?: (event: string) => void;
-  }
-}
+import { track } from "@/lib/analytics";
+import { ENQUIRY_LABELS, UTM_PARAMS } from "@/lib/attribution";
+import { contactHref } from "@/lib/siteConfig";
 
 /**
- * Click events and campaign attribution, without an analytics stack of its
- * own. A link marked `data-track="agency_send_brief"` is reported to
- * whichever of gtag, a GTM dataLayer or Plausible is on the page; with none
- * installed (the case today) nothing is sent anywhere.
+ * Click events and campaign attribution. A link marked
+ * `data-track="get_in_touch_click"` (with optional `data-track-section` and
+ * `data-track-category`) is reported through lib/analytics.ts, which sends
+ * nothing unless the visitor has allowed analytics.
  *
- * Tracked links to the brief form also carry the event name (as `enquiry`)
- * and any utm_* parameters the visitor arrived with, so the brief that
- * lands in the inbox says where it came from. The query string is added at
- * click time only: the links in the HTML stay clean, the form's canonical
- * stays /start-a-project/, and nothing is written to the device.
+ * Plain-anchor links to the enquiry form also carry any utm_* parameters
+ * the visitor arrived with, and the agency guide's tracked buttons their
+ * event name (as `enquiry`), so the enquiry that lands in the inbox says
+ * where it came from. The query string is added at click time only: the
+ * links in the HTML stay clean, the form's canonical stays /contact/, and
+ * nothing is written to the device.
  */
 export function Attribution() {
   useEffect(() => {
@@ -32,23 +26,21 @@ export function Attribution() {
       );
       const name = link?.dataset.track;
       if (!link || !name) return;
-      window.gtag?.("event", name);
-      window.dataLayer?.push({ event: name });
-      window.plausible?.(name);
-      if (
-        link.origin !== window.location.origin ||
-        link.pathname !== startHref
-      ) {
-        return;
-      }
+      const internal = link.origin === window.location.origin;
+      track(name, {
+        section: link.dataset.trackSection,
+        category: link.dataset.trackCategory,
+        destination: internal ? link.pathname + link.hash : undefined,
+      });
+      if (!internal || link.pathname !== contactHref) return;
       const url = new URL(link.href);
-      url.searchParams.set("enquiry", name);
+      if (ENQUIRY_LABELS[name]) url.searchParams.set("enquiry", name);
       const current = new URLSearchParams(window.location.search);
       for (const key of UTM_PARAMS) {
         const value = current.get(key);
         if (value) url.searchParams.set(key, value);
       }
-      link.href = url.toString();
+      if (url.href !== link.href) link.href = url.toString();
     };
     // Capture phase, so the href is decorated before the browser follows it.
     document.addEventListener("click", onClick, true);

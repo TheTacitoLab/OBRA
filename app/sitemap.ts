@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { agencyPage } from "@/content/agencies";
 import { audiences, pageHref, products } from "@/content/site";
 import { noteHref, notes } from "@/content/notes";
-import { privacyHref, siteConfig, startHref } from "@/lib/siteConfig";
+import { privacyHref, siteConfig, contactHref } from "@/lib/siteConfig";
 
 /**
  * XML sitemap: canonical, indexable pages only, each URL exactly as its
@@ -34,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     entry("/", 1),
-    entry(startHref, 0.9),
+    entry(contactHref, 0.9),
     entry("/who-for/", 0.8),
     entry("/what-we-make/", 0.8),
     entry("/services/", 0.8),

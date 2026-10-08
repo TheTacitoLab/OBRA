@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "./Container";
-import { audiences, navLinks, pageHref, primaryCta } from "@/content/site";
+import { CookieSettingsButton } from "./CookieSettingsButton";
+import { audiences, footerLinks, pageHref, primaryCta } from "@/content/site";
 import { privacyHref, siteConfig, socialLinks } from "@/lib/siteConfig";
 
 /**
@@ -8,7 +9,6 @@ import { privacyHref, siteConfig, socialLinks } from "@/lib/siteConfig";
  * and the line as a sign-off, set enormous and cut by the page edge.
  */
 export function Footer() {
-  const siteLinks = navLinks.filter((link) => link.href !== "/who-for/");
   return (
     <footer data-tone="ink" className="bg-bg text-fg">
       <Container className="pt-section-sm">
@@ -47,15 +47,26 @@ export function Footer() {
             <div>
               <h2 className="type-meta text-muted">Studio</h2>
               <ul className="mt-3 space-y-1.5">
-                {siteLinks.map((link) => (
+                {footerLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="nav-link">
+                    <Link
+                      href={link.href}
+                      className="nav-link"
+                      {...(link.href === "/notes/"
+                        ? { "data-track": "notes_click", "data-track-section": "footer" }
+                        : {})}
+                    >
                       <span className="u-wipe">{link.label}</span>
                     </Link>
                   </li>
                 ))}
                 <li>
-                  <Link href={primaryCta.href} className="nav-link">
+                  <Link
+                    href={primaryCta.href}
+                    className="nav-link"
+                    data-track="get_in_touch_click"
+                    data-track-section="footer"
+                  >
                     <span className="u-wipe">{primaryCta.label}</span>
                   </Link>
                 </li>
@@ -91,12 +102,15 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col gap-2 border-t border-line pt-5 type-meta text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 madebyobra. A TACITO Group company.</p>
-          <Link
-            href={privacyHref}
-            className="-my-3 inline-flex min-h-11 items-center self-start"
-          >
-            <span className="u-wipe">Privacy</span>
-          </Link>
+          <div className="flex flex-wrap gap-x-6">
+            <Link
+              href={privacyHref}
+              className="-my-3 inline-flex min-h-11 items-center"
+            >
+              <span className="u-wipe">Privacy</span>
+            </Link>
+            <CookieSettingsButton className="-my-3 inline-flex min-h-11 cursor-pointer items-center" />
+          </div>
         </div>
       </Container>
       <Container>

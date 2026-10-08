@@ -28,12 +28,24 @@
 
 [[redirects]]
   from = "/brief"
-  to = "/start-a-project/"
+  to = "/contact/"
   status = 301
 
 [[redirects]]
   from = "/brief/"
-  to = "/start-a-project/"
+  to = "/contact/"
+  status = 301
+
+# The enquiry form moved from /start-a-project/ to /contact/. Every redirect
+# above points at the final URL directly, so none of them chain.
+[[redirects]]
+  from = "/start-a-project"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/start-a-project/"
+  to = "/contact/"
   status = 301
 
 # The Brands page was briefly published as /culture-led-brands/.

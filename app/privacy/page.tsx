@@ -96,7 +96,9 @@ export default function PrivacyPage() {
             </li>
           </ul>
 
-          <h2 className="privacy-h2">4. Cookies and analytics</h2>
+          <h2 id="cookies" className="privacy-h2 scroll-mt-24">
+            4. Cookies and analytics
+          </h2>
           <p className="privacy-p">
             Our website may use cookies and similar technologies to make the site
             work, remember your preferences and understand how the site is used.

@@ -8,17 +8,21 @@ const DARK_TONES = new Set(["ink", "clay"]);
 /**
  * Drives the stacked-sheet scroll on the homepage.
  *
- * The stacking itself is plain CSS (`position: sticky` on each .sheet), so the
- * page scrolls normally with no JavaScript. This script adds three things:
+ * The page is a run of stacks (`SheetGroup`, a `.sheets` element each):
+ * the hero with Who for, then each statement with the chapter that rises
+ * over it. The stacking itself is plain CSS (`position: sticky` on each
+ * .sheet inside its stack), so the page scrolls normally with no
+ * JavaScript. This script adds:
  *
  * 1. `--sheet-top`: a sheet taller than the viewport sticks only once it has
  *    been read to the bottom, instead of pinning at its top and cutting off
  *    the rest.
  * 2. `--rise` / `--cover` (0-1): how far a sheet has risen into view and how
- *    far the next sheet has covered it, for the subtle content movement and
- *    dimming in globals.css. Skipped under prefers-reduced-motion.
- * 3. `data-nav` on <html>: the tone of the sheet beneath the fixed header, so
- *    the header text switches between ink and bone.
+ *    far the next sheet in its stack has covered it, for the subtle content
+ *    movement and dimming in globals.css. Skipped under
+ *    prefers-reduced-motion.
+ * 3. `data-nav` on <html>: the tone of the surface beneath the fixed
+ *    header, so the header text switches between ink and bone.
  * 4. Anchor links to a sheet scroll to the sheet's position in the document
  *    flow. Browsers otherwise scroll a sticky element to wherever it is
  *    pinned, which lands a tall sheet with its title above the fold.
@@ -29,10 +33,27 @@ export function Sheets({ children }: { children: ReactNode }) {
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    const sheets = Array.from(
-      root.querySelectorAll<HTMLElement>(":scope > .sheet"),
+    const groups = Array.from(
+      root.querySelectorAll<HTMLElement>(":scope > .sheets"),
     );
+    const stacks = groups.map((group) =>
+      Array.from(group.querySelectorAll<HTMLElement>(":scope > .sheet")),
+    );
+    const sheets = stacks.flat();
     if (sheets.length === 0) return;
+    const stackOf = new Map<HTMLElement, HTMLElement[]>();
+    const groupOf = new Map<HTMLElement, HTMLElement>();
+    stacks.forEach((stack, index) =>
+      stack.forEach((sheet) => {
+        stackOf.set(sheet, stack);
+        groupOf.set(sheet, groups[index]);
+      }),
+    );
+    // The next sheet in the same stack: the one that slides over this one.
+    const nextInStack = (sheet: HTMLElement) => {
+      const stack = stackOf.get(sheet) ?? [];
+      return stack[stack.indexOf(sheet) + 1];
+    };
 
     const html = document.documentElement;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -54,38 +75,51 @@ export function Sheets({ children }: { children: ReactNode }) {
       }
     };
 
+    // The tone under the header's midline (the bar is 3.5rem tall, 4.25rem
+    // from lg): whatever is painted there, read from the section or footer
+    // around the topmost element that is not the header itself. Toned
+    // tiles inside a section do not count, or the bar would flicker as
+    // tiles and the gaps between them pass beneath it.
+    const headerTone = () => {
+      const x = html.clientWidth / 2;
+      for (const el of document.elementsFromPoint(x, 34)) {
+        if (el.closest(".site-header, .site-menu")) continue;
+        const surface = el.closest<HTMLElement>(
+          "section[data-tone], footer[data-tone]",
+        );
+        return surface?.dataset.tone ?? "bone";
+      }
+      return "bone";
+    };
+
     const update = () => {
       frame = 0;
       const vh = viewport();
-      const rects = sheets.map((sheet) => sheet.getBoundingClientRect());
-      const tops = rects.map((rect) => rect.top);
 
       if (!reduce.matches && !phone.matches) {
+        const rects = new Map(
+          sheets.map((sheet) => [sheet, sheet.getBoundingClientRect()]),
+        );
         sheets.forEach((sheet, index) => {
-          const nextTop = tops[index + 1];
+          const rect = rects.get(sheet)!;
+          const next = nextInStack(sheet);
           // How far the next sheet has slid over this one's visible part. A
-          // sheet shorter than the viewport (the hero) starts uncovered even
-          // though the next sheet is already on screen beneath it.
-          const rect = rects[index];
+          // sheet shorter than the viewport (the hero, a statement) starts
+          // uncovered even though the next sheet is already on screen
+          // beneath it.
           const visible = Math.min(rect.height, vh);
-          const cover =
-            nextTop === undefined
-              ? 0
-              : clamp((rect.bottom - nextTop) / visible);
-          const rise = index === 0 ? 1 : clamp((vh - tops[index]) / vh);
+          const cover = next
+            ? clamp((rect.bottom - rects.get(next)!.top) / visible)
+            : 0;
+          // The hero is in place from the start; every later sheet rises
+          // into view.
+          const rise = index === 0 ? 1 : clamp((vh - rect.top) / vh);
           sheet.style.setProperty("--cover", cover.toFixed(3));
           sheet.style.setProperty("--rise", rise.toFixed(3));
         });
       }
 
-      // The sheet under the header: the last one whose top has crossed the
-      // header's midline (the bar is 3.5rem tall, 4.25rem from lg).
-      let tone = sheets[0].dataset.tone ?? "bone";
-      for (let index = 0; index < sheets.length; index += 1) {
-        if (tops[index] > 36) break;
-        tone = sheets[index].dataset.tone ?? tone;
-      }
-      if (DARK_TONES.has(tone)) html.dataset.nav = "dark";
+      if (DARK_TONES.has(headerTone())) html.dataset.nav = "dark";
       else delete html.dataset.nav;
     };
 
@@ -97,13 +131,18 @@ export function Sheets({ children }: { children: ReactNode }) {
       schedule();
     };
 
-    // Where a sheet sits in normal flow: the stack's top plus the heights of
-    // every sheet before it. Sticky offsets never enter into it.
+    // Where a sheet sits in normal flow: its stack's top plus the heights of
+    // every sheet before it in that stack. Sticky offsets never enter into
+    // it, and the stacks themselves are never sticky or transformed.
     const flowTop = (target: HTMLElement) => {
-      const index = sheets.indexOf(target);
-      if (index < 0) return null;
-      let top = root.getBoundingClientRect().top + window.scrollY;
-      for (let i = 0; i < index; i += 1) top += sheets[i].offsetHeight;
+      const stack = stackOf.get(target);
+      const group = groupOf.get(target);
+      if (!stack || !group) return null;
+      let top = group.getBoundingClientRect().top + window.scrollY;
+      for (const sheet of stack) {
+        if (sheet === target) break;
+        top += sheet.offsetHeight;
+      }
       return top;
     };
     const scrollToHash = (hash: string, smooth: boolean) => {
@@ -116,6 +155,8 @@ export function Sheets({ children }: { children: ReactNode }) {
       });
       return true;
     };
+    // In-page links: "#who-for", and "/#who-for" while already on the
+    // homepage.
     const onClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
@@ -123,10 +164,15 @@ export function Sheets({ children }: { children: ReactNode }) {
       const anchor = (event.target as Element | null)?.closest("a[href]");
       if (!anchor) return;
       const href = anchor.getAttribute("href") ?? "";
-      if (!href.startsWith("#")) return;
-      if (scrollToHash(href, true)) {
+      const hash = href.startsWith("#")
+        ? href
+        : href.startsWith("/#") && window.location.pathname === "/"
+          ? href.slice(1)
+          : null;
+      if (!hash) return;
+      if (scrollToHash(hash, true)) {
         event.preventDefault();
-        history.pushState(null, "", href);
+        history.pushState(null, "", hash);
       }
     };
     const onHashChange = () => scrollToHash(window.location.hash, true);
@@ -140,10 +186,9 @@ export function Sheets({ children }: { children: ReactNode }) {
       if (phone.matches) return;
       const target = event.target as HTMLElement | null;
       const sheet = target?.closest<HTMLElement>(".sheet") ?? null;
-      if (!target || !sheet) return;
-      const index = sheets.indexOf(sheet);
-      const next = sheets[index + 1];
-      if (index < 0 || !next) return;
+      if (!target || !sheet || !stackOf.has(sheet)) return;
+      const next = nextInStack(sheet);
+      if (!next) return;
       const vh = viewport();
       const rect = target.getBoundingClientRect();
       const nextTop = next.getBoundingClientRect().top;
@@ -216,8 +261,22 @@ export function Sheets({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={ref} className="sheets">
+    <div ref={ref} className="sheet-stack">
       {children}
     </div>
   );
+}
+
+/**
+ * One stack of sheets. Each sheet but the last pins while the next slides
+ * over it; `lap` rounds the stack's join with the one before.
+ */
+export function SheetGroup({
+  lap = false,
+  children,
+}: {
+  lap?: boolean;
+  children: ReactNode;
+}) {
+  return <div className={`sheets ${lap ? "sheets--lap" : ""}`}>{children}</div>;
 }

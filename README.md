@@ -7,7 +7,7 @@ product studio for brands, artists, festivals, events and agencies.
 
 - **Next.js 15** (App Router) · **React 19** · **TypeScript**
 - **Tailwind CSS v4** (design tokens via `@theme` in `app/globals.css`)
-- No animation library: the opening stacked-sheet scroll, underline wipes,
+- No animation library: the homepage's stacked-sheet scroll, underline wipes,
   menu and hero load-in are CSS, with one small script
   (`components/home/Sheets.tsx`) writing scroll progress to custom properties.
 - Static export (`output: 'export'`) - builds to `out/` as plain HTML/CSS/JS.
@@ -20,6 +20,8 @@ npm run dev        # http://localhost:3000
 npm run build      # static export to ./out
 npm run lint
 npm run typecheck
+npm run check:links   # after a build: every internal link and #fragment resolves
+npm run check:media   # every homepage photograph is publicly reachable
 ```
 
 ## Structure
@@ -28,20 +30,21 @@ npm run typecheck
 app/
   layout.tsx             Root layout - font, metadata, header + footer shell
   globals.css            Design system: palette, tones, type scale, rhythm
-  page.tsx               Homepage
+  page.tsx               Homepage (order and stacks: see "Homepage" below)
   festivals/ events/ brands/ artists/   Audience landing pages (one template)
   agencies/              The agency guide: long-form, its own layout
   [slug]/page.tsx        Product landing pages (one template)
-  what-we-make/ who-for/ services/ about/ notes/ start-a-project/ privacy/
+  what-we-make/ who-for/ services/ about/ notes/ contact/ privacy/
   robots.ts sitemap.ts   robots.txt and sitemap.xml, generated at build
 components/
   site/                  Header, Footer, Logo, Container, Section, Editorial,
                          Block, Button, MarkedTitle, Reveal, JsonLd,
-                         RichText, Attribution
-  home/                  Sheets (scroll engine), Sheet, BigList, ScrollCue and
-                         the sections in page order (Hero, WhoFor,
-                         Proposition, AboutPreview, Collection, RetailReady,
-                         Procurement, NotesPreview, Contact)
+                         RichText, Attribution, CookieConsent,
+                         CookieSettingsButton
+  home/                  Sheets + SheetGroup (scroll engine), Sheet, Collage,
+                         Statement, BigList, ScrollCue and the sections in
+                         page order (Hero, WhoFor, WhatWeMake, WhatWeHandle,
+                         Overview, FinalCta)
   landing/               AudiencePage, product/landing templates, ClosingCta
   guide/                 Long-form primitives: GuideChapter, Callout,
                          GuideRail/GuideStrip + GuideSpy, Faq, Figures,
@@ -50,17 +53,24 @@ components/
                          sections, the guide, quantity bands, pricing
                          strip, short version, closing CTA)
   notes/                 NoteList, article rendering
-  forms/                 ProjectForm (Web3Forms)
+  forms/                 ProjectForm (Web3Forms), on /contact/ only
 content/
   site.ts                Nav, audiences, products, services, form options
+  home.ts                Homepage copy, section by section
+  homeMedia.ts           Homepage photography: files, labels, links, alt
+                         text, crops and collage slots
   audiences.ts           Per-audience landing page content (not agencies)
   agencies.ts            Agency guide: metadata, contents, FAQ, links, images
   pricing.ts             Published prices (approved figures only)
   notes.ts               Notes entries (example content to replace)
-lib/                     siteConfig, metadata helper, schema.org builders,
-                         attribution constants, inline-link syntax,
-                         titleFit (display-face widths for fitted titles)
-scripts/                 preview-noindex.mjs (runs as npm postbuild)
+lib/                     siteConfig (incl. tracking IDs), metadata helper,
+                         schema.org builders, attribution constants,
+                         inline-link syntax, titleFit (display-face widths
+                         for fitted titles and tile labels), media (image
+                         URLs), consent (cookie choice + Consent Mode),
+                         analytics (consent-gated events)
+scripts/                 preview-noindex.mjs (runs as npm postbuild),
+                         check-links.mjs, check-media.mjs
 public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 ```
 
@@ -73,9 +83,9 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   the semantic `bg-bg / text-fg / text-muted / border-line` utilities.
 - **Lime block**: the brand punctuation. `.mark` puts the end of a heading
   on a solid lime block (the hero's "More brand.", "Make." on the What we
-  make section and page, "Your product." in the blue break, "Ready." on
-  Retail ready, "Agencies." in the agencies title, "Project." on
-  every Start a project heading). `MarkedTitle` in `components/site/` renders the split:
+  make section and page, "In mind?" on the homepage close, "Agencies." in
+  the agencies title, "Project." on the contact page, "Touch." on every
+  closing Get in touch). `MarkedTitle` in `components/site/` renders the split:
   the break goes before the marked word, or wherever a `\n` in the title
   puts it, in which case a mid-line word keeps its word space
   (`.mark--mid`). `.mark-hover` is the same block wiping in on hover for
@@ -102,11 +112,11 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 - **Composition**: `Section` (tone + size) and `Editorial` (large heading
   ~60% / supporting copy ~30%, optionally reversed or right-aligned) are the
   layout primitives. `Block` is the occasional content block; one accent per
-  group. On the homepage the sections alternate sides (copy left and title
-  right, then the reverse) and each full-width section takes `rounded`, a
-  top edge of `--radius-section` (24px on desktop down to 12px on phones)
-  that laps the section above by the same amount (`.section-round`,
-  `.sheet--round` for the last stacked sheet, and the footer).
+  group. On the homepage the chapters alternate sides (title left and copy
+  right, then the reverse) and every full-width section has a top edge of
+  `--radius-section` (24px on desktop down to 12px on phones) that laps the
+  section above by the same amount (`.section-round` on other pages;
+  `.sheet--round` and `.sheets--lap` on the homepage; the footer).
 - **Fitted titles**: the product-page hero (PageHero `full`, also About)
   and the agencies hero size the h1 from its own words. `lib/titleFit.ts`
   measures the title in em from the display face's glyph widths at build
@@ -140,6 +150,67 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `next` prop names: the agencies hero reuses it); it is decorative and
   not interactive.
 
+## Homepage
+
+The page alternates a visual chapter with a statement on a full brand
+colour, three times, then explains the business in full:
+
+Hero (bone) > Who for (ink, collage) > statement "Your merchandise should
+feel like your product." (lime, ink type) > What we make (bone, collage) >
+statement "We design by collection, for your audience." (clay, ink type) >
+What we handle (stone, collage) > statement "Full service studio. From
+concept to creation." (ink, lime type) > the overview (bone; the long,
+visible, crawlable explanation with links to the pages that own each
+search) > "Have something in mind?" (white) > footer.
+
+- **Stacks**: four `SheetGroup`s inside `Sheets`: the hero with Who for,
+  then each statement with the chapter after it. Within a stack each sheet
+  pins while the next slides over it (dimming a little); each stack after
+  the first laps the one before with the rounded section edge. Phones and
+  `prefers-reduced-motion` get plain flow. The header tone follows the
+  section actually under it.
+- **Collages** (`Collage.tsx`, `.collage--who|make|handle`): an asymmetric
+  grid per section and breakpoint, slot names from `content/homeMedia.ts`.
+  Labels are live text in the display face, lower case with a full stop,
+  sized from the tile (container units) and capped so the longest word
+  fits (`labelWordEm`). Photographs get lime labels over a low scrim;
+  tiles without a photograph are panels of the washed palette with ink
+  labels and the audience's one-line intro.
+- **Photography** comes from the public Supabase bucket "Website Builds",
+  folder `madebyobra/`, through Supabase's render endpoint (WebP, resized
+  per `srcset`; `lib/media.ts` has a switch back to the original files).
+  Filenames are case-sensitive and irregular (`retro_jerseys.png`,
+  `techpacks.png`): copy them from the bucket, then run `npm run
+  check:media`. No audience, hoodie or accessory photographs exist there
+  yet; Who for shows panels until they do, and What we make shows only
+  categories with a photograph.
+
+## Analytics and consent
+
+- **Consent first**: an inline script at the top of `<head>`
+  (`consentBootstrapScript` in `lib/consent.ts`) sets every Google Consent
+  Mode v2 signal to denied and re-applies a stored choice before anything
+  else can load. `CookieConsent.tsx` shows the banner (Accept all, Reject
+  non-essential, Manage cookies; Essential, Analytics, Marketing), stores
+  the choice in localStorage for a year, and loads only what it allows:
+  GA4 (`G-Z8WND8F9RR`, gtag.js) on analytics consent, the LinkedIn Insight
+  Tag (`9818722`) on marketing consent. Footer > Cookie settings reopens
+  it. Withdrawing a category deletes its first-party cookies and reloads.
+- **One GA4**: GA4 is loaded once per page load and sends its own page
+  view; client-side navigations are counted by GA4's enhanced measurement
+  (history events), so nothing sends page views by hand.
+- **Google Tag Manager**: none was installed (not in the code or on the
+  live site). To move to GTM, set `analytics.gtmId` in `lib/siteConfig.ts`
+  and configure GA4 and LinkedIn inside the container with consent checks:
+  the direct loaders then switch off so nothing is counted twice.
+- **Events** (`lib/analytics.ts`, sent only with analytics consent):
+  `get_in_touch_click`, `who_for_tile_click`, `product_tile_click`,
+  `service_tile_click`, `notes_click`, `contact_form_submit`, plus the
+  agency guide's `agency_*` events, each with `section`, `category`,
+  `destination` and `page_path` only. Nothing typed into a form is sent.
+- **Search Console** is verified by a DNS TXT record on madebyobra.com,
+  outside this code.
+
 ## Search and indexing
 
 - **URLs**: https, no www, trailing slash (`trailingSlash: true`). Every
@@ -163,14 +234,16 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   shows breadcrumbs); Article for notes, with a Person author when the note
   names one. No FAQPage markup (Google shows FAQ rich results only for
   government and health sites) and no Product markup on category pages.
-- **Click events**: links carry `data-track` (the agency guide's
-  `agency_*` events). `Attribution.tsx` forwards them to gtag, a GTM
-  dataLayer or Plausible if one is installed (none is today), and carries
-  the event and any utm_* parameters to the brief form, which adds them to
-  the submission.
+- **Click events**: links carry `data-track` (plus `data-track-section`
+  and `data-track-category`). `Attribution.tsx` reports them through
+  `lib/analytics.ts` (consent-gated, above) and carries any utm_*
+  parameters, and the agency guide's event name, to the enquiry form,
+  which adds them to the submission.
 - **Pages not built yet**: `/pricing/`, `/how-we-work/` and `/work/`. Links
   that want them point at the nearest live page (`agencyLinks` in
-  `content/agencies.ts`); switch them there once each page exists. The
+  `content/agencies.ts`, and the homepage overview's How we work in
+  `content/home.ts`, both at `/about/#how-we-work`); switch them there once
+  each page exists. The
   Agency Merchandise Brief Template download stays hidden until
   `agencyLinks.briefTemplate` points at a real file.
 
@@ -183,9 +256,19 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   guide at its foot, and a listing on that page); body text takes inline
   links as `[label](/path/)`. The five planned agency pieces are listed
   there.
+- **Enquiries**: every general "Get in touch" leads to `/contact/` (H1
+  "Tell us about your project."), the only page with the full form.
+  `/start-a-project/` and `/brief` 301 there directly (`netlify.toml`).
 - **Form** posts to Web3Forms from the client. File attachments are sent as
   multipart data; whether they are delivered depends on the Web3Forms plan
   attached to the access key.
 - **Contact** - `hello@madebyobra.com` in `lib/siteConfig.ts` is a placeholder;
   confirm the exact mailbox.
 - **Redirects** for retired URLs live in `netlify.toml`.
+- **Cookie policy**: there is no separate cookie policy. The privacy
+  policy's section 4 (`/privacy/#cookies`, linked from the banner) speaks
+  of cookies and analytics in general terms; have it reviewed so it names
+  Google Analytics and the LinkedIn Insight Tag before relying on it.
+- **e-commerce.png** in the bucket is a screenshot of another brand's
+  storefront ("Layers for the city", USD prices); the tile crops to the
+  top, but replace it with madebyobra's own work when there is some.

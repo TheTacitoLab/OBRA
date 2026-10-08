@@ -7,8 +7,10 @@ export type Tone =
   | "ink"
   | "stone"
   | "clay"
+  | "lime"
   | "blue-soft"
-  | "lime-soft";
+  | "lime-soft"
+  | "clay-soft";
 export type SectionSize = "compact" | "default" | "large";
 
 const padding: Record<SectionSize, string> = {

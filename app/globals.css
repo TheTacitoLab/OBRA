@@ -132,6 +132,26 @@
   --accent: var(--color-ink);
 }
 
+[data-tone="clay-soft"] {
+  --bg: var(--color-clay-soft);
+  --fg: var(--color-ink);
+  --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-clay-soft));
+  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
+  --accent: var(--color-ink);
+}
+
+/* Acid Lime as a surface: the first homepage statement. Soft black type
+   (12.6:1); the accent turns ink, since lime on lime would vanish. */
+[data-tone="lime"] {
+  --bg: var(--color-lime);
+  --fg: var(--color-ink);
+  --muted: color-mix(in srgb, var(--color-ink) 78%, var(--color-lime));
+  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
+  --accent: var(--color-ink);
+}
+
 /* Vertical metrics of the display face, in em, for the lime block behind a
    heading word (.mark below). Figtree: ascent 950, cap height 700 per 1000.
    Update both when Aeonik is dropped in. */
@@ -817,7 +837,7 @@ html[data-nav="dark"] {
   .biglink:focus-visible {
     outline-offset: -2px;
   }
-  .biglink[aria-current="page"] > .u-wipe {
+  .biglink[aria-current] > .u-wipe {
     background-size: 100% var(--u-size);
     background-position: 0 var(--u-y, 100%);
   }
@@ -1067,7 +1087,7 @@ html[data-nav="dark"] {
   .nav-link > span {
     padding-bottom: 0.1em;
   }
-  .nav-link[aria-current="page"] > span {
+  .nav-link[aria-current] > span {
     --u-color: var(--color-lime);
     --u-size: 2px;
     background-size: 100% var(--u-size);
@@ -1278,6 +1298,485 @@ html[data-nav="dark"] {
       width: 3.25rem;
       height: 3.25rem;
     }
+  }
+
+  /* -------------------------------------------------------------------
+     Sheet groups. The homepage runs as four stacks (.sheets), each a
+     statement or the hero followed by the chapter that rises over it.
+     A stack after the first laps the one before by the section radius,
+     its first sheet rounded, so the join reads like every other section
+     edge; sticky sheets stay inside their own stack, so each one lets go
+     once its chapter has passed.
+     ------------------------------------------------------------------- */
+  .sheets--lap {
+    position: relative;
+    margin-top: calc(var(--radius-section) * -1);
+  }
+  /* A chapter that sizes to its content rather than the screen. */
+  .sheet--auto {
+    min-height: 0;
+  }
+
+  /* Statements: one line of brand voice on a full colour, given room.
+     About 80% of the screen from 768px, so the next chapter's edge is
+     already in view; on phones the padding sets the height instead. */
+  .sheet--statement {
+    min-height: 0;
+  }
+  .statement {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.75rem, 3vw, 3rem);
+    padding-block: clamp(5.5rem, 24vw, 8rem);
+    text-align: center;
+  }
+  @media (min-width: 768px) {
+    .sheet--statement {
+      min-height: 80vh;
+      min-height: 80svh;
+    }
+    .statement {
+      padding-block: var(--spacing-section-lg);
+    }
+  }
+  /* Sized so the longest word ("MERCHANDISE", 6.82em) fits a 320px phone,
+     and the longest line breaks in balanced lines beyond that. */
+  .type-statement-xl {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.25rem, 12.4vw, 5.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    max-width: 100%;
+  }
+  .type-statement-xl > .line {
+    display: block;
+  }
+  @media (min-width: 768px) {
+    .type-statement-xl {
+      font-size: min(9.4vw, 11rem);
+    }
+  }
+  @media (min-width: 1024px) {
+    .type-statement-xl {
+      font-size: min(8.4vw, 13rem);
+    }
+  }
+
+  /* -------------------------------------------------------------------
+     Collage (Collage.tsx): the homepage's image-led chapters. An
+     asymmetric grid per section rather than a row of equal cards: one
+     lead tile, a tall one, pairs and a wide close, recomposed for phones,
+     tablets and desktop (each tile's slot is its `area` in
+     content/homeMedia.ts). Row heights are fixed per breakpoint, so the
+     photographs never shift the layout as they load.
+     ------------------------------------------------------------------- */
+  .collage {
+    /* The surface's foreground, for focus rings outside the tiles. */
+    --focus: var(--fg);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.5rem, 0.35rem + 0.6vw, 1rem);
+  }
+  .collage > li {
+    min-width: 0;
+  }
+  .collage--who {
+    grid-template-areas: "a a" "b c" "b d" "e e";
+    grid-template-rows: 70vw 44vw 44vw 50vw;
+  }
+  .collage--make {
+    grid-template-areas: "j j" "t o" "t c";
+    grid-template-rows: 88vw 48vw 48vw;
+  }
+  .collage--handle {
+    grid-template-areas: "m m" "b l" "p k" "e e";
+    grid-template-rows: 78vw 46vw 46vw 52vw;
+  }
+  @media (min-width: 768px) {
+    .collage {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .collage--who {
+      grid-template-areas:
+        "a a a a a a"
+        "b b b c c c"
+        "b b b d d d"
+        "e e e e e e";
+      grid-template-rows: 44vw 26vw 26vw 28vw;
+    }
+    .collage--make {
+      grid-template-areas:
+        "j j j j t t"
+        "j j j j t t"
+        "o o o c c c";
+      grid-template-rows: 30vw 30vw 34vw;
+    }
+    .collage--handle {
+      grid-template-areas:
+        "m m m b b b"
+        "m m m l l l"
+        "p p k k k k"
+        "p p e e e e";
+      grid-template-rows: 30vw 30vw 28vw 28vw;
+    }
+  }
+  @media (min-width: 1024px) {
+    .collage {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    .collage--who {
+      grid-template-areas:
+        "a a a a a a a b b b b b"
+        "c c c d d d d b b b b b"
+        "e e e e e e e e e e e e";
+      grid-template-rows:
+        clamp(16rem, 30vw, 40rem) clamp(13rem, 20vw, 27rem)
+        clamp(12rem, 18vw, 24rem);
+    }
+    .collage--make {
+      grid-template-areas:
+        "j j j j j j t t t o o o"
+        "j j j j j j t t t c c c";
+      grid-template-rows: repeat(2, clamp(15rem, 24vw, 32rem));
+    }
+    .collage--handle {
+      grid-template-areas:
+        "m m m m m b b b b p p p"
+        "m m m m m l l l l p p p"
+        "k k k k k k k e e e e e";
+      grid-template-rows: repeat(3, clamp(13rem, 20vw, 27rem));
+    }
+  }
+
+  /* A tile: the photograph (or a panel of colour) with its label in the
+     lower left. The tile is a size container, so the label scales with
+     the tile and still fits its longest word (--label-em, measured in
+     lib/titleFit.ts). */
+  .tile {
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    isolation: isolate;
+    container-type: size;
+    border-radius: calc(var(--radius-section) / 2);
+    background-color: var(--bg);
+    color: var(--fg);
+    text-decoration: none;
+    transition: background-color 0.35s var(--ease-out-quart);
+  }
+  .tile:focus-visible {
+    outline: 2px solid var(--focus, currentColor);
+    outline-offset: 3px;
+    border-radius: calc(var(--radius-section) / 2);
+  }
+  .tile__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.1s var(--ease-out-expo);
+  }
+  /* A low scrim under the label: the lime label holds at least 3:1 (it is
+     large text) over the palest pixels behind it in any photograph. */
+  .tile--photo {
+    --fg: var(--color-lime);
+    background-color: var(--color-ink);
+  }
+  .tile--photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      to top,
+      rgb(23 23 23 / 0.8) 0%,
+      rgb(23 23 23 / 0.5) 30%,
+      rgb(23 23 23 / 0) 62%
+    );
+    opacity: 0.9;
+    transition: opacity 0.45s var(--ease-out-quart);
+  }
+  .tile__label {
+    --inset: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
+    --k: 20cqi;
+    position: absolute;
+    left: var(--inset);
+    right: var(--inset);
+    bottom: calc(var(--inset) * 0.8);
+    z-index: 1;
+    font-family: var(--font-display);
+    font-weight: 900;
+    /* The tile's own scale, floored for small tiles, and never wider than
+       the longest word allows. */
+    font-size: min(
+      calc((100cqi - var(--inset) * 2) * 0.96 / var(--label-em, 5)),
+      max(1.75rem, min(var(--k), 24cqh, 9rem))
+    );
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+    transition: transform 0.45s var(--ease-out-quart);
+  }
+  /* A panel's one line, upper left; left out where the tile is too small
+     to carry it beside the label (the audience pages say it in full). */
+  .tile__intro {
+    position: absolute;
+    top: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
+    left: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
+    right: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
+    max-width: 30ch;
+    font-size: clamp(0.9375rem, 0.85rem + 0.25vw, 1.0625rem);
+    line-height: 1.4;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  @container (max-width: 15rem) or (max-height: 12rem) {
+    .tile__intro {
+      display: none;
+    }
+  }
+  @media (min-width: 768px) {
+    .tile__label {
+      --k: 15cqi;
+    }
+  }
+  @media (min-width: 1024px) {
+    .tile__label {
+      --k: 13cqi;
+    }
+  }
+  @media (hover: hover) {
+    a.tile:hover .tile__media {
+      transform: scale(1.04);
+    }
+    a.tile:hover::after {
+      opacity: 1;
+    }
+    a.tile:hover .tile__label {
+      transform: translate3d(0.35rem, 0, 0);
+    }
+    a.tile:not(.tile--photo):hover {
+      background-color: color-mix(in srgb, var(--bg) 90%, var(--color-ink));
+    }
+  }
+  a.tile:focus-visible .tile__media {
+    transform: scale(1.04);
+  }
+  a.tile:focus-visible .tile__label {
+    transform: translate3d(0.35rem, 0, 0);
+  }
+  a.tile:active {
+    opacity: 0.85;
+  }
+
+  /* -------------------------------------------------------------------
+     The business explained (Overview.tsx): the quiet, reading section.
+     Body type, a comfortable measure, H3s in a column of their own on
+     wide screens, hairlines between topics. No cards.
+     ------------------------------------------------------------------- */
+  .overview-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 7.4vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    max-width: 16ch;
+  }
+  .overview-lead > p,
+  .overview-topic__body > p {
+    font-size: clamp(1.0625rem, 0.98rem + 0.3vw, 1.1875rem);
+    line-height: 1.65;
+    text-wrap: pretty;
+    max-width: 66ch;
+  }
+  .overview-lead > p:first-child {
+    font-weight: 500;
+    font-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+  .overview-lead > p + p,
+  .overview-topic__body > p + p {
+    margin-top: 1.25rem;
+  }
+  .overview-topic {
+    display: grid;
+    gap: 1.25rem;
+    padding-block: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+    border-top: 1px solid var(--line-strong);
+  }
+  .overview-topic:last-child {
+    padding-bottom: 0;
+  }
+  .overview-topic__title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 1.15rem + 1.1vw, 2.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    max-width: 18ch;
+  }
+  @media (min-width: 1024px) {
+    .overview-topic {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: clamp(2.5rem, 4vw, 6rem);
+      align-items: start;
+    }
+    .overview-topic__title {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .overview-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 2rem;
+    margin-top: 2rem;
+  }
+
+  /* -------------------------------------------------------------------
+     Cookie preferences (CookieConsent.tsx): a small soft-black panel in
+     a lower corner, never a full-screen wall. Accept and reject carry the
+     same weight; the categories open in place.
+     ------------------------------------------------------------------- */
+  .consent {
+    position: fixed;
+    inset-inline: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 50;
+    max-height: calc(100vh - 1.5rem);
+    max-height: calc(100dvh - 1.5rem);
+    overflow-y: auto;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border-radius: var(--radius-section);
+    background-color: var(--bg);
+    color: var(--fg);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 1.5rem 3rem -1rem rgb(0 0 0 / 0.35);
+    animation: consent-in 0.5s var(--ease-out-expo) both;
+  }
+  /* Lower right from 640px: clear of the hero's copy and action, over
+     the scroll cue only until the visitor has chosen. */
+  @media (min-width: 640px) {
+    .consent {
+      inset-inline: auto;
+      right: clamp(1rem, 2vw, 2rem);
+      bottom: clamp(1rem, 2vw, 2rem);
+      width: min(28rem, calc(100vw - 2rem));
+    }
+  }
+  .consent__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .consent__text {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .consent__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+  .consent__actions .btn {
+    justify-content: center;
+    padding-inline: 0.75rem;
+    white-space: normal;
+    text-align: center;
+  }
+  .consent__more {
+    margin-top: 0.5rem;
+  }
+  .consent__options {
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .consent__option {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem 1rem;
+    align-items: center;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .consent__option-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .consent__option-text {
+    grid-column: 1;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+  /* The switch: a native checkbox, restyled. 44px tap height from the
+     label row; the track itself stays small. */
+  .switch {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background-color: transparent;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .switch::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0.2rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--fg);
+    transform: translateY(-50%);
+    transition: transform 0.2s var(--ease-out-quart);
+  }
+  .switch:checked {
+    background-color: var(--color-lime);
+    border-color: var(--color-lime);
+  }
+  .switch:checked::before {
+    background-color: var(--color-ink);
+    transform: translate(1.2rem, -50%);
+  }
+  .switch:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  .switch:focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 3px;
   }
 
   /* -------------------------------------------------------------------
@@ -2177,6 +2676,12 @@ html[data-nav="dark"] {
     transform: translateY(0);
   }
 }
+@keyframes consent-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
 @keyframes fade-in {
   to {
     opacity: 1;
@@ -2212,6 +2717,9 @@ html[data-nav="dark"] {
   .scroll-cue svg {
     animation: none !important;
   }
+  .consent {
+    animation: none;
+  }
   html[data-reveal] [data-reveal],
   html[data-reveal] [data-reveal-group] > * {
     opacity: 1;
@@ -2230,9 +2738,20 @@ html[data-nav="dark"] {
   .btn__arrow,
   .plus-icon,
   .guide-link,
-  .guide-strip-wrap {
+  .guide-strip-wrap,
+  .tile,
+  .tile::after,
+  .tile__media,
+  .tile__label,
+  .switch,
+  .switch::before {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
+  }
+  /* Still images and still labels: the hover state is a colour change. */
+  a.tile .tile__media,
+  a.tile .tile__label {
+    transform: none !important;
   }
 }
 
@@ -2245,7 +2764,8 @@ html[data-nav="dark"] {
     transform: none !important;
     transition: none !important;
   }
-  .scroll-cue {
+  .scroll-cue,
+  .consent {
     display: none;
   }
 }

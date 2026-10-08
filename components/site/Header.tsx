@@ -6,11 +6,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "./Logo";
 import { Arrow } from "./Button";
 import {
+  navHref,
   navLinks,
   primaryCta,
   audiences,
   products,
   pageHref,
+  type NavLink,
 } from "@/content/site";
 import { siteConfig, socialLinks } from "@/lib/siteConfig";
 
@@ -28,23 +30,55 @@ export function Header() {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
-  // A nav item is current on its own page, on anything beneath it, and on
-  // the landing pages it indexes (Who for on /festivals/, What we make on
-  // /headwear/, and so on).
-  const isCurrent = useCallback(
-    (href: string) => {
-      if (pathname === href) return true;
-      if (href !== "/" && pathname.startsWith(href)) return true;
-      const children =
-        href === "/who-for/"
-          ? audiences
-          : href === "/what-we-make/"
-            ? products
-            : [];
-      return children.some((page) => pathname.startsWith(pageHref(page.slug)));
+  // A page link is current on its own page and anything beneath it. A
+  // homepage-section link marks the pages that section leads to (Who for on
+  // /festivals/, What we make on /headwear/, Services on /services/) as
+  // "true" rather than "page", since it does not point at them.
+  const currentState = useCallback(
+    (link: NavLink): "page" | "true" | undefined => {
+      if (!link.section) {
+        return pathname.startsWith(link.href) ? "page" : undefined;
+      }
+      const pages =
+        link.section === "who-for"
+          ? ["/who-for/", ...audiences.map((page) => pageHref(page.slug))]
+          : link.section === "what-we-make"
+            ? ["/what-we-make/", ...products.map((page) => pageHref(page.slug))]
+            : ["/services/"];
+      return pages.some((href) => pathname.startsWith(href))
+        ? "true"
+        : undefined;
     },
     [pathname],
   );
+
+  // Section links are plain anchors: on the homepage Sheets.tsx scrolls
+  // them to the section's place in the page flow, and from another page
+  // they load the homepage, which lands on the section the same way.
+  const navItem = (
+    link: NavLink,
+    className: string,
+    label: React.ReactNode,
+    section: string,
+    ref?: React.Ref<HTMLAnchorElement>,
+  ) => {
+    const props = {
+      className,
+      "aria-current": currentState(link),
+      ...(link.href === "/notes/"
+        ? { "data-track": "notes_click", "data-track-section": section }
+        : {}),
+    };
+    return link.section ? (
+      <a ref={ref} href={navHref(link, pathname)} {...props}>
+        {label}
+      </a>
+    ) : (
+      <Link ref={ref} href={link.href} {...props}>
+        {label}
+      </Link>
+    );
+  };
 
   useEffect(() => {
     let last = window.scrollY;
@@ -119,17 +153,21 @@ export function Header() {
             <ul className="flex items-center gap-7">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="nav-link"
-                    aria-current={isCurrent(link.href) ? "page" : undefined}
-                  >
-                    <span className="u-wipe">{link.label}</span>
-                  </Link>
+                  {navItem(
+                    link,
+                    "nav-link",
+                    <span className="u-wipe">{link.label}</span>,
+                    "header",
+                  )}
                 </li>
               ))}
             </ul>
-            <Link href={primaryCta.href} className="btn btn-nav">
+            <Link
+              href={primaryCta.href}
+              className="btn btn-nav"
+              data-track="get_in_touch_click"
+              data-track-section="header"
+            >
               <span>{primaryCta.label}</span>
               <Arrow />
             </Link>
@@ -159,9 +197,14 @@ export function Header() {
         data-open={open ? "true" : "false"}
         inert={!open}
       >
+        {/* Any link closes the menu, including a section link that keeps
+            the reader on the homepage (the pathname does not change). */}
         <nav
           aria-label="Mobile"
           className="mx-auto flex h-full w-full max-w-[140rem] flex-col overflow-y-auto px-5 pb-6 pt-20 sm:px-8"
+          onClick={(event) => {
+            if ((event.target as Element).closest("a")) setOpen(false);
+          }}
         >
           <div>
             <ul className="biglist flex flex-col">
@@ -171,14 +214,13 @@ export function Header() {
                   className="site-menu__item"
                   style={{ "--i": index } as React.CSSProperties}
                 >
-                  <Link
-                    ref={index === 0 ? firstLinkRef : undefined}
-                    href={link.href}
-                    className="biglink type-link-sm"
-                    aria-current={isCurrent(link.href) ? "page" : undefined}
-                  >
-                    <span className="u-wipe u-lime">{link.label}</span>
-                  </Link>
+                  {navItem(
+                    link,
+                    "biglink type-link-sm",
+                    <span className="u-wipe u-lime">{link.label}</span>,
+                    "mobile_menu",
+                    index === 0 ? firstLinkRef : undefined,
+                  )}
                 </li>
               ))}
             </ul>
@@ -204,7 +246,12 @@ export function Header() {
             className="site-menu__item mt-10 flex flex-col gap-6"
             style={{ "--i": navLinks.length + 1 } as React.CSSProperties}
           >
-            <Link href={primaryCta.href} className="btn btn-primary self-start">
+            <Link
+              href={primaryCta.href}
+              className="btn btn-primary self-start"
+              data-track="get_in_touch_click"
+              data-track-section="mobile_menu"
+            >
               <span>{primaryCta.label}</span>
               <Arrow />
             </Link>

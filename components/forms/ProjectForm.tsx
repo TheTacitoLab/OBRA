@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { budgetOptions, quantityOptions } from "@/content/site";
+import { track } from "@/lib/analytics";
 import { ENQUIRY_LABELS, UTM_PARAMS } from "@/lib/attribution";
 import { siteConfig } from "@/lib/siteConfig";
 import { Arrow } from "@/components/site/Button";
@@ -91,7 +92,7 @@ function formatBytes(bytes: number) {
 }
 
 /**
- * Project brief form. Posts to Web3Forms from the client as multipart form
+ * The enquiry form on /contact/. Posts to Web3Forms from the client as multipart form
  * data (works with the static export). Validation runs on submit and again
  * as a field changes, with the message beneath the field; file attachments
  * are forwarded as-is, and whether they arrive depends on the Web3Forms plan
@@ -99,7 +100,7 @@ function formatBytes(bytes: number) {
  */
 export function ProjectForm({
   accessKey,
-  subject = "New project brief",
+  subject = "New project enquiry",
 }: {
   accessKey: string;
   subject?: string;
@@ -121,7 +122,7 @@ export function ProjectForm({
   const announce = (
     <p className="sr-only" role="status" aria-live="polite">
       {status === "success"
-        ? "Brief received. Thank you. We’ll read it properly and reply with a plan."
+        ? "Message received. Thank you. We’ll read it properly and reply with a plan."
         : ""}
     </p>
   );
@@ -208,6 +209,8 @@ export function ProjectForm({
       });
       const data = await response.json();
       if (data.success) {
+        // The event only: nothing typed into the form goes to analytics.
+        track("contact_form_submit", { section: "contact_form" });
         setStatus("success");
         form.reset();
         setFiles([]);
@@ -228,7 +231,7 @@ export function ProjectForm({
           tabIndex={-1}
           className="flex min-h-[20rem] flex-col justify-center outline-none"
         >
-          <p className="type-headline">Brief received.</p>
+          <p className="type-headline">Message received.</p>
           <p className="type-body mt-3 max-w-[40ch] text-muted">
             Thank you. We&rsquo;ll read it properly and reply with a plan.
           </p>
@@ -459,7 +462,7 @@ export function ProjectForm({
             className="btn btn-primary self-start"
           >
             <span>
-              {status === "submitting" ? "Sending…" : "Send project brief"}
+              {status === "submitting" ? "Sending…" : "Send"}
             </span>
             <Arrow />
           </button>
@@ -470,7 +473,7 @@ export function ProjectForm({
 
         {status === "error" && (
           <p className="type-small text-clay-deep sm:col-span-2" role="alert">
-            Something went wrong sending the brief. Please email us at{" "}
+            Something went wrong sending your message. Please email us at{" "}
             <a className="u-wipe u-static" href={`mailto:${siteConfig.email}`}>
               {siteConfig.email}
             </a>

@@ -1,7 +1,7 @@
 import type { FaqItem } from "@/components/guide/Faq";
 import type { GuideImage } from "@/components/guide/Figures";
 import type { Crumb } from "@/lib/schema/organization";
-import { startHref } from "@/lib/siteConfig";
+import { contactHref } from "@/lib/siteConfig";
 import { footballShirtPricing, formatQuantity } from "./pricing";
 import { findAudience } from "./site";
 
@@ -49,7 +49,7 @@ export const agencyEvents = {
  * entry). Nothing links to a URL that would 404.
  */
 export const agencyLinks = {
-  start: startHref,
+  start: contactHref,
   whatWeMake: "/what-we-make/",
   services: "/services/",
   whiteLabelService: "/services/#white-label-production",

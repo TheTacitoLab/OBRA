@@ -25,6 +25,17 @@ const WIDTHS: Record<string, number> = {
   "?": 0.477, "!": 0.281, "’": 0.209, "'": 0.242, "&": 0.606, " ": 0.185,
 };
 
+/**
+ * Lower case, for the photography labels ("retro jerseys."), measured the
+ * same way. Punctuation and the space are shared with the table above.
+ */
+const LOWER: Record<string, number> = {
+  a: 0.501, b: 0.56, c: 0.505, d: 0.559, e: 0.521, f: 0.37, g: 0.569,
+  h: 0.535, i: 0.245, j: 0.266, k: 0.541, l: 0.225, m: 0.846, n: 0.533,
+  o: 0.538, p: 0.565, q: 0.56, r: 0.372, s: 0.444, t: 0.38, u: 0.533,
+  v: 0.545, w: 0.838, x: 0.547, y: 0.577, z: 0.419,
+};
+
 /** Width of a run of text in em, as it would set in uppercase. */
 export function textEm(text: string) {
   let em = 0;
@@ -39,3 +50,16 @@ export const longestWordEm = (title: string) =>
 /** The widest of a title's forced lines. */
 export const longestLineEm = (lines: string[]) =>
   Math.max(...lines.map(textEm));
+
+/** The widest word of a lower-case label, as it sets (no case change). */
+export const labelWordEm = (label: string) =>
+  Math.max(
+    ...label
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((word) => {
+        let em = 0;
+        for (const char of word) em += LOWER[char] ?? WIDTHS[char] ?? 0.75;
+        return Math.round(em * 1000) / 1000;
+      }),
+  );

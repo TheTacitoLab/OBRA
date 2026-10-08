@@ -8,7 +8,9 @@
     "postbuild": "node scripts/preview-noindex.mjs",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:media": "node scripts/check-media.mjs",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "next": "15.5.19",

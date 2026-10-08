@@ -10,8 +10,8 @@ import { siteConfig } from "@/lib/siteConfig";
  * the last word of the title on the lime block.
  */
 export function ClosingCta({
-  title = "Start a project.",
-  copy = "Send the brief, or the start of one, and we’ll take it from there.",
+  title = "Get in touch.",
+  copy = "Whether you’ve got a finished brief or the beginnings of an idea, we’d be happy to hear about it.",
 }: {
   title?: string;
   copy?: string;
@@ -29,7 +29,13 @@ export function ClosingCta({
           <div className="flex flex-col gap-body">
             <p className="type-lede text-muted">{copy}</p>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Button href={primaryCta.href}>{primaryCta.label}</Button>
+              <Button
+                href={primaryCta.href}
+                track="get_in_touch_click"
+                trackSection="closing_cta"
+              >
+                {primaryCta.label}
+              </Button>
               <a
                 href={`mailto:${siteConfig.email}`}
                 className="type-small inline-flex min-h-11 items-center text-muted"

@@ -36,11 +36,34 @@ export function Arrow({
 
 type Variant = "primary" | "outline" | "nav";
 
+/** The click-event attributes read by components/site/Attribution.tsx. */
+type Tracking = {
+  /** The event name, e.g. "get_in_touch_click". */
+  track?: string;
+  /** Where on the page the link sits, e.g. "hero". */
+  trackSection?: string;
+  /** What it leads to, e.g. an audience or product slug. */
+  trackCategory?: string;
+};
+
+export const trackingAttributes = ({
+  track,
+  trackSection,
+  trackCategory,
+}: Tracking) =>
+  track
+    ? {
+        "data-track": track,
+        "data-track-section": trackSection,
+        "data-track-category": trackCategory,
+      }
+    : {};
+
 /**
  * Solid, squared button. `plain` renders an <a> instead of next/link, for
  * in-page hash links the sheet script handles itself. `track` names the
  * click event (components/site/Attribution.tsx); a tracked link is always a
- * plain anchor, because the tracker decorates links to the brief form at
+ * plain anchor, because the tracker decorates links to the enquiry form at
  * click time and next/link would navigate to its own href instead.
  */
 export function Button({
@@ -50,6 +73,8 @@ export function Button({
   className = "",
   plain = false,
   track,
+  trackSection,
+  trackCategory,
   arrow = "right",
 }: {
   href: string;
@@ -57,13 +82,16 @@ export function Button({
   variant?: Variant;
   className?: string;
   plain?: boolean;
-  track?: string;
   arrow?: ArrowDirection;
-}) {
+} & Tracking) {
   const classes = `btn btn-${variant} ${className}`;
   if (plain || track) {
     return (
-      <a href={href} className={classes} data-track={track}>
+      <a
+        href={href}
+        className={classes}
+        {...trackingAttributes({ track, trackSection, trackCategory })}
+      >
         <span>{children}</span>
         <Arrow direction={arrow} />
       </a>
@@ -84,13 +112,14 @@ export function ArrowLink({
   className = "",
   plain = false,
   track,
+  trackSection,
+  trackCategory,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
   plain?: boolean;
-  track?: string;
-}) {
+} & Tracking) {
   const classes = `link-arrow ${className}`;
   const inner = (
     <>
@@ -100,7 +129,11 @@ export function ArrowLink({
   );
   if (plain || track) {
     return (
-      <a href={href} className={classes} data-track={track}>
+      <a
+        href={href}
+        className={classes}
+        {...trackingAttributes({ track, trackSection, trackCategory })}
+      >
         {inner}
       </a>
     );

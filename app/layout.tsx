@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Attribution } from "@/components/site/Attribution";
+import { CookieConsent } from "@/components/site/CookieConsent";
+import { consentBootstrapScript } from "@/lib/consent";
 import { ogImage } from "@/lib/metadata";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -46,7 +48,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "madebyobra | Merchandise and product studio",
+    default: "madebyobra | Bespoke merchandise design and manufacturing",
     template: "%s | madebyobra",
   },
   description: siteConfig.description,
@@ -71,6 +73,13 @@ export default function RootLayout({
       lang="en-GB"
       className={`${figtree.variable} ${dmSans.variable} h-full`}
     >
+      <head>
+        {/* First in <head>: Consent Mode defaults (everything denied) and
+            any stored choice, before any tag can load. lib/consent.ts. */}
+        <script
+          dangerouslySetInnerHTML={{ __html: consentBootstrapScript() }}
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-bone text-ink">
         <a
           href="#main"
@@ -81,6 +90,8 @@ export default function RootLayout({
         <Header />
         {/* Wrapped so the header can make the page inert while its menu is open. */}
         <div id="page" className="flex flex-1 flex-col">
+          {/* Before the content, so keyboard users reach it first. */}
+          <CookieConsent />
           <main id="main" className="flex-1">
             {children}
           </main>

@@ -1,12 +1,14 @@
 import { Sheet } from "./Sheet";
 import { Container } from "../site/Container";
 import { Button } from "../site/Button";
+import { hero } from "@/content/home";
+import { primaryCta } from "@/content/site";
 
 /**
  * The opening statement. One word per line on phones (see .type-hero
  * .word), two lines from 768px, sized to the viewport at every width, with
- * the second line on the lime block. The copy stays small beneath it and
- * the first action is to explore, not to enquire.
+ * the second line on the lime block. The copy stays small beneath it,
+ * saying plainly who the studio is for and what it does, with one action.
  */
 export function Hero() {
   return (
@@ -46,18 +48,15 @@ export function Hero() {
             className="fade-in flex flex-col gap-6 md:col-span-8 lg:col-span-6"
             style={{ "--d": "0.4s" } as React.CSSProperties}
           >
-            <p className="type-body max-w-[44ch] text-muted">
-              madebyobra designs and manufactures original merchandise for
-              brands, festivals, artists, events and agencies. From the first
-              idea to the finished collection.
-            </p>
+            <p className="type-body max-w-[54ch] text-muted">{hero.copy}</p>
             <div className="flex flex-wrap items-center gap-x-7 gap-y-4 pr-16 md:pr-0">
-              <Button href="/what-we-make/">Explore what we make</Button>
-              {/* A plain anchor: Sheets.tsx scrolls it to the section's flow
-                  position, which a router-driven scroll would not. */}
-              <a href="#start-a-project" className="link-quiet">
-                <span className="u-wipe">Start a project</span>
-              </a>
+              <Button
+                href={primaryCta.href}
+                track="get_in_touch_click"
+                trackSection="hero"
+              >
+                {primaryCta.label}
+              </Button>
             </div>
           </div>
         </div>
