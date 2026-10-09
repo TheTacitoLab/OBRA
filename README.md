@@ -196,8 +196,10 @@ search) > "Have something in mind?" (white) > footer.
   and capped so the longest word fits (`labelWordEm`); photographs get
   lime labels over a low scrim; the audience photographs are pale by
   design (a light filter) and take ink labels (`labels: "ink"`) and their
-  one-line descriptions, no scrim. Every label clears 3:1 over the
-  photograph behind it (6.8:1 or more today).
+  one-line descriptions, no scrim, and each carries a soft tint from the
+  palette (`tint: "clay-soft"`, multiplied at part strength, lifting on
+  hover and focus; neighbours never share one). Every label clears 3:1
+  over the photograph behind it (6.8:1 or more today).
 - **Photography** is the V3 set in the public Supabase bucket "Website
   Builds", folder `madebyobra/V3 Website/` (`v3("agency.png")` in the
   manifest), through Supabase's render endpoint (WebP, resized

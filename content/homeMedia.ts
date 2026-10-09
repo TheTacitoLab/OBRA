@@ -36,6 +36,9 @@ import type { MosaicNode } from "@/lib/mosaic";
  * - `mobile`: the same three for phones (below 768px), where they differ.
  * - `labels`: "lime" (default) for the darker photographs, set over a low
  *   scrim; "ink" for pale ones, which need no scrim.
+ * - `tint`: optional, one of the palette's soft colours laid over the
+ *   photograph (multiplied, at part strength, so the picture and its
+ *   filter still read). It lifts when the tile is hovered or focused.
  *
  * Layouts are trees of rows and columns of tile ids, one per breakpoint
  * (sm: phones, md: from 768px, lg: from 1024px). A row sets tiles side by
@@ -56,7 +59,11 @@ export type Photo = {
   zoom?: number;
   mobile?: Framing;
   labels?: "lime" | "ink";
+  tint?: Tint;
 };
+
+/** The palette's soft colours (--color-* in app/globals.css). */
+export type Tint = "clay-soft" | "blue-soft" | "lime-soft" | "stone";
 
 export type Tile = {
   /** Also the analytics category. */
@@ -79,7 +86,8 @@ const audienceIntro = (slug: string) => findAudience(slug)?.intro;
 
 /**
  * Who for. The audience photographs are pale, high-key images, so their
- * labels and descriptions are set in ink.
+ * labels and descriptions are set in ink. Each carries a soft tint, mixed
+ * so no two neighbours share a colour at any breakpoint.
  */
 export const whoForTiles: Tile[] = [
   {
@@ -94,6 +102,7 @@ export const whoForTiles: Tile[] = [
       aspect: 1.05,
       position: "35% 30%",
       labels: "ink",
+      tint: "clay-soft",
       // Tall on phones: his face and the wall he is working on.
       mobile: { aspect: 0.62, position: "38% 50%" },
     },
@@ -110,6 +119,7 @@ export const whoForTiles: Tile[] = [
       aspect: 0.78,
       position: "50% 35%",
       labels: "ink",
+      tint: "blue-soft",
       mobile: { aspect: 1.3, position: "50% 30%" },
     },
   },
@@ -125,6 +135,7 @@ export const whoForTiles: Tile[] = [
       aspect: 0.9,
       position: "50% 50%",
       labels: "ink",
+      tint: "lime-soft",
       mobile: { aspect: 1.3, position: "50% 45%" },
     },
   },
@@ -141,6 +152,7 @@ export const whoForTiles: Tile[] = [
       // Her face and her hands on the decks.
       position: "45% 22%",
       labels: "ink",
+      tint: "blue-soft",
       mobile: { aspect: 1.15, position: "45% 20%" },
     },
   },
@@ -157,6 +169,7 @@ export const whoForTiles: Tile[] = [
       // Head to the chest print in a landscape frame.
       position: "45% 10%",
       labels: "ink",
+      tint: "clay-soft",
       mobile: { aspect: 1.15, position: "45% 10%" },
     },
   },

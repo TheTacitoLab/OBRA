@@ -1613,6 +1613,15 @@ html[data-nav="dark"] {
   .tile--ink::after {
     display: none;
   }
+  /* A soft colour over the photograph (tint in homeMedia.ts): multiplied,
+     at part strength, so the picture and its filter still read under it.
+     It lifts on hover and focus. */
+  .tile--tint::after {
+    display: block;
+    background: var(--tint);
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
   .tile--photo .tile__intro {
     color: rgb(241 238 231 / 0.92);
   }
@@ -1656,6 +1665,9 @@ html[data-nav="dark"] {
     a.tile:hover::after {
       opacity: 1;
     }
+    a.tile--tint:hover::after {
+      opacity: 0.2;
+    }
     a.tile:hover .tile__label {
       transform: translate3d(0.35rem, 0, 0);
     }
@@ -1668,6 +1680,9 @@ html[data-nav="dark"] {
   }
   a.tile:focus-visible .tile__label {
     transform: translate3d(0.35rem, 0, 0);
+  }
+  a.tile--tint:focus-visible::after {
+    opacity: 0.2;
   }
   a.tile:active {
     opacity: 0.85;

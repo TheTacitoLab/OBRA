@@ -114,7 +114,17 @@ function TileView({
   section: string;
 }) {
   const { photo } = tile;
-  const className = `tile tile--photo ${photo.labels === "ink" ? "tile--ink" : ""}`;
+  const className = [
+    "tile tile--photo",
+    photo.labels === "ink" && "tile--ink",
+    photo.tint && "tile--tint",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  // The soft colour laid over the photograph (globals.css, .tile--tint).
+  const tileStyle = photo.tint
+    ? ({ "--tint": `var(--color-${photo.tint})` } as React.CSSProperties)
+    : undefined;
   const zoom = (value?: number) => String(Math.max(1, value ?? 1));
   const body = (
     <>
@@ -152,12 +162,17 @@ function TileView({
   );
 
   if (!tile.href) {
-    return <div className={className}>{body}</div>;
+    return (
+      <div className={className} style={tileStyle}>
+        {body}
+      </div>
+    );
   }
   return (
     <Link
       href={tile.href}
       className={className}
+      style={tileStyle}
       data-track={event}
       data-track-section={section}
       data-track-category={tile.id}
