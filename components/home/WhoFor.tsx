@@ -18,7 +18,7 @@ export function WhoFor() {
       last
       sectionClassName="sheet--round sheet--auto"
     >
-      <Container className="chapter">
+      <Container className="home-chapter">
         <div className="chapter-head">
           <h2 className="type-display type-display-tight" data-reveal="left">
             {whoFor.title}
@@ -32,7 +32,7 @@ export function WhoFor() {
           </p>
         </div>
         <Collage
-          className="chapter__media"
+          className="home-chapter__media"
           tiles={whoForTiles}
           layout={whoForLayout}
           event="who_for_tile_click"

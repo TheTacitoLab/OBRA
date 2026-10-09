@@ -53,10 +53,12 @@ components/
                          sections, the guide, quantity bands, pricing
                          strip, short version, closing CTA)
   notes/                 NoteList, article rendering
+  (about)                app/about/page.tsx reads content/about.ts
   forms/                 ProjectForm (Web3Forms), on /contact/ only
 content/
   site.ts                Nav, audiences, products, services, form options
   home.ts                Homepage copy, section by section
+  about.ts               About page copy (Rob, Q, Brad; process at #how-we-work)
   homeMedia.ts           Homepage photography: files, labels, links, alt
                          text, crops and collage slots
   audiences.ts           Per-audience landing page content (not agencies)
@@ -169,14 +171,22 @@ search) > "Have something in mind?" (white) > footer.
   the first laps the one before with the rounded section edge. Phones and
   `prefers-reduced-motion` get plain flow. The header tone follows the
   section actually under it.
-- **Compact chapters**: Who for and What we make size to their content
-  (about 70-80% and 85-95% of a desktop screen), with the title on one line
-  and the copy beside it, so the next statement is already arriving as
-  they end. The statements keep their 80% height.
+- **Compact chapters** (`.home-chapter`, not `.chapter`, which the agency
+  guide owns): Who for and What we make size to their content (about 65-77%
+  and 86-97% of a desktop screen), with the title on one line and the copy
+  beside it, so the next statement is already arriving as they end. On
+  phones the supporting paragraph drops to body size. The statements keep
+  their 80% height.
+- **Calls to action**: on the homepage and About, every call to action is
+  a plain text link with an arrow (`ArrowLink strong`); the desktop
+  header's Get in touch is the one boxed button. The phone and tablet
+  header is a solid bar (the page colour, or soft black over a dark
+  section).
 - **Collages** (`Collage.tsx`, `lib/mosaic.ts`): built around the
   photographs. Each photograph has a frame in `content/homeMedia.ts`
   (`aspect`, plus `position` for object-position and an optional `zoom`
-  that only ever tightens), and each section has a layout per breakpoint:
+  that only ever tightens, with `mobile` overrides of all three for
+  phones), and each section has a layout per breakpoint:
   a tree of rows and columns of tile ids. The mosaic turns that into grid
   tracks and the collage's own aspect ratio at build time, so every tile
   is drawn at its photograph's frame at every width and no photograph is
@@ -184,20 +194,22 @@ search) > "Have something in mind?" (white) > footer.
   or a layout in the manifest and the grid reflows. Labels are live text
   in the display face, lower case with a full stop, sized from the tile
   and capped so the longest word fits (`labelWordEm`); photographs get
-  lime labels over a low scrim (at least 3:1 over the lightest pixels
-  behind any label); tiles without a photograph are panels of the washed
-  palette with ink labels and the audience's one-line intro.
-- **Photography** comes from the public Supabase bucket "Website Builds",
-  folder `madebyobra/`, through Supabase's render endpoint (WebP, resized
+  lime labels over a low scrim; the audience photographs are pale by
+  design (a light filter) and take ink labels (`labels: "ink"`) and their
+  one-line descriptions, no scrim. Every label clears 3:1 over the
+  photograph behind it (6.8:1 or more today).
+- **Photography** is the V3 set in the public Supabase bucket "Website
+  Builds", folder `madebyobra/V3 Website/` (`v3("agency.png")` in the
+  manifest), through Supabase's render endpoint (WebP, resized
   per `srcset` with `resize=contain`: without it the endpoint keeps the
   full height and returns a narrow crop; `lib/media.ts` has a switch back
   to the original files). Filenames are case-sensitive and irregular
-  (`retro_jerseys (1).png`, `manufacturing (1).png`, `hoods.png`): a
-  replacement uploaded under a new name must be switched in the manifest,
-  because the old name stops resolving. Run `npm run check:media` after
-  any change: it fails on a missing file or a resize that crops. No
-  audience or accessory photographs exist yet; Who for shows panels until
-  they do, and What we make shows only categories with a photograph.
+  (`agency.png`, `festival.png`, `artist.png`, `hoods.png`,
+  `techpacks.png`): a replacement uploaded under a new name must be
+  switched in the manifest, because the old name stops resolving. Run
+  `npm run check:media` after any change: it fails on a missing file or a
+  resize that crops. There is no accessories photograph yet, so What we
+  make shows the five categories that have one.
 
 ## Analytics and consent
 

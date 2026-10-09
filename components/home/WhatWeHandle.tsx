@@ -2,7 +2,7 @@ import { Sheet } from "./Sheet";
 import { Collage } from "./Collage";
 import { Container } from "../site/Container";
 import { Editorial } from "../site/Editorial";
-import { Button } from "../site/Button";
+import { ArrowLink } from "../site/Button";
 import { whatWeHandle } from "@/content/home";
 import { handleLayout, handleTiles } from "@/content/homeMedia";
 
@@ -35,7 +35,9 @@ export function WhatWeHandle() {
           section="what_we_handle"
         />
         <div className="mt-body" data-reveal="up">
-          <Button href={whatWeHandle.cta.href}>{whatWeHandle.cta.label}</Button>
+          <ArrowLink strong href={whatWeHandle.cta.href}>
+            {whatWeHandle.cta.label}
+          </ArrowLink>
         </div>
       </Container>
     </Sheet>

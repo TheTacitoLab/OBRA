@@ -1,7 +1,7 @@
 import { Sheet } from "./Sheet";
 import { Collage } from "./Collage";
 import { Container } from "../site/Container";
-import { Button } from "../site/Button";
+import { ArrowLink } from "../site/Button";
 import { whatWeMake } from "@/content/home";
 import { makeLayout, makeTiles } from "@/content/homeMedia";
 
@@ -23,7 +23,7 @@ export function WhatWeMake() {
       last
       sectionClassName="sheet--round sheet--auto"
     >
-      <Container className="chapter">
+      <Container className="home-chapter home-chapter--make">
         <div className="chapter-head chapter-head--reverse">
           <h2 className="type-display type-display-tight" data-reveal="right">
             {lead}
@@ -38,14 +38,16 @@ export function WhatWeMake() {
           </p>
         </div>
         <Collage
-          className="chapter__media"
+          className="home-chapter__media"
           tiles={makeTiles}
           layout={makeLayout}
           event="product_tile_click"
           section="what_we_make"
         />
-        <div className="chapter__action" data-reveal="up">
-          <Button href={whatWeMake.cta.href}>{whatWeMake.cta.label}</Button>
+        <div className="home-chapter__action" data-reveal="up">
+          <ArrowLink strong href={whatWeMake.cta.href}>
+            {whatWeMake.cta.label}
+          </ArrowLink>
         </div>
       </Container>
     </Sheet>

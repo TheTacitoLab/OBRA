@@ -1,6 +1,6 @@
 import { Sheet } from "./Sheet";
 import { Container } from "../site/Container";
-import { Button } from "../site/Button";
+import { ArrowLink } from "../site/Button";
 import { hero } from "@/content/home";
 import { primaryCta } from "@/content/site";
 
@@ -15,7 +15,7 @@ export function Hero() {
     <Sheet id="top" tone="bone" sectionClassName="sheet--hero">
       <Container
         data-hero-frame
-        className="flex flex-1 flex-col pb-12 pt-20 sm:pt-28 lg:pb-16 lg:pt-36"
+        className="flex flex-1 flex-col pb-9 pt-[4.75rem] sm:pb-12 sm:pt-28 lg:pb-16 lg:pt-36"
       >
         <h1 className="type-hero">
           <span className="rise-line">
@@ -49,14 +49,15 @@ export function Hero() {
             style={{ "--d": "0.4s" } as React.CSSProperties}
           >
             <p className="type-body max-w-[54ch] text-muted">{hero.copy}</p>
-            <div className="flex flex-wrap items-center gap-x-7 gap-y-4 pr-16 md:pr-0">
-              <Button
+            <div className="pr-16 md:pr-0">
+              <ArrowLink
+                strong
                 href={primaryCta.href}
                 track="get_in_touch_click"
                 trackSection="hero"
               >
                 {primaryCta.label}
-              </Button>
+              </ArrowLink>
             </div>
           </div>
         </div>

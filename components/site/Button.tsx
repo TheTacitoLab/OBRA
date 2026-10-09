@@ -105,12 +105,18 @@ export function Button({
   );
 }
 
-/** Secondary action: text with an accent underline wipe and an arrow. */
+/**
+ * Text with an underline wipe and an arrow. The default is the quiet
+ * secondary action; `strong` is the editorial call to action the homepage
+ * and About page use in place of boxed buttons: larger, bolder, in the
+ * surface's own text colour, the underline in that colour too.
+ */
 export function ArrowLink({
   href,
   children,
   className = "",
   plain = false,
+  strong = false,
   track,
   trackSection,
   trackCategory,
@@ -119,11 +125,14 @@ export function ArrowLink({
   children: ReactNode;
   className?: string;
   plain?: boolean;
+  strong?: boolean;
 } & Tracking) {
-  const classes = `link-arrow ${className}`;
+  const classes = `link-arrow ${strong ? "link-arrow--strong" : ""} ${className}`;
   const inner = (
     <>
-      <span className="u-wipe u-accent">{children}</span>
+      <span className={strong ? "u-wipe u-strong" : "u-wipe u-accent"}>
+        {children}
+      </span>
       <Arrow />
     </>
   );

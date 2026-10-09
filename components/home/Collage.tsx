@@ -15,9 +15,9 @@ const SIZES_MEDIA: Record<Breakpoint, string> = {
 };
 
 /**
- * An editorial collage of tiles (content/homeMedia.ts): photographs, or
- * panels of colour where no photograph exists yet, each with its label as
- * live text in the lower left (a panel also carries its one-line intro).
+ * An editorial collage of photographs (content/homeMedia.ts), each with
+ * its label as live text in the lower left (the audiences also carry
+ * their one-line description in the upper left).
  *
  * The arrangement comes from the section's layout at each breakpoint, and
  * every tile is sized to its photograph's chosen frame (lib/mosaic.ts):
@@ -44,11 +44,16 @@ export function Collage({
   section: string;
   className?: string;
 }) {
-  const aspects = Object.fromEntries(
-    tiles.map((tile) => [tile.id, tile.photo?.aspect ?? tile.aspect ?? 1]),
-  );
+  // Each photograph's frame: its phone frame below 768px where it has one.
+  const aspectsFor = (bp: Breakpoint) =>
+    Object.fromEntries(
+      tiles.map((tile) => [
+        tile.id,
+        (bp === "sm" ? tile.photo.mobile?.aspect : undefined) ?? tile.photo.aspect,
+      ]),
+    );
   const grids = Object.fromEntries(
-    BREAKPOINTS.map((bp) => [bp, mosaicGrid(layout[bp], aspects)]),
+    BREAKPOINTS.map((bp) => [bp, mosaicGrid(layout[bp], aspectsFor(bp))]),
   ) as Record<Breakpoint, MosaicGrid>;
 
   // Every tile placed exactly once at every breakpoint.
@@ -108,7 +113,9 @@ function TileView({
   event: string;
   section: string;
 }) {
-  const className = `tile ${tile.photo ? "tile--photo" : ""}`;
+  const { photo } = tile;
+  const className = `tile tile--photo ${photo.labels === "ink" ? "tile--ink" : ""}`;
+  const zoom = (value?: number) => String(Math.max(1, value ?? 1));
   const body = (
     <>
       <span
@@ -117,47 +124,40 @@ function TileView({
       >
         {tile.label}
       </span>
-      {!tile.photo && tile.intro && (
-        <span className="tile__intro">{tile.intro}</span>
-      )}
-      {tile.photo && (
-        // A plain img: the static export runs with `images.unoptimized`,
-        // and Supabase's render endpoint does the resizing (lib/media.ts).
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          className="tile__media"
-          {...mediaSources(tile.photo.file)}
-          sizes={sizes}
-          width={tile.photo.width}
-          height={tile.photo.height}
-          alt={tile.photo.alt}
-          loading="lazy"
-          decoding="async"
-          style={
-            {
-              objectPosition: tile.photo.position,
-              "--media-pos": tile.photo.position,
-              "--zoom": Math.max(1, tile.photo.zoom ?? 1),
-            } as React.CSSProperties
-          }
-        />
-      )}
+      {tile.intro && <span className="tile__intro">{tile.intro}</span>}
+      {/* A plain img: the static export runs with `images.unoptimized`,
+          and Supabase's render endpoint does the resizing (lib/media.ts).
+          The crop is set per breakpoint from the manifest: the phone
+          framing below 768px, the desktop framing above. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className="tile__media"
+        {...mediaSources(photo.file)}
+        sizes={sizes}
+        width={photo.width}
+        height={photo.height}
+        alt={photo.alt}
+        loading="lazy"
+        decoding="async"
+        style={
+          {
+            "--media-pos": photo.position,
+            "--media-pos-sm": photo.mobile?.position ?? photo.position,
+            "--zoom": zoom(photo.zoom),
+            "--zoom-sm": zoom(photo.mobile?.zoom ?? photo.zoom),
+          } as React.CSSProperties
+        }
+      />
     </>
   );
-  const tone = tile.photo ? undefined : tile.tone;
 
   if (!tile.href) {
-    return (
-      <div className={className} data-tone={tone}>
-        {body}
-      </div>
-    );
+    return <div className={className}>{body}</div>;
   }
   return (
     <Link
       href={tile.href}
       className={className}
-      data-tone={tone}
       data-track={event}
       data-track-section={section}
       data-track-category={tile.id}

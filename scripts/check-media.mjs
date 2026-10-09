@@ -7,7 +7,8 @@
  * non-zero if any image would render broken.
  *
  * Reads the filenames straight from the manifest source (every
- * `file: "..."`) so there is no second list to keep in step.
+ * `file: "..."` or `file: v3("...")`) so there is no second list to keep
+ * in step.
  */
 import { readFileSync } from "node:fs";
 
@@ -15,7 +16,14 @@ const PROJECT = "https://odfpmwgwnyexuxqbusvi.supabase.co/storage/v1";
 const FOLDER = "Website%20Builds/madebyobra";
 
 const source = readFileSync("content/homeMedia.ts", "utf8");
-const files = [...new Set([...source.matchAll(/file:\s*"([^"]+)"/g)].map((m) => m[1]))];
+// `file: "x.png"` or `file: v3("x.png")` (the V3 Website folder).
+const files = [
+  ...new Set(
+    [...source.matchAll(/file:\s*(v3\()?"([^"]+)"/g)].map((m) =>
+      m[1] ? `V3 Website/${m[2]}` : m[2],
+    ),
+  ),
+];
 
 /** Width and height of a PNG or WebP, from its header. */
 function dimensions(buf) {
@@ -33,7 +41,7 @@ function dimensions(buf) {
 
 let failed = 0;
 for (const file of files) {
-  const name = encodeURIComponent(file);
+  const name = file.split("/").map(encodeURIComponent).join("/");
   const checks = [
     ["original", `${PROJECT}/object/public/${FOLDER}/${name}`],
     ["resized", `${PROJECT}/render/image/public/${FOLDER}/${name}?width=480&resize=contain&quality=72`],

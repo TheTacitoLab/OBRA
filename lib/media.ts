@@ -18,7 +18,9 @@ const TRANSFORM = true;
 const WIDTHS = [480, 720, 1080] as const;
 const QUALITY = 72;
 
-const encode = (file: string) => encodeURIComponent(file);
+// Encoded segment by segment, so a file in a subfolder ("V3 Website/x.png")
+// keeps its slash.
+const encode = (file: string) => file.split("/").map(encodeURIComponent).join("/");
 
 /** The original file. */
 export const mediaUrl = (file: string) =>

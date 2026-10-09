@@ -980,6 +980,23 @@ html[data-nav="dark"] {
     width: 0.9rem;
     height: 0.9rem;
   }
+  /* The editorial call to action: plain text, no box, the arrow carrying
+     the movement. The underline wipes in under the words on hover, in the
+     text's own colour (ink on light surfaces, bone on dark). */
+  .link-arrow--strong {
+    gap: 0.55rem;
+    font-weight: 700;
+    font-size: clamp(1.0625rem, 0.97rem + 0.35vw, 1.3125rem);
+    letter-spacing: -0.015em;
+  }
+  .link-arrow--strong .btn__arrow {
+    width: 1em;
+    height: 1em;
+  }
+  .u-strong {
+    --u-color: currentColor;
+    --u-size: 2px;
+  }
   .link-arrow:hover .btn__arrow,
   .link-arrow:focus-visible .btn__arrow {
     transform: translateX(3px);
@@ -1060,6 +1077,15 @@ html[data-nav="dark"] {
     color: var(--color-ink);
     background-color: transparent;
     border-bottom-color: transparent;
+  }
+  /* Phones and tablets: a solid bar at all times (the page colour, or soft
+     black over a dark section), so nothing shows through or under it as
+     the page scrolls. The open menu keeps its own surface. */
+  @media (max-width: 1023.98px) {
+    .site-header:not([data-menu-open="true"]) {
+      background-color: var(--nav-bg);
+      border-bottom-color: var(--nav-line);
+    }
   }
   .site-header__bar {
     display: flex;
@@ -1374,9 +1400,14 @@ html[data-nav="dark"] {
      filling a screen. Lighter padding, the title on one line with the
      copy beside it from 1024px, and the photographs close beneath.
      ------------------------------------------------------------------- */
-  .chapter {
-    padding-top: var(--spacing-section-sm);
-    padding-bottom: var(--spacing-section-sm);
+  /* (Not ".chapter": the agency guide owns that name.) */
+  .home-chapter {
+    padding-top: clamp(1.75rem, 1rem + 1.8vw, 2.75rem);
+    padding-bottom: clamp(1.75rem, 1rem + 1.8vw, 2.75rem);
+  }
+  /* What we make takes a little more room under its rounded top edge. */
+  .home-chapter--make {
+    padding-top: clamp(2.5rem, 1.6rem + 2vw, 3.75rem);
   }
   .chapter-head {
     display: grid;
@@ -1385,11 +1416,23 @@ html[data-nav="dark"] {
   .chapter-head__copy {
     max-width: 46ch;
   }
-  .chapter__media {
-    margin-top: clamp(1.5rem, 1rem + 1.2vw, 2.25rem);
+  /* Phones: the supporting paragraph at a comfortable reading size rather
+     than the lede, close under the title. */
+  @media (max-width: 767px) {
+    .chapter-head {
+      gap: 0.75rem;
+    }
+    .chapter-head__copy {
+      font-size: 1.0625rem;
+      line-height: 1.45;
+      letter-spacing: 0;
+    }
   }
-  .chapter__action {
+  .home-chapter__media {
     margin-top: clamp(1.25rem, 0.9rem + 1vw, 2rem);
+  }
+  .home-chapter__action {
+    margin-top: clamp(1.25rem, 0.9rem + 0.8vw, 1.75rem);
   }
   @media (min-width: 1024px) {
     .chapter-head {
@@ -1504,11 +1547,21 @@ html[data-nav="dark"] {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* --zoom (homeMedia.ts, never below 1) tightens the frame around the
-       photograph's focus point; hover adds a little on top. */
-    transform: scale(var(--zoom, 1));
-    transform-origin: var(--media-pos, 50% 50%);
+    /* The crop from homeMedia.ts: the phone framing below 768px, the
+       desktop framing above. --z (never below 1) tightens the frame around
+       the photograph's focus point; hover lifts it a little (--lift). */
+    --z: var(--zoom-sm, 1);
+    object-position: var(--media-pos-sm, 50% 50%);
+    transform-origin: var(--media-pos-sm, 50% 50%);
+    transform: scale(calc(var(--z) * var(--lift, 1)));
     transition: transform 1.1s var(--ease-out-expo);
+  }
+  @media (min-width: 768px) {
+    .tile__media {
+      --z: var(--zoom, 1);
+      object-position: var(--media-pos, 50% 50%);
+      transform-origin: var(--media-pos, 50% 50%);
+    }
   }
   /* A low scrim under the label: the lime label holds at least 3:1 (it is
      large text) over the palest pixels behind it in any photograph. */
@@ -1551,10 +1604,27 @@ html[data-nav="dark"] {
     text-wrap: balance;
     transition: transform 0.45s var(--ease-out-quart);
   }
-  /* A panel's one line, upper left; left out where the tile is too small
-     to carry it beside the label (the audience pages say it in full). */
+  /* Pale photographs (labels: "ink" in homeMedia.ts): ink labels and
+     descriptions straight on the picture, no scrim. */
+  .tile--ink {
+    --fg: var(--color-ink);
+    background-color: var(--color-stone);
+  }
+  .tile--ink::after {
+    display: none;
+  }
+  .tile--photo .tile__intro {
+    color: rgb(241 238 231 / 0.92);
+  }
+  .tile--ink .tile__intro {
+    color: color-mix(in srgb, var(--color-ink) 82%, transparent);
+  }
+  /* The one-line description, upper left; left out where the tile is too
+     small to carry it beside the label (the audience pages say it in
+     full). */
   .tile__intro {
     position: absolute;
+    z-index: 1;
     top: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
     left: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
     right: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
@@ -1581,7 +1651,7 @@ html[data-nav="dark"] {
   }
   @media (hover: hover) {
     a.tile:hover .tile__media {
-      transform: scale(calc(var(--zoom, 1) * 1.04));
+      --lift: 1.04;
     }
     a.tile:hover::after {
       opacity: 1;
@@ -1594,7 +1664,7 @@ html[data-nav="dark"] {
     }
   }
   a.tile:focus-visible .tile__media {
-    transform: scale(calc(var(--zoom, 1) * 1.04));
+    --lift: 1.04;
   }
   a.tile:focus-visible .tile__label {
     transform: translate3d(0.35rem, 0, 0);
@@ -2644,6 +2714,193 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
+     About (app/about/page.tsx): heading left, a reading column right;
+     short lines set typographically; three people as open columns, the
+     name leading (a 4:5 portrait sits above it once there is one).
+     ------------------------------------------------------------------- */
+  .about-split {
+    display: grid;
+    gap: var(--spacing-head);
+  }
+  @media (min-width: 1024px) {
+    .about-split {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 3rem;
+      align-items: start;
+    }
+    .about-split > :first-child {
+      grid-column: 1 / span 5;
+    }
+    .about-split > :last-child {
+      grid-column: 7 / -1;
+    }
+    .about-split__title {
+      position: sticky;
+      top: 6rem;
+    }
+    .about-split--top .about-split__title {
+      position: static;
+    }
+  }
+  .about-split__title {
+    max-width: 15ch;
+  }
+  .about-prose > p {
+    max-width: 58ch;
+    font-size: clamp(1.0625rem, 0.98rem + 0.3vw, 1.1875rem);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .about-prose > p + p {
+    margin-top: 1rem;
+  }
+  .about-prose + .about-prose {
+    margin-top: 1rem;
+  }
+  .about-prose--lead > p:first-child {
+    font-weight: 500;
+    font-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+  /* Running copy on clay is true black (see [data-tone="clay"]). */
+  [data-tone="clay"] .about-prose {
+    color: var(--muted);
+  }
+  .about-sequence {
+    margin-block: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  .about-sequence--sentences {
+    font-weight: 700;
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    max-width: 30ch;
+  }
+  .about-sequence--sentences > li + li {
+    margin-top: 0.5rem;
+  }
+  .about-team-lede {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--color-lime);
+  }
+  .people {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    margin-top: var(--spacing-section-sm);
+  }
+  @media (min-width: 1024px) {
+    .people {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: clamp(2rem, 3vw, 4rem);
+    }
+  }
+  .person {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .person__photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border-radius: calc(var(--radius-section) / 2);
+  }
+  .person__name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(4rem, 3rem + 5vw, 8.5rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .person__role {
+    margin-top: 1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-lime);
+  }
+  .person__copy {
+    margin-top: 1.5rem;
+    color: var(--muted);
+  }
+  .person__copy > p {
+    font-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .person__copy > p + p {
+    margin-top: 0.9rem;
+  }
+  .person__short {
+    margin-top: 1.75rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .person__short-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-lime);
+  }
+  .about-steps {
+    margin-top: var(--spacing-body);
+  }
+  .about-step {
+    display: grid;
+    gap: 0.6rem;
+  }
+  @media (min-width: 768px) {
+    .about-step {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: 3rem;
+      align-items: baseline;
+    }
+  }
+  .about-step__name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 3.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .about-prompt {
+    margin-top: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+    margin-bottom: 0.75rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  /* -------------------------------------------------------------------
      Long-form prose (privacy policy)
      ------------------------------------------------------------------- */
   .privacy-h2 {
@@ -2777,7 +3034,7 @@ html[data-nav="dark"] {
   /* Still images and still labels: the hover state is a colour change.
      The art-directed zoom stays; only the hover movement goes. */
   a.tile .tile__media {
-    transform: scale(var(--zoom, 1)) !important;
+    --lift: 1 !important;
   }
   a.tile .tile__label {
     transform: none !important;

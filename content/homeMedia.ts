@@ -3,41 +3,46 @@ import type { MosaicNode } from "@/lib/mosaic";
 
 /**
  * The homepage's image-led sections, in one place: every photograph, the
- * label set over it, where it leads, its alt text, how it is framed, and
- * how the tiles are arranged at each breakpoint. Components read from
- * here; no image URL or crop appears anywhere else.
+ * label set over it, where it leads, its alt text, how it is framed on
+ * desktop and on phones, and how the tiles are arranged at each
+ * breakpoint. Components read from here; no image URL or crop appears
+ * anywhere else.
  *
- * Photographs are in the public Supabase bucket (lib/media.ts builds the
- * URLs). `file` is the filename exactly as it is in the bucket's
- * madebyobra/ folder: the names are case-sensitive and do not follow one
- * pattern (retro_jerseys (1).png, t-shirts.png, techpacks.png, hoods.png),
- * so copy them from the bucket rather than guessing. A replacement
- * uploaded under a new name (Supabase adds " (1)") must be switched here:
- * the old name stops resolving. scripts/check-media.mjs confirms every file
- * here is publicly reachable: run `npm run check:media` after a change.
+ * Photographs are the V3 website set in the public Supabase bucket
+ * (lib/media.ts builds the URLs): `file` is the path under the bucket's
+ * madebyobra/ folder, exactly as stored ("V3 Website/agency.png"). Names
+ * are case-sensitive and irregular (agency, festival, artist; hoods;
+ * techpacks), so copy them from the bucket rather than guessing. A file
+ * replaced under a new name must be switched here, because the old name
+ * stops resolving. scripts/check-media.mjs confirms every file is public
+ * and resizes whole: run `npm run check:media` after any change.
  *
  * The images are clean: labels are live text, never part of the picture.
  * Labels are lower case with a full stop, like the wordmark.
  *
- * Framing, per photograph (the brief's objectPosition / cropScale /
- * preferredAspectRatio):
+ * Framing, per photograph (objectPosition / cropScale /
+ * preferredAspectRatio, with mobile overrides):
  *
  * - `aspect`: the frame the photograph is best seen in, width / height
- *   (`4 / 5` is the sources' own shape; `6 / 5` a little wider). The
- *   collage is built around these (lib/mosaic.ts), so a tile is drawn at
- *   its photograph's aspect rather than the photograph being forced into
- *   a fixed box. A layout can give a tile a different frame at one
- *   breakpoint ({ id, aspect }) where the composition needs it.
+ *   (`4 / 5` is the sources' own shape). The collage is built around these
+ *   (lib/mosaic.ts), so each tile is drawn at its photograph's frame
+ *   rather than the photograph being forced into a fixed box. A layout can
+ *   give a tile a different frame at one breakpoint ({ id, aspect }).
  * - `position`: object-position, the point kept in frame when the frame is
  *   narrower or wider than the file.
  * - `zoom`: optional tightening (1.1 = 10% closer), around `position`. It
  *   only ever zooms in: to show more of a photograph, give it a frame
  *   closer to its own shape instead (no letterboxing, no empty bars).
+ * - `mobile`: the same three for phones (below 768px), where they differ.
+ * - `labels`: "lime" (default) for the darker photographs, set over a low
+ *   scrim; "ink" for pale ones, which need no scrim.
  *
  * Layouts are trees of rows and columns of tile ids, one per breakpoint
  * (sm: phones, md: from 768px, lg: from 1024px). A row sets tiles side by
  * side at one height, a column stacks them at one width.
  */
+
+export type Framing = { aspect?: number; position?: string; zoom?: number };
 
 export type Photo = {
   file: string;
@@ -49,39 +54,32 @@ export type Photo = {
   aspect: number;
   position: string;
   zoom?: number;
+  mobile?: Framing;
+  labels?: "lime" | "ink";
 };
-
-/** Panel colour for a tile without a photograph (a [data-tone] value). */
-export type TileTone = "stone" | "bone" | "clay-soft" | "blue-soft" | "lime-soft";
 
 export type Tile = {
   /** Also the analytics category. */
   id: string;
   label: string;
-  /** One line in the panel's upper left, shown while `photo` is null. */
+  /** One line in the tile's upper left (the audiences). */
   intro?: string;
   /** A live route (checked against the app's routes), or null. */
   href: string | null;
-  photo: Photo | null;
-  /** Shown while `photo` is null. */
-  tone?: TileTone;
-  /** The panel's frame while `photo` is null (a photograph brings its own). */
-  aspect?: number;
+  photo: Photo;
 };
 
 export type CollageLayout = { sm: MosaicNode; md: MosaicNode; lg: MosaicNode };
 
 const portrait = { width: 1080, height: 1350 };
+const v3 = (name: string) => `V3 Website/${name}`;
 
 /** An audience's one-line description, as on the Who for page. */
 const audienceIntro = (slug: string) => findAudience(slug)?.intro;
 
 /**
- * Who for. No audience photography has been supplied yet, so each
- * audience is a block of the washed brand palette with its label and its
- * one-line description; give a tile a `photo` and it becomes a photograph
- * with a lime label. The frames are portrait-leaning so people, hands and
- * scenes will sit in them without heavy cropping.
+ * Who for. The audience photographs are pale, high-key images, so their
+ * labels and descriptions are set in ink.
  */
 export const whoForTiles: Tile[] = [
   {
@@ -89,61 +87,109 @@ export const whoForTiles: Tile[] = [
     label: "agencies.",
     intro: audienceIntro("agencies"),
     href: pageHref("agencies"),
-    photo: null,
-    tone: "stone",
-    aspect: 1,
+    photo: {
+      file: v3("agency.png"),
+      ...portrait,
+      alt: "A designer in a cap pinning work to a studio moodboard wall",
+      aspect: 1.05,
+      position: "35% 30%",
+      labels: "ink",
+      // Tall on phones: his face and the wall he is working on.
+      mobile: { aspect: 0.62, position: "38% 50%" },
+    },
   },
   {
     id: "festivals",
     label: "festivals.",
     intro: audienceIntro("festivals"),
     href: pageHref("festivals"),
-    photo: null,
-    tone: "clay-soft",
-    aspect: 3 / 4,
+    photo: {
+      file: v3("festival.png"),
+      ...portrait,
+      alt: "A festival crowd with arms raised around a man in a white madebyobra T-shirt",
+      aspect: 0.78,
+      position: "50% 35%",
+      labels: "ink",
+      mobile: { aspect: 1.3, position: "50% 30%" },
+    },
   },
   {
     id: "events",
     label: "events.",
     intro: audienceIntro("events"),
     href: pageHref("events"),
-    photo: null,
-    tone: "blue-soft",
-    aspect: 3 / 4,
+    photo: {
+      file: v3("events.png"),
+      ...portrait,
+      alt: "madebyobra event lanyards for London 2026 laid over a crowd",
+      aspect: 0.9,
+      position: "50% 50%",
+      labels: "ink",
+      mobile: { aspect: 1.3, position: "50% 45%" },
+    },
   },
   {
     id: "artists",
     label: "artists.",
     intro: audienceIntro("artists"),
     href: pageHref("artists"),
-    photo: null,
-    tone: "lime-soft",
-    aspect: 1,
+    photo: {
+      file: v3("artist.png"),
+      ...portrait,
+      alt: "A DJ in a football shirt performing at the decks",
+      aspect: 4 / 5,
+      // Her face and her hands on the decks.
+      position: "45% 22%",
+      labels: "ink",
+      mobile: { aspect: 1.15, position: "45% 20%" },
+    },
   },
   {
     id: "brands",
     label: "brands.",
     intro: audienceIntro("brands"),
     href: pageHref("brands"),
-    photo: null,
-    tone: "bone",
-    aspect: 1,
+    photo: {
+      file: v3("brands.png"),
+      ...portrait,
+      alt: "A model seated on a stool in a ROKOR Sport sweatshirt and a black cap",
+      aspect: 4 / 5,
+      // Head to the chest print in a landscape frame.
+      position: "45% 10%",
+      labels: "ink",
+      mobile: { aspect: 1.15, position: "45% 10%" },
+    },
   },
 ];
 
-/** A lead, two tall frames and a stacked pair: one quick row. */
+/**
+ * A lead, two portraits and a stacked pair, in one short row on desktop;
+ * on phones a tall lead beside two landscapes, then a pair.
+ */
 export const whoForLayout: CollageLayout = {
-  lg: { row: ["agencies", "festivals", "events", { col: ["artists", "brands"] }] },
+  lg: {
+    row: [
+      "agencies",
+      "festivals",
+      "events",
+      { col: [{ id: "artists", aspect: 1.5 }, { id: "brands", aspect: 1.5 }] },
+    ],
+  },
   md: {
     col: [
       { row: [{ id: "agencies", aspect: 1.3 }, "festivals"] },
-      { row: [{ id: "events", aspect: 1 }, "artists", "brands"] },
+      {
+        row: [
+          { id: "events", aspect: 1 },
+          { id: "artists", aspect: 1 },
+          { id: "brands", aspect: 1 },
+        ],
+      },
     ],
   },
   sm: {
     col: [
-      { id: "agencies", aspect: 1.35 },
-      { row: [{ id: "festivals", aspect: 0.85 }, { id: "events", aspect: 0.85 }] },
+      { row: ["agencies", { col: ["festivals", "events"] }] },
       { row: ["artists", "brands"] },
     ],
   },
@@ -160,14 +206,14 @@ export const makeTiles: Tile[] = [
     label: "retro jerseys.",
     href: pageHref("retro-football-shirts"),
     photo: {
-      file: "retro_jerseys (1).png",
+      file: v3("retro_jerseys.png"),
       ...portrait,
       alt: "A stack of five custom retro football jerseys in different colours and patterns, each with the madebyobra wordmark",
-      // Wide enough to read as a stack of four designs; anchored to the
-      // top so the label sits on the yellow and purple folds, clear of the
-      // printed wordmarks.
-      aspect: 6 / 5,
+      // Wide enough to read as a stack of several designs; anchored to the
+      // top so the label sits on the lower folds.
+      aspect: 1.3,
       position: "50% 0%",
+      mobile: { aspect: 1.3, position: "50% 0%" },
     },
   },
   {
@@ -175,12 +221,13 @@ export const makeTiles: Tile[] = [
     label: "t-shirts.",
     href: pageHref("t-shirts"),
     photo: {
-      file: "t-shirts.png",
+      file: v3("t-shirts.png"),
       ...portrait,
-      alt: "Heavyweight T-shirt collars in black, charcoal, rust and grey",
-      // Tall, so all four collars stack in frame.
-      aspect: 18 / 25,
+      alt: "Four T-shirts stacked at the collar in black, charcoal, rust and white",
+      // Tall, so all four garments stack in frame.
+      aspect: 0.75,
       position: "50% 50%",
+      mobile: { aspect: 0.85, position: "50% 45%" },
     },
   },
   {
@@ -188,11 +235,12 @@ export const makeTiles: Tile[] = [
     label: "hoodies.",
     href: pageHref("tops"),
     photo: {
-      file: "hoods.png",
+      file: v3("hoods.png"),
       ...portrait,
       alt: "A rust hood surrounded by hoods in black, stone, cream and blue",
       aspect: 4 / 5,
-      position: "50% 42%",
+      position: "50% 45%",
+      mobile: { aspect: 0.85, position: "50% 45%" },
     },
   },
   {
@@ -200,11 +248,12 @@ export const makeTiles: Tile[] = [
     label: "tops.",
     href: pageHref("tops"),
     photo: {
-      file: "tops.png",
+      file: v3("tops.png"),
       ...portrait,
       alt: "Crewneck sweatshirts in rust, stone and black with ribbed collars",
-      aspect: 1,
+      aspect: 1.05,
       position: "50% 50%",
+      mobile: { aspect: 1.1 },
     },
   },
   {
@@ -212,12 +261,13 @@ export const makeTiles: Tile[] = [
     label: "caps.",
     href: pageHref("headwear"),
     photo: {
-      file: "caps.png",
+      file: v3("caps.png"),
       ...portrait,
       alt: "Six-panel caps in black, stone, green, rust and blue",
-      // Square and central, so several caps and colours stay in view.
-      aspect: 1,
+      // Near square and central, so several caps and colours stay in view.
+      aspect: 1.05,
       position: "50% 50%",
+      mobile: { aspect: 1.1 },
     },
   },
 ];
@@ -228,40 +278,43 @@ export const makeLayout: CollageLayout = {
     row: [
       "retro-football-shirts",
       "t-shirts",
-      { col: [{ id: "hoodies", aspect: 1.4 }, { row: ["tops", "headwear"] }] },
+      { col: [{ id: "hoodies", aspect: 1.5 }, { row: ["tops", "headwear"] }] },
     ],
   },
   md: {
     col: [
       { row: ["retro-football-shirts", { id: "t-shirts", aspect: 0.62 }] },
-      { row: [{ id: "hoodies", aspect: 1 }, "tops", "headwear"] },
+      {
+        row: [
+          { id: "hoodies", aspect: 1 },
+          { id: "tops", aspect: 1 },
+          { id: "headwear", aspect: 1 },
+        ],
+      },
     ],
   },
   sm: {
     col: [
-      { id: "retro-football-shirts", aspect: 1.15 },
+      "retro-football-shirts",
       { row: ["t-shirts", "hoodies"] },
       { row: ["tops", "headwear"] },
     ],
   },
 };
 
-/**
- * What we handle. Each leads to its row on the services page (the rows
- * carry the service slugs as ids); branding and packaging share one.
- */
 export const handleTiles: Tile[] = [
   {
     id: "manufacturing",
     label: "manufacturing.",
     href: "/services/#sampling-and-manufacturing",
     photo: {
-      file: "manufacturing (1).png",
+      file: v3("manufacturing.png"),
       ...portrait,
       alt: "Thread cones in rust, olive and cream on an industrial sewing machine",
       // The rust cone and the machine head together.
       aspect: 0.95,
       position: "55% 55%",
+      mobile: { aspect: 1.2, position: "50% 60%" },
     },
   },
   {
@@ -269,7 +322,7 @@ export const handleTiles: Tile[] = [
     label: "branding.",
     href: "/services/#branding-and-packaging",
     photo: {
-      file: "branding.png",
+      file: v3("branding.png"),
       ...portrait,
       alt: "A madebyobra swing tag and orange embroidered logo on a white garment",
       // Near full frame: the swing tag above, the embroidery below.
@@ -282,11 +335,12 @@ export const handleTiles: Tile[] = [
     label: "packaging.",
     href: "/services/#branding-and-packaging",
     photo: {
-      file: "packaging.png",
+      file: v3("packaging.png"),
       ...portrait,
       alt: "Frosted garment bags printed with the madebyobra name",
       aspect: 1.3,
       position: "50% 40%",
+      mobile: { aspect: 1 },
     },
   },
   {
@@ -294,7 +348,7 @@ export const handleTiles: Tile[] = [
     label: "logistics.",
     href: "/services/#logistics",
     photo: {
-      file: "logistics.png",
+      file: v3("logistics.png"),
       ...portrait,
       alt: "Sealing a green shipping box with madebyobra printed tape",
       aspect: 0.92,
@@ -306,11 +360,12 @@ export const handleTiles: Tile[] = [
     label: "tech packs.",
     href: "/services/#product-development",
     photo: {
-      file: "techpacks.png",
+      file: v3("techpacks.png"),
       ...portrait,
       alt: "madebyobra technical drawings of a jacket, joggers and sweatshirts",
       aspect: 0.92,
       position: "50% 40%",
+      mobile: { aspect: 1 },
     },
   },
   {
@@ -318,12 +373,13 @@ export const handleTiles: Tile[] = [
     label: "e-commerce.",
     href: "/services/#e-commerce",
     photo: {
-      file: "e-commerce.png",
+      file: v3("e-commerce.png"),
       ...portrait,
-      alt: "An online store page showing a collection of hoodies, T-shirts and sweatpants",
-      // The hanging garments at the top of the page, not the price grid.
+      alt: "An online store page with a product grid of hoodies, T-shirts and sweatpants",
+      // The product grid at the top of the page.
       aspect: 1.3,
-      position: "50% 8%",
+      position: "50% 6%",
+      mobile: { aspect: 1.45 },
     },
   },
 ];
@@ -365,10 +421,10 @@ export const handleLayout: CollageLayout = {
   },
   sm: {
     col: [
-      { id: "manufacturing", aspect: 1.2 },
+      "manufacturing",
       { row: ["branding", "logistics"] },
-      { row: [{ id: "packaging", aspect: 1 }, { id: "tech-packs", aspect: 1 }] },
-      { id: "e-commerce", aspect: 1.45 },
+      { row: ["packaging", "tech-packs"] },
+      "e-commerce",
     ],
   },
 };

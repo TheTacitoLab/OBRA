@@ -1,7 +1,7 @@
 import { Sheet } from "./Sheet";
 import { Container } from "../site/Container";
 import { Editorial } from "../site/Editorial";
-import { Button } from "../site/Button";
+import { ArrowLink } from "../site/Button";
 import { MarkedTitle } from "../site/MarkedTitle";
 import { finalCta } from "@/content/home";
 import { primaryCta } from "@/content/site";
@@ -29,13 +29,14 @@ export function FinalCta() {
             <div className="flex flex-col gap-body" data-reveal-group="right">
               <p className="type-lede">{finalCta.copy}</p>
               <div>
-                <Button
+                <ArrowLink
+                  strong
                   href={primaryCta.href}
                   track="get_in_touch_click"
                   trackSection="final_cta"
                 >
                   {primaryCta.label}
-                </Button>
+                </ArrowLink>
               </div>
             </div>
           }

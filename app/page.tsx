@@ -63,7 +63,9 @@ export default function Home() {
             lines={statements.studio}
             textClassName="text-lime"
           >
-            <ArrowLink href="/about/">About madebyobra</ArrowLink>
+            <ArrowLink strong href="/about/">
+              About madebyobra
+            </ArrowLink>
           </Statement>
           <Overview />
           <FinalCta />

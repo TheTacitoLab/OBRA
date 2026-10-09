@@ -43,11 +43,12 @@ export function Overview() {
                 {index === overview.topics.length - 1 && (
                   <div className="overview-links">
                     {overview.links.map((link) => (
-                      <ArrowLink key={link.href} href={link.href}>
+                      <ArrowLink strong key={link.href} href={link.href}>
                         {link.label}
                       </ArrowLink>
                     ))}
                     <ArrowLink
+                      strong
                       href={primaryCta.href}
                       track="get_in_touch_click"
                       trackSection="overview"
