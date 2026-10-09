@@ -378,7 +378,8 @@ html[data-nav="dark"] {
     }
   }
 
-  /* Fitted heroes (PageHero `full`: the product pages and About). The h1
+  /* Fitted heroes (PageHero `full` on the product pages; About's title via
+     .fit-hero--solo). The h1
      is sized from its own words: --fit-em (set inline from lib/titleFit.ts)
      is the longest word's width in em, so the largest size at which that
      word still fits is the available width divided by it, 3% held back for
@@ -2845,10 +2846,11 @@ html[data-nav="dark"] {
   }
 
   /* People. Phones and tablets: the photograph, then the copy. Desktop:
-     the photograph beside the copy at its own shape, held to about
-     three-quarters of the screen height so a section stays an editorial band
-     (the next person is already arriving), the sides swapping from one
-     person to the next and the copy close to the picture. */
+     the photograph beside the copy at its own shape, just under 60% of the
+     screen height, so with the section's padding each person is a band of
+     about three-quarters of the screen and the next person is already
+     arriving. The pair is centred, the sides swapping from one person to
+     the next. */
   .person {
     display: grid;
     gap: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
@@ -2862,17 +2864,18 @@ html[data-nav="dark"] {
   }
   @media (min-width: 1024px) {
     .person {
-      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-columns: auto minmax(0, 34rem);
+      justify-content: center;
       column-gap: clamp(3rem, 7vw, 8rem);
       align-items: center;
     }
     .person__photo {
       width: auto;
       max-width: none;
-      height: clamp(26rem, 72vh, 50rem);
+      height: clamp(24rem, 58vh, 50rem);
     }
     .person--reverse {
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 34rem) auto;
     }
     .person--reverse .person__photo {
       grid-column: 2;
@@ -2881,7 +2884,6 @@ html[data-nav="dark"] {
     .person--reverse .person__text {
       grid-column: 1;
       grid-row: 1;
-      justify-self: end;
     }
   }
   .person__text {
@@ -2930,19 +2932,20 @@ html[data-nav="dark"] {
     text-wrap: balance;
   }
 
-  .about-original__title {
-    max-width: none;
-  }
   .about-original__body {
     margin-top: var(--spacing-body);
   }
 
   /* The close: the group photograph whole and wide (its own shape at every
-     width, never cropped), then the three words and the way on. */
+     width, never cropped), then the three words and the way on. Its width
+     follows its own ratio (--ratio, set from the file's size) so it is
+     never taller than about 80% of the screen, and its box is reserved
+     before it loads. */
   .about-group {
     display: block;
-    width: 100%;
+    width: min(100%, calc(min(80vh, 56rem) * var(--ratio, 1.5)));
     height: auto;
+    margin-inline: auto;
     border-radius: calc(var(--radius-section) / 2);
   }
   .about-close--after-photo {

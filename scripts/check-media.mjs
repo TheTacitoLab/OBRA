@@ -1,9 +1,8 @@
 /**
  * Confirms every photograph in content/homeMedia.ts and content/about.ts is
- * publicly reachable,
- * as the original file and through the resizing endpoint the pages use,
- * and that the resized copy is the whole photograph scaled down rather
- * than a crop of it.
+ * publicly reachable, as the original file and through the resizing
+ * endpoint the pages use, and that the resized copy is the whole
+ * photograph scaled down rather than a crop of it.
  * Run after adding or renaming an image: `npm run check:media`. Exits
  * non-zero if any image would render broken.
  *

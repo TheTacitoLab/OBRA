@@ -31,7 +31,7 @@ export function pageTitleClass(title: string, tier?: TitleTier) {
 /**
  * The opening section of a studio page. Two layouts:
  *
- * `full` (the product pages, About) sizes the h1 to its own words: the
+ * `full` (the product pages) sizes the h1 to its own words: the
  * longest word fills the space it has, capped higher for a very short title
  * (TOPS) than for the rest. Side by side (a short title from lg, the rest
  * from xl) the copy sits beside the title, not at the far edge: a short

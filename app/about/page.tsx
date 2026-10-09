@@ -57,7 +57,7 @@ function PersonSection({ person, index }: { person: Person; index: number }) {
           width={person.photo.width}
           height={person.photo.height}
           alt={person.photo.alt}
-          loading={index === 0 ? "eager" : "lazy"}
+          loading="lazy"
           decoding="async"
           data-reveal="up"
         />
@@ -156,7 +156,7 @@ export default function AboutPage() {
       </Section>
 
       <Section tone="lime" rounded>
-        <h2 className="type-display-sm about-original__title" data-reveal="up">
+        <h2 className="type-display-sm" data-reveal="up">
           {original.title.map((line) => (
             <span key={line} className="block">
               {line}
@@ -191,6 +191,11 @@ export default function AboutPage() {
             loading="lazy"
             decoding="async"
             data-reveal="up"
+            style={
+              {
+                "--ratio": closing.photo.width / closing.photo.height,
+              } as React.CSSProperties
+            }
           />
         )}
         <div className={`article-split ${closing.photo ? "about-close--after-photo" : ""}`}>

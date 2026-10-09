@@ -1,7 +1,8 @@
 /**
- * Homepage photography lives in the public "Website Builds" bucket of the
- * madebyobra Supabase project, in its madebyobra/ folder. Public objects
- * need no key or signed URL; nothing here is a credential.
+ * Site photography (homepage and About) lives in the public "Website
+ * Builds" bucket of the madebyobra Supabase project, in its madebyobra/
+ * folder. Public objects need no key or signed URL; nothing here is a
+ * credential.
  *
  * Images are served through Supabase's image transformation endpoint
  * (render/image), which resizes on request and returns WebP to browsers

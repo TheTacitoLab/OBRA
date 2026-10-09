@@ -21,7 +21,7 @@ npm run build      # static export to ./out
 npm run lint
 npm run typecheck
 npm run check:links   # after a build: every internal link and #fragment resolves
-npm run check:media   # every homepage photograph is publicly reachable
+npm run check:media   # every homepage and About photograph is publicly reachable
 ```
 
 ## Structure
