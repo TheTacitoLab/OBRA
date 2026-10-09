@@ -62,7 +62,10 @@ export type Photo = {
   tint?: Tint;
 };
 
-/** The palette's soft colours (--color-* in app/globals.css). */
+/**
+ * The palette's three soft colours and stone, its warm neutral (--color-*
+ * in app/globals.css).
+ */
 export type Tint = "clay-soft" | "blue-soft" | "lime-soft" | "stone";
 
 export type Tile = {
@@ -87,7 +90,10 @@ const audienceIntro = (slug: string) => findAudience(slug)?.intro;
 /**
  * Who for. The audience photographs are pale, high-key images, so their
  * labels and descriptions are set in ink. Each carries a soft tint, mixed
- * so no two neighbours share a colour at any breakpoint.
+ * so no two tiles that share an edge share a colour at any breakpoint.
+ * Agencies, festivals, events and artists all touch one another at some
+ * width, so they take four different colours; brands matches agencies,
+ * which it only ever meets at a corner.
  */
 export const whoForTiles: Tile[] = [
   {
@@ -152,7 +158,7 @@ export const whoForTiles: Tile[] = [
       // Her face and her hands on the decks.
       position: "45% 22%",
       labels: "ink",
-      tint: "blue-soft",
+      tint: "stone",
       mobile: { aspect: 1.15, position: "45% 20%" },
     },
   },
