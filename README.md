@@ -172,9 +172,12 @@ search) > "Have something in mind?" (white) > footer.
   `prefers-reduced-motion` get plain flow. The header tone follows the
   section actually under it.
 - **Compact chapters** (`.home-chapter`, not `.chapter`, which the agency
-  guide owns): Who for and What we make size to their content (about 65-77%
+  guide owns): Who for and What we make size to their content (about 70-85%
   and 86-97% of a desktop screen), with the title on one line and the copy
-  beside it, so the next statement is already arriving as they end. On
+  beside it, so the next statement is already arriving as they end. Who
+  for is the calmer of the two (`.home-chapter--who`): five photographs
+  and five names, framed by black on every side, with more room under its
+  top edge, before the photographs, between them and at its foot. On
   phones the supporting paragraph drops to body size. The statements keep
   their 80% height.
 - **Calls to action**: on the homepage and About, every call to action is
@@ -195,8 +198,8 @@ search) > "Have something in mind?" (white) > footer.
   in the display face, lower case with a full stop, sized from the tile
   and capped so the longest word fits (`labelWordEm`); photographs get
   lime labels over a low scrim; the audience photographs are pale by
-  design (a light filter) and take ink labels (`labels: "ink"`) and their
-  one-line descriptions, no scrim, and each carries a soft tint from the
+  design (a light filter) and take ink labels (`labels: "ink"`) with no
+  scrim and nothing else over them, and each carries a soft tint from the
   palette (`tint: "clay-soft"`, multiplied at part strength, lifting on
   hover and focus; no two tiles that share an edge share one). Every label clears 3:1
   over the photograph behind it (6.8:1 or more today).

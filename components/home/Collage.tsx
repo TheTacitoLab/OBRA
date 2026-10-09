@@ -16,8 +16,7 @@ const SIZES_MEDIA: Record<Breakpoint, string> = {
 
 /**
  * An editorial collage of photographs (content/homeMedia.ts), each with
- * its label as live text in the lower left (the audiences also carry
- * their one-line description in the upper left).
+ * its label as live text in the lower left and nothing else over it.
  *
  * The arrangement comes from the section's layout at each breakpoint, and
  * every tile is sized to its photograph's chosen frame (lib/mosaic.ts):
@@ -134,7 +133,6 @@ function TileView({
       >
         {tile.label}
       </span>
-      {tile.intro && <span className="tile__intro">{tile.intro}</span>}
       {/* A plain img: the static export runs with `images.unoptimized`,
           and Supabase's render endpoint does the resizing (lib/media.ts).
           The crop is set per breakpoint from the manifest: the phone

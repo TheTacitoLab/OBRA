@@ -1,4 +1,4 @@
-import { findAudience, pageHref } from "@/content/site";
+import { pageHref } from "@/content/site";
 import type { MosaicNode } from "@/lib/mosaic";
 
 /**
@@ -72,8 +72,6 @@ export type Tile = {
   /** Also the analytics category. */
   id: string;
   label: string;
-  /** One line in the tile's upper left (the audiences). */
-  intro?: string;
   /** A live route (checked against the app's routes), or null. */
   href: string | null;
   photo: Photo;
@@ -84,12 +82,10 @@ export type CollageLayout = { sm: MosaicNode; md: MosaicNode; lg: MosaicNode };
 const portrait = { width: 1080, height: 1350 };
 const v3 = (name: string) => `V3 Website/${name}`;
 
-/** An audience's one-line description, as on the Who for page. */
-const audienceIntro = (slug: string) => findAudience(slug)?.intro;
-
 /**
- * Who for. The audience photographs are pale, high-key images, so their
- * labels and descriptions are set in ink. Each carries a soft tint, mixed
+ * Who for. Five photographs and five names, nothing else: the audience
+ * pages do the explaining. The photographs are pale, high-key images, so
+ * their labels are set in ink. Each carries a soft tint, mixed
  * so no two tiles that share an edge share a colour at any breakpoint.
  * Agencies, festivals, events and artists all touch one another at some
  * width, so they take four different colours; brands matches agencies,
@@ -99,7 +95,6 @@ export const whoForTiles: Tile[] = [
   {
     id: "agencies",
     label: "agencies.",
-    intro: audienceIntro("agencies"),
     href: pageHref("agencies"),
     photo: {
       file: v3("agency.png"),
@@ -116,7 +111,6 @@ export const whoForTiles: Tile[] = [
   {
     id: "festivals",
     label: "festivals.",
-    intro: audienceIntro("festivals"),
     href: pageHref("festivals"),
     photo: {
       file: v3("festival.png"),
@@ -132,7 +126,6 @@ export const whoForTiles: Tile[] = [
   {
     id: "events",
     label: "events.",
-    intro: audienceIntro("events"),
     href: pageHref("events"),
     photo: {
       file: v3("events.png"),
@@ -148,35 +141,36 @@ export const whoForTiles: Tile[] = [
   {
     id: "artists",
     label: "artists.",
-    intro: audienceIntro("artists"),
     href: pageHref("artists"),
     photo: {
       file: v3("artist.png"),
       ...portrait,
       alt: "A DJ in a football shirt performing at the decks",
       aspect: 4 / 5,
-      // Her face and her hands on the decks.
-      position: "45% 22%",
+      // Her face in the upper third, her hands on the decks below: the
+      // smoke above her head gives way to her (eyes about 40% down the
+      // file). Landscape on desktop, square on tablets.
+      position: "45% 50%",
       labels: "ink",
       tint: "stone",
-      mobile: { aspect: 1.15, position: "45% 20%" },
+      mobile: { aspect: 1.15, position: "45% 65%" },
     },
   },
   {
     id: "brands",
     label: "brands.",
-    intro: audienceIntro("brands"),
     href: pageHref("brands"),
     photo: {
       file: v3("brands.png"),
       ...portrait,
       alt: "A model seated on a stool in a ROKOR Sport sweatshirt and a black cap",
       aspect: 4 / 5,
-      // Head to the chest print in a landscape frame.
-      position: "45% 10%",
+      // Head to the chest print in a landscape frame, with a little air
+      // above the cap.
+      position: "45% 4%",
       labels: "ink",
       tint: "clay-soft",
-      mobile: { aspect: 1.15, position: "45% 10%" },
+      mobile: { aspect: 1.15 },
     },
   },
 ];

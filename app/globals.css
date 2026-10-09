@@ -1409,15 +1409,31 @@ html[data-nav="dark"] {
   .home-chapter--make {
     padding-top: clamp(2.5rem, 1.6rem + 2vw, 3.75rem);
   }
-  /* Who for: the lime statement laps its foot by the section radius, so
-     the bottom padding gives that strip back and then leaves the collage
-     about 21px clear of the rounded edge on phones, 26-29px on tablets and
-     32-34px on desktop. A little less on top keeps the section compact. */
+  /* Who for: an editorial spread, five photographs framed by black on
+     every side. Room under the rounded top edge (about 48px on phones,
+     56-72px on desktop), a clear pause between the title and the
+     photographs, and a foot about as deep as the page gutter: the lime
+     statement laps it by the section radius, so the padding gives that
+     strip back first. */
   .home-chapter--who {
-    padding-top: clamp(1.5rem, 0.95rem + 1.5vw, 2.375rem);
+    padding-top: min(var(--spacing-section-sm), 4.5rem);
     padding-bottom: calc(
-      var(--radius-section) + clamp(1.3rem, 1rem + 1.25vw, 2.125rem)
+      var(--radius-section) + clamp(2rem, 1rem + 2.5vw, 3.5rem)
     );
+  }
+  .home-chapter--who .chapter-head {
+    gap: 1.125rem;
+  }
+  .home-chapter--who .home-chapter__media {
+    margin-top: max(2rem, var(--spacing-body));
+  }
+  /* A little more air between the photographs, and the labels set further
+     in from the edges (18-24px). */
+  .home-chapter--who .collage {
+    gap: clamp(0.625rem, 0.4rem + 0.75vw, 1.125rem);
+  }
+  .home-chapter--who .tile__label {
+    --inset: clamp(1.125rem, 0.6rem + 3cqi, 1.5rem);
   }
   .chapter-head {
     display: grid;
@@ -1631,32 +1647,6 @@ html[data-nav="dark"] {
     background: var(--tint);
     mix-blend-mode: multiply;
     opacity: 0.55;
-  }
-  .tile--photo .tile__intro {
-    color: rgb(241 238 231 / 0.92);
-  }
-  .tile--ink .tile__intro {
-    color: color-mix(in srgb, var(--color-ink) 82%, transparent);
-  }
-  /* The one-line description, upper left; left out where the tile is too
-     small to carry it beside the label (the audience pages say it in
-     full). */
-  .tile__intro {
-    position: absolute;
-    z-index: 1;
-    top: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
-    left: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
-    right: clamp(0.875rem, 0.4rem + 3cqi, 2.25rem);
-    max-width: 30ch;
-    font-size: clamp(0.9375rem, 0.85rem + 0.25vw, 1.0625rem);
-    line-height: 1.4;
-    color: var(--muted);
-    text-wrap: pretty;
-  }
-  @container (max-width: 15rem) or (max-height: 12rem) {
-    .tile__intro {
-      display: none;
-    }
   }
   @media (min-width: 768px) {
     .tile__label {
