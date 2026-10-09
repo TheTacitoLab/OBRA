@@ -18,7 +18,7 @@ export function WhoFor() {
       last
       sectionClassName="sheet--round sheet--auto"
     >
-      <Container className="home-chapter">
+      <Container className="home-chapter home-chapter--who">
         <div className="chapter-head">
           <h2 className="type-display type-display-tight" data-reveal="left">
             {whoFor.title}

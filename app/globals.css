@@ -1409,6 +1409,16 @@ html[data-nav="dark"] {
   .home-chapter--make {
     padding-top: clamp(2.5rem, 1.6rem + 2vw, 3.75rem);
   }
+  /* Who for: the lime statement laps its foot by the section radius, so
+     the bottom padding gives that strip back and then leaves the collage
+     about 21px clear of the rounded edge on phones, 26-29px on tablets and
+     32-34px on desktop. A little less on top keeps the section compact. */
+  .home-chapter--who {
+    padding-top: clamp(1.5rem, 0.95rem + 1.5vw, 2.375rem);
+    padding-bottom: calc(
+      var(--radius-section) + clamp(1.3rem, 1rem + 1.25vw, 2.125rem)
+    );
+  }
   .chapter-head {
     display: grid;
     gap: 1rem;
