@@ -58,7 +58,8 @@ components/
 content/
   site.ts                Nav, audiences, products, services, form options
   home.ts                Homepage copy, section by section
-  about.ts               About page copy (Rob, Q, Brad; process at #how-we-work)
+  about.ts               About page copy and figurine photography (Rob, Q,
+                         Brad; process at #how-we-work)
   homeMedia.ts           Homepage photography: files, labels, links, alt
                          text, crops and collage slots
   audiences.ts           Per-audience landing page content (not agencies)
@@ -119,8 +120,9 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `--radius-section` (24px on desktop down to 12px on phones) that laps the
   section above by the same amount (`.section-round` on other pages;
   `.sheet--round` and `.sheets--lap` on the homepage; the footer).
-- **Fitted titles**: the product-page hero (PageHero `full`, also About)
-  and the agencies hero size the h1 from its own words. `lib/titleFit.ts`
+- **Fitted titles**: the product-page hero (PageHero `full`), About's
+  title (on its own line, `.fit-hero--solo`) and the agencies hero size the
+  h1 from its own words. `lib/titleFit.ts`
   measures the title in em from the display face's glyph widths at build
   time; CSS divides the space available by that (`--fit-em`, container
   units), capped, so a short title (TOPS) runs large and a long one wraps
@@ -180,6 +182,23 @@ search) > "Have something in mind?" (white) > footer.
   top edge, before the photographs, between them and at its foot. On
   phones the supporting paragraph drops to body size. The statements keep
   their 80% height.
+- **The information section** (`Overview.tsx`, after the last statement):
+  the quiet, reading part of the homepage, set like an editorial article.
+  Every block, the opening one included, is its heading on the left (about
+  42%) and its copy on the right (about 52%), both starting at the same
+  line (`.article-split`, shared with About), with hairlines between
+  blocks; on phones the copy follows the heading. The opening heading is
+  only 1.2x the topic headings: an article heading, never the display
+  scale.
+- **About** (`app/about/page.tsx`, copy and photographs in
+  `content/about.ts`): serious about product, with personality from the
+  figurine photography. The same article split throughout; each person in
+  a full-width section of their own (bone, ink, bone), the figurine shown
+  whole at its own shape beside the copy, the sides alternating on desktop
+  and stacked photograph-first on phones; the group photograph closes the
+  page, uncropped, once its filename is confirmed (`closing.photo`,
+  GROUP_PHOTO_TO_CONFIRM). Who is who comes from the filenames and what
+  each figurine holds, never from faces.
 - **Calls to action**: on the homepage and About, every call to action is
   a plain text link with an arrow (`ArrowLink strong`); the desktop
   header's Get in touch is the one boxed button. The phone and tablet
@@ -199,7 +218,7 @@ search) > "Have something in mind?" (white) > footer.
   and capped so the longest word fits (`labelWordEm`); photographs get
   lime labels over a low scrim; the audience photographs are pale by
   design (a light filter) and take ink labels (`labels: "ink"`) with no
-  scrim and nothing else over them, and each carries a soft tint from the
+  scrim and no other text over them, and each carries a soft tint from the
   palette (`tint: "clay-soft"`, multiplied at part strength, lifting on
   hover and focus; no two tiles that share an edge share one). Every label clears 3:1
   over the photograph behind it (6.8:1 or more today).

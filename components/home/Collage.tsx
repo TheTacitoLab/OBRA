@@ -16,7 +16,7 @@ const SIZES_MEDIA: Record<Breakpoint, string> = {
 
 /**
  * An editorial collage of photographs (content/homeMedia.ts), each with
- * its label as live text in the lower left and nothing else over it.
+ * its label as live text in the lower left and no other text over it.
  *
  * The arrangement comes from the section's layout at each breakpoint, and
  * every tile is sized to its photograph's chosen frame (lib/mosaic.ts):

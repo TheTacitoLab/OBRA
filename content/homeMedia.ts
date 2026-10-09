@@ -1,4 +1,5 @@
 import { pageHref } from "@/content/site";
+import { v3 } from "@/lib/media";
 import type { MosaicNode } from "@/lib/mosaic";
 
 /**
@@ -80,7 +81,6 @@ export type Tile = {
 export type CollageLayout = { sm: MosaicNode; md: MosaicNode; lg: MosaicNode };
 
 const portrait = { width: 1080, height: 1350 };
-const v3 = (name: string) => `V3 Website/${name}`;
 
 /**
  * Who for. Five photographs and five names, nothing else: the audience
@@ -148,9 +148,9 @@ export const whoForTiles: Tile[] = [
       alt: "A DJ in a football shirt performing at the decks",
       aspect: 4 / 5,
       // Her face in the upper third, her hands on the decks below: the
-      // smoke above her head gives way to her (eyes about 40% down the
+      // smoke above her head gives way to her (eyes about 43% down the
       // file). Landscape on desktop, square on tablets.
-      position: "45% 50%",
+      position: "45% 56%",
       labels: "ink",
       tint: "stone",
       mobile: { aspect: 1.15, position: "45% 65%" },

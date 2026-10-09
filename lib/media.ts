@@ -14,9 +14,12 @@ const PROJECT = "https://odfpmwgwnyexuxqbusvi.supabase.co/storage/v1";
 const FOLDER = "Website%20Builds/madebyobra";
 const TRANSFORM = true;
 
-/** The widths each photograph is offered at (the sources are 1080 wide). */
+/** The widths each photograph is offered at (the sources are 1024-1080 wide). */
 const WIDTHS = [480, 720, 1080] as const;
 const QUALITY = 72;
+
+/** A file in the V3 Website folder, the current photography. */
+export const v3 = (name: string) => `V3 Website/${name}`;
 
 // Encoded segment by segment, so a file in a subfolder ("V3 Website/x.png")
 // keeps its slash.

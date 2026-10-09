@@ -1411,21 +1411,23 @@ html[data-nav="dark"] {
   }
   /* Who for: an editorial spread, five photographs framed by black on
      every side. Room under the rounded top edge (about 48px on phones,
-     56-72px on desktop), a clear pause between the title and the
-     photographs, and a foot about as deep as the page gutter: the lime
-     statement laps it by the section radius, so the padding gives that
-     strip back first. */
+     56-72px on desktop), a clear pause of 32-48px between the title and
+     the photographs, and a foot of about 32px on phones and 40-54px on
+     desktop: the lime statement laps it by the section radius, so the
+     padding gives that strip back first. */
   .home-chapter--who {
     padding-top: min(var(--spacing-section-sm), 4.5rem);
     padding-bottom: calc(
       var(--radius-section) + clamp(2rem, 1rem + 2.5vw, 3.5rem)
     );
   }
+  /* Stacked title and copy only: from 1024px they sit side by side with
+     the shared column gap. */
   .home-chapter--who .chapter-head {
-    gap: 1.125rem;
+    row-gap: 1.125rem;
   }
   .home-chapter--who .home-chapter__media {
-    margin-top: max(2rem, var(--spacing-body));
+    margin-top: min(max(2rem, var(--spacing-body)), 3rem);
   }
   /* A little more air between the photographs, and the labels set further
      in from the edges (18-24px). */
@@ -1630,8 +1632,8 @@ html[data-nav="dark"] {
     text-wrap: balance;
     transition: transform 0.45s var(--ease-out-quart);
   }
-  /* Pale photographs (labels: "ink" in homeMedia.ts): ink labels and
-     descriptions straight on the picture, no scrim. */
+  /* Pale photographs (labels: "ink" in homeMedia.ts): ink labels straight
+     on the picture, no scrim. */
   .tile--ink {
     --fg: var(--color-ink);
     background-color: var(--color-stone);
@@ -1689,19 +1691,36 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
-     The business explained (Overview.tsx): the quiet, reading section.
-     Body type, a comfortable measure, H3s in a column of their own on
-     wide screens, hairlines between topics. No cards.
+     The business explained (Overview.tsx): the quiet, reading section,
+     set like an editorial article. Every block is a heading on the left
+     (about 42%) and its copy on the right (about 52%), both starting at
+     the same line, with hairlines between blocks; on phones the copy
+     follows the heading. Body type at a comfortable measure. No cards.
      ------------------------------------------------------------------- */
+  /* The article split, shared with About: heading (or statement) left,
+     about 42%, and copy right, about 52%, both starting at the same line
+     from 1024px; the copy follows the heading below that. */
+  .article-split {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .article-split {
+      grid-template-columns: minmax(0, 42fr) minmax(0, 52fr);
+      column-gap: 6%;
+      align-items: start;
+    }
+  }
+  /* The opening heading: 1.2x the topic headings, the strongest heading
+     here but an article heading, never the display scale. */
   .overview-title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(2rem, 7.4vw, 6.5rem);
-    line-height: 0.92;
-    letter-spacing: -0.045em;
+    font-size: clamp(1.8rem, 1.38rem + 1.32vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
     text-transform: uppercase;
     text-wrap: balance;
-    max-width: 16ch;
   }
   .overview-lead > p,
   .overview-topic__body > p {
@@ -1721,10 +1740,12 @@ html[data-nav="dark"] {
     margin-top: 1.25rem;
   }
   .overview-topic {
-    display: grid;
-    gap: 1.25rem;
-    padding-block: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+    padding-block: clamp(2.25rem, 1.75rem + 2vw, 3.75rem);
     border-top: 1px solid var(--line-strong);
+  }
+  .overview-topic--open {
+    padding-top: 0;
+    border-top: 0;
   }
   .overview-topic:last-child {
     padding-bottom: 0;
@@ -1740,11 +1761,7 @@ html[data-nav="dark"] {
     max-width: 18ch;
   }
   @media (min-width: 1024px) {
-    .overview-topic {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      column-gap: clamp(2.5rem, 4vw, 6rem);
-      align-items: start;
-    }
+    .overview-title,
     .overview-topic__title {
       position: sticky;
       top: 6rem;
@@ -2729,36 +2746,37 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
-     About (app/about/page.tsx): heading left, a reading column right;
-     short lines set typographically; three people as open columns, the
-     name leading (a 4:5 portrait sits above it once there is one).
+     About (app/about/page.tsx): serious about product, with personality.
+     The article split throughout (heading or statement left, copy right,
+     from the same line), each person in a full-width section of their
+     own with the figurine shown whole, and the group photograph as the
+     close. No cards, no icons.
      ------------------------------------------------------------------- */
-  .about-split {
-    display: grid;
-    gap: var(--spacing-head);
+  /* The page title on its own line, the full width (the copy follows it
+     rather than sharing its row). */
+  .fit-hero.fit-hero--solo {
+    --fit-space: 100cqi;
+    display: block;
   }
-  @media (min-width: 1024px) {
-    .about-split {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: 3rem;
-      align-items: start;
-    }
-    .about-split > :first-child {
-      grid-column: 1 / span 5;
-    }
-    .about-split > :last-child {
-      grid-column: 7 / -1;
-    }
-    .about-split__title {
-      position: sticky;
-      top: 6rem;
-    }
-    .about-split--top .about-split__title {
-      position: static;
-    }
+  .about-intro {
+    margin-top: var(--spacing-section-sm);
   }
-  .about-split__title {
-    max-width: 15ch;
+  .about-intro__lead {
+    max-width: 34ch;
+    font-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--muted);
+  }
+  /* The belief, set as the page's statement: strong, not a banner. */
+  .about-statement {
+    margin-top: 1rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 1.2rem + 1.8vw, 3.125rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
   }
   .about-prose > p {
     max-width: 58ch;
@@ -2769,150 +2787,185 @@ html[data-nav="dark"] {
   .about-prose > p + p {
     margin-top: 1rem;
   }
-  .about-prose + .about-prose {
-    margin-top: 1rem;
+  /* A section heading in the article voice: well below the display scale. */
+  .about-heading {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.75rem, 1.2rem + 1.7vw, 3.25rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    max-width: 16ch;
   }
-  .about-prose--lead > p:first-child {
-    font-weight: 500;
+  @media (min-width: 1024px) {
+    .about-heading {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .about-team-line {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .about-team-copy {
+    margin-top: 1rem;
+    max-width: 40ch;
     font-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
     line-height: 1.4;
     letter-spacing: -0.01em;
-  }
-  /* Running copy on clay is true black (see [data-tone="clay"]). */
-  [data-tone="clay"] .about-prose {
     color: var(--muted);
   }
-  .about-sequence {
-    margin-block: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  /* Short lines set one per line in the display face. */
+  .about-lines {
+    margin-block: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    max-width: 32ch;
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
-    line-height: 1.04;
-    letter-spacing: -0.035em;
-    text-wrap: balance;
-  }
-  .about-sequence--sentences {
     font-weight: 700;
     font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
     line-height: 1.2;
     letter-spacing: -0.02em;
-    max-width: 30ch;
+    text-wrap: balance;
   }
-  .about-sequence--sentences > li + li {
+  .about-lines > li + li {
     margin-top: 0.5rem;
   }
-  .about-team-lede {
+  .about-strong {
+    margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
     font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    color: var(--color-lime);
+    font-weight: 800;
+    font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
-  .people {
-    display: grid;
-    gap: clamp(2.5rem, 2rem + 2vw, 3.5rem);
-    margin-top: var(--spacing-section-sm);
-  }
-  @media (min-width: 1024px) {
-    .people {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      column-gap: clamp(2rem, 3vw, 4rem);
-    }
-  }
+
+  /* People. Phones and tablets: the photograph, then the copy. Desktop:
+     the photograph beside the copy at its own shape, held to about
+     three-quarters of the screen height so a section stays an editorial band
+     (the next person is already arriving), the sides swapping from one
+     person to the next and the copy close to the picture. */
   .person {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line-strong);
+    display: grid;
+    gap: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
   }
   .person__photo {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    margin-bottom: 1.5rem;
+    max-width: 28rem;
+    height: auto;
     border-radius: calc(var(--radius-section) / 2);
+  }
+  @media (min-width: 1024px) {
+    .person {
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: clamp(3rem, 7vw, 8rem);
+      align-items: center;
+    }
+    .person__photo {
+      width: auto;
+      max-width: none;
+      height: clamp(26rem, 72vh, 50rem);
+    }
+    .person--reverse {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .person--reverse .person__photo {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .person--reverse .person__text {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: end;
+    }
+  }
+  .person__text {
+    max-width: 34rem;
   }
   .person__name {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(4rem, 3rem + 5vw, 8.5rem);
-    line-height: 0.85;
-    letter-spacing: -0.05em;
+    font-size: clamp(2.75rem, 1.75rem + 3vw, 5rem);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
   }
   .person__role {
-    margin-top: 1rem;
+    margin-top: 0.875rem;
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.8125rem;
     line-height: 1.3;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: var(--muted);
+  }
+  [data-tone="ink"] .person__role {
     color: var(--color-lime);
   }
   .person__copy {
-    margin-top: 1.5rem;
-    color: var(--muted);
+    margin-top: clamp(1.25rem, 1rem + 1vw, 1.75rem);
   }
   .person__copy > p {
-    font-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+    font-size: clamp(1.0625rem, 0.98rem + 0.3vw, 1.1875rem);
     line-height: 1.6;
     text-wrap: pretty;
+    color: var(--muted);
   }
   .person__copy > p + p {
     margin-top: 0.9rem;
   }
-  .person__short {
-    margin-top: 1.75rem;
+  .person__closing {
+    margin-top: 1.25rem;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
+    font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
-  .person__short-label {
-    display: block;
-    margin-bottom: 0.35rem;
-    font-weight: 700;
-    font-size: 0.8125rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-lime);
+
+  .about-original__title {
+    max-width: none;
   }
-  .about-steps {
+  .about-original__body {
     margin-top: var(--spacing-body);
   }
-  .about-step {
-    display: grid;
-    gap: 0.6rem;
+
+  /* The close: the group photograph whole and wide (its own shape at every
+     width, never cropped), then the three words and the way on. */
+  .about-group {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius-section) / 2);
   }
-  @media (min-width: 768px) {
-    .about-step {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      column-gap: 3rem;
-      align-items: baseline;
-    }
+  .about-close--after-photo {
+    margin-top: var(--spacing-section-sm);
   }
-  .about-step__name {
+  .about-close__fit {
+    container-type: inline-size;
+  }
+  .about-close__title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(1.75rem, 1.2rem + 2vw, 3.25rem);
-    line-height: 0.95;
-    letter-spacing: -0.04em;
+    font-size: min(4.5rem, calc(100cqi * 0.97 / var(--fit-em)));
+    line-height: 0.92;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
   }
-  .about-prompt {
-    margin-top: clamp(2rem, 1.5rem + 1.5vw, 3rem);
-    margin-bottom: 0.75rem;
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
-    line-height: 1;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    color: var(--color-ink);
+  .about-close__line {
+    margin-bottom: 1rem;
+    max-width: 30ch;
+    font-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--muted);
   }
 
   /* -------------------------------------------------------------------

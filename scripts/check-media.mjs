@@ -1,5 +1,6 @@
 /**
- * Confirms every photograph in content/homeMedia.ts is publicly reachable,
+ * Confirms every photograph in content/homeMedia.ts and content/about.ts is
+ * publicly reachable,
  * as the original file and through the resizing endpoint the pages use,
  * and that the resized copy is the whole photograph scaled down rather
  * than a crop of it.
@@ -15,7 +16,9 @@ import { readFileSync } from "node:fs";
 const PROJECT = "https://odfpmwgwnyexuxqbusvi.supabase.co/storage/v1";
 const FOLDER = "Website%20Builds/madebyobra";
 
-const source = readFileSync("content/homeMedia.ts", "utf8");
+const source = ["content/homeMedia.ts", "content/about.ts"]
+  .map((path) => readFileSync(path, "utf8"))
+  .join("\n");
 // `file: "x.png"` or `file: v3("x.png")` (the V3 Website folder).
 const files = [
   ...new Set(
@@ -25,9 +28,21 @@ const files = [
   ),
 ];
 
-/** Width and height of a PNG or WebP, from its header. */
+/** Width and height of a PNG, JPEG or WebP, from its header. */
 function dimensions(buf) {
   if (buf.toString("ascii", 1, 4) === "PNG") return [buf.readUInt32BE(16), buf.readUInt32BE(20)];
+  // JPEG (whatever the file is named): the first start-of-frame marker.
+  if (buf[0] === 0xff && buf[1] === 0xd8) {
+    for (let i = 2; i + 9 < buf.length; ) {
+      if (buf[i] !== 0xff) return null;
+      const marker = buf[i + 1];
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+        return [buf.readUInt16BE(i + 7), buf.readUInt16BE(i + 5)];
+      }
+      i += 2 + buf.readUInt16BE(i + 2);
+    }
+    return null;
+  }
   if (buf.toString("ascii", 0, 4) !== "RIFF" || buf.toString("ascii", 8, 12) !== "WEBP") return null;
   const chunk = buf.toString("ascii", 12, 16);
   if (chunk === "VP8X") return [1 + buf.readUIntLE(24, 3), 1 + buf.readUIntLE(27, 3)];
