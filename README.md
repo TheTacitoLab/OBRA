@@ -59,7 +59,7 @@ content/
   site.ts                Nav, audiences, products, services, form options
   home.ts                Homepage copy, section by section
   about.ts               About page copy and figurine photography (Rob, Q,
-                         Brad; process at #how-we-work)
+                         Brad; the team banner is #how-we-work)
   homeMedia.ts           Homepage photography: files, labels, links, alt
                          text, crops and collage slots
   audiences.ts           Per-audience landing page content (not agencies)
@@ -186,19 +186,23 @@ search) > "Have something in mind?" (white) > footer.
   the quiet, reading part of the homepage, set like an editorial article.
   Every block, the opening one included, is its heading on the left (about
   42%) and its copy on the right (about 52%), both starting at the same
-  line (`.article-split`, shared with About), with hairlines between
-  blocks; on phones the copy follows the heading. The opening heading is
+  line and staying level as the page scrolls (no sticky headings;
+  `.article-split`, shared with About), with hairlines between blocks; on
+  phones the copy follows the heading. The opening heading is
   only 1.2x the topic headings: an article heading, never the display
   scale.
 - **About** (`app/about/page.tsx`, copy and photographs in
-  `content/about.ts`): serious about product, with personality from the
-  figurine photography. The same article split throughout; each person in
-  a full-width section of their own (bone, ink, bone), the figurine shown
-  whole at its own shape beside the copy, the sides alternating on desktop
-  and stacked photograph-first on phones; the group photograph closes the
-  page, uncropped, once its filename is confirmed (`closing.photo`,
-  GROUP_PHOTO_TO_CONFIRM). Who is who comes from the filenames and what
-  each figurine holds, never from faces.
+  `content/about.ts`): one story, serious about product, with the
+  personality left to the figurine photography. The introduction, the
+  team on a soft black banner (`#how-we-work`, where the homepage,
+  Services and the agency guide link), each person in a full-width
+  section of their own (bone, ink, bone), the figurine shown whole at its
+  own shape beside the copy, the sides alternating on desktop and stacked
+  photograph-first on phones, then Why we created madebyobra and a short
+  close. The group photograph closes the page, uncropped, once its
+  filename is confirmed (`closing.photo`, GROUP_PHOTO_TO_CONFIRM). Who is
+  who comes from the brief and the files, never from faces; Q's
+  photograph is the file the brief names for him.
 - **Calls to action**: on the homepage and About, every call to action is
   a plain text link with an arrow (`ArrowLink strong`); the desktop
   header's Get in touch is the one boxed button. The phone and tablet
@@ -292,7 +296,8 @@ search) > "Have something in mind?" (white) > footer.
 - **Pages not built yet**: `/pricing/`, `/how-we-work/` and `/work/`. Links
   that want them point at the nearest live page (`agencyLinks` in
   `content/agencies.ts`, and the homepage overview's How we work in
-  `content/home.ts`, both at `/about/#how-we-work`); switch them there once
+  `content/home.ts`, both at `/about/#how-we-work`, the team banner);
+  switch them there once
   each page exists. The
   Agency Merchandise Brief Template download stays hidden until
   `agencyLinks.briefTemplate` points at a real file.

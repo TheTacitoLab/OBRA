@@ -1695,8 +1695,9 @@ html[data-nav="dark"] {
      The business explained (Overview.tsx): the quiet, reading section,
      set like an editorial article. Every block is a heading on the left
      (about 42%) and its copy on the right (about 52%), both starting at
-     the same line, with hairlines between blocks; on phones the copy
-     follows the heading. Body type at a comfortable measure. No cards.
+     the same line and staying there as the page scrolls (nothing sticks),
+     with hairlines between blocks; on phones the copy follows the
+     heading. Body type at a comfortable measure. No cards.
      ------------------------------------------------------------------- */
   /* The article split, shared with About: heading (or statement) left,
      about 42%, and copy right, about 52%, both starting at the same line
@@ -1760,13 +1761,6 @@ html[data-nav="dark"] {
     text-transform: uppercase;
     text-wrap: balance;
     max-width: 18ch;
-  }
-  @media (min-width: 1024px) {
-    .overview-title,
-    .overview-topic__title {
-      position: sticky;
-      top: 6rem;
-    }
   }
   .overview-links {
     display: flex;
@@ -2747,11 +2741,12 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
-     About (app/about/page.tsx): serious about product, with personality.
-     The article split throughout (heading or statement left, copy right,
-     from the same line), each person in a full-width section of their
-     own with the figurine shown whole, and the group photograph as the
-     close. No cards, no icons.
+     About (app/about/page.tsx): serious about product, with personality
+     from the figurines. The article split throughout (heading or
+     statement left, copy right, from the same line), the team introduced
+     on a soft black banner, each person in a full-width section of their
+     own with the figurine shown whole, then why we created madebyobra and
+     a short close. No cards, no icons.
      ------------------------------------------------------------------- */
   /* The page title on its own line, the full width (the copy follows it
      rather than sharing its row). */
@@ -2788,23 +2783,7 @@ html[data-nav="dark"] {
   .about-prose > p + p {
     margin-top: 1rem;
   }
-  /* A section heading in the article voice: well below the display scale. */
-  .about-heading {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(1.75rem, 1.2rem + 1.7vw, 3.25rem);
-    line-height: 1;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    text-wrap: balance;
-    max-width: 16ch;
-  }
-  @media (min-width: 1024px) {
-    .about-heading {
-      position: sticky;
-      top: 6rem;
-    }
-  }
+  /* The banner's one accent: the three disciplines in lime. */
   .about-team-line {
     font-family: var(--font-display);
     font-weight: 800;
@@ -2812,6 +2791,7 @@ html[data-nav="dark"] {
     line-height: 1.05;
     letter-spacing: -0.03em;
     text-wrap: balance;
+    color: var(--color-lime);
   }
   .about-team-copy {
     margin-top: 1rem;
@@ -2821,30 +2801,6 @@ html[data-nav="dark"] {
     letter-spacing: -0.01em;
     color: var(--muted);
   }
-  /* Short lines set one per line in the display face. */
-  .about-lines {
-    margin-block: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
-    max-width: 32ch;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    text-wrap: balance;
-  }
-  .about-lines > li + li {
-    margin-top: 0.5rem;
-  }
-  .about-strong {
-    margin-top: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    text-wrap: balance;
-  }
-
   /* People. Phones and tablets: the photograph, then the copy. Desktop:
      the photograph beside the copy at its own shape, just under 60% of the
      screen height, so with the section's padding each person is a band of
@@ -2932,12 +2888,20 @@ html[data-nav="dark"] {
     text-wrap: balance;
   }
 
-  .about-original__body {
-    margin-top: var(--spacing-body);
+  /* Why we created madebyobra: the page's story, at a comfortable reading
+     size and measure, one column of ordinary paragraphs. */
+  .about-why > p {
+    max-width: 60ch;
+    font-size: clamp(1.125rem, 1rem + 0.35vw, 1.3125rem);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .about-why > p + p {
+    margin-top: 1.25rem;
   }
 
   /* The close: the group photograph whole and wide (its own shape at every
-     width, never cropped), then the three words and the way on. Its width
+     width, never cropped), then the closing line and the way on. Its width
      follows its own ratio (--ratio, set from the file's size) so it is
      never taller than about 80% of the screen, and its box is reserved
      before it loads. */
@@ -2951,24 +2915,14 @@ html[data-nav="dark"] {
   .about-close--after-photo {
     margin-top: var(--spacing-section-sm);
   }
-  .about-close__fit {
-    container-type: inline-size;
-  }
-  .about-close__title {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: min(4.5rem, calc(100cqi * 0.97 / var(--fit-em)));
-    line-height: 0.92;
-    letter-spacing: -0.045em;
-    text-transform: uppercase;
-  }
   .about-close__line {
-    margin-bottom: 1rem;
-    max-width: 30ch;
-    font-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    color: var(--muted);
+    max-width: 24ch;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 1.2rem + 1.8vw, 3.125rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
   }
 
   /* -------------------------------------------------------------------

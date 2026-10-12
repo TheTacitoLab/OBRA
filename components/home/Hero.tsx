@@ -48,7 +48,10 @@ export function Hero() {
             className="fade-in flex flex-col gap-6 md:col-span-8 lg:col-span-6"
             style={{ "--d": "0.4s" } as React.CSSProperties}
           >
-            <p className="type-body max-w-[54ch] text-muted">{hero.copy}</p>
+            <div className="max-w-[54ch]">
+              <p className="type-body text-muted">{hero.copy}</p>
+              <p className="type-body mt-2 font-medium text-fg">{hero.line}</p>
+            </div>
             <div className="pr-16 md:pr-0">
               <ArrowLink
                 strong

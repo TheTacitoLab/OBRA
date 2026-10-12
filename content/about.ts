@@ -2,19 +2,20 @@ import { v3 } from "@/lib/media";
 
 /**
  * The About page, section by section (app/about/page.tsx). Approved copy:
- * edit the words here, not in the page.
+ * edit the words here, not in the page. The page tells one story: who we
+ * are, the team, and why we created madebyobra.
  *
- * Public only: what the studio believes, the people and how they work.
- * Nothing about ownership, pay, agreements or any other internal business
- * matter belongs on this page.
+ * Public only: the people, where the business came from and why it cares
+ * about merchandise. Nothing about ownership, pay, agreements or any other
+ * internal business matter belongs on this page.
  *
  * Photography is the figurine set in the V3 Website folder of the public
- * bucket (lib/media.ts), named by person. Who is who comes from the
- * filenames and what each figurine holds, never from faces: Rob holds the
- * cat and the motorcycle helmet, Q the burger and the football shirts,
- * Brad wears the cap and carries the bat and the iPad. Every photograph is
- * shown whole (no crop): `width` and `height` are the file's own.
- * scripts/check-media.mjs confirms each file resolves: run
+ * bucket (lib/media.ts). Who is who comes from the brief and the files,
+ * never from faces: Rob is Rob.jpg (the cat and the motorcycle helmet),
+ * Q is the file the brief names for him (the car key and the football
+ * shirts), Brad is brad.png (the cap, the bat and the iPad). Every
+ * photograph is shown whole (no crop): `width` and `height` are the
+ * file's own. scripts/check-media.mjs confirms each file resolves: run
  * `npm run check:media` after any change.
  */
 
@@ -23,7 +24,7 @@ export const aboutMeta = {
   title: "About madebyobra | Merchandise Design & Manufacturing Studio",
   crumb: "About",
   description:
-    "Meet the team behind madebyobra, a British merchandise design, product development and manufacturing studio working with agencies, festivals, events, artists and brands.",
+    "Meet the team behind madebyobra, a merchandise design, product development and manufacturing studio working with agencies, festivals, events, artists and brands.",
 };
 
 export type TeamPhoto = { file: string; width: number; height: number; alt: string };
@@ -45,6 +46,8 @@ export const aboutHero = {
   ],
 };
 
+/** The soft black banner before the people. Anchored at #how-we-work (the
+ * homepage, Services and the agency guide link there). */
 export const team = {
   title: "Our team.",
   line: "Commercial. Creative. Manufacturing.",
@@ -89,9 +92,10 @@ export const people: Person[] = [
     ],
     closing: "It has to feel right in your hands too.",
     photo: {
-      file: v3("Q.jpg"),
+      // The file the brief names for Q, exactly as stored.
+      file: v3("file_00000000bc08821087dc3bb02f4180f1.jpg"),
       ...figurine,
-      alt: "Q as a figurine on a grass plinth, holding a burger in one hand and a stack of football shirts in the other",
+      alt: "Q as a figurine on a grass plinth, holding out a car key with a stack of football shirts over his other arm",
     },
   },
   {
@@ -114,71 +118,24 @@ export const people: Person[] = [
   },
 ];
 
-export const connected = {
-  title: "It works because the three parts are connected.",
-  stages: [
-    "A lot of merchandise is created in stages.",
-    "The creative team designs something.",
-    "The supplier tries to make it.",
-    "The factory compromises it.",
-    "And somewhere along the way the original idea gets diluted.",
-  ],
-  approach: [
-    "We try to avoid that.",
-    "Commercial, creative and manufacturing are considered together from the start.",
-  ],
-  /** Who does what, set one per line. */
-  roles: [
-    "Rob understands the brief and the audience.",
-    "Brad develops the product and protects the creative intent.",
-    "Q makes sure it can be manufactured properly.",
-  ],
-  after: [
-    "That means decisions about fabric, fit, construction, colour, branding, trims and finish are made deliberately rather than left until the end.",
-    "The result should feel considered from every angle.",
-  ],
-  /** Set a step stronger, one per line. */
-  closing: [
-    "Not promotional.",
-    "Not generic.",
-    "Not like something that already existed before the logo went on it.",
-  ],
-};
-
-export const original = {
-  /** Two lines: the statement. */
-  title: ["Original product.", "Not promotional product."],
+/** The story after the team: one section, the copy exactly as approved. */
+export const why = {
+  title: "Why we created madebyobra.",
   paragraphs: [
-    "This is probably the clearest way to describe what we care about.",
-    "We want branded merchandise to feel original.",
-    "That means thinking about the silhouette, the fabric, the weight, the fit, the collar, the trim, the branding method, the labels, the packaging and the way the whole collection works together.",
-    "None of those decisions are particularly exciting on their own.",
-    "Together, they are the difference between a product people want and something that feels like a giveaway.",
-    "We are meticulous about that distinction.",
-  ],
-};
-
-/** Anchored at #how-we-work: the homepage, Services and the agency guide link here. */
-export const process = {
-  title: "From idea to finished product.",
-  paragraphs: [
-    "Some clients come to us with a finished creative direction.",
-    "Some have a rough idea.",
-    "Some just know they want to make something genuinely good.",
-    "We can work from any of those starting points.",
-    "Our role is to help turn the idea into a properly developed product, then manage sampling, refinement, manufacturing, quality control, packaging and delivery.",
-    "We stay involved because the small decisions made during production are often the ones that determine whether the final product feels right.",
+    "madebyobra came from running two sports apparel brands and then working closely with a designer who had already created product for some of the biggest teams, events, festivals and brands. Between us, we understood the commercial side, the creative side and the manufacturing side and we kept coming back to the same thought: merchandise could be so much better than it usually was.",
+    "Too often, it felt like the thing that got dealt with at the end. The campaign, event or brand experience had all the thought and energy put into it, then the merchandise was treated as something that simply needed to exist. We never really understood that because it is often one of the only physical things people actually take away with them.",
+    "That is why we are building madebyobra around the idea of designing by collection, not just by product. We want a merch collection to feel more like the drop of a fashion brand, where the fit, fabric, colour, trims, labels, packaging and presentation have all been thought about together. The point is not just to make something that looks good but to create a product and retail experience that feels authentic to the audience and relevant to the culture around it.",
+    "We care about the small details because they are normally what make the difference. If we can create something people genuinely want to buy, wear and keep and it still reminds them of the moment, place or experience it came from years later, then we have done what we set out to do.",
   ],
 };
 
 export const closing = {
-  title: ["Commercial.", "Creative.", "Manufacturing."],
-  line: "Three different parts of the same process.",
+  line: "Original merchandise for agencies, festivals, events, artists and brands.",
   /**
    * GROUP_PHOTO_TO_CONFIRM: the group photograph of Rob, Q and Brad, as a
    * TeamPhoto (its V3 Website filename exactly as stored, its pixel size
    * and alt text), once the filename is confirmed. Shown whole above the
-   * closing words; left null, the section closes on the words alone.
+   * closing line; left null, the page closes on the line alone.
    */
   photo: null as TeamPhoto | null,
 };

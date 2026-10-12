@@ -15,7 +15,9 @@ export const homeMeta = {
 };
 
 export const hero = {
-  copy: "madebyobra is a British bespoke merchandise design and manufacturing studio creating original products for agencies, festivals, events, artists and brands. From product development and sampling through to manufacturing, packaging and delivery, we turn ideas into merchandise people actually want to own.",
+  copy: "madebyobra is a global merchandise design and manufacturing studio creating original merchandise for agencies, festivals, events, artists and brands.",
+  /** Set a step stronger than the copy. */
+  line: "Designed, developed and manufactured from idea to finished product.",
 };
 
 export const whoFor = {

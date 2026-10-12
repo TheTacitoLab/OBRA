@@ -7,11 +7,9 @@ import {
   aboutHero,
   aboutMeta,
   closing,
-  connected,
-  original,
   people,
-  process,
   team,
+  why,
   type Person,
 } from "@/content/about";
 import { primaryCta } from "@/content/site";
@@ -77,13 +75,13 @@ function PersonSection({ person, index }: { person: Person; index: number }) {
 }
 
 /**
- * About: serious about product, with personality. The words carry the
- * credibility and the figurine photography carries the humour. One
- * editorial system with the homepage's information section (heading left,
- * copy right, both starting at the same line; stacked on phones), each
- * person in a full-width section of their own, the sides alternating, and
- * the group photograph as the close. No cards, no icons. #how-we-work (the
- * homepage, Services and the agency guide link to it) is the process.
+ * About: who we are, the team and why we created madebyobra, then the way
+ * on. Serious about product, with the personality left to the figurine
+ * photography. One editorial system with the homepage's information
+ * section (heading left, copy right, both starting at the same line;
+ * stacked on phones), each person in a full-width section of their own,
+ * the sides alternating. No cards, no icons. #how-we-work (the homepage,
+ * Services and the agency guide link to it) is the team banner.
  */
 export default function AboutPage() {
   return (
@@ -117,7 +115,13 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section tone="stone" size="large" rounded>
+      <Section
+        id="how-we-work"
+        tone="ink"
+        size="large"
+        rounded
+        className="scroll-mt-16"
+      >
         <div className="article-split">
           <h2 className="type-display-sm" data-reveal="up">
             {team.title}
@@ -133,50 +137,20 @@ export default function AboutPage() {
         <PersonSection key={person.name} person={person} index={index} />
       ))}
 
-      <Section tone="stone" rounded>
+      <Section tone="stone" size="large" rounded>
         <div className="article-split">
-          <h2 className="about-heading">{connected.title}</h2>
-          <div>
-            <Prose paragraphs={[...connected.stages, ...connected.approach]} />
-            <ul className="about-lines" aria-label="Who does what">
-              {connected.roles.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-            <Prose paragraphs={connected.after} />
-            <p className="about-strong">
-              {connected.closing.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
+          <h2 className="type-display-sm" data-reveal="up">
+            {why.title}
+          </h2>
+          <div className="about-why" data-reveal="up" data-reveal-delay="1">
+            {why.paragraphs.map((text) => (
+              <p key={text}>{text}</p>
+            ))}
           </div>
         </div>
       </Section>
 
-      <Section tone="lime" rounded>
-        <h2 className="type-display-sm" data-reveal="up">
-          {original.title.map((line) => (
-            <span key={line} className="block">
-              {line}
-            </span>
-          ))}
-        </h2>
-        <div className="article-split about-original__body">
-          <div aria-hidden="true" />
-          <Prose paragraphs={original.paragraphs} />
-        </div>
-      </Section>
-
-      <Section id="how-we-work" tone="bone" rounded className="scroll-mt-16">
-        <div className="article-split">
-          <h2 className="about-heading">{process.title}</h2>
-          <Prose paragraphs={process.paragraphs} />
-        </div>
-      </Section>
-
-      <Section tone="ink" size="large" rounded className="cta-dark">
+      <Section tone="ink" rounded className="cta-dark">
         {closing.photo && (
           // The whole group, never cropped: the frame is the photograph's
           // own shape at every width.
@@ -198,25 +172,9 @@ export default function AboutPage() {
             }
           />
         )}
-        <div className={`article-split ${closing.photo ? "about-close--after-photo" : ""}`}>
-          <div
-            className="about-close__fit"
-            style={
-              {
-                "--fit-em": longestWordEm(closing.title.join(" ")),
-              } as React.CSSProperties
-            }
-          >
-            <h2 className="about-close__title">
-              {closing.title.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </h2>
-          </div>
-          <div>
-            <p className="about-close__line">{closing.line}</p>
+        <div className={closing.photo ? "about-close--after-photo" : ""}>
+          <p className="about-close__line">{closing.line}</p>
+          <div className="mt-6">
             <ArrowLink
               strong
               href={primaryCta.href}
