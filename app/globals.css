@@ -2799,7 +2799,7 @@ html[data-nav="dark"] {
     font-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
     line-height: 1.4;
     letter-spacing: -0.01em;
-    color: var(--muted);
+    color: var(--fg);
   }
   /* People. Phones and tablets: the photograph, then the copy. Desktop:
      the photograph beside the copy at its own shape, just under 60% of the
@@ -2891,7 +2891,7 @@ html[data-nav="dark"] {
   /* Why we created madebyobra: the page's story, at a comfortable reading
      size and measure, one column of ordinary paragraphs. */
   .about-why > p {
-    max-width: 60ch;
+    max-width: 34em;
     font-size: clamp(1.125rem, 1rem + 0.35vw, 1.3125rem);
     line-height: 1.6;
     text-wrap: pretty;

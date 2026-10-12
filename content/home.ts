@@ -99,9 +99,9 @@ export const overview = {
     },
   ] satisfies OverviewTopic[],
   /**
-   * /how-we-work/ is not built yet: How we work lives on About (the same
-   * fallback as the agency guide, agencyLinks.howWeWork). Switch it here
-   * once the page exists.
+   * /how-we-work/ is not built yet: the link lands on About's team banner
+   * (#how-we-work), the same fallback as the agency guide's
+   * agencyLinks.howWeWork. Switch it here once the page exists.
    */
   links: [
     { label: "How we work", href: "/about/#how-we-work" },
