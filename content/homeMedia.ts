@@ -209,108 +209,145 @@ export const whoForLayout: CollageLayout = {
 };
 
 /**
- * What we make. Only categories with real photography are shown;
- * accessories joins when its image is in the bucket. Hoodies lead to the
- * tops page, which covers hoodies and sweatshirts.
+ * What we make. The seven product photographs sit in the bucket's
+ * madebyobra/ folder itself, named in capitals as uploaded (note
+ * "ACESSORIES.png" and "BESPOKE (1).png"). They are dark, filtered
+ * photographs, so the labels are lime over the low scrim. Each tile leads
+ * to the page that covers it: streetwear to T-shirts (the photograph is a
+ * T-shirt), bags and luggage to accessories (bags, socks and buffs),
+ * bespoke to product development on Services, gifting to events
+ * (attendee and delegate gifts).
  */
 export const makeTiles: Tile[] = [
   {
     id: "retro-football-shirts",
-    label: "retro jerseys.",
+    label: "retro.",
     href: pageHref("retro-football-shirts"),
     photo: {
-      file: v3("retro_jerseys.png"),
+      file: "RETRO.png",
       ...portrait,
-      alt: "A stack of five custom retro football jerseys in different colours and patterns, each with the madebyobra wordmark",
-      // Wide enough to read as a stack of several designs; anchored to the
-      // top so the label sits on the lower folds.
-      aspect: 1.3,
-      position: "50% 0%",
-      mobile: { aspect: 1.3, position: "50% 0%" },
+      alt: "A man at a festival in round sunglasses and a purple tie-dye OBRA retro football shirt",
+      // Head to the shirt's OBRA print: the photograph's own shape.
+      aspect: 4 / 5,
+      position: "50% 30%",
     },
   },
   {
-    id: "t-shirts",
-    label: "t-shirts.",
+    id: "streetwear",
+    label: "streetwear.",
     href: pageHref("t-shirts"),
     photo: {
-      file: v3("t-shirts.png"),
+      file: "STREETWEAR.png",
       ...portrait,
-      alt: "Four T-shirts stacked at the collar in black, charcoal, rust and white",
-      // Tall, so all four garments stack in frame.
-      aspect: 0.75,
-      position: "50% 50%",
-      mobile: { aspect: 0.85, position: "50% 45%" },
-    },
-  },
-  {
-    id: "hoodies",
-    label: "hoodies.",
-    href: pageHref("tops"),
-    photo: {
-      file: v3("hoods.png"),
-      ...portrait,
-      alt: "A rust hood surrounded by hoods in black, stone, cream and blue",
+      alt: "A man in sunglasses seen from behind in an oversized black T-shirt printed madebyobra. across the back",
+      // His head and the back print both in frame.
       aspect: 4 / 5,
-      position: "50% 45%",
-      mobile: { aspect: 0.85, position: "50% 45%" },
-    },
-  },
-  {
-    id: "tops",
-    label: "tops.",
-    href: pageHref("tops"),
-    photo: {
-      file: v3("tops.png"),
-      ...portrait,
-      alt: "Crewneck sweatshirts in rust, stone and black with ribbed collars",
-      aspect: 1.05,
-      position: "50% 50%",
-      mobile: { aspect: 1.1 },
+      position: "50% 30%",
     },
   },
   {
     id: "headwear",
-    label: "caps.",
+    label: "headwear.",
     href: pageHref("headwear"),
     photo: {
-      file: v3("caps.png"),
+      file: "HEADWEAR.png",
       ...portrait,
-      alt: "Six-panel caps in black, stone, green, rust and blue",
-      // Near square and central, so several caps and colours stay in view.
-      aspect: 1.05,
+      alt: "A white trucker cap with a blue circular logo on a blue leather car seat",
+      // The cap sits a little above the middle of the file.
+      aspect: 1.25,
+      position: "50% 25%",
+      mobile: { aspect: 1 },
+    },
+  },
+  {
+    id: "accessories",
+    label: "accessories.",
+    href: pageHref("accessories"),
+    photo: {
+      file: "ACESSORIES.png",
+      ...portrait,
+      alt: "Cream socks and kraft swing tags printed with madebyobra, laid out together",
+      aspect: 1.25,
+      position: "50% 30%",
+      mobile: { aspect: 1 },
+    },
+  },
+  {
+    id: "bags-and-luggage",
+    label: "bags & luggage.",
+    href: pageHref("accessories"),
+    photo: {
+      file: "BAGS & LUGGAGE.png",
+      ...portrait,
+      alt: "An olive roll-top backpack printed with madebyobra on a wooden stool, sunglasses beside it",
+      // The whole bag, top to base: the photograph's own shape.
+      aspect: 4 / 5,
       position: "50% 50%",
-      mobile: { aspect: 1.1 },
+    },
+  },
+  {
+    id: "gifting",
+    label: "gifting.",
+    href: pageHref("events"),
+    photo: {
+      file: "GIFTING.png",
+      ...portrait,
+      alt: "A pink cap, a folded T-shirt, a notebook and a white tumbler, each carrying the madebyobra name",
+      // The notebook, T-shirt and tumbler together.
+      aspect: 1.25,
+      position: "50% 40%",
+      mobile: { aspect: 1.25 },
+    },
+  },
+  {
+    id: "bespoke",
+    label: "bespoke.",
+    href: "/services/#product-development",
+    photo: {
+      file: "BESPOKE (1).png",
+      ...portrait,
+      alt: "Hands over a table of product sketches on tracing paper",
+      aspect: 1.25,
+      position: "50% 50%",
+      mobile: { aspect: 1.25 },
     },
   },
 ];
 
-/** Jerseys lead, T-shirts stand tall, hoodies over tops and caps. */
+/**
+ * One even row on desktop: the three photographs of people and the bag
+ * stand tall, with the objects paired between them. Tablets: the tall
+ * three, then the four objects. Phones: the people side by side, two
+ * objects, then the bag beside the last pair.
+ */
 export const makeLayout: CollageLayout = {
   lg: {
     row: [
       "retro-football-shirts",
-      "t-shirts",
-      { col: [{ id: "hoodies", aspect: 1.5 }, { row: ["tops", "headwear"] }] },
+      { col: ["headwear", "accessories"] },
+      "streetwear",
+      { col: ["gifting", "bespoke"] },
+      "bags-and-luggage",
     ],
   },
   md: {
     col: [
-      { row: ["retro-football-shirts", { id: "t-shirts", aspect: 0.62 }] },
+      { row: ["retro-football-shirts", "streetwear", "bags-and-luggage"] },
       {
         row: [
-          { id: "hoodies", aspect: 1 },
-          { id: "tops", aspect: 1 },
           { id: "headwear", aspect: 1 },
+          { id: "accessories", aspect: 1 },
+          { id: "gifting", aspect: 1 },
+          { id: "bespoke", aspect: 1 },
         ],
       },
     ],
   },
   sm: {
     col: [
-      "retro-football-shirts",
-      { row: ["t-shirts", "hoodies"] },
-      { row: ["tops", "headwear"] },
+      { row: ["retro-football-shirts", "streetwear"] },
+      { row: ["headwear", "accessories"] },
+      { row: ["bags-and-luggage", { col: ["gifting", "bespoke"] }] },
     ],
   },
 };

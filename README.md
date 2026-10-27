@@ -225,7 +225,7 @@ search) > "Have something in mind?" (white) > footer.
   scrim and no other text over them, and each carries a soft tint from the
   palette (`tint: "clay-soft"`, multiplied at part strength, lifting on
   hover and focus; no two tiles that share an edge share one). Every label clears 3:1
-  over the photograph behind it (6.8:1 or more today).
+  over the photograph behind it (4.2:1 or more today, the lightest being the gifting photograph on a small phone).
 - **Photography** is the V3 set in the public Supabase bucket "Website
   Builds", folder `madebyobra/V3 Website/` (`v3("agency.png")` in the
   manifest), through Supabase's render endpoint (WebP, resized
@@ -236,8 +236,10 @@ search) > "Have something in mind?" (white) > footer.
   `techpacks.png`): a replacement uploaded under a new name must be
   switched in the manifest, because the old name stops resolving. Run
   `npm run check:media` after any change: it fails on a missing file or a
-  resize that crops. There is no accessories photograph yet, so What we
-  make shows the five categories that have one.
+  resize that crops. What we make's seven photographs are the exception:
+  they sit in `madebyobra/` itself, named in capitals as uploaded
+  (`RETRO.png`, `ACESSORIES.png`, `BESPOKE (1).png`, ...), and take lime
+  labels over the scrim.
 
 ## Analytics and consent
 
