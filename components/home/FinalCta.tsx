@@ -7,14 +7,14 @@ import { finalCta } from "@/content/home";
 import { primaryCta } from "@/content/site";
 
 /**
- * The close: one question, one sentence, one action, on white, sliding
+ * The close: one question, one sentence, one action, on lilac, sliding
  * over the end of the overview before the footer laps it in turn.
  */
 export function FinalCta() {
   return (
     <Sheet
       id="get-in-touch"
-      tone="white"
+      tone="lilac"
       last
       sectionClassName="sheet--round sheet--auto"
     >

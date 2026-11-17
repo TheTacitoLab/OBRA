@@ -9,8 +9,8 @@ import { useEffect, useRef } from "react";
  *
  * It sits outside the sheet stack, fixed at the corner the hero's frame
  * occupies at the top of the page, so the sheet sliding over the hero does
- * not cover it, and it blends with whatever is beneath (near-black on bone,
- * light on soft black). Purely decorative: hidden from assistive tech and
+ * not cover it, and it follows whatever surface is beneath it (lime over
+ * navy, navy over the rest). Purely decorative: hidden from assistive tech and
  * not clickable. Under prefers-reduced-motion it is a still arrow that
  * simply goes when the page moves.
  *
@@ -111,11 +111,22 @@ export function ScrollCue({
         : window.innerHeight * 0.5;
     };
 
+    // The tone of the surface under the cue's centre (the cue itself takes
+    // no pointer events, so it is not in the hit test).
+    const surfaceTone = () => {
+      const rect = cue.getBoundingClientRect();
+      const surface = document
+        .elementsFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2)
+        .find((el) => el.matches("section[data-tone], footer[data-tone]"));
+      return (surface as HTMLElement | undefined)?.dataset.tone ?? "paper";
+    };
+
     const update = () => {
       raf = 0;
       const y = window.scrollY;
       const p = clamp01(y / span);
       cue.dataset.state = y > 2 ? "moving" : "rest";
+      cue.dataset.over = surfaceTone();
       if (reduce.matches) {
         cue.style.opacity = y > 2 ? "0" : "1";
         cue.style.visibility = y > 2 ? "hidden" : "visible";

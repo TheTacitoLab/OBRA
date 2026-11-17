@@ -53,7 +53,7 @@ export default function ServicesPage() {
       {/* No top padding: the list follows straight on from the hero. Each
           row carries the service slug as its id, so /services/#fulfilment
           lands on the row, clear of the fixed header. */}
-      <Section tone="bone" size="compact" containerClassName="pt-0">
+      <Section tone="paper" size="compact" containerClassName="pt-0">
         <h2 className="sr-only">All services</h2>
         <ol className="index-list">
           {services.map((service, index) => (
@@ -82,7 +82,7 @@ export default function ServicesPage() {
       </Section>
 
       {/* Copy left, heading right: the commercial side of the work. */}
-      <Section tone="stone">
+      <Section tone="lilac-soft">
         <Editorial
           reverse
           heading={<h2 className="type-display">Range, quantity, price.</h2>}

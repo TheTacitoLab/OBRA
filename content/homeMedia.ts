@@ -36,10 +36,10 @@ import type { MosaicNode } from "@/lib/mosaic";
  *   closer to its own shape instead (no letterboxing, no empty bars).
  * - `mobile`: the same three for phones (below 768px), where they differ.
  * - `labels`: "lime" (default) for the darker photographs, set over a low
- *   scrim; "ink" for pale ones, which need no scrim.
- * - `tint`: optional, one of the palette's soft colours laid over the
- *   photograph (multiplied, at part strength, so the picture and its
- *   filter still read). It lifts when the tile is hovered or focused.
+ *   scrim; "navy" for pale ones, which need no scrim.
+ * - `tint`: optional, a wash of a brand colour laid over the photograph
+ *   (multiplied, so the picture and its filter still read through it). It
+ *   lifts when the tile is hovered or focused.
  *
  * Layouts are trees of rows and columns of tile ids, one per breakpoint
  * (sm: phones, md: from 768px, lg: from 1024px). A row sets tiles side by
@@ -59,15 +59,15 @@ export type Photo = {
   position: string;
   zoom?: number;
   mobile?: Framing;
-  labels?: "lime" | "ink";
+  labels?: "lime" | "navy";
   tint?: Tint;
 };
 
 /**
- * The palette's three soft colours and stone, its warm neutral (--color-*
- * in app/globals.css).
+ * A wash of a brand colour over a photograph: lilac at two strengths, lime
+ * and navy (Collage.tsx sets how strong each is).
  */
-export type Tint = "clay-soft" | "blue-soft" | "lime-soft" | "stone";
+export type Tint = "lilac" | "lilac-light" | "lime" | "navy";
 
 export type Tile = {
   /** Also the analytics category. */
@@ -85,10 +85,10 @@ const portrait = { width: 1080, height: 1350 };
 /**
  * Who for. Five photographs and five names, nothing else: the audience
  * pages do the explaining. The photographs are pale, high-key images, so
- * their labels are set in ink. Each carries a soft tint, mixed
- * so no two tiles that share an edge share a colour at any breakpoint.
+ * their labels are set in navy. Each carries a wash of a brand colour,
+ * mixed so no two tiles that share an edge share a wash at any breakpoint.
  * Agencies, festivals, events and artists all touch one another at some
- * width, so they take four different colours; brands matches agencies,
+ * width, so they take four different washes; brands matches agencies,
  * which it only ever meets at a corner.
  */
 export const whoForTiles: Tile[] = [
@@ -102,8 +102,8 @@ export const whoForTiles: Tile[] = [
       alt: "A designer in a cap pinning work to a studio moodboard wall",
       aspect: 1.05,
       position: "35% 30%",
-      labels: "ink",
-      tint: "clay-soft",
+      labels: "navy",
+      tint: "lilac",
       // Tall on phones: his face and the wall he is working on.
       mobile: { aspect: 0.62, position: "38% 50%" },
     },
@@ -118,8 +118,8 @@ export const whoForTiles: Tile[] = [
       alt: "A festival crowd with arms raised around a man in a white madebyobra T-shirt",
       aspect: 0.78,
       position: "50% 35%",
-      labels: "ink",
-      tint: "blue-soft",
+      labels: "navy",
+      tint: "navy",
       mobile: { aspect: 1.3, position: "50% 30%" },
     },
   },
@@ -133,8 +133,8 @@ export const whoForTiles: Tile[] = [
       alt: "madebyobra event lanyards for London 2026 laid over a crowd",
       aspect: 0.9,
       position: "50% 50%",
-      labels: "ink",
-      tint: "lime-soft",
+      labels: "navy",
+      tint: "lime",
       mobile: { aspect: 1.3, position: "50% 45%" },
     },
   },
@@ -151,8 +151,8 @@ export const whoForTiles: Tile[] = [
       // smoke above her head gives way to her (eyes about 43% down the
       // file). Landscape on desktop, square on tablets.
       position: "45% 56%",
-      labels: "ink",
-      tint: "stone",
+      labels: "navy",
+      tint: "lilac-light",
       mobile: { aspect: 1.15, position: "45% 65%" },
     },
   },
@@ -168,8 +168,8 @@ export const whoForTiles: Tile[] = [
       // Head to the chest print in a landscape frame, with a little air
       // above the cap.
       position: "45% 4%",
-      labels: "ink",
-      tint: "clay-soft",
+      labels: "navy",
+      tint: "lilac",
       mobile: { aspect: 1.15 },
     },
   },

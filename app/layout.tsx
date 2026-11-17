@@ -80,10 +80,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: consentBootstrapScript() }}
         />
       </head>
-      <body className="flex min-h-full flex-col bg-bone text-ink">
+      <body className="flex min-h-full flex-col bg-paper text-navy">
         <a
           href="#main"
-          className="btn btn-primary fixed left-4 top-4 z-[80] -translate-y-[200%] focus:translate-y-0"
+          className="btn btn-primary btn-skip fixed left-4 top-4 z-[80] -translate-y-[200%] focus:translate-y-0"
         >
           <span>Skip to content</span>
         </a>

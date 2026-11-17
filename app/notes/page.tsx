@@ -16,7 +16,7 @@ export default function NotesPage() {
   return (
     <>
       <JsonLd data={buildNotesIndexSchema()} />
-      <Section tone="bone" size="compact" hero>
+      <Section tone="paper" size="compact" hero>
         <Editorial
           stackMd
           heading={<h1 className="type-display-xl">Notes.</h1>}
@@ -30,7 +30,7 @@ export default function NotesPage() {
         />
       </Section>
       {/* No top padding: the index follows straight on from the hero. */}
-      <Section tone="bone" size="compact" containerClassName="pt-0">
+      <Section tone="paper" size="compact" containerClassName="pt-0">
         <NoteList notes={sorted} featured headingLevel={2} />
       </Section>
       <ClosingCta />

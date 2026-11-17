@@ -13,7 +13,7 @@ import { handleLayout, handleTiles } from "@/content/homeMedia";
  */
 export function WhatWeHandle() {
   return (
-    <Sheet id="what-we-handle" tone="stone" last sectionClassName="sheet--round">
+    <Sheet id="what-we-handle" tone="paper" last sectionClassName="sheet--round">
       <Container className="py-section">
         <Editorial
           heading={<h2 className="type-display">{whatWeHandle.title}</h2>}

@@ -5,14 +5,14 @@ import { hero } from "@/content/home";
 import { primaryCta } from "@/content/site";
 
 /**
- * The opening statement. One word per line on phones (see .type-hero
- * .word), two lines from 768px, sized to the viewport at every width, with
- * the second line on the lime block. The copy stays small beneath it,
+ * The opening statement, on navy: off-white type with the second line on
+ * the lime block. One word per line on phones (see .type-hero .word), two
+ * lines from 768px, sized to the viewport at every width. The copy stays small beneath it,
  * saying plainly who the studio is for and what it does, with one action.
  */
 export function Hero() {
   return (
-    <Sheet id="top" tone="bone" sectionClassName="sheet--hero">
+    <Sheet id="top" tone="navy" sectionClassName="sheet--hero">
       <Container
         data-hero-frame
         className="flex flex-1 flex-col pb-9 pt-[4.75rem] sm:pb-12 sm:pt-28 lg:pb-16 lg:pt-36"

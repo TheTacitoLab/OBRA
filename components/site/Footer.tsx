@@ -10,7 +10,7 @@ import { privacyHref, siteConfig, socialLinks } from "@/lib/siteConfig";
  */
 export function Footer() {
   return (
-    <footer data-tone="ink" className="bg-bg text-fg">
+    <footer data-tone="navy" className="bg-bg text-fg">
       <Container className="pt-section-sm">
         <div className="grid gap-x-8 gap-y-10 md:grid-cols-12">
           <p className="md:col-span-5">

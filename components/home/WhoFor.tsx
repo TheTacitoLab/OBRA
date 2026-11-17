@@ -14,7 +14,7 @@ export function WhoFor() {
   return (
     <Sheet
       id="who-for"
-      tone="ink"
+      tone="paper"
       last
       sectionClassName="sheet--round sheet--auto"
     >

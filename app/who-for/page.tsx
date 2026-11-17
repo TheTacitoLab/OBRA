@@ -50,7 +50,7 @@ export default function WhoForPage() {
       />
 
       {/* Each audience once: the enormous link with its sentence beneath. */}
-      <Section tone="ink" size="compact">
+      <Section tone="navy" size="compact">
         <h2 className="sr-only">Who we work with</h2>
         <BigList
           size="type-link-sm"

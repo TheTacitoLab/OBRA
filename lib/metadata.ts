@@ -10,7 +10,7 @@ export const ogImage = {
   url: "/og-default.png",
   width: 1200,
   height: 630,
-  alt: "madebyobra wordmark on warm bone",
+  alt: "madebyobra wordmark in off-white on navy",
 };
 
 export type OgImage = typeof ogImage;

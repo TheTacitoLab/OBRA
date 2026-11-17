@@ -23,7 +23,7 @@ export function NoteArticle({ note }: { note: Note }) {
   const headings = note.body.filter((block) => block.type === "h2");
   const cluster = note.cluster ? noteClusters[note.cluster] : null;
   return (
-    <Section tone="bone" size="large" hero>
+    <Section tone="paper" size="large" hero>
       <div className="grid gap-y-4 md:grid-cols-12 md:gap-x-8 md:gap-y-head lg:gap-x-12">
         <div className="type-meta flex flex-wrap items-baseline gap-x-2 text-muted md:col-span-4 md:row-start-3 md:flex-col md:gap-y-1">
           <span>{note.category}</span>
@@ -71,7 +71,7 @@ export function NoteArticle({ note }: { note: Note }) {
               height={note.image.height}
               alt={note.image.alt}
               fetchPriority="high"
-              className="mt-body h-auto w-full rounded-[2px] bg-stone"
+              className="mt-body h-auto w-full rounded-[2px] bg-lilac-soft"
             />
           )}
           {note.toc && headings.length >= 3 && (

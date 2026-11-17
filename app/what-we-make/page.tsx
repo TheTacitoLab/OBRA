@@ -53,12 +53,12 @@ export default function WhatWeMakePage() {
       />
 
       {/* No top padding: the index follows straight on from the hero. */}
-      <Section tone="bone" size="compact" containerClassName="pt-0">
+      <Section tone="paper" size="compact" containerClassName="pt-0">
         <ProductIndex products={products} />
       </Section>
 
       {/* Copy left, heading right: everything beyond the six categories. */}
-      <Section tone="stone" size="compact">
+      <Section tone="lilac-soft" size="compact">
         <Editorial
           reverse
           headingAlign="right"

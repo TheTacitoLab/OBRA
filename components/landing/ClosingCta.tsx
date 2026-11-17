@@ -18,7 +18,7 @@ export function ClosingCta({
 }) {
   const mark = title.split(/\s+/).at(-1) ?? "";
   return (
-    <Section tone="clay" id="start">
+    <Section tone="lilac" id="start">
       <Editorial
         heading={
           <h2 className="type-display">

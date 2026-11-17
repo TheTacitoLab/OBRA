@@ -8,7 +8,7 @@ import { agencyEvents, agencyLinks } from "@/content/agencies";
 /** The dark closing section of the agencies page, in place of ClosingCta. */
 export function AgencyCta() {
   return (
-    <Section id="send-a-brief" tone="ink" size="large" className="cta-dark">
+    <Section id="send-a-brief" tone="navy" size="large" className="cta-dark">
       <Editorial
         heading={
           <h2 className="type-display">

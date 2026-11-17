@@ -21,7 +21,7 @@ export function AgencyHero() {
     "--fit-word": longestWordEm(titleLines.join(" ")),
   } as React.CSSProperties;
   return (
-    <section data-tone="bone" className="bg-bg text-fg">
+    <section data-tone="paper" className="bg-bg text-fg">
       {/* The frame the scroll cue pins itself to (ScrollCue.tsx). */}
       <Container data-hero-frame className="agency-hero hero-pad pb-12 lg:pb-16" style={fit}>
         <h1 className="agency-hero__title">
@@ -62,7 +62,7 @@ export function AgencyHero() {
 export function AgencyIntro() {
   return (
     <>
-      <Section id="made-for-agencies" tone="stone" size="large" rounded className="scroll-mt-12">
+      <Section id="made-for-agencies" tone="lilac-soft" size="large" rounded className="scroll-mt-12">
         <Editorial
           align="start"
           heading={
@@ -93,7 +93,7 @@ export function AgencyIntro() {
         />
       </Section>
 
-      <Section tone="ink" size="large" rounded>
+      <Section tone="navy" size="large" rounded>
         <Editorial
           reverse
           wide
@@ -130,7 +130,7 @@ export function AgencyIntro() {
         />
       </Section>
 
-      <Section tone="bone" size="large" rounded>
+      <Section tone="paper" size="large" rounded>
         <Editorial
           align="start"
           heading={
@@ -162,7 +162,7 @@ export function AgencyIntro() {
 /** The one choice: read the detail here, or send the brief now. */
 export function AgencyDecision() {
   return (
-    <Section tone="white" size="large" rounded>
+    <Section tone="lilac" size="large" rounded>
       <div className="grid gap-y-body lg:grid-cols-12 lg:gap-x-12">
         <h2 className="type-display type-display-long lg:col-span-8" data-reveal="left">
           Want the detail, <br className="hidden md:block" />

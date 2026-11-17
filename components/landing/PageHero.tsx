@@ -63,7 +63,7 @@ export function PageHero({
   if (full) {
     const em = longestWordEm(title);
     return (
-      <Section tone="bone" size={size} hero>
+      <Section tone="paper" size={size} hero>
         <div
           className={`fit-hero ${em <= 3.5 ? "fit-hero--short" : ""}`}
           style={{ "--fit-em": em } as React.CSSProperties}
@@ -76,7 +76,7 @@ export function PageHero({
   }
 
   return (
-    <Section tone="bone" size={size} hero>
+    <Section tone="paper" size={size} hero>
       <Editorial
         stackMd
         heading={<h1 className="type-display-xl">{heading}</h1>}

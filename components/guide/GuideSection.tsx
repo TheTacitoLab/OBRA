@@ -22,7 +22,7 @@ export function GuideChapter({
   number: string;
   title: ReactNode;
   intro: ReactNode;
-  /** The closing chapter: the same anatomy on a stone panel. */
+  /** The closing chapter: the same anatomy on a soft lilac panel. */
   final?: boolean;
   children: ReactNode;
 }) {
@@ -30,7 +30,7 @@ export function GuideChapter({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      data-tone={final ? "stone" : undefined}
+      data-tone={final ? "lilac-soft" : undefined}
       className={`chapter ${final ? "chapter--final bg-bg text-fg" : ""}`}
     >
       <div className="chapter__open">

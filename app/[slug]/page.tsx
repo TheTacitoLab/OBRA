@@ -112,7 +112,7 @@ export default async function ProductPage({
       />
 
       {/* Heading left, the three steps as a hairline list on the right. */}
-      <Section tone="stone">
+      <Section tone="lilac-soft">
         <Editorial
           align="start"
           stackMd
@@ -121,7 +121,7 @@ export default async function ProductPage({
         />
       </Section>
 
-      <Section tone="ink" size="compact">
+      <Section tone="navy" size="compact">
         <h2 className="type-display">Also make.</h2>
         <BigList className="mt-body" size="type-link-xs" items={others} />
       </Section>

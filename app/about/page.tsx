@@ -44,7 +44,7 @@ function Prose({ paragraphs }: { paragraphs: string[] }) {
 function PersonSection({ person, index }: { person: Person; index: number }) {
   const reverse = index % 2 === 1;
   return (
-    <Section tone={reverse ? "ink" : "bone"} size="compact" rounded>
+    <Section tone={reverse ? "navy" : "paper"} size="compact" rounded>
       <article className={`person ${reverse ? "person--reverse" : ""}`}>
         {/* A plain img, as on the homepage (lib/media.ts resizes it). */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -95,7 +95,7 @@ export default function AboutPage() {
         })}
       />
 
-      <Section tone="bone" size="large" hero>
+      <Section tone="paper" size="large" hero>
         <div
           className="fit-hero fit-hero--solo"
           style={{ "--fit-em": longestWordEm(aboutHero.title) } as React.CSSProperties}
@@ -117,7 +117,7 @@ export default function AboutPage() {
 
       <Section
         id="how-we-work"
-        tone="ink"
+        tone="navy"
         size="large"
         rounded
         className="scroll-mt-16"
@@ -137,7 +137,7 @@ export default function AboutPage() {
         <PersonSection key={person.name} person={person} index={index} />
       ))}
 
-      <Section tone="stone" size="large" rounded>
+      <Section tone="lilac-soft" size="large" rounded>
         <div className="article-split">
           <h2 className="type-display-sm" data-reveal="up">
             {why.title}
@@ -150,7 +150,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section tone="ink" rounded className="cta-dark">
+      <Section tone="navy" rounded className="cta-dark">
         {closing.photo && (
           // The whole group, never cropped: the frame is the photograph's
           // own shape at every width.

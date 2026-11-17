@@ -46,7 +46,7 @@ export const aboutHero = {
   ],
 };
 
-/** The soft black banner before the people. Anchored at #how-we-work (the
+/** The navy banner before the people. Anchored at #how-we-work (the
  * homepage, Services and the agency guide link there). */
 export const team = {
   title: "Our team.",

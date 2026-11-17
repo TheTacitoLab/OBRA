@@ -48,18 +48,13 @@ export default function Home() {
           <WhatWeMake />
         </SheetGroup>
         <SheetGroup lap>
-          <Statement
-            id="by-collection"
-            tone="clay"
-            lines={statements.collection}
-            textClassName="text-ink"
-          />
+          <Statement id="by-collection" tone="lilac" lines={statements.collection} />
           <WhatWeHandle />
         </SheetGroup>
         <SheetGroup lap>
           <Statement
             id="full-service"
-            tone="ink"
+            tone="navy"
             lines={statements.studio}
             textClassName="text-lime"
           >

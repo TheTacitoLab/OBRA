@@ -8,8 +8,9 @@ import { makeLayout, makeTiles } from "@/content/homeMedia";
 /**
  * The products, as a lookbook: copy left, the title right on one line with
  * MAKE. on the lime block (as on the What we make page), the photographs
- * framed around their subjects, then the way into the full range. Rises
- * over the first statement, and sizes to its content.
+ * framed around their subjects, then the way into the full range. On navy,
+ * where the dark photographs and their lime labels sit best. Rises over
+ * the first statement, and sizes to its content.
  */
 /** The word set on the lime block, kept on the title's line. */
 const MARK = "make.";
@@ -19,7 +20,7 @@ export function WhatWeMake() {
   return (
     <Sheet
       id="what-we-make"
-      tone="bone"
+      tone="navy"
       last
       sectionClassName="sheet--round sheet--auto"
     >

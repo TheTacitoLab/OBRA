@@ -2,15 +2,13 @@ import type { ElementType, ReactNode } from "react";
 import { Container } from "./Container";
 
 export type Tone =
-  | "bone"
-  | "white"
-  | "ink"
-  | "stone"
-  | "clay"
+  | "paper"
+  | "navy"
+  | "lilac"
   | "lime"
-  | "blue-soft"
-  | "lime-soft"
-  | "clay-soft";
+  | "lilac-soft"
+  | "navy-soft"
+  | "lime-soft";
 export type SectionSize = "compact" | "default" | "large";
 
 const padding: Record<SectionSize, string> = {
@@ -30,7 +28,7 @@ const paddingBottom: Record<SectionSize, string> = {
  */
 export function Section({
   id,
-  tone = "bone",
+  tone = "paper",
   size = "default",
   as: Tag = "section",
   hero = false,

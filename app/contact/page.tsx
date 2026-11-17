@@ -30,7 +30,7 @@ export default function ContactPage() {
           crumbs: [{ name: "Home", path: "/" }, { name: page.title }],
         })}
       />
-      <Section tone="bone" size="default" hero>
+      <Section tone="paper" size="default" hero>
         {/* Two lines at every width: the long tier keeps "Tell us about"
             on one line down to a 320px phone. */}
         <h1 className={pageTitleClass("Tell us about your project.", "long")}>

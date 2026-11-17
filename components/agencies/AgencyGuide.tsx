@@ -69,7 +69,7 @@ export function AgencyGuide() {
     <section
       id="agency-guide"
       aria-labelledby="agency-guide-title"
-      data-tone="bone"
+      data-tone="paper"
       className="guide section-round bg-bg text-fg"
     >
       <GuideSpy ids={agencySections.map((entry) => entry.id)} />

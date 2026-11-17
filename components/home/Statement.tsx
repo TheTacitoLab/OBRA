@@ -12,7 +12,7 @@ import type { Tone } from "../site/Section";
  *
  * `lines` are forced line breaks; within a line the browser balances the
  * wrap. `textClassName` sets the type colour where the surface's own
- * foreground is not the one wanted (ink on clay, lime on soft black).
+ * foreground is not the one wanted (lime on navy).
  */
 export function Statement({
   id,

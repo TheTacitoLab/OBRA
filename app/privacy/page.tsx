@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <Section tone="bone" size="large" hero>
+    <Section tone="paper" size="large" hero>
       <div className="grid gap-y-6 md:grid-cols-12 md:gap-x-8 lg:gap-x-12">
         <div className="md:col-span-12">
           <h1 className="type-display-xl">Privacy policy.</h1>

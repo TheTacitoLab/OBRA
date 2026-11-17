@@ -1,10 +1,21 @@
 import Link from "next/link";
-import type { CollageLayout, Tile } from "@/content/homeMedia";
+import type { CollageLayout, Tile, Tint } from "@/content/homeMedia";
 import { mediaSources } from "@/lib/media";
 import { mosaicGrid, type MosaicGrid } from "@/lib/mosaic";
 import { labelWordEm } from "@/lib/titleFit";
 
 const BREAKPOINTS = ["sm", "md", "lg"] as const;
+
+/**
+ * Each wash: the brand colour and how strongly it is multiplied over the
+ * photograph. Lime and navy are held back so they tint rather than flood.
+ */
+const WASHES: Record<Tint, { colour: string; strength: number }> = {
+  lilac: { colour: "var(--color-lilac)", strength: 0.9 },
+  "lilac-light": { colour: "var(--color-lilac)", strength: 0.45 },
+  lime: { colour: "var(--color-lime)", strength: 0.6 },
+  navy: { colour: "var(--color-navy)", strength: 0.26 },
+};
 type Breakpoint = (typeof BREAKPOINTS)[number];
 
 /** Viewport widths the `sizes` attribute switches at (matches the CSS). */
@@ -115,14 +126,17 @@ function TileView({
   const { photo } = tile;
   const className = [
     "tile tile--photo",
-    photo.labels === "ink" && "tile--ink",
+    photo.labels === "navy" && "tile--navy",
     photo.tint && "tile--tint",
   ]
     .filter(Boolean)
     .join(" ");
-  // The soft colour laid over the photograph (globals.css, .tile--tint).
+  // The brand colour washed over the photograph (globals.css, .tile--tint).
   const tileStyle = photo.tint
-    ? ({ "--tint": `var(--color-${photo.tint})` } as React.CSSProperties)
+    ? ({
+        "--tint": WASHES[photo.tint].colour,
+        "--tint-strength": WASHES[photo.tint].strength,
+      } as React.CSSProperties)
     : undefined;
   const zoom = (value?: number) => String(Math.max(1, value ?? 1));
   const body = (

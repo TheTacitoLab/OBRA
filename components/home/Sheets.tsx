@@ -3,7 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
-const DARK_TONES = new Set(["ink", "clay"]);
+const DARK_TONES = new Set(["navy"]);
 
 /**
  * Drives the stacked-sheet scroll on the homepage.
@@ -22,7 +22,8 @@ const DARK_TONES = new Set(["ink", "clay"]);
  *    movement and dimming in globals.css. Skipped under
  *    prefers-reduced-motion.
  * 3. `data-nav` on <html>: the tone of the surface beneath the fixed
- *    header, so the header text switches between ink and bone.
+ *    header, so the header switches between navy on off-white and
+ *    off-white on navy.
  * 4. Anchor links to a sheet scroll to the sheet's position in the document
  *    flow. Browsers otherwise scroll a sticky element to wherever it is
  *    pinned, which lands a tall sheet with its title above the fold.
@@ -87,9 +88,9 @@ export function Sheets({ children }: { children: ReactNode }) {
         const surface = el.closest<HTMLElement>(
           "section[data-tone], footer[data-tone]",
         );
-        return surface?.dataset.tone ?? "bone";
+        return surface?.dataset.tone ?? "paper";
       }
-      return "bone";
+      return "paper";
     };
 
     const update = () => {
@@ -119,8 +120,9 @@ export function Sheets({ children }: { children: ReactNode }) {
         });
       }
 
-      if (DARK_TONES.has(headerTone())) html.dataset.nav = "dark";
-      else delete html.dataset.nav;
+      // Always written, never removed while mounted: until it is set the
+      // stylesheet assumes the navy hero is under the header.
+      html.dataset.nav = DARK_TONES.has(headerTone()) ? "dark" : "light";
     };
 
     const schedule = () => {

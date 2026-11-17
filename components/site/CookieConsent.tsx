@@ -191,7 +191,7 @@ export function CookieConsent() {
     <div
       ref={panelRef}
       className="consent"
-      data-tone="ink"
+      data-tone="navy"
       role={reopened ? "dialog" : "region"}
       aria-modal={reopened ? false : undefined}
       aria-labelledby={titleId}

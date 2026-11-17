@@ -38,7 +38,7 @@ export function Figures({ images }: { images: GuideImage[] }) {
             alt={image.alt}
             loading="lazy"
             decoding="async"
-            className="h-auto w-full rounded-[2px] bg-stone"
+            className="h-auto w-full rounded-[2px] bg-lilac-soft"
           />
           {(image.label || image.caption) && (
             <figcaption className="type-meta mt-3 text-muted">

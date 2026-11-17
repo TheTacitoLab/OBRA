@@ -3,23 +3,23 @@
 /* =========================================================================
    madebyobra design tokens - single source of truth.
    Tailwind v4 emits each of these as a CSS variable on :root and generates
-   the matching utilities (--color-clay -> bg-clay / text-clay / border-clay).
+   the matching utilities (--color-lilac -> bg-lilac / text-lilac / border-lilac).
    ========================================================================= */
 @theme {
-  /* Brand palette */
-  --color-bone: #f1eee7; /* Warm Bone - primary light background */
-  --color-ink: #171717; /* Soft Black - primary dark background, main text */
-  --color-stone: #d7d1c6; /* Muted Stone - secondary neutral */
-  --color-clay: #b8644a; /* Burnt Orange / Clay - supporting accent, one section */
-  --color-blue: #6e7d94; /* Dusty Blue - supporting cool accent */
-  --color-lime: #d8e24f; /* Acid Lime - the main accent: the block behind one heading word, hover blocks, focus, underlines */
+  /* Brand palette: two mains, a secondary and an accent. */
+  --color-navy: #092742; /* Navy - primary dark background, main text */
+  --color-paper: #f9f9fa; /* Off-white - primary light background */
+  --color-lilac: #c8b8de; /* Lilac - the secondary: call-out sections with bold type */
+  --color-lime: #ccff00; /* Lime - the accent: the block behind one heading word, call-out sections, hover blocks, focus, underlines */
 
-  /* Washed variants of the brand hues for the occasional accent block. */
-  --color-lime-soft: #e6e9b6;
-  --color-blue-soft: #c9d1dc;
-  --color-clay-soft: #e5cbbf;
-  /* Clay deepened for small text on bone (about 5.2:1; clay alone is 3.4:1). */
-  --color-clay-deep: #8f4f3b;
+  /* Washed variants of the brand hues (each mixed into off-white) for the
+     quieter surfaces between the main ones and the occasional block. */
+  --color-lilac-soft: #e7e2f0;
+  --color-navy-soft: #d3d7dd;
+  --color-lime-soft: #e8fb9b;
+  /* Lilac deepened for small text on off-white (7.8:1; lilac alone is
+     1.8:1): form errors and the like. */
+  --color-lilac-deep: #5f3d8f;
 
   /* Two families. Display (headings, navigation, buttons): --font-aeonik is
      defined only once the licensed Aeonik files are wired up in
@@ -53,7 +53,7 @@
 
 /* Semantic colours follow the tone of the surface they sit on (see
    [data-tone] below), so `bg-bg text-fg border-line text-muted` are correct
-   on bone, soft black, stone and clay alike. */
+   on off-white, navy, lilac and lime alike. */
 @theme inline {
   --color-bg: var(--bg);
   --color-fg: var(--fg);
@@ -64,92 +64,77 @@
 }
 
 /* =========================================================================
-   Surface tones
+   Surface tones. Navy type on every light surface (14.5:1 on off-white,
+   8.2:1 on lilac, 13:1 on lime); off-white type and the lime accent on
+   navy. Lime and lilac are never used as type on a light surface.
    ========================================================================= */
 :root,
-[data-tone="bone"] {
-  --bg: var(--color-bone);
-  --fg: var(--color-ink);
-  --muted: color-mix(in srgb, var(--color-ink) 70%, var(--color-bone));
-  --line: color-mix(in srgb, var(--color-ink) 16%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-ink) 40%, transparent);
+[data-tone="paper"] {
+  --bg: var(--color-paper);
+  --fg: var(--color-navy);
+  --muted: color-mix(in srgb, var(--color-navy) 72%, var(--color-paper));
+  --line: color-mix(in srgb, var(--color-navy) 16%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-navy) 40%, transparent);
   --accent: var(--color-lime);
 }
 
-[data-tone="white"] {
-  --bg: #ffffff;
-  --fg: var(--color-ink);
-  --muted: color-mix(in srgb, var(--color-ink) 68%, #ffffff);
-  --line: color-mix(in srgb, var(--color-ink) 14%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-ink) 40%, transparent);
+[data-tone="navy"] {
+  --bg: var(--color-navy);
+  --fg: var(--color-paper);
+  --muted: color-mix(in srgb, var(--color-paper) 70%, var(--color-navy));
+  --line: color-mix(in srgb, var(--color-paper) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-paper) 44%, transparent);
   --accent: var(--color-lime);
 }
 
-[data-tone="stone"] {
-  --bg: var(--color-stone);
-  --fg: var(--color-ink);
-  --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-stone));
-  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
+/* Lilac as a surface: the call-out sections. Navy type; running copy stays
+   close to full navy (5.6:1). The lime block still reads on it. */
+[data-tone="lilac"] {
+  --bg: var(--color-lilac);
+  --fg: var(--color-navy);
+  --muted: color-mix(in srgb, var(--color-navy) 82%, var(--color-lilac));
+  --line: color-mix(in srgb, var(--color-navy) 20%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-navy) 46%, transparent);
   --accent: var(--color-lime);
 }
 
-[data-tone="ink"] {
-  --bg: var(--color-ink);
-  --fg: var(--color-bone);
-  --muted: color-mix(in srgb, var(--color-bone) 66%, var(--color-ink));
-  --line: color-mix(in srgb, var(--color-bone) 18%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-bone) 44%, transparent);
+/* Lime as a surface: the first homepage statement. Navy type (13:1); the
+   accent turns navy, since lime on lime would vanish. */
+[data-tone="lime"] {
+  --bg: var(--color-lime);
+  --fg: var(--color-navy);
+  --muted: color-mix(in srgb, var(--color-navy) 82%, var(--color-lime));
+  --line: color-mix(in srgb, var(--color-navy) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-navy) 42%, transparent);
+  --accent: var(--color-navy);
+}
+
+/* The quiet surface between off-white sections. */
+[data-tone="lilac-soft"] {
+  --bg: var(--color-lilac-soft);
+  --fg: var(--color-navy);
+  --muted: color-mix(in srgb, var(--color-navy) 74%, var(--color-lilac-soft));
+  --line: color-mix(in srgb, var(--color-navy) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-navy) 42%, transparent);
   --accent: var(--color-lime);
 }
 
-[data-tone="clay"] {
-  --bg: var(--color-clay);
-  --fg: var(--color-bone);
-  /* Running copy on clay is true black: ink is 4.23:1 on clay, black 4.96:1,
-     and bone only clears AA at display sizes. */
-  --muted: #000000;
-  --line: color-mix(in srgb, var(--color-bone) 26%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-bone) 50%, transparent);
-  --accent: var(--color-lime);
-}
-
-[data-tone="blue-soft"] {
-  --bg: var(--color-blue-soft);
-  --fg: var(--color-ink);
-  --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-blue-soft));
-  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
+[data-tone="navy-soft"] {
+  --bg: var(--color-navy-soft);
+  --fg: var(--color-navy);
+  --muted: color-mix(in srgb, var(--color-navy) 76%, var(--color-navy-soft));
+  --line: color-mix(in srgb, var(--color-navy) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-navy) 42%, transparent);
   --accent: var(--color-lime);
 }
 
 [data-tone="lime-soft"] {
   --bg: var(--color-lime-soft);
-  --fg: var(--color-ink);
-  --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-lime-soft));
-  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
-  --accent: var(--color-ink);
-}
-
-[data-tone="clay-soft"] {
-  --bg: var(--color-clay-soft);
-  --fg: var(--color-ink);
-  --muted: color-mix(in srgb, var(--color-ink) 72%, var(--color-clay-soft));
-  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
-  --accent: var(--color-ink);
-}
-
-/* Acid Lime as a surface: the first homepage statement. Soft black type
-   (12.6:1); the accent turns ink, since lime on lime would vanish. */
-[data-tone="lime"] {
-  --bg: var(--color-lime);
-  --fg: var(--color-ink);
-  --muted: color-mix(in srgb, var(--color-ink) 78%, var(--color-lime));
-  --line: color-mix(in srgb, var(--color-ink) 18%, transparent);
-  --line-strong: color-mix(in srgb, var(--color-ink) 42%, transparent);
-  --accent: var(--color-ink);
+  --fg: var(--color-navy);
+  --muted: color-mix(in srgb, var(--color-navy) 76%, var(--color-lime-soft));
+  --line: color-mix(in srgb, var(--color-navy) 18%, transparent);
+  --line-strong: color-mix(in srgb, var(--color-navy) 42%, transparent);
+  --accent: var(--color-navy);
 }
 
 /* Vertical metrics of the display face, in em, for the lime block behind a
@@ -161,17 +146,20 @@
 }
 
 /* The fixed header follows whichever surface is beneath it. Sheets.tsx
-   writes data-nav="dark" on <html> while a dark sheet is under the header;
-   every other page leaves it light. */
+   writes data-nav on <html> ("dark" while a navy sheet is under the
+   header, "light" otherwise); every other page leaves it unset and light.
+   The homepage opens on its navy hero, so until the script has run the
+   header is already dark there: no flash of a light bar on first paint. */
 :root {
-  --nav-fg: var(--color-ink);
-  --nav-bg: var(--color-bone);
-  --nav-line: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  --nav-fg: var(--color-navy);
+  --nav-bg: var(--color-paper);
+  --nav-line: color-mix(in srgb, var(--color-navy) 14%, transparent);
 }
-html[data-nav="dark"] {
-  --nav-fg: var(--color-bone);
-  --nav-bg: var(--color-ink);
-  --nav-line: color-mix(in srgb, var(--color-bone) 16%, transparent);
+html[data-nav="dark"],
+html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
+  --nav-fg: var(--color-paper);
+  --nav-bg: var(--color-navy);
+  --nav-line: color-mix(in srgb, var(--color-paper) 16%, transparent);
 }
 
 /* =========================================================================
@@ -185,8 +173,8 @@ html[data-nav="dark"] {
   }
 
   body {
-    background-color: var(--color-bone);
-    color: var(--color-ink);
+    background-color: var(--color-paper);
+    color: var(--color-navy);
     font-family: var(--font-sans);
     font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
     line-height: 1.45;
@@ -199,7 +187,7 @@ html[data-nav="dark"] {
 
   ::selection {
     background: var(--color-lime);
-    color: var(--color-ink);
+    color: var(--color-navy);
   }
 
   /* Focus follows the text colour so it stays visible on every tone. */
@@ -721,7 +709,7 @@ html[data-nav="dark"] {
 
   /* -------------------------------------------------------------------
      Lime block: the brand punctuation. A solid block behind one word of a
-     heading, black type on the brand lime. It is a background painted per
+     heading, navy type on the brand lime. It is a background painted per
      line fragment and sized from the font's metrics so it clears the caps
      by --mark-pad above and below whatever the line-height, and the
      negative margins keep the block from moving the word or its
@@ -746,7 +734,7 @@ html[data-nav="dark"] {
   .mark {
     background-size: 100% var(--mark-h);
     background-position: 0 var(--mark-y);
-    color: var(--color-ink);
+    color: var(--color-navy);
   }
   /* A block after other words on its line keeps the word space in front. */
   .mark--mid {
@@ -764,7 +752,7 @@ html[data-nav="dark"] {
   a:active .mark-hover {
     background-size: 100% var(--mark-h);
     background-position: 0 var(--mark-y);
-    color: var(--color-ink);
+    color: var(--color-navy);
   }
   /* On phones the hero's two highlighted words stack, so they get a gap. */
   @media (max-width: 767px) {
@@ -906,16 +894,19 @@ html[data-nav="dark"] {
 
   .btn-primary {
     --btn-accent: var(--color-lime);
-    background-color: var(--color-ink);
-    color: var(--color-bone);
-    border: 1px solid var(--color-ink);
+    background-color: var(--color-navy);
+    color: var(--color-paper);
+    border: 1px solid var(--color-navy);
   }
-  /* On soft black the button inverts, or it would vanish. */
-  [data-tone="ink"] .btn-primary {
-    --btn-accent: var(--color-clay);
-    background-color: var(--color-bone);
-    color: var(--color-ink);
-    border-color: var(--color-bone);
+  /* On navy the button is the lime highlight, with navy type (13:1). The
+     skip link is too: it appears over whatever opens the page, and the
+     homepage opens on navy. */
+  .btn-primary.btn-skip,
+  [data-tone="navy"] .btn-primary {
+    --btn-accent: currentColor;
+    background-color: var(--color-lime);
+    color: var(--color-navy);
+    border-color: var(--color-lime);
   }
 
   .btn-outline {
@@ -930,8 +921,8 @@ html[data-nav="dark"] {
   }
 
   /* The ring follows the surface's foreground, not the button's text, so a
-     black button on bone shows an ink ring and the inverted one on ink a
-     bone ring. */
+     navy button on off-white shows a navy ring and the lime one on navy an
+     off-white ring. */
   .btn:focus-visible {
     outline-color: var(--fg);
   }
@@ -962,8 +953,13 @@ html[data-nav="dark"] {
     gap: 0.75rem;
     font-size: 0.875rem;
   }
-  html[data-nav="dark"] .btn-nav {
-    --btn-accent: var(--color-clay);
+  /* Over navy the header's button is the lime highlight too. */
+  html[data-nav="dark"] .btn-nav,
+  html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) .btn-nav {
+    --btn-accent: currentColor;
+    background-color: var(--color-lime);
+    color: var(--color-navy);
+    border-color: var(--color-lime);
   }
 
   /* Inline text link with arrow, for secondary actions. */
@@ -983,7 +979,7 @@ html[data-nav="dark"] {
   }
   /* The editorial call to action: plain text, no box, the arrow carrying
      the movement. The underline wipes in under the words on hover, in the
-     text's own colour (ink on light surfaces, bone on dark). */
+     text's own colour (navy on light surfaces, off-white on navy). */
   .link-arrow--strong {
     gap: 0.55rem;
     font-weight: 700;
@@ -1075,12 +1071,12 @@ html[data-nav="dark"] {
     display: none;
   }
   .site-header[data-menu-open="true"] {
-    color: var(--color-ink);
+    color: var(--color-navy);
     background-color: transparent;
     border-bottom-color: transparent;
   }
-  /* Phones and tablets: a solid bar at all times (the page colour, or soft
-     black over a dark section), so nothing shows through or under it as
+  /* Phones and tablets: a solid bar at all times (the page colour, or navy
+     over a navy section), so nothing shows through or under it as
      the page scrolls. The open menu keeps its own surface. */
   @media (max-width: 1023.98px) {
     .site-header:not([data-menu-open="true"]) {
@@ -1129,8 +1125,8 @@ html[data-nav="dark"] {
     z-index: 55;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-bone);
-    color: var(--color-ink);
+    background-color: var(--color-paper);
+    color: var(--color-navy);
     opacity: 0;
     visibility: hidden;
     transition:
@@ -1220,7 +1216,7 @@ html[data-nav="dark"] {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: var(--color-ink);
+    background-color: var(--color-navy);
     opacity: calc(var(--cover, 0) * 0.22);
     pointer-events: none;
   }
@@ -1237,6 +1233,12 @@ html[data-nav="dark"] {
       scale(calc(1 - var(--cover, 0) * 0.03));
     transform-origin: 50% 40%;
     will-change: transform, opacity;
+  }
+  /* A sheet's colour runs on by the section radius beneath the rounded
+     sheet that follows it in its stack, so that sheet's corners show this
+     colour, not the page's, before it starts to slide over. */
+  .sheet:has(+ .sheet--round) {
+    box-shadow: 0 var(--radius-section) 0 0 var(--bg);
   }
   /* The final sheet scrolls away normally so the rest of the page follows. */
   .sheet[data-last="true"] {
@@ -1277,9 +1279,10 @@ html[data-nav="dark"] {
 
   /* -------------------------------------------------------------------
      Scroll cue (ScrollCue.tsx): the arrow in the hero's corner. Fixed at
-     the corner the hero holds at the top of the page and blended, so it
-     reads near-black on bone and light over soft black as the next sheet
-     slides beneath it. The script moves it; at rest it bounces a little.
+     the corner the hero holds at the top of the page. The script moves it
+     and tells it which surface is beneath (data-over), so it is lime over
+     navy and navy over everything else as the next sheet slides under it.
+     At rest it bounces a little.
      ------------------------------------------------------------------- */
   .scroll-cue {
     position: fixed;
@@ -1288,11 +1291,13 @@ html[data-nav="dark"] {
     z-index: 30;
     width: 2.75rem;
     height: 2.75rem;
-    color: #fff;
-    mix-blend-mode: difference;
+    color: var(--color-navy);
     pointer-events: none;
     visibility: hidden;
     transform-origin: 50% 50%;
+  }
+  .scroll-cue[data-over="navy"] {
+    color: var(--color-lime);
   }
   .scroll-cue[data-ready="true"] {
     visibility: visible;
@@ -1410,7 +1415,7 @@ html[data-nav="dark"] {
   .home-chapter--make {
     padding-top: clamp(2.5rem, 1.6rem + 2vw, 3.75rem);
   }
-  /* Who for: an editorial spread, five photographs framed by black on
+  /* Who for: an editorial spread, five photographs framed by off-white on
      every side. Room under the rounded top edge (about 48px on phones,
      56-72px on desktop), a clear pause of 32-48px between the title and
      the photographs, and a foot of about 32px on phones and 40-54px on
@@ -1596,7 +1601,7 @@ html[data-nav="dark"] {
      large text) over the palest pixels behind it in any photograph. */
   .tile--photo {
     --fg: var(--color-lime);
-    background-color: var(--color-ink);
+    background-color: var(--color-navy);
   }
   .tile--photo::after {
     content: "";
@@ -1605,9 +1610,9 @@ html[data-nav="dark"] {
     z-index: 0;
     background: linear-gradient(
       to top,
-      rgb(23 23 23 / 0.8) 0%,
-      rgb(23 23 23 / 0.5) 30%,
-      rgb(23 23 23 / 0) 62%
+      rgb(9 39 66 / 0.8) 0%,
+      rgb(9 39 66 / 0.5) 30%,
+      rgb(9 39 66 / 0) 62%
     );
     opacity: 0.9;
     transition: opacity 0.45s var(--ease-out-quart);
@@ -1633,23 +1638,23 @@ html[data-nav="dark"] {
     text-wrap: balance;
     transition: transform 0.45s var(--ease-out-quart);
   }
-  /* Pale photographs (labels: "ink" in homeMedia.ts): ink labels straight
-     on the picture, no scrim. */
-  .tile--ink {
-    --fg: var(--color-ink);
-    background-color: var(--color-stone);
+  /* Pale photographs (labels: "navy" in homeMedia.ts): navy labels
+     straight on the picture, no scrim. */
+  .tile--navy {
+    --fg: var(--color-navy);
+    background-color: var(--color-lilac-soft);
   }
-  .tile--ink::after {
+  .tile--navy::after {
     display: none;
   }
-  /* A soft colour over the photograph (tint in homeMedia.ts): multiplied,
-     at part strength, so the picture and its filter still read under it.
-     It lifts on hover and focus. */
+  /* A wash of a brand colour over the photograph (tint in homeMedia.ts;
+     colour and strength from Collage.tsx): multiplied, so the picture and
+     its filter still read through it. It lifts on hover and focus. */
   .tile--tint::after {
     display: block;
     background: var(--tint);
     mix-blend-mode: multiply;
-    opacity: 0.55;
+    opacity: var(--tint-strength, 0.6);
   }
   @media (min-width: 768px) {
     .tile__label {
@@ -1675,7 +1680,7 @@ html[data-nav="dark"] {
       transform: translate3d(0.35rem, 0, 0);
     }
     a.tile:not(.tile--photo):hover {
-      background-color: color-mix(in srgb, var(--bg) 90%, var(--color-ink));
+      background-color: color-mix(in srgb, var(--bg) 90%, var(--color-navy));
     }
   }
   a.tile:focus-visible .tile__media {
@@ -1770,7 +1775,7 @@ html[data-nav="dark"] {
   }
 
   /* -------------------------------------------------------------------
-     Cookie preferences (CookieConsent.tsx): a small soft-black panel in
+     Cookie preferences (CookieConsent.tsx): a small navy panel in
      a lower corner, never a full-screen wall. Accept and reject carry the
      same weight; the categories open in place.
      ------------------------------------------------------------------- */
@@ -1890,7 +1895,7 @@ html[data-nav="dark"] {
     border-color: var(--color-lime);
   }
   .switch:checked::before {
-    background-color: var(--color-ink);
+    background-color: var(--color-navy);
     transform: translate(1.2rem, -50%);
   }
   .switch:disabled {
@@ -1935,10 +1940,10 @@ html[data-nav="dark"] {
     gap: clamp(1.5rem, 3vw, 3.5rem);
     padding: clamp(1.25rem, 2vw + 0.5rem, 2.25rem);
     border-radius: 2px;
-    color: var(--color-ink);
+    color: var(--color-navy);
   }
-  .panel-stone {
-    background-color: var(--color-stone);
+  .panel-soft {
+    background-color: var(--color-lilac-soft);
   }
   .panel-accent {
     background-color: var(--color-lime-soft);
@@ -2035,13 +2040,13 @@ html[data-nav="dark"] {
       0 3px 0 0 var(--fg);
   }
   .field__control[aria-invalid="true"] {
-    border-color: var(--color-clay);
-    box-shadow: 0 1px 0 0 var(--color-clay);
+    border-color: var(--color-lilac-deep);
+    box-shadow: 0 1px 0 0 var(--color-lilac-deep);
   }
   .field__error {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-clay-deep);
+    color: var(--color-lilac-deep);
   }
   textarea.field__control {
     resize: none;
@@ -2114,7 +2119,7 @@ html[data-nav="dark"] {
       font-size: min(9.5vw, 11rem, calc(100cqi * 0.97 / var(--fit-line)));
     }
   }
-  /* The one lime line in the dark intro section (lime on ink, 12.6:1). */
+  /* The one lime line in the navy intro section (lime on navy, 13:1). */
   .intro-callout {
     margin-top: 0.5rem;
     max-width: 16ch;
@@ -2187,11 +2192,11 @@ html[data-nav="dark"] {
     width: 0.7rem;
     height: 0.7rem;
     background-color: var(--color-lime);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 18%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-navy) 18%, transparent);
   }
 
   /* Contents links, shared by the rail and the strip. The current section
-     gets its number on the lime and a heavier, ink label: no line, no
+     gets its number on the lime and a heavier, navy label: no line, no
      progress bar, no motion. */
   .guide-link {
     display: flex;
@@ -2221,7 +2226,7 @@ html[data-nav="dark"] {
   }
   .guide-link[aria-current="true"] .guide-link__num {
     background-color: var(--color-lime);
-    color: var(--color-ink);
+    color: var(--color-navy);
   }
 
   .guide-rail {
@@ -2355,7 +2360,7 @@ html[data-nav="dark"] {
     padding: 0.1em 0.4em;
     border-radius: 2px;
     background-color: var(--color-lime);
-    color: var(--color-ink);
+    color: var(--color-navy);
     font-size: 0.8125rem;
     font-weight: 700;
     line-height: 1.4;
@@ -2423,7 +2428,7 @@ html[data-nav="dark"] {
     margin-top: var(--g-block) !important;
   }
 
-  /* The closing chapter: the same anatomy on a stone panel. */
+  /* The closing chapter: the same anatomy on a soft lilac panel. */
   .chapter--final {
     margin-top: var(--g-section);
     padding: clamp(2rem, 1rem + 3cqi, 3.5rem);
@@ -2460,13 +2465,13 @@ html[data-nav="dark"] {
     text-decoration-thickness: 2px;
   }
 
-  /* The one callout: lime, ink type, softly rounded, no border or icon. */
+  /* The one callout: lime, navy type, softly rounded, no border or icon. */
   .callout {
-    --muted: color-mix(in srgb, var(--color-ink) 80%, var(--color-lime));
+    --muted: color-mix(in srgb, var(--color-navy) 80%, var(--color-lime));
     padding: clamp(1.5rem, 1rem + 2.5cqi, 3rem) clamp(1.5rem, 1rem + 3cqi, 3.5rem);
     border-radius: var(--radius-section);
     background-color: var(--color-lime);
-    color: var(--color-ink);
+    color: var(--color-navy);
   }
   .callout__text {
     max-width: 26ch;
@@ -2529,7 +2534,7 @@ html[data-nav="dark"] {
     padding: 0.15em 0.45em;
     border-radius: 2px;
     background-color: var(--color-lime);
-    color: var(--color-ink);
+    color: var(--color-navy);
   }
   .band__lead {
     font-weight: 600;
@@ -2586,7 +2591,7 @@ html[data-nav="dark"] {
     letter-spacing: -0.01em;
   }
 
-  /* The + that turns into an x: a lime block with an ink cross (13:1). */
+  /* The + that turns into an x: a lime block with a navy cross (13:1). */
   .plus-icon {
     position: relative;
     flex: none;
@@ -2604,7 +2609,7 @@ html[data-nav="dark"] {
     left: 50%;
     width: 0.8rem;
     height: 2px;
-    background-color: var(--color-ink);
+    background-color: var(--color-navy);
     transform: translate(-50%, -50%);
   }
   .plus-icon::after {
@@ -2708,7 +2713,7 @@ html[data-nav="dark"] {
   .on-this-page {
     padding: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
     border-radius: var(--radius-section);
-    background-color: color-mix(in srgb, var(--color-stone) 45%, var(--color-bone));
+    background-color: color-mix(in srgb, var(--color-lilac-soft) 45%, var(--color-paper));
   }
   .on-this-page ol {
     margin-top: 1.25rem;
@@ -2744,7 +2749,7 @@ html[data-nav="dark"] {
      About (app/about/page.tsx): serious about product, with personality
      from the figurines. The article split throughout (heading or
      statement left, copy right, from the same line), the team introduced
-     on a soft black banner, each person in a full-width section of their
+     on a navy banner, each person in a full-width section of their
      own with the figurine shown whole, then why we created madebyobra and
      a short close. No cards, no icons.
      ------------------------------------------------------------------- */
@@ -2863,7 +2868,7 @@ html[data-nav="dark"] {
     text-transform: uppercase;
     color: var(--muted);
   }
-  [data-tone="ink"] .person__role {
+  [data-tone="navy"] .person__role {
     color: var(--color-lime);
   }
   .person__copy {
@@ -2965,7 +2970,7 @@ html[data-nav="dark"] {
     transition: color 0.2s ease;
   }
   .privacy-link:hover {
-    color: var(--color-clay);
+    color: var(--color-lilac-deep);
   }
 }
 

@@ -79,11 +79,19 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 
 ## Design system
 
-- **Colour**: tokens in `app/globals.css` (`--color-bone`, `--color-ink`,
-  `--color-stone`, `--color-clay`, `--color-blue`, `--color-lime`) plus washed
-  variants (`--color-lime-soft`, `--color-blue-soft`, `--color-clay-soft`) for
-  the occasional accent block. Every surface sets `data-tone`, which resolves
-  the semantic `bg-bg / text-fg / text-muted / border-line` utilities.
+- **Colour**: four brand colours, as tokens in `app/globals.css`: two mains,
+  navy `#092742` (`--color-navy`: dark surfaces and all type on light ones)
+  and off-white `#f9f9fa` (`--color-paper`); the secondary, lilac `#c8b8de`
+  (`--color-lilac`); and the accent, lime `#ccff00` (`--color-lime`). Lilac
+  and lime are for call-out sections with bold type and for highlights,
+  never for type on a light surface. Washed variants (`--color-lilac-soft`,
+  `--color-navy-soft`, `--color-lime-soft`, each mixed into off-white) make
+  the quiet surfaces between the main ones, and `--color-lilac-deep` is
+  the one colour for small text that must stand apart (form errors). Every
+  surface sets `data-tone` (`paper`, `navy`, `lilac`, `lime`, `lilac-soft`,
+  `navy-soft`, `lime-soft`), which resolves the semantic
+  `bg-bg / text-fg / text-muted / border-line` utilities. On navy, buttons
+  and the header's Get in touch turn lime.
 - **Lime block**: the brand punctuation. `.mark` puts the end of a heading
   on a solid lime block (the hero's "More brand.", "Make." on the What we
   make section and page, "In mind?" on the homepage close, "Agencies." in
@@ -159,13 +167,15 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 The page alternates a visual chapter with a statement on a full brand
 colour, three times, then explains the business in full:
 
-Hero (bone) > Who for (ink, collage) > statement "Your merchandise should
-feel like your product." (lime, ink type) > What we make (bone, collage) >
-statement "We design by collection, for your audience." (clay, ink type) >
-What we handle (stone, collage) > statement "Full service studio. From
-concept to creation." (ink, lime type) > the overview (bone; the long,
+Hero (navy, off-white type, lime block) > Who for (off-white, collage) >
+statement "Your merchandise should feel like your product." (lime, navy
+type) > What we make (navy, collage) > statement "We design by
+collection, for your audience." (lilac, navy type) > What we handle
+(off-white, collage) > statement "Full service studio. From concept to
+creation." (navy, lime type) > the overview (off-white; the long,
 visible, crawlable explanation with links to the pages that own each
-search) > "Have something in mind?" (white) > footer.
+search) > "Have something in mind?" (lilac) > footer (navy). Navy and
+off-white alternate; lime and lilac carry the call-outs.
 
 - **Stacks**: four `SheetGroup`s inside `Sheets`: the hero with Who for,
   then each statement with the chapter after it. Within a stack each sheet
@@ -178,7 +188,7 @@ search) > "Have something in mind?" (white) > footer.
   and 86-97% of a desktop screen), with the title on one line and the copy
   beside it, so the next statement is already arriving as they end. Who
   for is the calmer of the two (`.home-chapter--who`): five photographs
-  and five names, framed by black on every side, with more room under its
+  and five names, framed by off-white on every side, with more room under its
   top edge, before the photographs, between them and at its foot. On
   phones the supporting paragraph drops to body size. The statements keep
   their 80% height.
@@ -194,9 +204,9 @@ search) > "Have something in mind?" (white) > footer.
 - **About** (`app/about/page.tsx`, copy and photographs in
   `content/about.ts`): one story, serious about product, with the
   personality left to the figurine photography. The introduction, the
-  team on a soft black banner (`#how-we-work`, where the homepage,
+  team on a navy banner (`#how-we-work`, where the homepage,
   Services and the agency guide link), each person in a full-width
-  section of their own (bone, ink, bone), the figurine shown whole at its
+  section of their own (off-white, navy, off-white), the figurine shown whole at its
   own shape beside the copy, the sides alternating on desktop and stacked
   photograph-first on phones, then Why we created madebyobra and a short
   close. The group photograph closes the page, uncropped, once its
@@ -206,8 +216,7 @@ search) > "Have something in mind?" (white) > footer.
 - **Calls to action**: on the homepage and About, every call to action is
   a plain text link with an arrow (`ArrowLink strong`); the desktop
   header's Get in touch is the one boxed button. The phone and tablet
-  header is a solid bar (the page colour, or soft black over a dark
-  section).
+  header is a solid bar (the page colour, or navy over a navy section).
 - **Collages** (`Collage.tsx`, `lib/mosaic.ts`): built around the
   photographs. Each photograph has a frame in `content/homeMedia.ts`
   (`aspect`, plus `position` for object-position and an optional `zoom`
@@ -221,11 +230,13 @@ search) > "Have something in mind?" (white) > footer.
   in the display face, lower case with a full stop, sized from the tile
   and capped so the longest word fits (`labelWordEm`); photographs get
   lime labels over a low scrim; the audience photographs are pale by
-  design (a light filter) and take ink labels (`labels: "ink"`) with no
-  scrim and no other text over them, and each carries a soft tint from the
-  palette (`tint: "clay-soft"`, multiplied at part strength, lifting on
-  hover and focus; no two tiles that share an edge share one). Every label clears 3:1
-  over the photograph behind it (4.2:1 or more today, the lightest being the gifting photograph on a small phone).
+  design (a light filter) and take navy labels (`labels: "navy"`) with no
+  scrim and no other text over them, and each carries a wash of a brand
+  colour (`tint: "lilac"`, `"lilac-light"`, `"lime"` or `"navy"`,
+  multiplied over the photograph, lifting on hover and focus; no two tiles
+  that share an edge share one). Every label clears 3:1 over the
+  photograph behind it (4.7:1 or more today, the lightest being the
+  gifting photograph on a small phone).
 - **Photography** is the V3 set in the public Supabase bucket "Website
   Builds", folder `madebyobra/V3 Website/` (`v3("agency.png")` in the
   manifest), through Supabase's render endpoint (WebP, resized

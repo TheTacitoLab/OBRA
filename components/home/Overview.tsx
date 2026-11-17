@@ -7,7 +7,7 @@ import { primaryCta } from "@/content/site";
 
 /**
  * The business explained in full, after the last statement: the quiet,
- * reading part of the homepage, on warm bone. One editorial system
+ * reading part of the homepage, on off-white. One editorial system
  * throughout: each block is its heading on the left and its copy on the
  * right, both starting at the same line, with hairlines between blocks.
  * The opening heading is only a step larger than the topic headings: an
@@ -17,7 +17,7 @@ import { primaryCta } from "@/content/site";
  */
 export function Overview() {
   return (
-    <Sheet id="about-madebyobra" tone="bone" sectionClassName="sheet--round">
+    <Sheet id="about-madebyobra" tone="paper" sectionClassName="sheet--round">
       <Container className="py-section-lg">
         <div className="overview-topic overview-topic--open article-split">
           <h2 className="overview-title" data-reveal="up">

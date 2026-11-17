@@ -472,7 +472,7 @@ export function ProjectForm({
         </div>
 
         {status === "error" && (
-          <p className="type-small text-clay-deep sm:col-span-2" role="alert">
+          <p className="type-small text-lilac-deep sm:col-span-2" role="alert">
             Something went wrong sending your message. Please email us at{" "}
             <a className="u-wipe u-static" href={`mailto:${siteConfig.email}`}>
               {siteConfig.email}

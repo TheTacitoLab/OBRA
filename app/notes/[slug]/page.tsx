@@ -61,7 +61,7 @@ export default async function NotePage({
       <JsonLd data={buildNoteSchema(note)} />
       <NoteArticle note={note} />
       {others.length > 0 && (
-        <Section tone="stone" size="compact">
+        <Section tone="lilac-soft" size="compact">
           <h2 className="type-display-sm">More notes.</h2>
           <div className="mt-body">
             <NoteList notes={others} />

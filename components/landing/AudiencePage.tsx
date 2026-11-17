@@ -28,7 +28,7 @@ export const audienceCrumbs = (page: PageEntry): Crumb[] => [
 /** Lead block spans 7/12 and both rows; the other two stack beside it. */
 const benefitLayout: { tone: BlockTone; className: string }[] = [
   {
-    tone: "stone",
+    tone: "soft",
     className:
       "md:col-span-12 lg:col-span-7 lg:row-span-2 lg:min-h-[24rem] lg:justify-between",
   },
@@ -61,7 +61,7 @@ export function AudiencePage({ slug }: { slug: string }) {
   return (
     <>
       {/* Hero: full-width statement, intro and CTA in the right column. */}
-      <Section tone="bone" size="large" hero>
+      <Section tone="paper" size="large" hero>
         <h1 className={pageTitleClass(content.headline, content.headlineTier)}>
           <MarkedTitle title={content.headline} mark={content.headlineMark} />
         </h1>
@@ -88,7 +88,7 @@ export function AudiencePage({ slug }: { slug: string }) {
       {/* What we do: heading left, hairline list right. The heading takes the
           full width until lg because "FESTIVALS." does not fit a 7/12 column
           at the 13vw display size between 768 and 1023px. */}
-      <Section tone="stone">
+      <Section tone="lilac-soft">
         <div className="grid gap-y-head md:grid-cols-12 md:gap-x-8 lg:items-start lg:gap-x-12">
           <div className="md:col-span-12 lg:sticky lg:top-24 lg:col-span-8">
             <h2 className="type-display">
@@ -108,7 +108,7 @@ export function AudiencePage({ slug }: { slug: string }) {
       </Section>
 
       {/* Products: note left, heading right-aligned, then the enormous list. */}
-      <Section tone="ink" size="large">
+      <Section tone="navy" size="large">
         <Editorial
           reverse
           headingAlign="right"
@@ -127,7 +127,7 @@ export function AudiencePage({ slug }: { slug: string }) {
 
       {/* Retail readiness: a short heading and one line, compact. */}
       {content.ready && (
-        <Section tone="blue-soft" size="compact">
+        <Section tone="navy-soft" size="compact">
           <Editorial
             heading={
               <h2 className="type-display">
@@ -157,7 +157,7 @@ export function AudiencePage({ slug }: { slug: string }) {
           titles-only two-up index so it reads differently from "What we do";
           tablets stack the title above the list; the side-by-side split
           starts at lg. */}
-      <Section tone="stone" size="compact">
+      <Section tone="lilac-soft" size="compact">
         <div className="grid gap-y-head lg:grid-cols-12 lg:gap-x-12">
           <div className="flex flex-col gap-body lg:col-span-4">
             <div>
@@ -195,7 +195,7 @@ export function AudiencePage({ slug }: { slug: string }) {
 
       {/* Benefits: full-width heading, then three blocks of unequal size. */}
       {content.benefits && content.benefits.length > 0 && (
-        <Section tone="bone">
+        <Section tone="paper">
           <h2 className="type-display max-w-[12ch]">
             {content.benefitsHeading}
           </h2>
@@ -219,7 +219,7 @@ export function AudiencePage({ slug }: { slug: string }) {
 
       {/* Closing statement: copy left, heading right-aligned. */}
       {content.statement && (
-        <Section tone="ink">
+        <Section tone="navy">
           <Editorial
             reverse
             headingAlign="right"
