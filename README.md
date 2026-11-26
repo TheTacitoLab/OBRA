@@ -112,25 +112,35 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   highlight, and everything is sized from its width (`--lock` on
   `.type-hero`). From 768px the title is centred and the block leads:
   "Where great" and "are made" are one smaller size above and below it,
-  and the block is 84% of the column from 1024px, less only where the
-  screen is too short. On phones there are four lines, each the block's
-  full width ("Where" / "great" / the block / "are made"), each set at the
-  size that makes its ink span it.
-- **The block** (`components/home/Slot.tsx`, `.slot` in `app/globals.css`):
-  navy type on a solid colour, changing through the three words in
-  `hero.words` (`content/home.ts`): "ideas" on lime, "products" on lilac,
-  "activations" on off-white. It is a fruit machine: three reels side by
-  side, each showing its third of the block, spin downwards together and
-  stop left to right on the next word with a small bounce; once the last
-  has stopped the word stands in one piece on its full colour. A small
-  script moves the reels (where each is depends only on the time, so it
-  survives a throttled tab and pauses off screen); without it, or under
-  reduced motion, the block stays on "ideas". The block is decoration:
-  the heading's own word is a visually hidden "ideas", so it reads "Where
-  great ideas are made" to search engines and screen readers. Each word
-  carries its measured ink (`left`, `width`, in ems), which sizes and
-  centres it: measure a new word before swapping one in, and keep to
-  three.
+  and the block is 63% of the column from 1024px (three quarters of the
+  column below that), less only where the screen is too short. On phones
+  there are four lines, each the block's full width ("Where" / "great" /
+  the block / "are made"), each set at the size that makes its ink span
+  it.
+- **The block** (`.hero-cube` in `app/globals.css`, CSS only): navy type
+  on a solid colour that turns a quarter at a time, always the same way,
+  like the side of a cube, through the three words in `hero.words`
+  (`content/home.ts`): "ideas" on lime, "products" on lilac, "activations"
+  on off-white. Three words do not go round four sides, so the block is
+  two panels that take turns, each changing its word while it is round
+  the back. Under reduced motion it stays on "ideas". The block is
+  decoration: the heading's own word is a visually hidden "ideas", so it
+  reads "Where great ideas are made" to search engines and screen
+  readers. Each word carries its measured ink (`left`, `width`, in ems),
+  which sizes and centres it: measure a new word before swapping one in,
+  and keep to three.
+- **Hero film** (`components/home/HeroVideo.tsx`, `public/media/`): dark,
+  navy-graded footage of the work being made, muted and looping behind
+  the title. It is kept out of the page's loading: the element has no
+  source until the page has finished loading, then it is fetched, played
+  and faded in over the plain navy. It is never loaded under reduced
+  motion, reduced data or a slow connection, and pauses when the hero is
+  out of sight. Two H.264 encodes of the one film at 25 frames a second
+  with no sound: `hero-wide.mp4` (1280x720, about 1.4MB) and
+  `hero-tall.mp4` (540x960, a centre crop for phones held upright, about
+  0.9MB). To replace it, encode the new film the same way under new file
+  names (they are cached for a week) and point `HeroVideo.tsx` at them;
+  keep it dark enough for off-white type to read over.
 - **Pitch**: the studio in one sentence, centred, mid-size, navy on
   off-white, on its own band under the hero (`components/home/Pitch.tsx`,
   the `pitch` lines in `content/home.ts`): four lines as written from
@@ -198,7 +208,7 @@ The page opens with the headline and the studio in one sentence, then
 alternates a visual chapter with a statement on a full brand colour,
 three times, then explains the business in full:
 
-Hero (navy, off-white type, the spinning block) > the pitch (off-white,
+Hero (navy, a quiet film behind, the turning block) > the pitch (off-white,
 navy type) > Who for (navy, collage) > statement "Your merchandise should feel like your product." (lime, navy
 type) > What we make (navy, collage) > statement "We design by
 collection, for your audience." (lilac, navy type) > What we handle

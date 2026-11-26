@@ -17,13 +17,13 @@ export const homeMeta = {
 export const hero = {
   /**
    * The headline is "Where great [ideas] are made": the middle word
-   * changes through these three in order, on a block that spins like a
-   * fruit machine. The numbers are each word's measurements in ems in the
-   * display face (weight 900, -0.045em tracking, capitals): `left` is
+   * changes through these three in order, on a block that turns like the
+   * side of a cube. The numbers are each word's measurements in ems in
+   * the display face (weight 900, -0.045em tracking, capitals): `left` is
    * where its ink starts and `width` how wide the ink is. They size each
    * word to fit the block and centre it. Measure a new word before
-   * swapping one in, and keep to three (lime, lilac, off-white; the reels
-   * are built on three).
+   * swapping one in, and keep to three (lime, lilac, off-white; the
+   * block's turn is built on three).
    */
   words: [
     { text: "ideas", left: 0.047, width: 2.702 },

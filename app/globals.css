@@ -245,18 +245,19 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
 
   /* Hero statement: "WHERE GREAT [IDEAS] ARE MADE", on a hero that is
      exactly the first screen: the title in the middle of it, a minimal
-     "Find out more" at its foot. The middle line is one wide block, the
-     highlight, which carries the changing word (.slot). Everything is
-     sized from the block's width (--lock), and a line is laid out as its
-     capitals alone (0.7em), so the gaps between lines are even.
+     "Find out more" at its foot, a quiet film behind (.hero-video). The
+     middle line is one wide block, the highlight, which carries the
+     changing word (.hero-cube). Everything is sized from the block's
+     width (--lock), and a line is laid out as its capitals alone (0.7em),
+     so the gaps between lines are even.
      Phones: four lines, each the block's full width, set at the size that
      makes its ink span it (ink widths at weight 900, -0.045em: "WHERE"
      3.348em, "GREAT" 3.035em, "ARE MADE" 4.767em).
      From 768px: centred, and the block leads. "WHERE GREAT" and "ARE
      MADE" are one smaller size, at which "WHERE GREAT" (6.598em) spans
-     72% of the block. The block is as wide as the column, 84% of it from
-     1024px, and less wherever the screen is too short for the title, the
-     cue and the padding. */
+     72% of the block. The block is three quarters of the column, 63% of
+     it from 1024px, and less wherever the screen is too short for the
+     title, the cue and the padding. */
   .sheet--hero {
     /* The hero's top padding from 1024px, shared with the lockup's sum. */
     --hero-top: clamp(5.5rem, 11vh, 7.5rem);
@@ -264,6 +265,21 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   .sheet.sheet--hero {
     min-height: 100vh;
     min-height: 100svh;
+  }
+  /* The film: behind everything in the hero, filling it. Unseen until it
+     is playing (HeroVideo.tsx), then faded in over the navy. */
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease-out-quart);
+    pointer-events: none;
+  }
+  .hero-video[data-on="true"] {
+    opacity: 1;
   }
   .hero-stage {
     display: flex;
@@ -281,12 +297,12 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     container-type: inline-size;
   }
   .type-hero {
-    /* 13.75rem: the hero's padding and the cue. At its tallest the title
-       is 1.053 of the block's width here, 0.549 from 768px. */
-    --lock: min(100cqw, max(15rem, calc((100vh - 13.75rem) / 1.053)));
-    --gap: calc(var(--lock) * 0.05);
-    --slot-h: calc(var(--lock) * 0.316);
-    --slot-pad: calc(var(--lock) * 0.0376);
+    /* 13.75rem: the hero's padding and the cue. The title is 1.077 of the
+       block's width tall here. */
+    --lock: min(100cqw, max(15rem, calc((100vh - 13.75rem) / 1.077)));
+    --gap: calc(var(--lock) * 0.058);
+    --block-h: calc(var(--lock) * 0.316);
+    --block-pad: calc(var(--lock) * 0.0376);
     display: flex;
     flex-direction: column;
     gap: var(--gap);
@@ -330,8 +346,14 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   }
   @media (min-width: 768px) {
     .type-hero {
-      --lock: min(100cqw, max(20rem, calc((100vh - 16.5rem) / 0.549)));
-      --gap: calc(var(--lock) * 0.04);
+      /* Three quarters of what would fill the column or the screen's
+         height (a title 0.549 as tall as the block is wide, between the
+         padding and the cue), whichever is less. */
+      --lock: calc(
+        0.75 * min(100cqw, max(20rem, calc((100vh - 16.5rem) / 0.549)))
+      );
+      /* Room for the block's corners to swing clear of the lines. */
+      --gap: calc(var(--lock) * 0.07);
       text-align: center;
     }
     .type-hero__top,
@@ -341,9 +363,12 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   }
   @media (min-width: 1024px) {
     .type-hero {
-      --lock: min(
-        84cqw,
-        max(20rem, calc((100vh - var(--hero-top) - 9.5rem) / 0.549))
+      --lock: calc(
+        0.75 *
+          min(
+            84cqw,
+            max(20rem, calc((100vh - var(--hero-top) - 9.5rem) / 0.549))
+          )
       );
     }
   }
@@ -2075,51 +2100,64 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     animation-delay: var(--d, 0s);
   }
   /* -------------------------------------------------------------------
-     The hero's block: the headline's highlight, as a fruit machine
-     (Slot.tsx, which moves the strips). Three reels side by side, each a
-     window on a strip of four cells, each cell that reel's third of a
-     word on its colour. While the reels stand, the word is shown over
-     them in one piece (.slot__rest), so at rest the block is a single
-     clean colour with no joins; that is all there is without the script
-     or under reduced motion.
+     The hero's block: the headline's highlight. Navy type on one wide
+     block of solid colour that turns a quarter at a time, always the same
+     way, like the side of a cube: the side showing goes up and over, the
+     next comes up from beneath. CSS only. Each step is a hold and a turn,
+     and a side darkens as it turns away. Three words, each on its own
+     colour: lime, lilac, off-white. A word is as large as fits the block
+     inside its pad, in width or in height, and centred on its ink.
 
-     A word is as large as fits the block inside its pad, in width or in
-     height, and centred on its ink.
+     Three words do not go round a four-sided block, so the block is two
+     panels that take turns. Each is a side of the same cube (set back by
+     half the block's height, turned, then stood out by half again). A
+     panel goes over the top, carries on round the back out of sight,
+     changing its word there, and comes up from beneath two steps later,
+     so the pair always turn the same way. The second panel runs the same
+     course three steps behind.
      ------------------------------------------------------------------- */
-  .slot {
+  .type-hero {
+    --cube-step: 2.6s; /* one word: the hold, then the turn */
+    --cube-delay: 1.1s; /* longer on the first word while the page loads in */
+    --cube-ease: cubic-bezier(0.7, 0, 0.2, 1);
+    --cube-r: calc(var(--block-h) / 2);
+  }
+  /* The turning block's corners swing past its line, so this line's mask
+     is deeper than the others'. */
+  .type-hero > .rise-line--cube {
+    padding: calc(var(--lock) * 0.075) calc(var(--lock) * 0.03);
+    margin: calc(var(--lock) * -0.075) calc(var(--lock) * -0.03);
+  }
+  .rise-line--cube > span {
+    transform: translateY(170%);
+  }
+  .hero-cube {
     position: relative;
     display: block;
-    height: var(--slot-h);
-    overflow: hidden;
+    height: var(--block-h);
+    perspective: calc(var(--lock) * 1.8);
+    perspective-origin: 50% 50%;
   }
-  .slot__reels {
+  .hero-cube__panel {
     position: absolute;
     inset: 0;
-    display: flex;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg)
+      translateZ(var(--cube-r));
+    animation: panel-a calc(var(--cube-step) * 6) var(--cube-ease)
+      var(--cube-delay) infinite backwards;
+    will-change: transform, opacity;
   }
-  .slot__col {
-    flex: 1 1 0;
-    min-width: 0;
-    height: 100%;
-    overflow: hidden;
+  .hero-cube__panel--b {
+    transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg)
+      translateZ(var(--cube-r));
+    animation-name: panel-b;
   }
-  /* Four cells; the last, the first word, shows until the script moves it. */
-  .slot__strip {
-    display: block;
-    height: 400%;
-    transform: translate3d(0, -75%, 0);
-    will-change: transform;
-  }
-  .slot__cell {
-    position: relative;
-    display: block;
-    height: 25%;
-    overflow: hidden;
-  }
-  /* A word on its colour, the size of the whole block. In a reel's cell
-     it is shifted so that reel's third shows. */
-  .slot__word,
-  .slot__rest {
+  /* A side: one word on its colour, the size of the block. */
+  .hero-cube__side {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     padding-left: calc(
@@ -2128,47 +2166,178 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     background-color: var(--word-bg);
     color: var(--color-navy);
     font-size: min(
-      calc((var(--lock) - var(--slot-pad) * 2) / var(--ink-w)),
-      calc((var(--slot-h) - var(--slot-pad) * 2) / 0.703)
+      calc((var(--lock) - var(--block-pad) * 2) / var(--ink-w)),
+      calc((var(--block-h) - var(--block-pad) * 2) / 0.703)
     );
     text-align: left;
+    opacity: 0;
+    animation: side-show calc(var(--cube-step) * 6) step-end
+      calc(var(--cube-delay) + var(--side-shift) * var(--cube-step)) infinite
+      backwards;
   }
-  .slot__word::before,
-  .slot__rest::before {
+  .hero-cube__side::before {
     content: attr(data-word);
     letter-spacing: -0.045em;
   }
-  .slot__word {
-    position: absolute;
-    top: 0;
-    left: calc(var(--col) * -100%);
-    width: 300%;
-    height: 100%;
-  }
-  .slot__word--1 {
+  .hero-cube__side--1 {
     --word-bg: var(--color-lime);
   }
-  .slot__word--2 {
+  .hero-cube__side--2 {
     --word-bg: var(--color-lilac);
   }
-  .slot__word--3 {
+  .hero-cube__side--3 {
     --word-bg: var(--color-paper);
   }
-  /* The word at rest: the script names it (data-word) and takes it away
-     for the spin (data-spin). Before the script, the first. */
-  .slot__rest {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-  }
-  .slot:not([data-word]) .slot__rest--1,
-  .slot[data-word="0"] .slot__rest--1,
-  .slot[data-word="1"] .slot__rest--2,
-  .slot[data-word="2"] .slot__rest--3 {
+  /* A panel carries the first word, the third, then the second: it shows
+     on every other step. --side-shift is the step each is first due on,
+     counted back a whole round where that keeps it out of sight at the
+     start. */
+  .hero-cube__side:nth-child(1) {
+    --side-shift: 0;
     opacity: 1;
   }
-  .slot[data-spin] .slot__rest {
-    opacity: 0;
+  .hero-cube__side:nth-child(2) {
+    --side-shift: -4;
+  }
+  .hero-cube__side:nth-child(3) {
+    --side-shift: -2;
+  }
+  .hero-cube__panel--b > .hero-cube__side:nth-child(1) {
+    --side-shift: -3;
+  }
+  .hero-cube__panel--b > .hero-cube__side:nth-child(2) {
+    --side-shift: -1;
+  }
+  .hero-cube__panel--b > .hero-cube__side:nth-child(3) {
+    --side-shift: -5;
+  }
+  /* Six steps: this panel shows on steps 0, 2 and 4 (words 1, 3, 2) and
+     is round the back on the others. Each step is a hold (the first 73%)
+     and a turn. */
+  @keyframes panel-a {
+    0%,
+    12.167% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg)
+        translateZ(var(--cube-r));
+      opacity: 1;
+    }
+    16.667% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    28.833% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(270deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    33.333%,
+    45.5% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(360deg)
+        translateZ(var(--cube-r));
+      opacity: 1;
+    }
+    50% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(450deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    62.167% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(630deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    66.667%,
+    78.833% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(720deg)
+        translateZ(var(--cube-r));
+      opacity: 1;
+    }
+    83.333% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(810deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    95.5% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(990deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    100% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(1080deg)
+        translateZ(var(--cube-r));
+      opacity: 1;
+    }
+  }
+  /* The same course three steps behind: this panel shows on steps 1, 3
+     and 5 (words 2, 1, 3). */
+  @keyframes panel-b {
+    0% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    12.167% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(270deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    16.667%,
+    28.833% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(360deg)
+        translateZ(var(--cube-r));
+      opacity: 1;
+    }
+    33.333% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(450deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    45.5% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(630deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    50%,
+    62.167% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(720deg)
+        translateZ(var(--cube-r));
+      opacity: 1;
+    }
+    66.667% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(810deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    78.833% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(990deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+    83.333%,
+    95.5% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(1080deg)
+        translateZ(var(--cube-r));
+      opacity: 1;
+    }
+    100% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(1170deg)
+        translateZ(var(--cube-r));
+      opacity: 0.35;
+    }
+  }
+  /* A side is in view from half a step before its panel's turn to show
+     it until half a step after: two steps in six. */
+  @keyframes side-show {
+    0% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0;
+    }
+    91.667% {
+      opacity: 1;
+    }
   }
 
   .fade-in {
@@ -3276,10 +3445,16 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     opacity: 1;
     transform: none;
   }
-  /* The hero's reels do not spin (Slot.tsx does not run them): the block
-     stays on "ideas", on lime. */
+  /* The hero's block does not turn: it stays on "ideas", on lime. (The
+     film behind is never loaded: HeroVideo.tsx.) */
+  .hero-cube__panel,
+  .hero-cube__side,
   .hero-more__arrow {
     animation: none;
+  }
+  .hero-cube__panel--b,
+  .hero-cube__side:not(:first-child) {
+    display: none;
   }
   .scroll-cue svg {
     animation: none !important;

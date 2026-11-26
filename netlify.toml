@@ -58,3 +58,12 @@
   from = "/culture-led-brands/"
   to = "/brands/"
   status = 301
+
+
+# The hero's film. It is fetched only after the page has loaded; a week in
+# the browser's cache saves fetching it again on the next visit. Give a
+# replacement film a new file name.
+[[headers]]
+  for = "/media/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
