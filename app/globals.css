@@ -1636,9 +1636,30 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     padding-top: clamp(1.75rem, 1rem + 1.8vw, 2.75rem);
     padding-bottom: clamp(1.75rem, 1rem + 1.8vw, 2.75rem);
   }
-  /* What we make takes a little more room under its rounded top edge. */
+  /* What we make: room to breathe. More under its rounded top edge (about
+     48px on phones, 64-76px on desktop), a clear pause between the head
+     and the photographs (28-48px), a little more air between the
+     photographs and before the link, and a deeper foot: the next
+     statement laps it by the section radius, so the padding gives that
+     strip back first. The labels keep the standard inset: any more and
+     "bags & luggage." no longer fits its tile on one line. */
   .home-chapter--make {
-    padding-top: clamp(2.5rem, 1.6rem + 2vw, 3.75rem);
+    padding-top: clamp(3rem, 2rem + 2.5vw, 4.75rem);
+    padding-bottom: calc(
+      var(--radius-section) + clamp(1.75rem, 1rem + 2vw, 3rem)
+    );
+  }
+  .home-chapter--make .chapter-head {
+    row-gap: 1.125rem;
+  }
+  .home-chapter--make .home-chapter__media {
+    margin-top: clamp(1.75rem, 1.2rem + 1.6vw, 3rem);
+  }
+  .home-chapter--make .collage {
+    gap: clamp(0.625rem, 0.4rem + 0.75vw, 1.125rem);
+  }
+  .home-chapter--make .home-chapter__action {
+    margin-top: clamp(1.5rem, 1.1rem + 1.2vw, 2.5rem);
   }
   /* Who for: an editorial spread, five photographs framed by off-white on
      every side. Room under the rounded top edge (about 48px on phones,
