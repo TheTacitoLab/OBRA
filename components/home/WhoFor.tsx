@@ -6,9 +6,10 @@ import { whoForLayout, whoForTiles } from "@/content/homeMedia";
 
 /**
  * The first chapter, on navy, rising over the off-white pitch: the five
- * audiences as one quick editorial row, each leading to its own page. A compact head (title on one
- * line, the copy beside it), and the section sizes to its content rather
- * than the screen, so the lime statement is already arriving beneath it.
+ * audiences as one quick editorial row, each leading to its own page. A
+ * compact head (the title alone), and the section sizes to its content
+ * rather than the screen, so the lime statement is already arriving
+ * beneath it.
  */
 export function WhoFor() {
   return (
@@ -23,13 +24,6 @@ export function WhoFor() {
           <h2 className="type-display type-display-tight" data-reveal="left">
             {whoFor.title}
           </h2>
-          <p
-            className="chapter-head__copy type-lede text-muted"
-            data-reveal="right"
-            data-reveal-delay="1"
-          >
-            {whoFor.copy}
-          </p>
         </div>
         <Collage
           className="home-chapter__media"

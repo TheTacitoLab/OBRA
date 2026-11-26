@@ -228,7 +228,7 @@ off-white alternate; lime and lilac carry the call-outs.
   guide owns): Who for and What we make size to their content (about 70-85%
   and 86-97% of a desktop screen), with the title on one line and the copy
   beside it, so the next statement is already arriving as they end. Who
-  for is the calmer of the two (`.home-chapter--who`): five photographs
+  for is the calmer of the two (`.home-chapter--who`): its title alone (no paragraph), five photographs
   and five names, framed by navy on every side, with more room under its
   top edge, before the photographs, between them and at its foot. On
   phones the supporting paragraph drops to body size. The statements keep

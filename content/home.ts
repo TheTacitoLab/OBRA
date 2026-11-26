@@ -45,7 +45,6 @@ export const pitch = [
 
 export const whoFor = {
   title: "Who for.",
-  copy: "We work with the people responsible for turning an idea into a product, whether that’s a client campaign, next year’s festival collection, a tour, an event or something a brand wants to put its name on.",
 };
 
 export const whatWeMake = {
