@@ -243,60 +243,173 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     font-family: var(--font-display);
   }
 
-  /* Hero statement: "WHERE GREAT" / the turning word / "ARE MADE".
-     Phones: one word per line at one size; the turning word's longer
-     faces are fitted to the column.
-     From 768px: a squared-off lockup. All three lines are the same width
-     (--lock), each set at the size that makes its ink span it: ink widths
-     at weight 900, -0.045em are "WHERE GREAT" 6.598em and "ARE MADE"
-     4.762em. A line is laid out as its capitals alone (0.7em), so the
-     gaps between the lines are even. The turning word carries the
-     highlight block (.hero-cube). */
+  /* Hero statement: "WHERE GREAT [IDEAS] ARE MADE", a squared-off lockup
+     in which every line spans one width (--lock). Each line is set at the
+     size that makes its ink span it: ink widths at weight 900, -0.045em
+     are "WHERE GREAT" 6.598em, "WHERE" 3.348em, "GREAT" 3.035em and "ARE
+     MADE" 4.767em, and each turning word carries its own (--ink-w). A
+     line is laid out as its capitals alone (0.7em), so the gaps between
+     lines are even.
+     Phones: four lines the full width, "WHERE" / "GREAT" / the block /
+     "ARE MADE". From 768px: three, "WHERE GREAT" / the block / "ARE
+     MADE"; from 1024px the lockup takes 78% of the page's width, less on
+     a short screen so the button under it stays in view (at its tallest
+     the lockup is 0.646 as tall as it is wide). The block is .hero-cube. */
   .hero-lockup {
     container-type: inline-size;
   }
-  .type-hero {
-    font-weight: 900;
-    font-size: clamp(3rem, 17vw, 8.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.045em;
-    text-transform: uppercase;
+  .sheet--hero {
+    /* The hero's top padding from 1024px, shared with the lockup's sum. */
+    --hero-top: clamp(5.5rem, 11vh, 7.5rem);
   }
-  .type-hero .word {
+  /* The lockup with the action under it. */
+  .hero-stage {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .hero-action {
+    padding-top: 1.75rem;
+  }
+  .type-hero {
+    --cube-step: 2.6s; /* one word: the hold, then the turn */
+    --cube-delay: 1.1s; /* longer on the first word while the page loads in */
+    --cube-ease: cubic-bezier(0.7, 0, 0.2, 1);
+    --lock: min(100cqw, 62vh);
+    --gap: calc(var(--lock) * 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    width: var(--lock);
+    font-weight: 900;
+    font-size: 1rem;
+    line-height: 0.7;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* Tracking is set on every element so it follows each one's own size. */
+  .type-hero,
+  .type-hero * {
+    letter-spacing: -0.045em;
+  }
+  /* The masks the lines rise from, with room for round letters. */
+  .type-hero > .rise-line {
+    padding: calc(var(--lock) * 0.02);
+    margin: calc(var(--lock) * -0.02);
+  }
+  /* Each line is pulled back by its first letter's side bearing, so the
+     ink starts on the lockup's edge. */
+  .type-hero__top .word {
     display: block;
+    margin-left: -0.01em;
+    font-size: calc(var(--lock) / 3.348);
+  }
+  .type-hero__top .word + .word {
+    margin-top: var(--gap);
+    margin-left: -0.025em;
+    font-size: calc(var(--lock) / 3.035);
+  }
+  .type-hero__base {
+    font-size: calc(var(--lock) / 4.767);
+  }
+  .type-hero__base > span {
+    margin-left: -0.009em;
   }
   @media (min-width: 768px) {
     .type-hero {
-      /* The column, or as wide as leaves the copy and the button on the
-         first screen: the lockup is 0.644 as tall as it is wide. */
-      --lock: min(100cqw, max(22rem, calc(135.5vh - 30rem)));
-      --lock-gap: calc(var(--lock) * 0.0376);
-      display: flex;
-      flex-direction: column;
-      gap: var(--lock-gap);
-      font-size: 1rem;
-    }
-    .type-hero .word {
-      display: inline;
-    }
-    .type-hero > .rise-line {
-      line-height: 0.7;
-      letter-spacing: -0.045em;
-      white-space: nowrap;
+      /* 14.5rem: the hero's padding, and the button under the lockup. */
+      --lock: min(100cqw, max(20rem, calc((100vh - 14.5rem) / 0.646)));
+      --gap: calc(var(--lock) * 0.0376);
     }
     .type-hero__top {
       font-size: calc(var(--lock) / 6.598);
     }
-    .type-hero__base {
-      font-size: calc(var(--lock) / 4.762);
-    }
-    /* Pull each line back by its first letter's side bearing, so the ink
-       starts on the lockup's edge. */
     .type-hero__top > span {
       margin-left: -0.009em;
     }
-    .type-hero__base > span {
-      margin-left: -0.013em;
+    .type-hero__top .word,
+    .type-hero__top .word + .word {
+      display: inline;
+      margin: 0;
+      font-size: inherit;
+    }
+  }
+  @media (min-width: 1024px) {
+    .hero-lockup {
+      width: 78%;
+    }
+    .type-hero {
+      --lock: min(
+        100cqw,
+        max(20rem, calc((100vh - var(--hero-top) - 7.5rem) / 0.646))
+      );
+    }
+  }
+  /* On a landscape screen the hero is the whole first screen: the lockup
+     already takes most of the height, and a sliver of the next section
+     under it would only look like a fault. The action goes to the bottom. */
+  @media (min-width: 768px) and (min-aspect-ratio: 5/4) {
+    .sheet.sheet--hero {
+      min-height: 100vh;
+      min-height: 100svh;
+    }
+    .hero-action {
+      margin-top: auto;
+    }
+  }
+  /* From 1200px on such a screen the action stands beside the lockup's
+     foot, in the column the lockup leaves (wide enough from there for the
+     action and the scroll cue), so the lockup has the whole height:
+     3.25rem is the hero's bottom padding and a little air. */
+  @media (min-width: 1200px) and (min-aspect-ratio: 5/4) {
+    .hero-stage {
+      display: grid;
+      grid-template-columns: 78% minmax(0, 1fr);
+      align-items: end;
+    }
+    .hero-lockup {
+      align-self: start;
+      width: auto;
+    }
+    .hero-action {
+      margin-top: 0;
+      padding-top: 0;
+      padding-left: clamp(1.5rem, 2.5vw, 3rem);
+    }
+    .type-hero {
+      --lock: min(
+        100cqw,
+        max(20rem, calc((100vh - var(--hero-top) - 3.25rem) / 0.646))
+      );
+    }
+  }
+
+  /* The elevator pitch under the hero (Pitch.tsx): one sentence, centred,
+     mid-size, navy on off-white. Four lines as written from 768px (the
+     longest, 48 characters, fits the column at every width from there);
+     on phones it wraps as it falls, balanced. */
+  .pitch {
+    display: flex;
+    justify-content: center;
+    padding-block: clamp(3.75rem, 2.5rem + 6vw, 8.5rem);
+    text-align: center;
+  }
+  .type-pitch {
+    max-width: 21em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.375rem, 0.85rem + 1.75vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  @media (min-width: 768px) {
+    .type-pitch {
+      max-width: none;
+    }
+    .type-pitch > .line {
+      display: block;
+      white-space: nowrap;
     }
   }
 
@@ -1953,203 +2066,298 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   }
   /* -------------------------------------------------------------------
      The hero's turning word: the headline's highlight. Navy type on a
-     solid block the height of the lime block elsewhere (cap height plus
-     0.12em above and below), one word to a face of a four-sided block
-     that turns a quarter at a time, always the same way: the front face
-     goes up and over, the next comes up from beneath. CSS only. Each step
-     is a hold and a turn; a face darkens as it turns away, and takes the
-     next of the three colours while it is at the back, so the block runs
-     lime, lilac, off-white whichever word is showing.
+     solid block that turns a quarter at a time, always the same way: the
+     side showing goes up and over, the next comes up from beneath. CSS
+     only. Each step is a hold and a turn, and a side darkens as it turns
+     away. Three words, each on its own colour: lime, lilac, off-white.
+
+     Every side is the lockup's full width, and each word is sized so its
+     ink fills it, a pad in from each edge. The short first word is
+     therefore much larger than the two long ones, so its side is tall
+     (--face-a: "IDEAS" at full width plus the pad above and below) and
+     theirs is shallow (--face-b: likewise for "PRODUCTS").
+
+     Three words do not go round a four-sided block, so the block is two
+     panels that take turns. Each turn, the pair are two sides of one
+     brick: the side showing, as tall as its word, and the side arriving,
+     which is the brick's depth. A panel goes over the top, carries on
+     round the back out of sight (changing its word there) and comes up
+     from beneath two steps later, so the two together always turn the
+     same way. A panel's keyframes hold four things: how far the brick is
+     lifted (its head stays put under the line above as it goes shallow),
+     how far it is set back (so the side showing sits flat on the page),
+     the angle, and how far this side stands from the brick's middle
+     (half the height of the other side in that turn). The second panel
+     runs the same course three steps behind.
+
+     "ARE MADE" follows the block's foot: up late, once the tall side has
+     gone, and down early, before it arrives.
      ------------------------------------------------------------------- */
-  .hero-cube {
-    --cube-step: 2.6s; /* one word: the hold, then the turn */
-    --cube-delay: 1.1s; /* longer on the first word while the page loads in */
-    --cube-ease: cubic-bezier(0.7, 0, 0.2, 1);
-    --cube-pad: 0.12em;
-    /* Half the block's height: it is square in section. */
-    --cube-r: calc(var(--font-cap) * 0.5em + var(--cube-pad));
-    --hero-col: calc(100vw - 2.5rem);
-    perspective: 11em;
-    perspective-origin: 2.4em 50%;
+  .type-hero {
+    --cube-pad: calc(var(--lock) * 0.0376);
+    --face-a: calc(var(--lock) * 0.316);
+    --face-b: calc(var(--lock) * 0.2038);
+    /* The brick's lift when shallow, and half of each height, signed. */
+    --y-b: calc((var(--face-b) - var(--face-a)) / 2);
+    --z-a: calc(var(--face-a) / -2);
+    --z-b: calc(var(--face-b) / -2);
+    --o-a: calc(var(--face-a) / 2);
+    --o-b: calc(var(--face-b) / 2);
   }
-  @media (min-width: 640px) {
-    .hero-cube {
-      --hero-col: calc(100vw - 4rem);
-    }
-  }
-  /* The turning block's corners swing past the line, and the block sits
-     proud of the column on the left, so this line's mask is wider than
-     the others'. Vertical margins collapse to the larger, so the lines
-     stay evenly spaced. */
-  .rise-line--cube {
-    padding: 0.26em 0.12em 0.26em 0.26em;
-    margin: -0.26em -0.12em -0.26em -0.26em;
+  /* The turning block's corners swing past its line, so this line's mask
+     is deeper than the others'. */
+  .type-hero > .rise-line--cube {
+    padding: calc(var(--lock) * 0.075) calc(var(--lock) * 0.03);
+    margin: calc(var(--lock) * -0.075) calc(var(--lock) * -0.03);
   }
   .rise-line--cube > span {
     transform: translateY(170%);
   }
-  .hero-cube__box {
+  .hero-cube {
     position: relative;
-    display: block;
-    height: 0.9em;
-    transform-style: preserve-3d;
-    /* Set back by its own depth so the front face sits flat on the page. */
-    transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg);
-    animation: cube-turn calc(var(--cube-step) * 4) var(--cube-ease)
-      var(--cube-delay) infinite;
-    will-change: transform;
+    height: var(--face-a);
+    perspective: calc(var(--lock) * 1.8);
+    perspective-origin: 50% 50%;
   }
-  /* A face is the block: centred on the line, a pad proud of the column. */
-  .hero-cube__face {
+  .hero-cube__panel {
     position: absolute;
-    top: calc(0.45em - var(--cube-r));
-    left: calc(var(--cube-pad) * -1);
-    display: flex;
-    align-items: center;
-    height: calc(var(--cube-r) * 2);
-    padding-inline: var(--cube-pad);
-    white-space: nowrap;
-    background-color: var(--color-lime);
-    color: var(--color-navy);
+    inset: 0;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    transform: rotateX(calc(var(--i) * -90deg)) translateZ(var(--cube-r));
-    animation:
-      cube-face calc(var(--cube-step) * 4) var(--cube-ease)
-        calc(var(--cube-delay) + var(--face-shift) * var(--cube-step)) infinite,
-      cube-colour calc(var(--cube-step) * 12) step-end
-        calc(var(--cube-delay) + var(--colour-shift) * var(--cube-step))
-        infinite;
+    animation: panel-a calc(var(--cube-step) * 6) var(--cube-ease)
+      var(--cube-delay) infinite backwards;
+    will-change: transform, opacity;
   }
-  /* Face n shows on step n. --face-shift lines its shading up with that;
-     --colour-shift also starts it on colour n of three. */
-  .hero-cube__face:nth-child(1) {
-    --i: 0;
-    --face-shift: 0;
-    --colour-shift: 0;
+  .hero-cube__panel--b {
+    animation-name: panel-b;
   }
-  .hero-cube__face:nth-child(2) {
-    --i: 1;
-    --face-shift: -3;
-    --colour-shift: -3;
+  /* A side: one word on its colour, centred on the panel. */
+  .hero-cube__side {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--side-h);
+    margin-top: calc(var(--side-h) / -2);
+    background-color: var(--side-bg);
+    color: var(--color-navy);
+    opacity: 0;
+    animation: side-show calc(var(--cube-step) * 6) step-end
+      calc(var(--cube-delay) + var(--side-shift) * var(--cube-step)) infinite
+      backwards;
   }
-  .hero-cube__face:nth-child(3) {
-    --i: 2;
-    --face-shift: -2;
-    --colour-shift: -6;
+  /* A panel carries the first word, the third, then the second: it shows
+     on every other step. --side-shift is the step each is first due on,
+     counted back a whole round where that keeps it out of sight at the
+     start. */
+  .hero-cube__side:nth-child(1) {
+    --side-h: var(--face-a);
+    --side-bg: var(--color-lime);
+    --side-shift: 0;
+    opacity: 1;
   }
-  .hero-cube__face:nth-child(4) {
-    --i: 3;
-    --face-shift: -1;
-    --colour-shift: -9;
+  .hero-cube__side:nth-child(2) {
+    --side-h: var(--face-b);
+    --side-bg: var(--color-paper);
+    --side-shift: -4;
   }
-  .hero-cube__face[data-word]::before {
+  .hero-cube__side:nth-child(3) {
+    --side-h: var(--face-b);
+    --side-bg: var(--color-lilac);
+    --side-shift: -2;
+  }
+  .hero-cube__panel--b > .hero-cube__side:nth-child(1) {
+    --side-shift: -3;
+  }
+  .hero-cube__panel--b > .hero-cube__side:nth-child(2) {
+    --side-shift: -1;
+  }
+  .hero-cube__panel--b > .hero-cube__side:nth-child(3) {
+    --side-shift: -5;
+  }
+  /* The first side of the first panel holds real text; the others draw
+     theirs. */
+  .hero-cube__side[data-word]::before {
     content: attr(data-word);
-  }
-  /* The word itself: the first face holds real text, the others draw
-     theirs from data-word. Tracking is restated so it follows the word's
-     own size. */
-  .hero-cube__word,
-  .hero-cube__face[data-word]::before {
     letter-spacing: -0.045em;
   }
-  /* Phones: a word whose block would be wider than the column is set as
-     large as fits. The block keeps its height, so the faces still meet. */
-  @media (max-width: 767.98px) {
-    .hero-cube__word,
-    .hero-cube__face[data-word]::before {
-      font-size: min(
-        1em,
-        calc(
-          (var(--hero-col) - var(--cube-pad)) /
-            ((var(--ink-w) + var(--ink-l) * 2) * 1.01)
-        )
-      );
-    }
+  .hero-cube__word,
+  .hero-cube__side[data-word]::before {
+    margin-left: calc(var(--cube-pad) - var(--ink-l) * 1em);
+    font-size: calc((var(--lock) - var(--cube-pad) * 2) / var(--ink-w));
   }
-  /* The lockup: the block is always the lockup's full width and one
-     height, and every word is sized so its ink fills it, a pad in from
-     each side. The height is "IDEAS", the largest, plus the same pad
-     above and below. */
-  @media (min-width: 768px) {
-    .hero-cube {
-      --cube-pad: calc(var(--lock) * 0.0376);
-      --cube-h: calc(var(--lock) * 0.316);
-      --cube-r: calc(var(--cube-h) / 2);
-      width: var(--lock);
-      perspective: calc(var(--lock) * 1.8);
-      perspective-origin: 50% 50%;
-    }
-    .rise-line--cube {
-      padding: calc(var(--lock) * 0.075) calc(var(--lock) * 0.03);
-      margin: calc(var(--lock) * -0.075) calc(var(--lock) * -0.03);
-    }
-    .hero-cube__box {
-      height: var(--cube-h);
-    }
-    .hero-cube__face {
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: var(--cube-h);
-      padding: 0;
-    }
-    .hero-cube__word,
-    .hero-cube__face[data-word]::before {
-      font-size: calc((var(--lock) - var(--cube-pad) * 2) / var(--ink-w));
-      margin-left: calc(var(--cube-pad) - var(--ink-l) * 1em);
-    }
+  /* "ARE MADE": room above its line to rise into under a shallow side. */
+  .type-hero > .type-hero__base {
+    padding-top: calc(var(--face-a) - var(--face-b) + var(--lock) * 0.02);
+    margin-top: calc(var(--face-b) - var(--face-a) - var(--lock) * 0.02);
   }
-  @keyframes cube-turn {
+  .hero-base {
+    display: inline-block;
+    animation: base-shift calc(var(--cube-step) * 3) var(--cube-ease)
+      var(--cube-delay) infinite backwards;
+    will-change: transform;
+  }
+  /* Six steps: this panel shows on steps 0, 2 and 4 (words 1, 3, 2) and
+     is round the back on the others. Each step is a hold (the first 73%)
+     and a turn. */
+  @keyframes panel-a {
     0%,
-    18.25% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg);
-    }
-    25%,
-    43.25% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg);
-    }
-    50%,
-    68.25% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(180deg);
-    }
-    75%,
-    93.25% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(270deg);
-    }
-    100% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(360deg);
-    }
-  }
-  /* One face: showing, darkening as it turns away, out of sight, then
-     coming back up to full strength. */
-  @keyframes cube-face {
-    0%,
-    18.25% {
+    12.167% {
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(0deg)
+        translateZ(var(--o-b));
       opacity: 1;
     }
-    25%,
-    93.25% {
+    16.667% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(90deg)
+        translateZ(var(--o-b));
+      opacity: 0.35;
+    }
+    28.833% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(270deg)
+        translateZ(var(--o-b));
+      opacity: 0.35;
+    }
+    33.333% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(360deg)
+        translateZ(var(--o-b));
+      opacity: 1;
+    }
+    45.5% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(360deg)
+        translateZ(var(--o-a));
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(450deg)
+        translateZ(var(--o-a));
+      opacity: 0.35;
+    }
+    62.167% {
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(630deg)
+        translateZ(var(--o-a));
+      opacity: 0.35;
+    }
+    66.667% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(720deg)
+        translateZ(var(--o-a));
+      opacity: 1;
+    }
+    78.833% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(720deg)
+        translateZ(var(--o-b));
+      opacity: 1;
+    }
+    83.333% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(810deg)
+        translateZ(var(--o-b));
+      opacity: 0.35;
+    }
+    95.5% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(990deg)
+        translateZ(var(--o-b));
       opacity: 0.35;
     }
     100% {
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(1080deg)
+        translateZ(var(--o-b));
       opacity: 1;
     }
   }
-  /* Three turns of the block: the colour changes on steps 2, 6 and 10,
-     when this face is at the back. */
-  @keyframes cube-colour {
+  /* The same course three steps behind: this panel shows on steps 1, 3
+     and 5 (words 2, 1, 3). */
+  @keyframes panel-b {
     0% {
-      background-color: var(--color-lime);
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(90deg)
+        translateZ(var(--o-a));
+      opacity: 0.35;
+    }
+    12.167% {
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(270deg)
+        translateZ(var(--o-a));
+      opacity: 0.35;
     }
     16.667% {
-      background-color: var(--color-lilac);
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(360deg)
+        translateZ(var(--o-a));
+      opacity: 1;
     }
-    50% {
-      background-color: var(--color-paper);
+    28.833% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(360deg)
+        translateZ(var(--o-b));
+      opacity: 1;
+    }
+    33.333% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(450deg)
+        translateZ(var(--o-b));
+      opacity: 0.35;
+    }
+    45.5% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(630deg)
+        translateZ(var(--o-b));
+      opacity: 0.35;
+    }
+    50%,
+    62.167% {
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(720deg)
+        translateZ(var(--o-b));
+      opacity: 1;
+    }
+    66.667% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(810deg)
+        translateZ(var(--o-b));
+      opacity: 0.35;
+    }
+    78.833% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(990deg)
+        translateZ(var(--o-b));
+      opacity: 0.35;
     }
     83.333% {
-      background-color: var(--color-lime);
+      transform: translateY(var(--y-b)) translateZ(var(--z-b)) rotateX(1080deg)
+        translateZ(var(--o-b));
+      opacity: 1;
+    }
+    95.5% {
+      transform: translateY(var(--y-b)) translateZ(var(--z-a)) rotateX(1080deg)
+        translateZ(var(--o-a));
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0px) translateZ(var(--z-b)) rotateX(1170deg)
+        translateZ(var(--o-a));
+      opacity: 0.35;
+    }
+  }
+  /* A side is in view from half a step before its panel's turn to show
+     it until half a step after: two steps in six. */
+  @keyframes side-show {
+    0% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0;
+    }
+    91.667% {
+      opacity: 1;
+    }
+  }
+  /* "ARE MADE" under the block, over the three words: it goes up from 55%
+     of the turn to the first long word and is back down by 45% of the
+     turn to the short one. */
+  @keyframes base-shift {
+    0%,
+    29.283% {
+      transform: translateY(0px);
+    }
+    33.333%,
+    91% {
+      transform: translateY(calc(var(--face-b) - var(--face-a)));
+    }
+    95.05%,
+    100% {
+      transform: translateY(0px);
     }
   }
 
@@ -3259,11 +3467,13 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     transform: none;
   }
   /* The hero's word does not turn: it stays on "ideas", on lime. */
-  .hero-cube__box,
-  .hero-cube__face {
+  .hero-cube__panel,
+  .hero-cube__side,
+  .hero-base {
     animation: none;
   }
-  .hero-cube__face:not(:first-child) {
+  .hero-cube__panel--b,
+  .hero-cube__side:not(:first-child) {
     display: none;
   }
   .scroll-cue svg {

@@ -105,25 +105,33 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `--font-cap` in `app/globals.css`); update those two numbers when the
   typeface changes. The footer signs off with the line set enormous and cut
   by the page edge (`.footer-mark`).
-- **Hero headline**: "Where great [ideas] are made" (`components/home/Hero.tsx`).
-  From 768px it is a squared-off lockup of three lines, all the same width
-  (`--lock` on `.type-hero`): each line is set at the size that makes its
-  ink span the lockup, so the line sizes differ and the edges align. The
-  lockup is as wide as the column, or as wide as leaves the copy and the
-  button on the first screen. On phones it is one word per line at one
-  size. The middle word is the headline's highlight: navy type on a block
-  that turns a quarter at a time, always the same way, like the side of a
-  cube, through the words in `hero.words` (`content/home.ts`), the block
-  lime, then lilac, then off-white. In the lockup the block is always the
-  full width and one height, and each word is sized to fill its width, so
-  "ideas", the shortest, is the largest. It is CSS only (`.hero-cube` in
-  `app/globals.css`) and stays on "ideas" under reduced motion. Only
-  "ideas" is real text, so the heading reads "Where great ideas are made"
-  to search engines and screen readers. Each word carries its measured ink
-  (`left`, `width`, in ems): measure a new word before adding it, re-measure
-  the two fixed lines if their wording changes (the divisors in
-  `.type-hero__top` / `.type-hero__base`), and keep to four words (the
-  block has four sides).
+- **Hero headline**: "Where great [ideas] are made" (`components/home/Hero.tsx`),
+  a squared-off lockup in which every line spans one width (`--lock` on
+  `.type-hero`): each line is set at the size that makes its ink span it,
+  so the sizes differ and the edges align. From 768px it is three lines
+  ("Where great" / the block / "are made"); from 1024px it takes 78% of
+  the page's width, less only where the screen is too short for that. On
+  phones it is four lines the full width ("Where" / "great" / the block /
+  "are made"). On a landscape screen the hero is exactly the first screen,
+  and from 1200px the Get in touch link stands beside the lockup's foot.
+  The middle line is the headline's highlight: navy type on a block that
+  turns a quarter at a time, always the same way, like the side of a cube,
+  through the three words in `hero.words` (`content/home.ts`): "ideas" on
+  lime, "products" on lilac, "activations" on off-white. Each word is
+  sized to fill the block's width, so the block is tall for the short
+  word and shallow for the two long ones, and "are made" moves to stay
+  under it. It is CSS only (`.hero-cube` in `app/globals.css`: two panels
+  that take turns, since three words do not go round four sides) and
+  stays on "ideas" under reduced motion. Only "ideas" is real text, so the
+  heading reads "Where great ideas are made" to search engines and screen
+  readers. Each word carries its measured ink (`left`, `width`, in ems):
+  measure a new word before swapping one in, keep to three (short, then
+  two long), and re-measure the fixed lines if their wording changes (the
+  divisors under `.type-hero__top` and `.type-hero__base`).
+- **Pitch**: the studio in one sentence, centred, mid-size, navy on
+  off-white, on its own band under the hero (`components/home/Pitch.tsx`,
+  the `pitch` lines in `content/home.ts`): four lines as written from
+  768px, wrapping as it falls on phones.
 - **Type**: two families. Display (headings, navigation, buttons) is
   Aeonik by intent (Black for display, Bold and Medium below it); it is
   licensed and not bundled, so Figtree from next/font stands in with the
@@ -177,17 +185,18 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   between siblings). Without the script nothing is hidden. `ScrollCue` is
   the hero's arrow at the bottom right of the frame: it bounces at rest,
   then rotates and morphs into a smile over the first half-viewport of
-  scroll, holds, and fades out before Who for (or before the element its
+  scroll, holds, and fades out before the pitch (or before the element its
   `next` prop names: the agencies hero reuses it); it is decorative and
   not interactive.
 
 ## Homepage
 
-The page alternates a visual chapter with a statement on a full brand
-colour, three times, then explains the business in full:
+The page opens with the headline and the studio in one sentence, then
+alternates a visual chapter with a statement on a full brand colour,
+three times, then explains the business in full:
 
-Hero (navy, off-white type, the turning block) > Who for (off-white, collage) >
-statement "Your merchandise should feel like your product." (lime, navy
+Hero (navy, off-white type, the turning block) > the pitch (off-white,
+navy type) > Who for (navy, collage) > statement "Your merchandise should feel like your product." (lime, navy
 type) > What we make (navy, collage) > statement "We design by
 collection, for your audience." (lilac, navy type) > What we handle
 (off-white, collage) > statement "Full service studio. From concept to
@@ -196,8 +205,8 @@ visible, crawlable explanation with links to the pages that own each
 search) > "Have something in mind?" (lilac) > footer (navy). Navy and
 off-white alternate; lime and lilac carry the call-outs.
 
-- **Stacks**: four `SheetGroup`s inside `Sheets`: the hero with Who for,
-  then each statement with the chapter after it. Within a stack each sheet
+- **Stacks**: four `SheetGroup`s inside `Sheets`: the hero with the pitch
+  and Who for, then each statement with the chapter after it. Within a stack each sheet
   pins while the next slides over it (dimming a little); each stack after
   the first laps the one before with the rounded section edge. Phones and
   `prefers-reduced-motion` get plain flow. The header tone follows the
@@ -207,7 +216,7 @@ off-white alternate; lime and lilac carry the call-outs.
   and 86-97% of a desktop screen), with the title on one line and the copy
   beside it, so the next statement is already arriving as they end. Who
   for is the calmer of the two (`.home-chapter--who`): five photographs
-  and five names, framed by off-white on every side, with more room under its
+  and five names, framed by navy on every side, with more room under its
   top edge, before the photographs, between them and at its foot. On
   phones the supporting paragraph drops to body size. The statements keep
   their 80% height.

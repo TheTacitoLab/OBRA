@@ -5,8 +5,8 @@ import { whoFor } from "@/content/home";
 import { whoForLayout, whoForTiles } from "@/content/homeMedia";
 
 /**
- * The first chapter, rising over the hero: the five audiences as one quick
- * editorial row, each leading to its own page. A compact head (title on one
+ * The first chapter, on navy, rising over the off-white pitch: the five
+ * audiences as one quick editorial row, each leading to its own page. A compact head (title on one
  * line, the copy beside it), and the section sizes to its content rather
  * than the screen, so the lime statement is already arriving beneath it.
  */
@@ -14,7 +14,7 @@ export function WhoFor() {
   return (
     <Sheet
       id="who-for"
-      tone="paper"
+      tone="navy"
       last
       sectionClassName="sheet--round sheet--auto"
     >

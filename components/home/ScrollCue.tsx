@@ -14,8 +14,9 @@ import { useEffect, useRef } from "react";
  * not clickable. Under prefers-reduced-motion it is a still arrow that
  * simply goes when the page moves.
  *
- * `next` is the element the cue must be gone before (the homepage's Who
- * for title by default); the agency guide passes its first section. The
+ * `next` is the element the cue must be gone before (the Who for title by
+ * default; the homepage passes its pitch, the agency guide its first
+ * section). The
  * hero it sits in is marked data-hero-frame.
  */
 

@@ -17,24 +17,31 @@ export const homeMeta = {
 export const hero = {
   /**
    * The headline is "Where great [ideas] are made": the middle word turns
-   * through these in order, like the sides of a block. The numbers are
-   * each word's measurements in ems in the display face (weight 900,
+   * through these three in order, like the sides of a block. The numbers
+   * are each word's measurements in ems in the display face (weight 900,
    * -0.045em tracking, capitals): `left` is where its ink starts and
-   * `width` how wide the ink is. They size each word to fill the block
-   * from 768px, and fit the longer words to a phone's width. Measure a
-   * new word before adding it, and keep to four (the block has four
-   * sides).
+   * `width` how wide the ink is. They size each word to fill the block's
+   * width, so the first, short word stands on a tall side and the two
+   * long ones on shallow sides. Measure a new word before swapping one
+   * in, and keep that shape: three words, short then long, long.
    */
   words: [
     { text: "ideas", left: 0.047, width: 2.702 },
     { text: "products", left: 0.047, width: 5.055 },
-    { text: "merch", left: 0.047, width: 3.322 },
     { text: "activations", left: 0, width: 6.293 },
   ],
-  copy: "madebyobra is a global merchandise design and manufacturing studio creating original merchandise for agencies, festivals, events, artists and brands.",
-  /** Set a step stronger than the copy. */
-  line: "Designed, developed and manufactured from idea to finished product.",
 };
+
+/**
+ * The elevator pitch, on its own band beneath the hero. One sentence; each
+ * entry is a line from 768px, and it wraps as it falls on phones.
+ */
+export const pitch = [
+  "We are a specialist merchandise studio combining",
+  "creative, product and manufacturing expertise",
+  "to create original, premium merchandise",
+  "from idea to delivery.",
+];
 
 export const whoFor = {
   title: "Who for.",

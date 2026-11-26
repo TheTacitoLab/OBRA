@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sheets, SheetGroup } from "@/components/home/Sheets";
 import { Hero } from "@/components/home/Hero";
+import { Pitch } from "@/components/home/Pitch";
 import { ScrollCue } from "@/components/home/ScrollCue";
 import { WhoFor } from "@/components/home/WhoFor";
 import { Statement } from "@/components/home/Statement";
@@ -24,14 +25,15 @@ export const metadata: Metadata = pageMetadata({
 });
 
 /**
- * The homepage alternates what the studio does with what it believes:
- * a visual chapter (who for, what we make, what we handle), then a
- * statement on a full brand colour, three times over; then the business
- * explained in full, and one way to get in touch.
+ * The homepage opens with the headline and, beneath it, the studio in one
+ * sentence. It then alternates what the studio does with what it
+ * believes: a visual chapter (who for, what we make, what we handle),
+ * then a statement on a full brand colour, three times over; then the
+ * business explained in full, and one way to get in touch.
  *
- * It runs as four stacks of sheets (Sheets.tsx): the hero with Who for,
- * then each statement with the chapter that rises over it. Every stack
- * after the first laps the one before with a rounded edge.
+ * It runs as four stacks of sheets (Sheets.tsx): the hero with the pitch
+ * and Who for, then each statement with the chapter that rises over it.
+ * Every stack after the first laps the one before with a rounded edge.
  */
 export default function Home() {
   return (
@@ -41,6 +43,7 @@ export default function Home() {
       <Sheets>
         <SheetGroup>
           <Hero />
+          <Pitch />
           <WhoFor />
         </SheetGroup>
         <SheetGroup lap>
@@ -66,7 +69,7 @@ export default function Home() {
           <FinalCta />
         </SheetGroup>
       </Sheets>
-      <ScrollCue />
+      <ScrollCue next="#intro p, #intro" />
     </>
   );
 }
