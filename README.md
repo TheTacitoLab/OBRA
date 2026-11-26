@@ -106,16 +106,24 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   typeface changes. The footer signs off with the line set enormous and cut
   by the page edge (`.footer-mark`).
 - **Hero headline**: "Where great [ideas] are made" (`components/home/Hero.tsx`).
-  Three lines from 768px, one word per line on phones. The middle word is
-  the headline's highlight: navy type on a block that turns a quarter at a
-  time, always the same way, like the side of a cube, through the words in
-  `hero.words` (`content/home.ts`), the block lime, then lilac, then
-  off-white. It is CSS only (`.hero-cube` in `app/globals.css`) and stays
-  on "ideas" under reduced motion. Only "ideas" is real text, so the
-  heading reads "Where great ideas are made" to search engines and screen
-  readers. Each word carries its measured width (`em`) so a long word can
-  be fitted to a phone's width: measure and add it when adding a word, and
-  keep to four words (the block has four sides).
+  From 768px it is a squared-off lockup of three lines, all the same width
+  (`--lock` on `.type-hero`): each line is set at the size that makes its
+  ink span the lockup, so the line sizes differ and the edges align. The
+  lockup is as wide as the column, or as wide as leaves the copy and the
+  button on the first screen. On phones it is one word per line at one
+  size. The middle word is the headline's highlight: navy type on a block
+  that turns a quarter at a time, always the same way, like the side of a
+  cube, through the words in `hero.words` (`content/home.ts`), the block
+  lime, then lilac, then off-white. In the lockup the block is always the
+  full width and one height, and each word is sized to fill its width, so
+  "ideas", the shortest, is the largest. It is CSS only (`.hero-cube` in
+  `app/globals.css`) and stays on "ideas" under reduced motion. Only
+  "ideas" is real text, so the heading reads "Where great ideas are made"
+  to search engines and screen readers. Each word carries its measured ink
+  (`left`, `width`, in ems): measure a new word before adding it, re-measure
+  the two fixed lines if their wording changes (the divisors in
+  `.type-hero__top` / `.type-hero__base`), and keep to four words (the
+  block has four sides).
 - **Type**: two families. Display (headings, navigation, buttons) is
   Aeonik by intent (Black for display, Bold and Medium below it); it is
   licensed and not bundled, so Figtree from next/font stands in with the

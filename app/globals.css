@@ -243,13 +243,18 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     font-family: var(--font-display);
   }
 
-  /* Hero statement: "WHERE GREAT" / the turning word / "ARE MADE". Three
-     lines from 768px, sized so "WHERE GREAT" (6.59em, the widest line:
-     "ACTIVATIONS" is 6.27em) fills the column, narrowest 90.6vw at 1024px,
-     and so three lines leave room for the copy on a short screen. On
-     phones one word per line; the turning word's longer faces are fitted
-     to the column. The turning word carries the highlight block
-     (.hero-cube). All at weight 900, -0.045em. */
+  /* Hero statement: "WHERE GREAT" / the turning word / "ARE MADE".
+     Phones: one word per line at one size; the turning word's longer
+     faces are fitted to the column.
+     From 768px: a squared-off lockup. All three lines are the same width
+     (--lock), each set at the size that makes its ink span it: ink widths
+     at weight 900, -0.045em are "WHERE GREAT" 6.598em and "ARE MADE"
+     4.762em. A line is laid out as its capitals alone (0.7em), so the
+     gaps between the lines are even. The turning word carries the
+     highlight block (.hero-cube). */
+  .hero-lockup {
+    container-type: inline-size;
+  }
   .type-hero {
     font-weight: 900;
     font-size: clamp(3rem, 17vw, 8.5rem);
@@ -262,10 +267,36 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   }
   @media (min-width: 768px) {
     .type-hero {
-      font-size: min(13.5vw, 18.5rem, 18.5vh);
+      /* The column, or as wide as leaves the copy and the button on the
+         first screen: the lockup is 0.644 as tall as it is wide. */
+      --lock: min(100cqw, max(22rem, calc(135.5vh - 30rem)));
+      --lock-gap: calc(var(--lock) * 0.0376);
+      display: flex;
+      flex-direction: column;
+      gap: var(--lock-gap);
+      font-size: 1rem;
     }
     .type-hero .word {
       display: inline;
+    }
+    .type-hero > .rise-line {
+      line-height: 0.7;
+      letter-spacing: -0.045em;
+      white-space: nowrap;
+    }
+    .type-hero__top {
+      font-size: calc(var(--lock) / 6.598);
+    }
+    .type-hero__base {
+      font-size: calc(var(--lock) / 4.762);
+    }
+    /* Pull each line back by its first letter's side bearing, so the ink
+       starts on the lockup's edge. */
+    .type-hero__top > span {
+      margin-left: -0.009em;
+    }
+    .type-hero__base > span {
+      margin-left: -0.013em;
     }
   }
 
@@ -1976,8 +2007,7 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     display: flex;
     align-items: center;
     height: calc(var(--cube-r) * 2);
-    /* The caps sit a hair above the middle of their line: level them. */
-    padding: 0.018em var(--cube-pad) 0;
+    padding-inline: var(--cube-pad);
     white-space: nowrap;
     background-color: var(--color-lime);
     color: var(--color-navy);
@@ -2013,23 +2043,61 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     --face-shift: -1;
     --colour-shift: -9;
   }
-  .hero-cube__face::before {
+  .hero-cube__face[data-word]::before {
     content: attr(data-word);
   }
-  /* The word itself. Tracking is restated so it follows a fitted size. */
+  /* The word itself: the first face holds real text, the others draw
+     theirs from data-word. Tracking is restated so it follows the word's
+     own size. */
   .hero-cube__word,
-  .hero-cube__face::before {
+  .hero-cube__face[data-word]::before {
     letter-spacing: -0.045em;
   }
   /* Phones: a word whose block would be wider than the column is set as
      large as fits. The block keeps its height, so the faces still meet. */
   @media (max-width: 767.98px) {
     .hero-cube__word,
-    .hero-cube__face::before {
+    .hero-cube__face[data-word]::before {
       font-size: min(
         1em,
-        calc((var(--hero-col) - var(--cube-pad)) / (var(--w) * 1.01))
+        calc(
+          (var(--hero-col) - var(--cube-pad)) /
+            ((var(--ink-w) + var(--ink-l) * 2) * 1.01)
+        )
       );
+    }
+  }
+  /* The lockup: the block is always the lockup's full width and one
+     height, and every word is sized so its ink fills it, a pad in from
+     each side. The height is "IDEAS", the largest, plus the same pad
+     above and below. */
+  @media (min-width: 768px) {
+    .hero-cube {
+      --cube-pad: calc(var(--lock) * 0.0376);
+      --cube-h: calc(var(--lock) * 0.316);
+      --cube-r: calc(var(--cube-h) / 2);
+      width: var(--lock);
+      perspective: calc(var(--lock) * 1.8);
+      perspective-origin: 50% 50%;
+    }
+    .rise-line--cube {
+      padding: calc(var(--lock) * 0.075) calc(var(--lock) * 0.03);
+      margin: calc(var(--lock) * -0.075) calc(var(--lock) * -0.03);
+    }
+    .hero-cube__box {
+      height: var(--cube-h);
+    }
+    .hero-cube__face {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--cube-h);
+      padding: 0;
+    }
+    .hero-cube__word,
+    .hero-cube__face[data-word]::before {
+      font-size: calc((var(--lock) - var(--cube-pad) * 2) / var(--ink-w));
+      margin-left: calc(var(--cube-pad) - var(--ink-l) * 1em);
     }
   }
   @keyframes cube-turn {

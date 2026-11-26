@@ -17,15 +17,19 @@ export const homeMeta = {
 export const hero = {
   /**
    * The headline is "Where great [ideas] are made": the middle word turns
-   * through these in order, like the faces of a cube. `em` is each word's
-   * width in ems in the display face (weight 900, -0.045em tracking), used
-   * to fit the longer words to a phone's width.
+   * through these in order, like the sides of a block. The numbers are
+   * each word's measurements in ems in the display face (weight 900,
+   * -0.045em tracking, capitals): `left` is where its ink starts and
+   * `width` how wide the ink is. They size each word to fill the block
+   * from 768px, and fit the longer words to a phone's width. Measure a
+   * new word before adding it, and keep to four (the block has four
+   * sides).
    */
   words: [
-    { text: "ideas", em: 2.73 },
-    { text: "products", em: 5.08 },
-    { text: "merch", em: 3.37 },
-    { text: "activations", em: 6.27 },
+    { text: "ideas", left: 0.047, width: 2.702 },
+    { text: "products", left: 0.047, width: 5.055 },
+    { text: "merch", left: 0.047, width: 3.322 },
+    { text: "activations", left: 0, width: 6.293 },
   ],
   copy: "madebyobra is a global merchandise design and manufacturing studio creating original merchandise for agencies, festivals, events, artists and brands.",
   /** Set a step stronger than the copy. */
