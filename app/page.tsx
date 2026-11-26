@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Sheets, SheetGroup } from "@/components/home/Sheets";
 import { Hero } from "@/components/home/Hero";
 import { Pitch } from "@/components/home/Pitch";
-import { ScrollCue } from "@/components/home/ScrollCue";
 import { WhoFor } from "@/components/home/WhoFor";
 import { Statement } from "@/components/home/Statement";
 import { WhatWeMake } from "@/components/home/WhatWeMake";
@@ -69,7 +68,6 @@ export default function Home() {
           <FinalCta />
         </SheetGroup>
       </Sheets>
-      <ScrollCue next="#intro p, #intro" />
     </>
   );
 }

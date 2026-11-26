@@ -106,28 +106,31 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   typeface changes. The footer signs off with the line set enormous and cut
   by the page edge (`.footer-mark`).
 - **Hero headline**: "Where great [ideas] are made" (`components/home/Hero.tsx`),
-  a squared-off lockup in which every line spans one width (`--lock` on
-  `.type-hero`): each line is set at the size that makes its ink span it,
-  so the sizes differ and the edges align. From 768px it is three lines
-  ("Where great" / the block / "are made"); from 1024px it takes 78% of
-  the page's width, less only where the screen is too short for that. On
-  phones it is four lines the full width ("Where" / "great" / the block /
-  "are made"). On a landscape screen the hero is exactly the first screen,
-  and from 1200px the Get in touch link stands beside the lockup's foot.
-  The middle line is the headline's highlight: navy type on a block that
-  turns a quarter at a time, always the same way, like the side of a cube,
-  through the three words in `hero.words` (`content/home.ts`): "ideas" on
-  lime, "products" on lilac, "activations" on off-white. Each word is
-  sized to fill the block's width, so the block is tall for the short
-  word and shallow for the two long ones, and "are made" moves to stay
-  under it. It is CSS only (`.hero-cube` in `app/globals.css`: two panels
-  that take turns, since three words do not go round four sides) and
-  stays on "ideas" under reduced motion. Only "ideas" is real text, so the
-  heading reads "Where great ideas are made" to search engines and screen
-  readers. Each word carries its measured ink (`left`, `width`, in ems):
-  measure a new word before swapping one in, keep to three (short, then
-  two long), and re-measure the fixed lines if their wording changes (the
-  divisors under `.type-hero__top` and `.type-hero__base`).
+  on a navy hero that is exactly the first screen, the title in the middle
+  of it and a minimal "Find out more" with a small arrow at its foot,
+  linking to the pitch. The middle line is one wide block, the headline's
+  highlight, and everything is sized from its width (`--lock` on
+  `.type-hero`). From 768px the title is centred and the block leads:
+  "Where great" and "are made" are one smaller size above and below it,
+  and the block is 84% of the column from 1024px, less only where the
+  screen is too short. On phones there are four lines, each the block's
+  full width ("Where" / "great" / the block / "are made"), each set at the
+  size that makes its ink span it.
+- **The block** (`components/home/Slot.tsx`, `.slot` in `app/globals.css`):
+  navy type on a solid colour, changing through the three words in
+  `hero.words` (`content/home.ts`): "ideas" on lime, "products" on lilac,
+  "activations" on off-white. It is a fruit machine: three reels side by
+  side, each showing its third of the block, spin downwards together and
+  stop left to right on the next word with a small bounce; once the last
+  has stopped the word stands in one piece on its full colour. A small
+  script moves the reels (where each is depends only on the time, so it
+  survives a throttled tab and pauses off screen); without it, or under
+  reduced motion, the block stays on "ideas". The block is decoration:
+  the heading's own word is a visually hidden "ideas", so it reads "Where
+  great ideas are made" to search engines and screen readers. Each word
+  carries its measured ink (`left`, `width`, in ems), which sizes and
+  centres it: measure a new word before swapping one in, and keep to
+  three.
 - **Pitch**: the studio in one sentence, centred, mid-size, navy on
   off-white, on its own band under the hero (`components/home/Pitch.tsx`,
   the `pitch` lines in `content/home.ts`): four lines as written from
@@ -183,11 +186,11 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   on an element, or `data-reveal-group` on a parent, fades and lifts them
   in over 650ms (1.5rem up, 0.875rem from the title's side, 90ms stagger
   between siblings). Without the script nothing is hidden. `ScrollCue` is
-  the hero's arrow at the bottom right of the frame: it bounces at rest,
-  then rotates and morphs into a smile over the first half-viewport of
-  scroll, holds, and fades out before the pitch (or before the element its
-  `next` prop names: the agencies hero reuses it); it is decorative and
-  not interactive.
+  the agencies hero's arrow at the bottom right of its frame: it bounces
+  at rest, then rotates and morphs into a smile over the first
+  half-viewport of scroll, holds, and fades out before the element its
+  `next` prop names; it is decorative and not interactive. (The homepage
+  hero has its own "Find out more" link instead.)
 
 ## Homepage
 
@@ -195,7 +198,7 @@ The page opens with the headline and the studio in one sentence, then
 alternates a visual chapter with a statement on a full brand colour,
 three times, then explains the business in full:
 
-Hero (navy, off-white type, the turning block) > the pitch (off-white,
+Hero (navy, off-white type, the spinning block) > the pitch (off-white,
 navy type) > Who for (navy, collage) > statement "Your merchandise should feel like your product." (lime, navy
 type) > What we make (navy, collage) > statement "We design by
 collection, for your audience." (lilac, navy type) > What we handle

@@ -1,85 +1,34 @@
 import { Sheet } from "./Sheet";
 import { Container } from "../site/Container";
-import { ArrowLink } from "../site/Button";
+import { Slot } from "./Slot";
 import { hero } from "@/content/home";
-import { primaryCta } from "@/content/site";
 
 /**
- * The opening statement, on navy: "Where great [ideas] are made", and one
- * action. What the studio is sits on its own band beneath (Pitch.tsx).
+ * The opening statement, on navy and exactly the first screen: "Where
+ * great [ideas] are made", centred. What the studio is sits on its own
+ * band beneath (Pitch.tsx), and a minimal "Find out more" with an arrow at
+ * the foot of the hero leads on to it.
  *
- * The headline is a squared-off lockup: every line spans the same width.
- * From 768px that is three lines ("Where great" / the block / "are made"),
- * about four fifths of the page wide from 1024px; on phones four, the
- * full width ("Where" / "great" / the block / "are made"). Each line is
- * set at the size that makes its ink span the lockup.
+ * The middle line is the highlight: navy type on one wide block of solid
+ * colour, changing through hero.words ("ideas" on lime, "products" on
+ * lilac, "activations" on off-white). The block is a fruit machine
+ * (Slot.tsx): three reels spin and stop left to right on the next word,
+ * and once the last has stopped the word stands in one piece on its full
+ * colour.
  *
- * The middle line is the highlight: navy type on a solid block that turns
- * one way, a quarter at a time, like the side of a cube, through
- * hero.words (.hero-cube in globals.css, CSS only): "ideas" on lime,
- * "products" on lilac, "activations" on off-white. Each word is sized to
- * fill the block's width, so the block is taller for "ideas" than for the
- * long words, and "are made" moves to stay beneath it.
+ * From 768px "Where great" and "are made" are small centred lines above
+ * and below the block, which leads. On phones every line is the block's
+ * full width, four of them: "Where" / "great" / the block / "are made".
  *
- * The block is two panels that take turns: one turns away over the top
- * as the other comes up from beneath, and each changes its word while it
- * is out of sight. Only the first word on the first panel is real text,
- * so the heading reads "Where great ideas are made" to search engines
- * and screen readers; every other word is drawn from data-word and hidden
- * from assistive technology.
+ * The word in the heading itself is a visually hidden "ideas", so it
+ * reads "Where great ideas are made" to search engines and screen
+ * readers; the block that draws the words is decoration (aria-hidden,
+ * every word drawn from data-word).
  */
-const wordStyle = (word: (typeof hero.words)[number]) =>
-  ({
-    "--ink-l": word.left,
-    "--ink-w": word.width,
-  }) as React.CSSProperties;
-
-/**
- * A panel shows on every other step, so over three words it carries the
- * first, the third, then the second.
- */
-const PANEL_ORDER = [0, 2, 1];
-
-function Panel({ second = false }: { second?: boolean }) {
-  return (
-    <span
-      className={`hero-cube__panel${second ? " hero-cube__panel--b" : ""}`}
-      aria-hidden={second ? "true" : undefined}
-    >
-      {PANEL_ORDER.map((index, slot) => {
-        const word = hero.words[index];
-        return !second && slot === 0 ? (
-          <span
-            key={word.text}
-            className="hero-cube__side"
-            style={wordStyle(word)}
-          >
-            <span className="hero-cube__word">{word.text} </span>
-          </span>
-        ) : (
-          <span
-            key={word.text}
-            className="hero-cube__side"
-            style={wordStyle(word)}
-            data-word={word.text}
-            aria-hidden="true"
-          />
-        );
-      })}
-    </span>
-  );
-}
-
 export function Hero() {
   return (
     <Sheet id="top" tone="navy" sectionClassName="sheet--hero">
-      <Container
-        data-hero-frame
-        className="flex flex-1 flex-col pb-9 pt-[5.75rem] sm:pb-12 sm:pt-28 lg:pb-12 lg:pt-[var(--hero-top)]"
-      >
-        {/* The lockup, and the one action: under it, or beside its foot on
-            a landscape screen from 1200px (.hero-stage). The bottom-right
-            corner is the scroll cue's (ScrollCue.tsx). */}
+      <Container className="flex flex-1 flex-col pb-7 pt-[5.75rem] sm:pb-9 sm:pt-28 lg:pb-9 lg:pt-[var(--hero-top)]">
         <div className="hero-stage">
           <div className="hero-lockup">
             <h1 className="type-hero">
@@ -90,37 +39,42 @@ export function Hero() {
                 </span>
               </span>
               <span
-                className="rise-line rise-line--cube"
+                className="rise-line"
                 style={{ "--d": "0.08s" } as React.CSSProperties}
               >
-                <span className="hero-cube">
-                  <Panel />
-                  <Panel second />
+                <span>
+                  <span className="sr-only">{hero.words[0].text} </span>
+                  <Slot />
                 </span>
               </span>
               <span
                 className="rise-line type-hero__base"
                 style={{ "--d": "0.16s" } as React.CSSProperties}
               >
-                <span>
-                  <span className="hero-base">are made</span>
-                </span>
+                <span>are made</span>
               </span>
             </h1>
           </div>
-          <div
-            className="hero-action fade-in pr-16 md:pr-0"
-            style={{ "--d": "0.4s" } as React.CSSProperties}
+
+          <a
+            href="#intro"
+            className="hero-more fade-in"
+            style={{ "--d": "0.5s" } as React.CSSProperties}
           >
-            <ArrowLink
-              strong
-              href={primaryCta.href}
-              track="get_in_touch_click"
-              trackSection="hero"
+            <span>Find out more</span>
+            <svg
+              className="hero-more__arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
             >
-              {primaryCta.label}
-            </ArrowLink>
-          </div>
+              <path d="M12 4v15M5.5 12.5 12 19l6.5-6.5" />
+            </svg>
+          </a>
         </div>
       </Container>
     </Sheet>

@@ -150,7 +150,7 @@ export function Header() {
           <Logo className="relative z-[70] w-[6.5rem] sm:w-[7.25rem]" />
 
           <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
-            <ul className="flex items-center gap-7">
+            <ul className="site-header__links flex items-center gap-7">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   {navItem(
