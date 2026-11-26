@@ -15,6 +15,18 @@ export const homeMeta = {
 };
 
 export const hero = {
+  /**
+   * The headline is "Where great [ideas] are made": the middle word turns
+   * through these in order, like the faces of a cube. `em` is each word's
+   * width in ems in the display face (weight 900, -0.045em tracking), used
+   * to fit the longer words to a phone's width.
+   */
+  words: [
+    { text: "ideas", em: 2.73 },
+    { text: "products", em: 5.08 },
+    { text: "merch", em: 3.37 },
+    { text: "activations", em: 6.27 },
+  ],
   copy: "madebyobra is a global merchandise design and manufacturing studio creating original merchandise for agencies, festivals, events, artists and brands.",
   /** Set a step stronger than the copy. */
   line: "Designed, developed and manufactured from idea to finished product.",

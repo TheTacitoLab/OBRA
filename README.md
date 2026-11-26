@@ -93,8 +93,8 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `bg-bg / text-fg / text-muted / border-line` utilities. On navy, buttons
   and the header's Get in touch turn lime.
 - **Lime block**: the brand punctuation. `.mark` puts the end of a heading
-  on a solid lime block (the hero's "Made", "Make." on the What we
-  make section and page, "In mind?" on the homepage close, "Agencies." in
+  on a solid lime block ("Make." on the What we make section and page,
+  "In mind?" on the homepage close, "Agencies." in
   the agencies title, "Project." on the contact page, "Touch." on every
   closing Get in touch). `MarkedTitle` in `components/site/` renders the split:
   the break goes before the marked word, or wherever a `\n` in the title
@@ -105,6 +105,17 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `--font-cap` in `app/globals.css`); update those two numbers when the
   typeface changes. The footer signs off with the line set enormous and cut
   by the page edge (`.footer-mark`).
+- **Hero headline**: "Where great [ideas] are made" (`components/home/Hero.tsx`).
+  Three lines from 768px, one word per line on phones. The middle word is
+  the headline's highlight: navy type on a block that turns a quarter at a
+  time, always the same way, like the side of a cube, through the words in
+  `hero.words` (`content/home.ts`), the block lime, then lilac, then
+  off-white. It is CSS only (`.hero-cube` in `app/globals.css`) and stays
+  on "ideas" under reduced motion. Only "ideas" is real text, so the
+  heading reads "Where great ideas are made" to search engines and screen
+  readers. Each word carries its measured width (`em`) so a long word can
+  be fitted to a phone's width: measure and add it when adding a word, and
+  keep to four words (the block has four sides).
 - **Type**: two families. Display (headings, navigation, buttons) is
   Aeonik by intent (Black for display, Bold and Medium below it); it is
   licensed and not bundled, so Figtree from next/font stands in with the
@@ -167,7 +178,7 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
 The page alternates a visual chapter with a statement on a full brand
 colour, three times, then explains the business in full:
 
-Hero (navy, off-white type, lime block) > Who for (off-white, collage) >
+Hero (navy, off-white type, the turning block) > Who for (off-white, collage) >
 statement "Your merchandise should feel like your product." (lime, navy
 type) > What we make (navy, collage) > statement "We design by
 collection, for your audience." (lilac, navy type) > What we handle

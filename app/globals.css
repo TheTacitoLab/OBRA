@@ -243,11 +243,13 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     font-family: var(--font-display);
   }
 
-  /* Hero statement: "WHERE GREAT IDEAS" / "ARE MADE". Two lines from
-     768px; on phones the first line stacks a word at a time and the second
-     stays whole. Limits at weight 900, -0.045em: "WHERE GREAT IDEAS"
-     9.5em across the column (narrowest at 1024px, 90.6vw), "ARE MADE"
-     4.78em plus the block's 0.12em on phones (87.5vw at 320px). */
+  /* Hero statement: "WHERE GREAT" / the turning word / "ARE MADE". Three
+     lines from 768px, sized so "WHERE GREAT" (6.59em, the widest line:
+     "ACTIVATIONS" is 6.27em) fills the column, narrowest 90.6vw at 1024px,
+     and so three lines leave room for the copy on a short screen. On
+     phones one word per line; the turning word's longer faces are fitted
+     to the column. The turning word carries the highlight block
+     (.hero-cube). All at weight 900, -0.045em. */
   .type-hero {
     font-weight: 900;
     font-size: clamp(3rem, 17vw, 8.5rem);
@@ -260,8 +262,7 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   }
   @media (min-width: 768px) {
     .type-hero {
-      font-size: min(9.3vw, 12.75rem, 24vh);
-      line-height: 0.9;
+      font-size: min(13.5vw, 18.5rem, 18.5vh);
     }
     .type-hero .word {
       display: inline;
@@ -1919,6 +1920,171 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     animation: rise-in 0.9s var(--ease-out-expo) forwards;
     animation-delay: var(--d, 0s);
   }
+  /* -------------------------------------------------------------------
+     The hero's turning word: the headline's highlight. Navy type on a
+     solid block the height of the lime block elsewhere (cap height plus
+     0.12em above and below), one word to a face of a four-sided block
+     that turns a quarter at a time, always the same way: the front face
+     goes up and over, the next comes up from beneath. CSS only. Each step
+     is a hold and a turn; a face darkens as it turns away, and takes the
+     next of the three colours while it is at the back, so the block runs
+     lime, lilac, off-white whichever word is showing.
+     ------------------------------------------------------------------- */
+  .hero-cube {
+    --cube-step: 2.6s; /* one word: the hold, then the turn */
+    --cube-delay: 1.1s; /* longer on the first word while the page loads in */
+    --cube-ease: cubic-bezier(0.7, 0, 0.2, 1);
+    --cube-pad: 0.12em;
+    /* Half the block's height: it is square in section. */
+    --cube-r: calc(var(--font-cap) * 0.5em + var(--cube-pad));
+    --hero-col: calc(100vw - 2.5rem);
+    perspective: 11em;
+    perspective-origin: 2.4em 50%;
+  }
+  @media (min-width: 640px) {
+    .hero-cube {
+      --hero-col: calc(100vw - 4rem);
+    }
+  }
+  /* The turning block's corners swing past the line, and the block sits
+     proud of the column on the left, so this line's mask is wider than
+     the others'. Vertical margins collapse to the larger, so the lines
+     stay evenly spaced. */
+  .rise-line--cube {
+    padding: 0.26em 0.12em 0.26em 0.26em;
+    margin: -0.26em -0.12em -0.26em -0.26em;
+  }
+  .rise-line--cube > span {
+    transform: translateY(170%);
+  }
+  .hero-cube__box {
+    position: relative;
+    display: block;
+    height: 0.9em;
+    transform-style: preserve-3d;
+    /* Set back by its own depth so the front face sits flat on the page. */
+    transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg);
+    animation: cube-turn calc(var(--cube-step) * 4) var(--cube-ease)
+      var(--cube-delay) infinite;
+    will-change: transform;
+  }
+  /* A face is the block: centred on the line, a pad proud of the column. */
+  .hero-cube__face {
+    position: absolute;
+    top: calc(0.45em - var(--cube-r));
+    left: calc(var(--cube-pad) * -1);
+    display: flex;
+    align-items: center;
+    height: calc(var(--cube-r) * 2);
+    /* The caps sit a hair above the middle of their line: level them. */
+    padding: 0.018em var(--cube-pad) 0;
+    white-space: nowrap;
+    background-color: var(--color-lime);
+    color: var(--color-navy);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: rotateX(calc(var(--i) * -90deg)) translateZ(var(--cube-r));
+    animation:
+      cube-face calc(var(--cube-step) * 4) var(--cube-ease)
+        calc(var(--cube-delay) + var(--face-shift) * var(--cube-step)) infinite,
+      cube-colour calc(var(--cube-step) * 12) step-end
+        calc(var(--cube-delay) + var(--colour-shift) * var(--cube-step))
+        infinite;
+  }
+  /* Face n shows on step n. --face-shift lines its shading up with that;
+     --colour-shift also starts it on colour n of three. */
+  .hero-cube__face:nth-child(1) {
+    --i: 0;
+    --face-shift: 0;
+    --colour-shift: 0;
+  }
+  .hero-cube__face:nth-child(2) {
+    --i: 1;
+    --face-shift: -3;
+    --colour-shift: -3;
+  }
+  .hero-cube__face:nth-child(3) {
+    --i: 2;
+    --face-shift: -2;
+    --colour-shift: -6;
+  }
+  .hero-cube__face:nth-child(4) {
+    --i: 3;
+    --face-shift: -1;
+    --colour-shift: -9;
+  }
+  .hero-cube__face::before {
+    content: attr(data-word);
+  }
+  /* The word itself. Tracking is restated so it follows a fitted size. */
+  .hero-cube__word,
+  .hero-cube__face::before {
+    letter-spacing: -0.045em;
+  }
+  /* Phones: a word whose block would be wider than the column is set as
+     large as fits. The block keeps its height, so the faces still meet. */
+  @media (max-width: 767.98px) {
+    .hero-cube__word,
+    .hero-cube__face::before {
+      font-size: min(
+        1em,
+        calc((var(--hero-col) - var(--cube-pad)) / (var(--w) * 1.01))
+      );
+    }
+  }
+  @keyframes cube-turn {
+    0%,
+    18.25% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg);
+    }
+    25%,
+    43.25% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg);
+    }
+    50%,
+    68.25% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(180deg);
+    }
+    75%,
+    93.25% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(270deg);
+    }
+    100% {
+      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(360deg);
+    }
+  }
+  /* One face: showing, darkening as it turns away, out of sight, then
+     coming back up to full strength. */
+  @keyframes cube-face {
+    0%,
+    18.25% {
+      opacity: 1;
+    }
+    25%,
+    93.25% {
+      opacity: 0.35;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  /* Three turns of the block: the colour changes on steps 2, 6 and 10,
+     when this face is at the back. */
+  @keyframes cube-colour {
+    0% {
+      background-color: var(--color-lime);
+    }
+    16.667% {
+      background-color: var(--color-lilac);
+    }
+    50% {
+      background-color: var(--color-paper);
+    }
+    83.333% {
+      background-color: var(--color-lime);
+    }
+  }
+
   .fade-in {
     opacity: 0;
     transform: translateY(0.5rem);
@@ -3023,6 +3189,14 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  /* The hero's word does not turn: it stays on "ideas", on lime. */
+  .hero-cube__box,
+  .hero-cube__face {
+    animation: none;
+  }
+  .hero-cube__face:not(:first-child) {
+    display: none;
   }
   .scroll-cue svg {
     animation: none !important;
