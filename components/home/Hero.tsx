@@ -5,10 +5,12 @@ import { hero } from "@/content/home";
 import { primaryCta } from "@/content/site";
 
 /**
- * The opening statement, on navy: off-white type with the second line on
- * the lime block. One word per line on phones (see .type-hero .word), two
- * lines from 768px, sized to the viewport at every width. The copy stays small beneath it,
- * saying plainly who the studio is for and what it does, with one action.
+ * The opening statement, on navy: off-white type with the last word on the
+ * lime block. Two lines from 768px ("Where great ideas" / "are made"); on
+ * phones the first line stacks a word at a time (see .type-hero .word) and
+ * "are made" stays together, sized to the viewport at every width. The
+ * copy stays small beneath it, saying plainly who the studio is for and
+ * what it does, with one action.
  */
 export function Hero() {
   return (
@@ -20,8 +22,9 @@ export function Hero() {
         <h1 className="type-hero">
           <span className="rise-line">
             <span>
-              <span className="word">Less </span>
-              <span className="word">bland.</span>
+              <span className="word">Where </span>
+              <span className="word">great </span>
+              <span className="word">ideas </span>
             </span>
           </span>
           <span
@@ -29,14 +32,7 @@ export function Hero() {
             style={{ "--d": "0.08s" } as React.CSSProperties}
           >
             <span>
-              {/* One block on desktop: the first mark carries the space so
-                  the two join; on phones each word is a line with its own. */}
-              <span className="word">
-                <span className="mark">More </span>
-              </span>
-              <span className="word">
-                <span className="mark">brand.</span>
-              </span>
+              are <span className="mark mark--mid">made</span>
             </span>
           </span>
         </h1>

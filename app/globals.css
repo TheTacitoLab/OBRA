@@ -243,11 +243,14 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     font-family: var(--font-display);
   }
 
-  /* Hero statement. One word per line on phones, two lines from 768px.
-     Limits at weight 900, -0.045em: "BRAND." 3.54em, "MORE BRAND." 6.46em. */
+  /* Hero statement: "WHERE GREAT IDEAS" / "ARE MADE". Two lines from
+     768px; on phones the first line stacks a word at a time and the second
+     stays whole. Limits at weight 900, -0.045em: "WHERE GREAT IDEAS"
+     9.5em across the column (narrowest at 1024px, 90.6vw), "ARE MADE"
+     4.78em plus the block's 0.12em on phones (87.5vw at 320px). */
   .type-hero {
     font-weight: 900;
-    font-size: clamp(4.5rem, 24vw, 12rem);
+    font-size: clamp(3rem, 17vw, 8.5rem);
     line-height: 0.9;
     letter-spacing: -0.045em;
     text-transform: uppercase;
@@ -257,7 +260,7 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   }
   @media (min-width: 768px) {
     .type-hero {
-      font-size: min(13.8vw, 19rem, 24vh);
+      font-size: min(9.3vw, 12.75rem, 24vh);
       line-height: 0.9;
     }
     .type-hero .word {
@@ -753,12 +756,6 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     background-size: 100% var(--mark-h);
     background-position: 0 var(--mark-y);
     color: var(--color-navy);
-  }
-  /* On phones the hero's two highlighted words stack, so they get a gap. */
-  @media (max-width: 767px) {
-    .type-hero .word:has(> .mark) + .word:has(> .mark) {
-      margin-top: 0.14em;
-    }
   }
 
   /* -------------------------------------------------------------------

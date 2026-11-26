@@ -93,7 +93,7 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `bg-bg / text-fg / text-muted / border-line` utilities. On navy, buttons
   and the header's Get in touch turn lime.
 - **Lime block**: the brand punctuation. `.mark` puts the end of a heading
-  on a solid lime block (the hero's "More brand.", "Make." on the What we
+  on a solid lime block (the hero's "Made", "Make." on the What we
   make section and page, "In mind?" on the homepage close, "Agencies." in
   the agencies title, "Project." on the contact page, "Touch." on every
   closing Get in touch). `MarkedTitle` in `components/site/` renders the split:
