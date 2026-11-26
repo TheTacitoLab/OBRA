@@ -16,19 +16,13 @@ export const homeMeta = {
 
 export const hero = {
   /**
-   * The headline is "Where great [ideas] are made": the middle word
-   * changes through these three in order, on a block that turns like the
-   * side of a cube. The numbers are each word's measurements in ems in
-   * the display face (weight 900, -0.045em tracking, capitals): `left` is
-   * where its ink starts and `width` how wide the ink is. They size each
-   * word to fit the block and centre it. Measure a new word before
-   * swapping one in, and keep to three (lime, lilac, off-white; the
-   * block's turn is built on three).
+   * The headline is "Where great / ideas are / made" (Hero.tsx sets the
+   * lines). This is the small line beside it: each entry is a line from
+   * 1024px, and it wraps as it falls below that.
    */
-  words: [
-    { text: "ideas", left: 0.047, width: 2.702 },
-    { text: "products", left: 0.047, width: 5.055 },
-    { text: "activations", left: 0, width: 6.293 },
+  sub: [
+    "Merchandise design and production,",
+    "turning great ideas into original products.",
   ],
 };
 

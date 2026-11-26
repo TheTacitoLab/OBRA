@@ -243,23 +243,20 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     font-family: var(--font-display);
   }
 
-  /* Hero statement: "WHERE GREAT [IDEAS] ARE MADE", on a hero that is
-     exactly the first screen: the title in the middle of it, a minimal
-     "Find out more" at its foot, a quiet film behind (.hero-video). The
-     middle line is one wide block, the highlight, which carries the
-     changing word (.hero-cube). Everything is sized from the block's
-     width (--lock), and a line is laid out as its capitals alone (0.7em),
-     so the gaps between lines are even.
-     Phones: four lines, each the block's full width, set at the size that
-     makes its ink span it (ink widths at weight 900, -0.045em: "WHERE"
-     3.348em, "GREAT" 3.035em, "ARE MADE" 4.767em).
-     From 768px: centred, and the block leads. "WHERE GREAT" and "ARE
-     MADE" are one smaller size, at which "WHERE GREAT" (6.598em) spans
-     72% of the block. The block is three quarters of the column, 63% of
-     it from 1024px, and less wherever the screen is too short for the
-     title, the cue and the padding. */
+  /* Hero statement: "WHERE GREAT / IDEAS ARE / MADE", extra large and to
+     the left, on a hero that is exactly the first screen, with a quiet
+     film behind (.hero-video). "MADE" stands on the lime block. A small
+     line and an arrow (.hero-sub) sit beside it.
+     From 768px: three lines at one size, set so "WHERE GREAT" (6.598em of
+     ink at weight 900, -0.045em) spans the column on tablets and nine
+     tenths of it from 1024px, less only where the screen is too short for
+     three lines of it. The block is the site's own (.mark), proud of the
+     column on the left.
+     Phones: four lines, each fitted to the full width and laid out as its
+     capitals alone (0.7em) so the gaps are even: "WHERE" 3.348em, "GREAT"
+     3.035em, "IDEAS ARE" 4.712em, and "MADE" on a block the full width. */
   .sheet--hero {
-    /* The hero's top padding from 1024px, shared with the lockup's sum. */
+    /* The hero's top padding from 1024px, shared with the headline's sum. */
     --hero-top: clamp(5.5rem, 11vh, 7.5rem);
   }
   .sheet.sheet--hero {
@@ -281,36 +278,48 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   .hero-video[data-on="true"] {
     opacity: 1;
   }
+  /* The headline sits in the middle of the hero's height. */
   .hero-stage {
     display: flex;
     flex: 1;
     flex-direction: column;
-    align-items: center;
-  }
-  /* The title takes the room above the cue and sits in the middle of it. */
-  .hero-lockup {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
     justify-content: center;
+  }
+  .hero-lockup {
     width: 100%;
     container-type: inline-size;
   }
+  /* The headline and the line beside it. --lock is the headline's width:
+     set here so both can be sized and placed from it. */
+  .hero-title {
+    /* Phones. 15rem: the hero's padding and the line under the headline,
+       which is 1.082 of its width tall. */
+    --lock: min(100cqw, max(15rem, calc((100vh - 15rem) / 1.082)));
+    position: relative;
+  }
+  @media (min-width: 768px) {
+    .hero-title {
+      /* Tablets: the column, or what fits the screen's height (three
+         lines are 0.4456 of the first line's width tall; 16rem is the
+         hero's padding and the line under the headline). */
+      --lock: min(100cqw, max(20rem, calc((100vh - 16rem) / 0.4456)));
+    }
+  }
+  @media (min-width: 1024px) {
+    .hero-title {
+      /* Desktop: nine tenths of the column, or of what fits the screen's
+         height (4.5rem: the hero's bottom padding and a little air). */
+      --lock: calc(
+        0.9 *
+          min(
+            100cqw,
+            max(20rem, calc((100vh - var(--hero-top) - 4.5rem) / 0.4456))
+          )
+      );
+    }
+  }
   .type-hero {
-    /* 13.75rem: the hero's padding and the cue. The title is 1.077 of the
-       block's width tall here. */
-    --lock: min(100cqw, max(15rem, calc((100vh - 13.75rem) / 1.077)));
-    --gap: calc(var(--lock) * 0.058);
-    --block-h: calc(var(--lock) * 0.316);
-    --block-pad: calc(var(--lock) * 0.0376);
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap);
-    width: var(--lock);
-    margin-inline: auto;
     font-weight: 900;
-    font-size: 1rem;
-    line-height: 0.7;
     text-transform: uppercase;
     white-space: nowrap;
   }
@@ -319,94 +328,133 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
   .type-hero * {
     letter-spacing: -0.045em;
   }
-  /* The masks the lines rise from, with room for round letters. */
-  .type-hero > .rise-line {
-    padding: calc(var(--lock) * 0.02);
-    margin: calc(var(--lock) * -0.02);
-  }
   @media (max-width: 767.98px) {
+    .type-hero {
+      --gap: calc(var(--lock) * 0.058);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      width: var(--lock);
+      font-size: 1rem;
+      line-height: 0.7;
+    }
+    /* The masks the lines rise from, with room for round letters. */
+    .type-hero > .rise-line {
+      padding: calc(var(--lock) * 0.02);
+      margin: calc(var(--lock) * -0.02);
+    }
     /* Each line is pulled back by its first letter's side bearing, so the
-       ink starts on the block's edge. */
-    .type-hero__top .word {
+       ink starts on the edge. */
+    .type-hero__l1 .word {
       display: block;
       margin-left: -0.01em;
       font-size: calc(var(--lock) / 3.348);
     }
-    .type-hero__top .word + .word {
+    .type-hero__l1 .word + .word {
       margin-top: var(--gap);
       margin-left: -0.025em;
       font-size: calc(var(--lock) / 3.035);
     }
-    .type-hero__base {
-      font-size: calc(var(--lock) / 4.767);
+    .type-hero__l2 {
+      font-size: calc(var(--lock) / 4.712);
     }
-    .type-hero__base > span {
-      margin-left: -0.009em;
+    .type-hero__l2 > span {
+      margin-left: -0.047em;
+    }
+    /* "MADE" on a block the full width: the word fills it, a pad in from
+       each side (its ink is 2.681em wide and starts 0.047em in). */
+    .type-hero .hero-made {
+      --pad: calc(var(--lock) * 0.0376);
+      display: flex;
+      align-items: center;
+      height: calc(var(--lock) * 0.316);
+      margin: 0;
+      padding: 0 0 0 calc(var(--pad) - 0.047em);
+      background: var(--color-lime);
+      font-size: calc((var(--lock) - var(--pad) * 2) / 2.681);
     }
   }
   @media (min-width: 768px) {
     .type-hero {
-      /* Three quarters of what would fill the column or the screen's
-         height (a title 0.549 as tall as the block is wide, between the
-         padding and the cue), whichever is less. */
-      --lock: calc(
-        0.75 * min(100cqw, max(20rem, calc((100vh - 16.5rem) / 0.549)))
-      );
-      /* Room for the block's corners to swing clear of the lines. */
-      --gap: calc(var(--lock) * 0.07);
-      text-align: center;
+      font-size: calc(var(--lock) / 6.598);
+      line-height: 0.9;
     }
-    .type-hero__top,
-    .type-hero__base {
-      font-size: calc(var(--lock) * 0.1091);
+    /* Pulled back by the first letter's side bearing, so the three lines
+       start on one edge. */
+    .type-hero__l1 > span {
+      margin-left: -0.009em;
+    }
+    .type-hero__l2 > span,
+    .type-hero__l3 > span {
+      margin-left: -0.047em;
     }
   }
-  @media (min-width: 1024px) {
-    .type-hero {
-      --lock: calc(
-        0.75 *
-          min(
-            84cqw,
-            max(20rem, calc((100vh - var(--hero-top) - 9.5rem) / 0.549))
-          )
-      );
-    }
+  /* The small line beside the headline, and the arrow on to the pitch.
+     Under the headline below 1024px, the arrow at the far end. */
+  .hero-sub {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-top: clamp(1.5rem, 4vh, 2.25rem);
   }
-  /* "Find out more": a small label over a small arrow, at the hero's
-     foot, leading to the pitch. */
-  .hero-more {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: clamp(1.25rem, 3vh, 2.25rem);
-    padding: 0.5rem 0.75rem;
+  .hero-sub__text {
+    max-width: 22em;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 0.8125rem;
-    line-height: 1;
-    letter-spacing: 0.01em;
-    text-decoration: none;
-    color: rgb(249 249 250 / 0.8);
-    transition: color 0.2s var(--ease-out-quart);
+    font-size: clamp(1rem, 0.8rem + 0.55vw, 1.375rem);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
   }
-  .hero-more:hover,
-  .hero-more:focus-visible {
-    color: var(--color-paper);
-  }
-  .hero-more__arrow {
-    width: 1.25rem;
-    height: 1.25rem;
+  .hero-sub__arrow {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: 0 -0.5rem -0.5rem 0;
     color: var(--color-lime);
-    animation: hero-more-bob 1.8s ease-in-out infinite;
   }
-  @keyframes hero-more-bob {
+  .hero-sub__arrow > svg {
+    width: 1.875rem;
+    height: 1.875rem;
+    animation: hero-arrow-bob 1.8s ease-in-out infinite;
+  }
+  @keyframes hero-arrow-bob {
     0%,
     100% {
       transform: translateY(0);
     }
     50% {
       transform: translateY(0.25rem);
+    }
+  }
+  /* From 1024px: on the right, level with "MADE", its last line on the
+     headline's baseline (0.22em above the headline's foot: the last
+     line's mask, and the room under a capital). */
+  @media (min-width: 1024px) {
+    .hero-sub {
+      position: absolute;
+      right: 0;
+      bottom: calc(var(--lock) / 6.598 * 0.22 - 0.36em);
+      gap: clamp(1.5rem, 2.5vw, 2.75rem);
+      margin-top: 0;
+      font-size: clamp(1rem, 0.8rem + 0.55vw, 1.375rem);
+    }
+    .hero-sub__text {
+      max-width: none;
+      font-size: 1em;
+      text-wrap: wrap;
+    }
+    .hero-sub__text > .line {
+      display: block;
+      white-space: nowrap;
+    }
+    /* The arrow's tip rests on the same baseline. */
+    .hero-sub__arrow {
+      margin: 0 -0.5rem -0.3rem 0;
     }
   }
 
@@ -2099,247 +2147,6 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     animation: rise-in 0.9s var(--ease-out-expo) forwards;
     animation-delay: var(--d, 0s);
   }
-  /* -------------------------------------------------------------------
-     The hero's block: the headline's highlight. Navy type on one wide
-     block of solid colour that turns a quarter at a time, always the same
-     way, like the side of a cube: the side showing goes up and over, the
-     next comes up from beneath. CSS only. Each step is a hold and a turn,
-     and a side darkens as it turns away. Three words, each on its own
-     colour: lime, lilac, off-white. A word is as large as fits the block
-     inside its pad, in width or in height, and centred on its ink.
-
-     Three words do not go round a four-sided block, so the block is two
-     panels that take turns. Each is a side of the same cube (set back by
-     half the block's height, turned, then stood out by half again). A
-     panel goes over the top, carries on round the back out of sight,
-     changing its word there, and comes up from beneath two steps later,
-     so the pair always turn the same way. The second panel runs the same
-     course three steps behind.
-     ------------------------------------------------------------------- */
-  .type-hero {
-    --cube-step: 1s; /* one word: the hold, then the turn */
-    --cube-delay: 0.9s; /* longer on the first word while the page loads in */
-    --cube-ease: cubic-bezier(0.7, 0, 0.2, 1);
-    --cube-r: calc(var(--block-h) / 2);
-  }
-  /* The turning block's corners swing past its line, so this line's mask
-     is deeper than the others'. */
-  .type-hero > .rise-line--cube {
-    padding: calc(var(--lock) * 0.075) calc(var(--lock) * 0.03);
-    margin: calc(var(--lock) * -0.075) calc(var(--lock) * -0.03);
-  }
-  .rise-line--cube > span {
-    transform: translateY(170%);
-  }
-  .hero-cube {
-    position: relative;
-    display: block;
-    height: var(--block-h);
-    perspective: calc(var(--lock) * 1.8);
-    perspective-origin: 50% 50%;
-  }
-  .hero-cube__panel {
-    position: absolute;
-    inset: 0;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg)
-      translateZ(var(--cube-r));
-    animation: panel-a calc(var(--cube-step) * 6) var(--cube-ease)
-      var(--cube-delay) infinite backwards;
-    will-change: transform, opacity;
-  }
-  .hero-cube__panel--b {
-    transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg)
-      translateZ(var(--cube-r));
-    animation-name: panel-b;
-  }
-  /* A side: one word on its colour, the size of the block. */
-  .hero-cube__side {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    padding-left: calc(
-      (var(--lock) - var(--ink-w) * 1em) / 2 - var(--ink-l) * 1em
-    );
-    background-color: var(--word-bg);
-    color: var(--color-navy);
-    font-size: min(
-      calc((var(--lock) - var(--block-pad) * 2) / var(--ink-w)),
-      calc((var(--block-h) - var(--block-pad) * 2) / 0.703)
-    );
-    text-align: left;
-    opacity: 0;
-    animation: side-show calc(var(--cube-step) * 6) step-end
-      calc(var(--cube-delay) + var(--side-shift) * var(--cube-step)) infinite
-      backwards;
-  }
-  .hero-cube__side::before {
-    content: attr(data-word);
-    letter-spacing: -0.045em;
-  }
-  .hero-cube__side--1 {
-    --word-bg: var(--color-lime);
-  }
-  .hero-cube__side--2 {
-    --word-bg: var(--color-lilac);
-  }
-  .hero-cube__side--3 {
-    --word-bg: var(--color-paper);
-  }
-  /* A panel carries the first word, the third, then the second: it shows
-     on every other step. --side-shift is the step each is first due on,
-     counted back a whole round where that keeps it out of sight at the
-     start. */
-  .hero-cube__side:nth-child(1) {
-    --side-shift: 0;
-    opacity: 1;
-  }
-  .hero-cube__side:nth-child(2) {
-    --side-shift: -4;
-  }
-  .hero-cube__side:nth-child(3) {
-    --side-shift: -2;
-  }
-  .hero-cube__panel--b > .hero-cube__side:nth-child(1) {
-    --side-shift: -3;
-  }
-  .hero-cube__panel--b > .hero-cube__side:nth-child(2) {
-    --side-shift: -1;
-  }
-  .hero-cube__panel--b > .hero-cube__side:nth-child(3) {
-    --side-shift: -5;
-  }
-  /* Six steps: this panel shows on steps 0, 2 and 4 (words 1, 3, 2) and
-     is round the back on the others. Each step is a hold (the first 55%)
-     and a turn. */
-  @keyframes panel-a {
-    0%,
-    9.167% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(0deg)
-        translateZ(var(--cube-r));
-      opacity: 1;
-    }
-    16.667% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    25.833% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(270deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    33.333%,
-    42.5% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(360deg)
-        translateZ(var(--cube-r));
-      opacity: 1;
-    }
-    50% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(450deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    59.167% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(630deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    66.667%,
-    75.833% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(720deg)
-        translateZ(var(--cube-r));
-      opacity: 1;
-    }
-    83.333% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(810deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    92.5% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(990deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    100% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(1080deg)
-        translateZ(var(--cube-r));
-      opacity: 1;
-    }
-  }
-  /* The same course three steps behind: this panel shows on steps 1, 3
-     and 5 (words 2, 1, 3). */
-  @keyframes panel-b {
-    0% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(90deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    9.167% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(270deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    16.667%,
-    25.833% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(360deg)
-        translateZ(var(--cube-r));
-      opacity: 1;
-    }
-    33.333% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(450deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    42.5% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(630deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    50%,
-    59.167% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(720deg)
-        translateZ(var(--cube-r));
-      opacity: 1;
-    }
-    66.667% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(810deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    75.833% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(990deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-    83.333%,
-    92.5% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(1080deg)
-        translateZ(var(--cube-r));
-      opacity: 1;
-    }
-    100% {
-      transform: translateZ(calc(var(--cube-r) * -1)) rotateX(1170deg)
-        translateZ(var(--cube-r));
-      opacity: 0.35;
-    }
-  }
-  /* A side is in view from half a step before its panel's turn to show
-     it until half a step after: two steps in six. */
-  @keyframes side-show {
-    0% {
-      opacity: 1;
-    }
-    25% {
-      opacity: 0;
-    }
-    91.667% {
-      opacity: 1;
-    }
-  }
-
   .fade-in {
     opacity: 0;
     transform: translateY(0.5rem);
@@ -3445,16 +3252,10 @@ html:not([data-nav]):has(.sheet--hero[data-tone="navy"]) {
     opacity: 1;
     transform: none;
   }
-  /* The hero's block does not turn: it stays on "ideas", on lime. (The
-     film behind is never loaded: HeroVideo.tsx.) */
-  .hero-cube__panel,
-  .hero-cube__side,
-  .hero-more__arrow {
+  /* The hero's arrow keeps still. (The film behind is never loaded:
+     HeroVideo.tsx.) */
+  .hero-sub__arrow > svg {
     animation: none;
-  }
-  .hero-cube__panel--b,
-  .hero-cube__side:not(:first-child) {
-    display: none;
   }
   .scroll-cue svg {
     animation: none !important;

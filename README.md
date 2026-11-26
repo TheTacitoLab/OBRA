@@ -105,30 +105,19 @@ public/brand/            madebyobra wordmark (PNG, used as a CSS mask)
   `--font-cap` in `app/globals.css`); update those two numbers when the
   typeface changes. The footer signs off with the line set enormous and cut
   by the page edge (`.footer-mark`).
-- **Hero headline**: "Where great [ideas] are made" (`components/home/Hero.tsx`),
-  on a navy hero that is exactly the first screen, the title in the middle
-  of it and a minimal "Find out more" with a small arrow at its foot,
-  linking to the pitch. The middle line is one wide block, the headline's
-  highlight, and everything is sized from its width (`--lock` on
-  `.type-hero`). From 768px the title is centred and the block leads:
-  "Where great" and "are made" are one smaller size above and below it,
-  and the block is 63% of the column from 1024px (three quarters of the
-  column below that), less only where the screen is too short. On phones
-  there are four lines, each the block's full width ("Where" / "great" /
-  the block / "are made"), each set at the size that makes its ink span
-  it.
-- **The block** (`.hero-cube` in `app/globals.css`, CSS only): navy type
-  on a solid colour that turns a quarter at a time, always the same way,
-  like the side of a cube, through the three words in `hero.words`
-  (`content/home.ts`): "ideas" on lime, "products" on lilac, "activations"
-  on off-white. Three words do not go round four sides, so the block is
-  two panels that take turns, each changing its word while it is round
-  the back. Under reduced motion it stays on "ideas". The block is
-  decoration: the heading's own word is a visually hidden "ideas", so it
-  reads "Where great ideas are made" to search engines and screen
-  readers. Each word carries its measured ink (`left`, `width`, in ems),
-  which sizes and centres it: measure a new word before swapping one in,
-  and keep to three.
+- **Hero headline**: "Where great ideas are made" (`components/home/Hero.tsx`),
+  extra large and to the left on a navy hero that is exactly the first
+  screen, the last word on the lime block. From 768px it is three lines at
+  one size ("Where great" / "ideas are" / "made"), set so the first spans
+  the column on tablets and nine tenths of it from 1024px, less only
+  where the screen is too short for three lines of it. On phones it is four lines, each fitted to the full width ("Where" /
+  "great" / "ideas are" / "made" on a full-width block). Beside it, a
+  small line saying what the studio does (`hero.sub` in
+  `content/home.ts`) and a lime arrow linking on to the pitch: from
+  1024px on the right, its last line on the same baseline as "made";
+  below that, under the headline with the arrow at the far end. The
+  headline's width is `--lock` on `.hero-title`; re-measure the ink
+  widths in `app/globals.css` if the wording changes.
 - **Hero film** (`components/home/HeroVideo.tsx`, `public/media/`): dark,
   navy-graded footage of the work being made, muted and looping behind
   the title. It is kept out of the page's loading: the element has no
@@ -208,7 +197,7 @@ The page opens with the headline and the studio in one sentence, then
 alternates a visual chapter with a statement on a full brand colour,
 three times, then explains the business in full:
 
-Hero (navy, a quiet film behind, the turning block) > the pitch (off-white,
+Hero (navy, a quiet film behind, extra-large type) > the pitch (off-white,
 navy type) > Who for (navy, collage) > statement "Your merchandise should feel like your product." (lime, navy
 type) > What we make (navy, collage) > statement "We design by
 collection, for your audience." (lilac, navy type) > What we handle
